@@ -160,7 +160,7 @@ mjx-container { font-weight:400 !important; }
   <div class="sheet-body">
     <h1 class="chapter-title">순열</h1>
 
-    <h2 class="section-title">01 순열</h2>
+    <h2 class="section-title">순열</h2>
     <div class="concept">
       <p>어떤 것을 일렬로 나열하는 경우의 수를 구할 때, 그 <b>순서</b>를 생각하는 경우가 있다. 즉, 서로 다른 물건, 사람, 문자, 숫자에서 몇 개를 택하여 나열해야 할 때, 그 순서를 고려하여 나열하는 경우의 수를 다음과 같이 정의한다.</p>
 
@@ -171,7 +171,7 @@ mjx-container { font-weight:400 !important; }
 
       <div class="note">$_nP_r$의 $P$는 순열을 뜻하는 permutation의 첫 글자이다.</div>
 
-      <div class="sub-title">02 순열의 수</div>
+      <div class="sub-title">순열의 수</div>
       <p>서로 다른 $n$개에서 $r$개를 택하여 순서를 생각하여 일렬로 배열하는 방법의 수</p>
 
       <div class="formula">
@@ -193,7 +193,7 @@ mjx-container { font-weight:400 !important; }
   <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
   <header class="sheet-header">2026 수복이</header>
   <div class="sheet-body">
-    <h2 class="section-title">03 계승과 순열의 수</h2>
+    <h2 class="section-title">계승과 순열의 수</h2>
     <div class="concept">
       <div class="sub-title" style="margin-top:0;">① $n$의 계승 ($n!$)</div>
       <p>서로 다른 $n$개에서 $n$개 전체를 일렬로 배열하는 방법의 수</p>
@@ -221,136 +221,14 @@ mjx-container { font-weight:400 !important; }
         \end{aligned}$$
       </div>
 
-      <div class="note">[1]은 $n$개 중 1개를 첫 자리에 놓는 방법($n$가지) × 나머지 $n-1$개에서 $r-1$개 나열(${}_{n-1}P_{r-1}$)로 이해할 수 있다. [2]는 먼저 $k$개를 택하여 앞 $k$자리에 배열한 뒤, 나머지에서 $r-k$개를 뒷자리에 배열하는 과정으로 이해할 수 있다.</div>
+      <div class="note">[1]은 $n$개 중 1개를 첫 자리에 놓는 방법($n$가지) × 나머지 $n-1$개에서 $r-1$개 나열(${}_{n-1}P_{r-1}$)로 이해할 수 있다.</div>
     </div>
   </div>
   <footer class="sheet-footer">2</footer>
 </section>
 
 <!-- ============================================================ -->
-<!-- PAGE 3 (odd) : 04 이웃하거나 이웃하지 않는 순열 -->
-<!-- ============================================================ -->
-<section class="sheet odd">
-  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
-  <header class="sheet-header">수학 · 대수</header>
-  <div class="sheet-body">
-    <h2 class="section-title">04 이웃하거나 이웃하지 않는 순열의 수</h2>
-    <div class="concept">
-      <div class="sub-title" style="margin-top:0;">① 이웃하는 순열 (인접순열)</div>
-      <p>이웃하도록 일렬로 나열하는 방법의 수는 다음과 같은 순서로 구한다.</p>
-      <p>[1단계] 이웃하는 것을 한 묶음으로 생각하여 일렬로 세우는 방법의 수를 구한다.</p>
-      <p>[2단계] 한 묶음 안에서의 순서를 바꾸는 순열의 수를 구한다.</p>
-      <p>[3단계] (하나 묶어 생각한 순열의 수) × (한 묶음 안에서의 순서를 바꾸는 순열의 수)</p>
-
-      <div class="sub-title">② 이웃하지 않는 순열 (인접하지 않는 순열)</div>
-      <p>이웃하지 않도록 일렬로 나열하는 방법의 수는 다음과 같은 순서로 구한다.</p>
-      <p>[1단계] 이웃해도 되는 것을 먼저 일렬로 세우는 방법의 수를 구한다.</p>
-      <p>[2단계] 세워진 것 사이사이와 양 끝 자리에서 이웃하지 않아야 하는 것을 일렬로 세우는 방법의 수를 구한다.</p>
-      <p>[3단계] (이웃해도 되는 것을 세우는 순열의 수) × (사이사이에 세우는 순열의 수)</p>
-
-      <div class="ex">
-        <b>예)</b> $n$명을 일렬로 세우고 사이사이 + 양 끝 = $(n+1)$자리 중에서 선택
-      </div>
-    </div>
-  </div>
-  <footer class="sheet-footer">3</footer>
-</section>
-
-<!-- ============================================================ -->
-<!-- PAGE 4 (even) : 05 적어도 + 교대 배열 -->
-<!-- ============================================================ -->
-<section class="sheet even">
-  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
-  <header class="sheet-header">2026 수복이</header>
-  <div class="sheet-body">
-    <h2 class="section-title">05 적어도 ~의 조건이 있는 순열의 수</h2>
-    <div class="concept">
-      <div class="sub-title" style="margin-top:0;">① 적어도가 있는 경우의 순열</div>
-      <p>"적어도 ~인 경우"의 사건은 "~인 경우"가 하나 이상만 되면 되므로 경우의 수를 구할 때에는 전체 경우의 수에서 "적어도 ~가 아닌" 경우의 수를 빼면 된다.</p>
-
-      <div class="formula">
-        (적어도 ~가 있는 경우의 수) = (전체 경우의 수) $-$ (반대의 경우의 수)
-      </div>
-
-      <div class="sub-title">② 교대 배열하는 순열의 수</div>
-      <p>두 개의 대상 중 하나를 일렬로 배열한다.</p>
-      <p>그 사이사이와 양 끝에서 교대가 되도록 나머지 대상들을 일렬로 나열하여 구한다.</p>
-
-      <div class="ex">
-        <b>예)</b> 남학생 $m$명과 여학생 $n$명이 교대로 서는 순열<br>
-        ・ $m=n$일 때 : 남녀남녀…, 여남여남… 두 가지 패턴 → $2\times m!\times n!$<br>
-        ・ $m&lt;n$ ($n=m+1$)일 때 : 여남여남…여 한 가지 패턴만 가능 → $m!\times n!$
-      </div>
-    </div>
-  </div>
-  <footer class="sheet-footer">4</footer>
-</section>
-
-<!-- ============================================================ -->
-<!-- PAGE 5 (odd) : 사전식 배열 -->
-<!-- ============================================================ -->
-<section class="sheet odd">
-  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
-  <header class="sheet-header">수학 · 대수</header>
-  <div class="sheet-body">
-    <h2 class="section-title">사전식 배열</h2>
-    <div class="concept">
-      <div class="sub-title" style="margin-top:0;">① 사전식 배열이란</div>
-      <p>$n$개의 서로 다른 문자를 일렬로 나열하여 만들 수 있는 모든 문자열을 알파벳 순서(사전 순서)대로 나열하는 것을 <b>사전식 배열</b>이라 한다.</p>
-
-      <div class="ex">
-        <b>예)</b> $a,\,b,\,c$ 세 문자의 사전식 배열 :<br>
-        $abc,\;acb,\;bac,\;bca,\;cab,\;cba$ (총 $3!=6$개)
-      </div>
-
-      <div class="sub-title">② 특정 문자열의 순서 구하기</div>
-      <p>주어진 문자열보다 사전식으로 앞에 오는 문자열의 개수를 세어 1을 더한다.</p>
-      <p>[1단계] 첫 글자가 주어진 문자보다 앞선 문자인 경우의 수를 모두 센다.</p>
-      <p>[2단계] 첫 글자가 같고 둘째 글자가 더 앞선 경우 … 를 반복한다.</p>
-
-      <div class="sub-title">③ $k$번째 문자열 구하기</div>
-      <p>첫 글자를 고정했을 때 만들 수 있는 문자열의 수를 이용하여 몇 번째 블록에 해당하는지 파악하고, 순차적으로 각 자리의 문자를 결정한다.</p>
-
-      <div class="ex">
-        <b>예)</b> $a,\,b,\,c,\,d$ 네 문자 ($4!=24$개)<br>
-        $a$로 시작 : $3!=6$개 (1~6번째), $b$로 시작 : 6개 (7~12번째), …<br>
-        10번째 → $b$로 시작하는 4번째 = $bcda$
-      </div>
-    </div>
-  </div>
-  <footer class="sheet-footer">5</footer>
-</section>
-
-<!-- ============================================================ -->
-<!-- PAGE 6 (even) : 여러 가지 순열 -->
-<!-- ============================================================ -->
-<section class="sheet even">
-  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
-  <header class="sheet-header">2026 수복이</header>
-  <div class="sheet-body">
-    <h2 class="section-title">여러 가지 순열</h2>
-    <div class="concept">
-      <div class="sub-title" style="margin-top:0;">① 두 집단을 배열하는 경우</div>
-      <p>$n$개를 택하여 배열하는데 그 중 특정한 자리에 대한 조건이 있을 때, 조건에 맞도록 먼저 배열한 후 나머지를 배열한다.</p>
-
-      <div class="sub-title">② 의자에 앉는 순열</div>
-      <p>의자가 있는 상태에서 사람을 앉히는 것이 아니라, 사람이 자리에 서는 순간 그 위치에 의자가 생기는 것으로 생각을 한다면 더 쉽게 접근할 수 있다.</p>
-      <p>일단 의자를 전부 치우고 사람을 조건에 맞게 세운다.</p>
-      <p>그리고 빈 의자를 조건에 맞춰 채워 넣는다.</p>
-
-      <div class="ex">
-        <b>예)</b> 의자 $n$개에 $r$명이 앉되 어느 두 사람도 이웃하지 않게 앉는 경우<br>
-        → $r$명 먼저 세우고, 빈 의자 $(n-r)$개를 $(r+1)$자리(사이사이 + 양 끝)에서 $(n-r)$개를 택하여 배치<br>
-        → $r!\times\dbinom{r+1}{n-r}\;$… 가 아니라, 사람의 순서가 구분되므로<br>
-        의자 $n$개 중 서로 이웃하지 않는 $r$개를 고르는 수 $= \dbinom{n-r+1}{r}$, 사람 배열 $= r!$
-      </div>
-    </div>
-  </div>
-  <footer class="sheet-footer">6</footer>
-</section>
-
-<!-- ============================================================ -->
-<!-- PAGE 7 (odd) : 문제 1, 2 -->
+<!-- PAGE 3 (odd) : 문제 1, 2 — 순열의 계산 -->
 <!-- ============================================================ -->
 <section class="sheet odd">
   <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
@@ -379,11 +257,11 @@ mjx-container { font-weight:400 !important; }
     </div>
 
   </div>
-  <footer class="sheet-footer">7</footer>
+  <footer class="sheet-footer">3</footer>
 </section>
 
 <!-- ============================================================ -->
-<!-- PAGE 8 (even) : 문제 3, 4 -->
+<!-- PAGE 4 (even) : 문제 3 — 8인승 승합차 -->
 <!-- ============================================================ -->
 <section class="sheet even">
   <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
@@ -394,6 +272,7 @@ mjx-container { font-weight:400 !important; }
       <div class="sub-label">- 확인문제</div>
       <div class="problem">
         <span class="pnum"><a href="#sol-3" class="solution-link">3)</a></span>
+        <img class="fig-right" src="img/van_seats.png" alt="8인승 승합차 좌석 배치" style="width:28mm; margin-top:-2mm;">
         <p>오른쪽 그림과 같이 운전기사가 별도로 정해진 8인승 승합차에 탁구부 감독 1명은 조수석에 앉기로 하고, 4명의 탁구 선수가 타려고 한다. 4명의 선수가 A, B, C, D, E, F의 6개의 좌석 중에서 임의로 한 좌석에 앉는 방법의 수는?</p>
         <div class="choices">
           <span>① 15</span>
@@ -405,6 +284,47 @@ mjx-container { font-weight:400 !important; }
       </div>
     </div>
 
+  </div>
+  <footer class="sheet-footer">4</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 5 (odd) : 04 이웃하거나 이웃하지 않는 순열 -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">수학 · 대수</header>
+  <div class="sheet-body">
+    <h2 class="section-title">이웃하거나 이웃하지 않는 순열의 수</h2>
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">① 이웃하는 순열 (인접순열)</div>
+      <p>이웃하도록 일렬로 나열하는 방법의 수는 다음과 같은 순서로 구한다.</p>
+      <p>[1단계] 이웃하는 것을 한 묶음으로 생각하여 일렬로 세우는 방법의 수를 구한다.</p>
+      <p>[2단계] 한 묶음 안에서의 순서를 바꾸는 순열의 수를 구한다.</p>
+      <p>[3단계] (하나 묶어 생각한 순열의 수) × (한 묶음 안에서의 순서를 바꾸는 순열의 수)</p>
+
+      <div class="sub-title">② 이웃하지 않는 순열 (비인접순열)</div>
+      <p>이웃하지 않도록 일렬로 나열하는 방법의 수는 다음과 같은 순서로 구한다.</p>
+      <p>[1단계] 이웃해도 되는 것을 먼저 일렬로 세우는 방법의 수를 구한다.</p>
+      <p>[2단계] 세워진 것 사이사이와 양 끝 자리에서 이웃하지 않아야 하는 것을 일렬로 세우는 방법의 수를 구한다.</p>
+      <p>[3단계] (이웃해도 되는 것을 세우는 순열의 수) × (사이사이에 세우는 순열의 수)</p>
+
+      <div class="ex">
+        <b>예)</b> $n$명을 일렬로 세우고 사이사이 + 양 끝 = $(n+1)$자리 중에서 선택
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">5</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 6 (even) : 문제 4, 5 — 이웃/교대 -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area">
+
     <div class="problem-block" data-qa-id="q4">
       <div class="sub-label">- 확인문제</div>
       <div class="problem">
@@ -414,18 +334,6 @@ mjx-container { font-weight:400 !important; }
         <p class="sub">(2) 여학생 3명이 이웃하지 않도록 세우는 방법의 수</p>
       </div>
     </div>
-
-  </div>
-  <footer class="sheet-footer">8</footer>
-</section>
-
-<!-- ============================================================ -->
-<!-- PAGE 9 (odd) : 문제 5, 6 -->
-<!-- ============================================================ -->
-<section class="sheet odd">
-  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
-  <header class="sheet-header">수학 · 대수</header>
-  <div class="problems-area">
 
     <div class="problem-block" data-qa-id="q5">
       <div class="sub-label">- 확인문제</div>
@@ -437,6 +345,48 @@ mjx-container { font-weight:400 !important; }
       </div>
     </div>
 
+  </div>
+  <footer class="sheet-footer">6</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 7 (odd) : 05 적어도 + 교대 배열 -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">수학 · 대수</header>
+  <div class="sheet-body">
+    <h2 class="section-title">적어도 ~의 조건이 있는 순열의 수</h2>
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">① 적어도가 있는 경우의 순열</div>
+      <p>"적어도 ~인 경우"의 사건은 "~인 경우"가 하나 이상만 되면 되므로 경우의 수를 구할 때에는 전체 경우의 수에서 "적어도 ~가 아닌" 경우의 수를 빼면 된다.</p>
+
+      <div class="formula">
+        (적어도 ~가 있는 경우의 수) = (전체 경우의 수) $-$ (반대의 경우의 수)
+      </div>
+
+      <div class="sub-title">② 교대 배열하는 순열의 수</div>
+      <p>두 개의 대상 중 하나를 일렬로 배열한다.</p>
+      <p>그 사이사이와 양 끝에서 교대가 되도록 나머지 대상들을 일렬로 나열하여 구한다.</p>
+
+      <div class="ex">
+        <b>예)</b> 남학생 $m$명과 여학생 $n$명이 교대로 서는 순열<br>
+        ・ $m=n$일 때 : 남녀남녀…, 여남여남… 두 가지 패턴 → $2\times m!\times n!$<br>
+        ・ $m&lt;n$ ($n=m+1$)일 때 : 여남여남…여 한 가지 패턴만 가능 → $m!\times n!$
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">7</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 8 (even) : 문제 6 — SPECIAL -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area">
+
     <div class="problem-block" data-qa-id="q6">
       <div class="sub-label">- 확인문제</div>
       <div class="problem">
@@ -447,18 +397,6 @@ mjx-container { font-weight:400 !important; }
         <p class="sub">(3) 적어도 한 쪽 끝에 모음이 오는 경우의 수</p>
       </div>
     </div>
-
-  </div>
-  <footer class="sheet-footer">9</footer>
-</section>
-
-<!-- ============================================================ -->
-<!-- PAGE 10 (even) : 문제 7, 8 -->
-<!-- ============================================================ -->
-<section class="sheet even">
-  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
-  <header class="sheet-header">2026 수복이</header>
-  <div class="problems-area">
 
     <div class="problem-block" data-qa-id="q7">
       <div class="sub-label">- 확인문제</div>
@@ -474,6 +412,18 @@ mjx-container { font-weight:400 !important; }
         </div>
       </div>
     </div>
+
+  </div>
+  <footer class="sheet-footer">8</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 9 (odd) : 문제 8 — DANCER -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">수학 · 대수</header>
+  <div class="problems-area">
 
     <div class="problem-block" data-qa-id="q8">
       <div class="sub-label">- 확인문제</div>
@@ -491,11 +441,46 @@ mjx-container { font-weight:400 !important; }
     </div>
 
   </div>
+  <footer class="sheet-footer">9</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 10 (even) : 사전식 배열 개념 -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">사전식 배열</h2>
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">① 사전식 배열이란</div>
+      <p>$n$개의 서로 다른 문자를 일렬로 나열하여 만들 수 있는 모든 문자열을 알파벳 순서(사전 순서)대로 나열하는 것을 <b>사전식 배열</b>이라 한다.</p>
+
+      <div class="ex">
+        <b>예)</b> $a,\,b,\,c$ 세 문자의 사전식 배열 :<br>
+        $abc,\;acb,\;bac,\;bca,\;cab,\;cba$ (총 $3!=6$개)
+      </div>
+
+      <div class="sub-title">② 특정 문자열의 순서 구하기</div>
+      <p>주어진 문자열보다 사전식으로 앞에 오는 문자열의 개수를 세어 1을 더한다.</p>
+      <p>[1단계] 첫 글자가 주어진 문자보다 앞선 문자인 경우의 수를 모두 센다.</p>
+      <p>[2단계] 첫 글자가 같고 둘째 글자가 더 앞선 경우 … 를 반복한다.</p>
+
+      <div class="sub-title">③ $k$번째 문자열 구하기</div>
+      <p>첫 글자를 고정했을 때 만들 수 있는 문자열의 수를 이용하여 몇 번째 블록에 해당하는지 파악하고, 순차적으로 각 자리의 문자를 결정한다.</p>
+
+      <div class="ex">
+        <b>예)</b> $a,\,b,\,c,\,d$ 네 문자 ($4!=24$개)<br>
+        $a$로 시작 : $3!=6$개 (1~6번째), $b$로 시작 : 6개 (7~12번째), …<br>
+        10번째 → $b$로 시작하는 4번째 = $bcda$
+      </div>
+    </div>
+  </div>
   <footer class="sheet-footer">10</footer>
 </section>
 
 <!-- ============================================================ -->
-<!-- PAGE 11 (odd) : 문제 9, 10 -->
+<!-- PAGE 11 (odd) : 문제 9 — 사전식 배열 -->
 <!-- ============================================================ -->
 <section class="sheet odd">
   <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
@@ -512,61 +497,107 @@ mjx-container { font-weight:400 !important; }
       </div>
     </div>
 
-    <div class="problem-block" data-qa-id="q10">
-      <div class="sub-label">- 확인문제</div>
-      <div class="problem">
-        <span class="pnum"><a href="#sol-10" class="solution-link">10)</a></span>
-        <p>남학생 2명과 여학생 2명이 놀이 공원에서 놀이기구를 타려고 한다. 이 놀이기구는 한 줄에 3개의 의자가 있고 모두 5줄로 되어 있다. 4명이 2줄에 2명씩 나누어 앉을 때, 앉는 방법의 수를 구하여라.</p>
-      </div>
-    </div>
-
   </div>
   <footer class="sheet-footer">11</footer>
 </section>
 
 <!-- ============================================================ -->
-<!-- PAGE 12 (even) : 문제 11, 12 -->
+<!-- PAGE 12 (even) : 여러 가지 순열 개념 -->
 <!-- ============================================================ -->
 <section class="sheet even">
   <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
   <header class="sheet-header">2026 수복이</header>
-  <div class="problems-area">
+  <div class="sheet-body">
+    <h2 class="section-title">여러 가지 순열</h2>
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">① 두 집단을 배열하는 경우</div>
+      <p>$n$개를 택하여 배열하는데 그 중 특정한 자리에 대한 조건이 있을 때, 조건에 맞도록 먼저 배열한 후 나머지를 배열한다.</p>
 
-    <div class="problem-block" data-qa-id="q11">
-      <div class="sub-label">- 확인문제</div>
-      <div class="problem">
-        <span class="pnum"><a href="#sol-11" class="solution-link">11)</a></span>
-        <p>그림의 반원에 6장의 사진 A, B, C, D, E, F를 하나씩 배치하여 사진첩의 한 면을 완성할 때, A와 B가 이웃하는 경우의 수를 구하여라. (단, 옆으로 이웃하는 경우만 이웃하는 것으로 본다.)</p>
+      <div class="sub-title">② 의자에 앉는 순열</div>
+      <p>의자가 있는 상태에서 사람을 앉히는 것이 아니라, 사람이 자리에 서는 순간 그 위치에 의자가 생기는 것으로 생각을 한다면 더 쉽게 접근할 수 있다.</p>
+      <p>일단 의자를 전부 치우고 사람을 조건에 맞게 세운다.</p>
+      <p>그리고 빈 의자를 조건에 맞춰 채워 넣는다.</p>
+
+      <div class="ex">
+        <b>예)</b> 의자 $n$개에 $r$명이 앉되 어느 두 사람도 이웃하지 않게 앉는 경우<br>
+        → 의자 $n$개 중 서로 이웃하지 않는 $r$개를 고르는 수 $= {}_{n-r+1}C_r$, 사람 배열 $= r!$
       </div>
     </div>
-
-    <div class="problem-block" data-qa-id="q12">
-      <div class="sub-label">- 확인문제</div>
-      <div class="problem">
-        <span class="pnum"><a href="#sol-12" class="solution-link">12)</a></span>
-        <p>그림과 같이 7개의 의자가 일렬로 놓여 있다. 두 명의 학생이 서로 다른 의자에 앉을 때, 두 명 사이에 적어도 하나의 빈 의자가 있도록 앉는 경우의 수를 구하여라.</p>
-      </div>
-    </div>
-
   </div>
   <footer class="sheet-footer">12</footer>
 </section>
 
 <!-- ============================================================ -->
-<!-- PAGE 13 (odd) : 문제 13, 14 -->
+<!-- PAGE 13 (odd) : 문제 10, 11 — 두 집단 배열 -->
 <!-- ============================================================ -->
 <section class="sheet odd">
   <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
   <header class="sheet-header">수학 · 대수</header>
   <div class="problems-area">
 
+    <div class="problem-block" data-qa-id="q10">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <span class="pnum"><a href="#sol-10" class="solution-link">10)</a></span>
+        <img class="fig-right" src="img/ride_seats.png" alt="놀이기구 좌석" style="width:38mm; margin-top:-2mm;">
+        <p>남학생 2명과 여학생 2명이 놀이 공원에서 놀이기구를 타려고 한다. 이 놀이기구는 오른쪽 그림과 같이 한 줄에 3개의 의자가 있고 모두 5줄로 되어 있다. 4명이 2줄에 2명씩 나누어 앉을 때, 앉는 방법의 수를 구하여라.</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q11">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <span class="pnum"><a href="#sol-11" class="solution-link">11)</a></span>
+        <img class="fig-right" src="img/photo_album.png" alt="사진첩 배치" style="width:30mm; margin-top:-2mm;">
+        <p>오른쪽 그림의 반면에 6장의 사진 A, B, C, D, E, F를 하나씩 배치하여 사진첩의 한 면을 완성할 때, A와 B가 이웃하는 경우의 수를 구하여라. (단, 옆으로 이웃하는 경우만 이웃하는 것으로 본다.)</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">13</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 14 (even) : 문제 12, 13 — 의자 순열 -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q12">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <span class="pnum"><a href="#sol-12" class="solution-link">12)</a></span>
+        <div class="fig-center">
+          <img src="img/chairs_7.png" alt="의자 7개" style="width:130mm;">
+        </div>
+        <p>그림과 같이 7개의 의자가 일렬로 놓여 있다. 두 명의 학생이 서로 다른 의자에 앉을 때, 두 명 사이에 적어도 하나의 빈 의자가 있도록 앉는 경우의 수를 구하여라.</p>
+      </div>
+    </div>
+
     <div class="problem-block" data-qa-id="q13">
       <div class="sub-label">- 확인문제</div>
       <div class="problem">
         <span class="pnum"><a href="#sol-13" class="solution-link">13)</a></span>
+        <div class="fig-center">
+          <img src="img/chairs_8.png" alt="의자 8개" style="width:140mm;">
+        </div>
         <p>그림과 같이 8개의 의자가 일렬로 놓여 있다. 이 의자에 A, B, C, D 네 사람이 앉을 때, 어느 두 사람도 이웃하지 않게 앉는 방법의 수를 구하여라. (단, 두 사람 사이에 빈 의자가 있는 경우는 이웃하지 않는 것으로 한다.)</p>
       </div>
     </div>
+
+  </div>
+  <footer class="sheet-footer">14</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 15 (odd) : 문제 14 — 의자 순열 -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">수학 · 대수</header>
+  <div class="problems-area">
 
     <div class="problem-block" data-qa-id="q14">
       <div class="sub-label">- 확인문제</div>
@@ -577,7 +608,7 @@ mjx-container { font-weight:400 !important; }
     </div>
 
   </div>
-  <footer class="sheet-footer">13</footer>
+  <footer class="sheet-footer">15</footer>
 </section>
 
 <!-- ============================================================ -->
@@ -602,114 +633,93 @@ mjx-container { font-weight:400 !important; }
         <div class="sol-answer"><b>[정답]</b> (1) $720$ &nbsp; (2) $720$ &nbsp; (3) 풀이 참조</div>
         <p>(1) 6명 중 2명을 먼저 2자리에 배치: $_6P_2=30$, 나머지 4명: $4!=24$ → $30\times 24=720$</p>
         <p>(2) 6명 중 3명을 먼저 3자리에 배치: $_6P_3=120$, 나머지 3명: $3!=6$ → $120\times 6=720$</p>
-        <p>(3) (1)에서 $720={}_6P_2\times{}_4P_4$, (2)에서 $720={}_6P_3\times{}_3P_3$. 일반화: ${}_nP_r={}_nP_k\times{}_{n-k}P_{r-k}$</p>
-        <p>증명: ${}_nP_k\times{}_{n-k}P_{r-k}=\dfrac{n!}{(n-k)!}\times\dfrac{(n-k)!}{(n-r)!}=\dfrac{n!}{(n-r)!}={}_nP_r$</p>
+        <p>(3) (1)에서 $6!={}_6P_2\times{}_4P_4$, (2)에서 $6!={}_6P_3\times{}_3P_3$</p>
+        <p>일반화: ${}_nP_k\times{}_{n-k}P_{r-k}=\dfrac{n!}{(n-k)!}\times\dfrac{(n-k)!}{(n-r)!}=\dfrac{n!}{(n-r)!}={}_nP_r$</p>
       </div>
 
       <div class="solution-item" id="sol-3" data-qa-id="q3">
         <div class="sol-num"><a href="#">3.</a></div>
         <div class="sol-answer"><b>[정답]</b> ④ $360$</div>
-        <p>운전기사 1명(운전석 고정), 감독 1명(조수석 고정)이므로 나머지 6석 중 4명 배치</p>
-        <p>$_6P_4 = 6\times 5\times 4\times 3 = 360$</p>
+        <p>운전기사(운전석), 감독(조수석) 고정 → 나머지 6석 중 4명 배치: $_6P_4 = 6\times 5\times 4\times 3 = 360$</p>
       </div>
 
       <div class="solution-item" id="sol-4" data-qa-id="q4">
         <div class="sol-num"><a href="#">4.</a></div>
         <div class="sol-answer"><b>[정답]</b> (1) $720$ &nbsp; (2) $1440$</div>
-        <p>(1) 여학생 3명을 한 묶음으로: (묶음 + 남학생 4명) = 5개 일렬 배열 $5!=120$, 묶음 내 $3!=6$</p>
-        <p>$120\times 6=720$</p>
-        <p>(2) 남학생 4명 먼저 배열: $4!=24$. 사이사이 + 양끝 = 5자리에서 3자리 택하여 여학생 배치: $_5P_3=60$</p>
-        <p>$24\times 60=1440$</p>
+        <p>(1) 여3명 한 묶음 + 남4명 = 5개 배열: $5!=120$, 묶음 내 $3!=6$ → $120\times 6=720$</p>
+        <p>(2) 남4명 먼저 배열: $4!=24$. 사이사이+양끝 5자리 중 3자리에 여학생: $_5P_3=60$ → $24\times 60=1440$</p>
       </div>
 
       <div class="solution-item" id="sol-5" data-qa-id="q5">
         <div class="sol-num"><a href="#">5.</a></div>
         <div class="sol-answer"><b>[정답]</b> (1) $72$ &nbsp; (2) $2880$</div>
-        <p>(1) 남녀 수가 같으므로 남→여→남→여… 또는 여→남→여→남… 두 패턴</p>
-        <p>$2\times 3!\times 3! = 2\times 6\times 6 = 72$</p>
-        <p>(2) 여학생(5명)이 남학생(4명)보다 1명 많으므로 여남여남여남여남여 한 패턴만 가능</p>
-        <p>$5!\times 4! = 120\times 24 = 2880$</p>
+        <p>(1) 남녀 수 같으므로 두 패턴: $2\times 3!\times 3! = 2\times 6\times 6 = 72$</p>
+        <p>(2) 여5명이 1명 많으므로 여남여남…여 한 패턴: $5!\times 4! = 120\times 24 = 2880$</p>
       </div>
 
       <div class="solution-item" id="sol-6" data-qa-id="q6">
         <div class="sol-num"><a href="#">6.</a></div>
         <div class="sol-answer"><b>[정답]</b> (1) $120$ &nbsp; (2) $960$ &nbsp; (3) $3600$</div>
-        <p>SPECIAL : 자음 S, P, C, L (4개) / 모음 E, I, A (3개)</p>
-        <p>(1) S를 첫째, P를 마지막에 고정하면 나머지 5문자 배열: $5!=120$</p>
-        <p>(2) S와 P 사이에 정확히 2문자 → $|i-j|=3$ ($i,j$는 S,P의 위치)</p>
-        <p>위치 쌍: $(1,4),(2,5),(3,6),(4,7)$ 및 S↔P 교환 = $4\times 2=8$가지</p>
-        <p>사이 2자리에 나머지 5문자 중 2개 배치: $_5P_2=20$, 나머지 3자리: $3!=6$</p>
-        <p>$8\times 20\times 6=960$</p>
-        <p>(3) (전체) $-$ (양쪽 끝 모두 자음) = $7! - {}_4P_2\times 5! = 5040-12\times 120=5040-1440=3600$</p>
+        <p>SPECIAL : 자음 S,P,C,L (4개) / 모음 E,I,A (3개)</p>
+        <p>(1) S 첫째, P 마지막 고정 → 나머지 5문자: $5!=120$</p>
+        <p>(2) S,P 사이 거리 3 → 위치 쌍 $4\times 2=8$, 사이 2문자 $_5P_2=20$, 나머지 $3!=6$ → $8\times 20\times 6=960$</p>
+        <p>(3) $7!-{}_4P_2\times 5!=5040-1440=3600$</p>
       </div>
 
       <div class="solution-item" id="sol-7" data-qa-id="q7">
         <div class="sol-num"><a href="#">7.</a></div>
         <div class="sol-answer"><b>[정답]</b> ④ $84$</div>
-        <p>(전체) $-$ (양쪽 끝 모두 여학생) = $5! - {}_3P_2\times 3! = 120-6\times 6=120-36=84$</p>
+        <p>$5!-{}_3P_2\times 3!=120-36=84$</p>
       </div>
 
       <div class="solution-item" id="sol-8" data-qa-id="q8">
         <div class="sol-num"><a href="#">8.</a></div>
         <div class="sol-answer"><b>[정답]</b> ① $480$</div>
-        <p>DANCER : 모음 A, E (2개) / 자음 D, N, C, R (4개)</p>
-        <p>(전체) $-$ (두 모음이 이웃) = $6! - 2!\times 5! = 720-2\times 120=720-240=480$</p>
+        <p>DANCER : 모음 A,E (2개) / 자음 D,N,C,R (4개)</p>
+        <p>$6!-2!\times 5!=720-240=480$</p>
       </div>
 
       <div class="solution-item" id="sol-9" data-qa-id="q9">
         <div class="sol-num"><a href="#">9.</a></div>
         <div class="sol-answer"><b>[정답]</b> (1) $56$번째 &nbsp; (2) $dcbae$</div>
-        <p>(1) $a$로 시작: $4!=24$개(1~24), $b$로 시작: $24$개(25~48), $c$로 시작은 49번째부터</p>
-        <p>$ca\cdots$: $3!=6$개(49~54), $cb\cdots$: 55번째부터. $cba\cdots$: $cbade$(55번째), $cbaed$(56번째)</p>
-        <p>∴ $cbaed$는 $56$번째</p>
-        <p>(2) $d$로 시작: 73~96번째. $87-72=15$번째를 찾으면</p>
-        <p>$da\cdots$: 6개(1~6), $db\cdots$: 6개(7~12), $dc\cdots$: 13번째부터</p>
-        <p>$dca\cdots$: 2개(13~14), $dcb\cdots$: 15번째 = $dcbae$</p>
+        <p>(1) $a$: 24개, $b$: 24개(~48), $ca$: 6개(~54), $cbade$(55), $cbaed$(56) → 56번째</p>
+        <p>(2) $d$로 시작 73~96. $da$: 6, $db$: 6(~84), $dca$: 2(~86), $dcbae$ = 87번째</p>
       </div>
 
       <div class="solution-item" id="sol-10" data-qa-id="q10">
         <div class="sol-num"><a href="#">10.</a></div>
         <div class="sol-answer"><b>[정답]</b> $2160$</div>
-        <p>5줄 중 2줄 선택: $\binom{5}{2}=10$</p>
-        <p>4명 중 첫째 줄에 앉을 2명 선택: $\binom{4}{2}=6$</p>
-        <p>각 줄에서 3석 중 2석에 배치: $_3P_2=6$ (각 줄)</p>
-        <p>$10\times 6\times 6\times 6=2160$</p>
+        <p>5줄 중 2줄: $_5C_2=10$, 4명 중 2명 선택: $_4C_2=6$, 각 줄 $_3P_2=6$ → $10\times 6\times 6\times 6=2160$</p>
       </div>
 
       <div class="solution-item" id="sol-11" data-qa-id="q11">
         <div class="sol-num"><a href="#">11.</a></div>
-        <div class="sol-answer"><b>[정답]</b> $240$</div>
-        <p>6장의 사진이 반원(일렬)에 배치되므로 이웃한 쌍은 $(1,2),(2,3),(3,4),(4,5),(5,6)$의 5쌍</p>
-        <p>A, B가 이웃한 쌍 중 하나에 배치: $5\times 2!=10$가지, 나머지 4장: $4!=24$</p>
-        <p>$10\times 24=240$</p>
+        <div class="sol-answer"><b>[정답]</b> $192$</div>
+        <p>$2\times 3$ 배치에서 가로 이웃 쌍: $(1,2),(2,3),(4,5),(5,6)$ → 4쌍</p>
+        <p>A,B 배치: $4\times 2!=8$, 나머지 $4!=24$ → $8\times 24=192$</p>
       </div>
 
       <div class="solution-item" id="sol-12" data-qa-id="q12">
         <div class="sol-num"><a href="#">12.</a></div>
         <div class="sol-answer"><b>[정답]</b> $30$</div>
-        <p>(전체) $-$ (이웃) = $_7P_2 - 6\times 2! = 42-12=30$</p>
-        <p>이웃 쌍 6개(의자 번호 차이 1) × 2명 배열 $2!=2$ → 이웃하는 경우 $12$</p>
+        <p>(전체)$-$(이웃) = $_7P_2-6\times 2!=42-12=30$</p>
       </div>
 
       <div class="solution-item" id="sol-13" data-qa-id="q13">
         <div class="sol-num"><a href="#">13.</a></div>
         <div class="sol-answer"><b>[정답]</b> $120$</div>
-        <p>8개의 의자 중 서로 이웃하지 않는 4개를 고르는 수: $\binom{8-4+1}{4}=\binom{5}{4}=5$</p>
-        <p>4명(A,B,C,D) 배열: $4!=24$</p>
-        <p>$5\times 24=120$</p>
+        <p>비이웃 4석 선택: $_5C_4=5$, 배열 $4!=24$ → $5\times 24=120$</p>
       </div>
 
       <div class="solution-item" id="sol-14" data-qa-id="q14">
         <div class="sol-num"><a href="#">14.</a></div>
         <div class="sol-answer"><b>[정답]</b> $720$</div>
-        <p>10개 의자 중 서로 이웃하지 않는 5개를 고르는 수: $\binom{10-5+1}{5}=\binom{6}{5}=6$</p>
-        <p>5명 배열: $5!=120$</p>
-        <p>$6\times 120=720$</p>
+        <p>비이웃 5석 선택: $_6C_5=6$, 배열 $5!=120$ → $6\times 120=720$</p>
       </div>
 
     </div>
   </div>
-  <footer class="sheet-footer">14</footer>
+  <footer class="sheet-footer">16</footer>
 </section>
 
 <section class="sheet even solution-section">
@@ -718,7 +728,7 @@ mjx-container { font-weight:400 !important; }
   <div class="sheet-body">
     <div class="solutions"></div>
   </div>
-  <footer class="sheet-footer">15</footer>
+  <footer class="sheet-footer">17</footer>
 </section>
 
 <script>
