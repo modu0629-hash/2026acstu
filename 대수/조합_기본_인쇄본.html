@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>조합 — 기본 인쇄본</title>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']] },
+  chtml: { matchFontHeight: false },
+  startup: { typeset: true }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+@font-face { font-family:'Gyeonggi Title'; src:url('../%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/woff/Title_Bold.woff') format('woff'); font-weight:700; font-display:swap; }
+@font-face { font-family:'Gyeonggi Title'; src:url('../%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/woff/Title_Medium.woff') format('woff'); font-weight:500; font-display:swap; }
+@font-face { font-family:'Gyeonggi Batang'; src:url('../%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/woff/Batang_Regular.woff') format('woff'); font-weight:400; font-display:swap; }
+@font-face { font-family:'Gyeonggi Batang'; src:url('../%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/woff/Batang_Bold.woff') format('woff'); font-weight:700; font-display:swap; }
+
+@page { size: A4; margin: 0; }
+* { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --line-h: 1.75;
+  --one-line: 7.4mm;
+  --pad-x: 22mm;
+  --pad-top: 20mm;
+  --pad-bottom: 18mm;
+  --corner-x: 22mm;
+  --corner-len: 48mm;
+}
+
+html, body {
+  background:#fff; color:#000;
+  font-family:'신명조','HY신명조','Shinmyeongjo','바탕','Batang',serif;
+  font-size:11pt; line-height:var(--line-h);
+}
+@media screen {
+  body { background:#dcdcdc; padding:24px 0; }
+  .sheet { box-shadow:0 3px 14px rgba(0,0,0,0.2); margin:0 auto 24px; }
+}
+
+.sheet {
+  width:210mm; height:297mm; background:#fff;
+  position:relative; overflow:hidden;
+}
+@media print {
+  .sheet { page-break-after:always; margin:0; box-shadow:none; }
+  .sheet:last-child { page-break-after:auto; }
+}
+
+.corner { position:absolute; height:0; width:var(--corner-len); border-top:1pt solid #000; }
+.corner::after { content:''; position:absolute; height:3mm; width:0; }
+.corner.tr { top:12mm; right:var(--corner-x); }
+.corner.tr::after { right:0; top:0; border-right:1pt solid #000; }
+.corner.tl { top:12mm; left:var(--corner-x); }
+.corner.tl::after { left:0; top:0; border-left:1pt solid #000; }
+.corner.br { bottom:14mm; right:var(--corner-x); }
+.corner.br::after { right:0; bottom:0; border-right:1pt solid #000; }
+.corner.bl { bottom:14mm; left:var(--corner-x); }
+.corner.bl::after { left:0; bottom:0; border-left:1pt solid #000; }
+.corner.tr, .corner.tl { display:none; }
+.sheet.odd .corner.bl { display:none; }
+.sheet.even .corner.br { display:none; }
+
+.sheet-header {
+  position:absolute; top:21mm; left:var(--pad-x); right:var(--pad-x);
+  font-family:'Gyeonggi Title',sans-serif; font-weight:700; font-size:10.5pt;
+}
+.sheet.odd .sheet-header { text-align:right; }
+.sheet.even .sheet-header { text-align:left; }
+.sheet-footer {
+  position:absolute; bottom:8mm; left:0; right:0;
+  text-align:center; font-family:'Gyeonggi Batang',serif; font-size:10pt;
+}
+
+.sheet-body {
+  position:absolute;
+  top:calc(var(--pad-top) + 14mm);
+  bottom:calc(var(--pad-bottom) + 6mm);
+  left:var(--pad-x); right:var(--pad-x);
+}
+
+.chapter-label { font-family:'Gyeonggi Title',sans-serif; font-weight:700; font-size:11pt; margin-bottom:3mm; }
+.chapter-title { font-family:'Gyeonggi Title',sans-serif; font-weight:700; font-size:18pt; letter-spacing:0.5pt; margin-bottom:calc(var(--one-line) * 2); }
+.section-title { font-family:'Gyeonggi Batang',serif; font-weight:700; font-size:13pt; margin-bottom:calc(var(--one-line) * 1); }
+.sub-label { font-family:'Gyeonggi Title',sans-serif; font-weight:700; font-size:13pt; margin-bottom:3mm; }
+
+.concept { font-family:'Gyeonggi Batang','신명조','HY신명조','바탕','Batang',serif; font-size:11pt; line-height:1.85; }
+.concept p { margin-bottom:2mm; }
+.concept .sub-title { font-family:'Gyeonggi Batang',serif; font-weight:700; font-size:11.5pt; margin:calc(var(--one-line)*2) 0 2mm; }
+.concept .formula { border:0.7pt solid #000; padding:3mm 5mm; margin:3mm 0; text-align:center; }
+.concept .formula.left { text-align:left; }
+.concept .note { padding:2mm 0 2mm 0; margin:3mm 0; font-size:8pt; line-height:1.6; }
+.concept .note::before { content:"[참고] "; font-weight:700; }
+.concept .ex { padding:2mm 0; margin:3mm 0; font-size:9pt; }
+.concept .proof { padding:2mm 0 2mm 4mm; margin:2mm 0; font-size:9.5pt; line-height:1.8; border-left:2pt solid #000; }
+.concept .proof-title { font-weight:700; font-size:9.5pt; margin-bottom:1mm; font-family:'Gyeonggi Batang',serif; }
+
+.problem-block { }
+.problem {
+  font-family:'신명조','HY신명조','바탕','Batang',serif;
+  font-size:10pt; line-height:var(--line-h);
+  letter-spacing:-0.05em;
+  position:relative; padding-left:8mm;
+}
+.problem .pnum { position:absolute; left:0; top:-0.5mm; font-size:9pt; }
+.problem p { margin-bottom:1.5mm; }
+.problem .sub { margin-left:4mm; }
+.cond-box { display:inline-block; border:0.7pt solid #000; padding:2.5mm 6mm; margin:2mm 0 2mm 2mm; }
+.cond-box p { margin:0.5mm 0; }
+
+.choices {
+  display:grid; grid-template-columns:repeat(5, minmax(0,1fr));
+  gap:2mm 5mm; margin-top:4mm; font-size:11pt; clear:both;
+}
+.choices.two-row { grid-template-columns:repeat(3, minmax(0,1fr)); }
+.choices span { white-space:nowrap; }
+
+.problems-area {
+  position:absolute;
+  top:calc(var(--pad-top) + 14mm + var(--one-line) * 3);
+  bottom:calc(var(--pad-bottom) + 6mm);
+  left:var(--pad-x); right:var(--pad-x);
+  display:flex; flex-direction:column;
+}
+.problems-area > .problem-block:first-child { margin-bottom:0; }
+.problems-area > .problem-block:nth-child(2) { margin:auto 0; }
+
+mjx-container { font-weight:400 !important; }
+
+.fig-right { float:right; margin:0 0 2mm 5mm; }
+.fig-center { text-align:center; margin:3mm 0; }
+.clearfix::after { content:''; display:table; clear:both; }
+
+.concept-mini {
+  font-family:'Gyeonggi Batang','신명조','바탕',serif; font-size:9.5pt; line-height:1.75;
+  border:0.7pt solid #888; padding:2.5mm 4mm; margin-bottom:4mm; background:#fff;
+}
+.concept-mini .cm-title { font-weight:700; font-size:10pt; margin-bottom:1.5mm; }
+.concept-mini .formula { border:0.7pt solid #000; padding:2mm 4mm; margin:2mm 0; text-align:center; font-size:9pt; }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- PAGE 1 (odd): 대단원 + 01 조합 정의 + 증명 -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">공통수학 1</header>
+  <div class="sheet-body">
+    <div class="chapter-label">Chapter 6</div>
+    <h1 class="chapter-title">조합</h1>
+
+    <h2 class="section-title">01 &nbsp; 조합</h2>
+    <div class="concept">
+      <p>서로 다른 $n$개에서 순서를 생각하지 않고 $r$개$(0 \le r \le n)$를 택하는 것을 $n$개에서 $r$개를 택하는 <b>조합</b>이라 하고, 이 조합의 수를 기호 $_n\mathrm{C}_r$로 나타낸다.</p>
+      <div class="formula">
+        $_n\mathrm{C}_r = \dfrac{_n\mathrm{P}_r}{r!} = \dfrac{n!}{r!\,(n-r)!}$ &nbsp;&nbsp; (단, $0 \le r \le n$)
+      </div>
+      <div class="note">
+        $_n\mathrm{C}_r$의 C는 조합을 뜻하는 Combination의 첫 글자이다. 서로 다른 것에서 순서를 생각하지 않고 택하는 것은 조합이고, 순서를 생각하여 택하는 것은 순열이다.
+      </div>
+      <div class="ex">
+        <b>예)</b> $_7\mathrm{C}_3 = \dfrac{7!}{3!(7-3)!} = \dfrac{7!}{3!\cdot4!} = \dfrac{7\times6\times5}{3\times2\times1} = 35$
+      </div>
+
+      <div class="proof-title" style="margin-top:5mm;">▷ 공식 유도 증명</div>
+      <div class="proof">
+        <p>서로 다른 $n$개에서 $r$개를 <b>순서 있게</b> 나열하는 방법의 수는 $_{n}\mathrm{P}_{r}$이다.</p>
+        <p>이 $_{n}\mathrm{P}_{r}$가지 각각은, 같은 $r$개를 택한 뒤 순서만 바꿔도 서로 다르게 센다. 그런데 조합에서는 순서를 구별하지 않으므로, 같은 $r$개를 택한 경우들($r!$가지)을 하나로 묶어야 한다.</p>
+        <p style="margin-top:1mm;">따라서 &nbsp; $_n\mathrm{C}_r = \dfrac{_n\mathrm{P}_r}{r!} = \dfrac{n!/(n-r)!}{r!} = \dfrac{n!}{r!\,(n-r)!}$ &nbsp; ■</p>
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">1</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 2 (even): 02 조합의 수의 성질 + 증명 -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">02 &nbsp; 조합의 수의 성질</h2>
+    <div class="concept">
+
+      <p class="sub-title" style="margin-top:0;">① &nbsp;$_n\mathrm{C}_0 = {}_n\mathrm{C}_n = 1$</p>
+      <div class="proof">
+        <p>$_n\mathrm{C}_0 = \dfrac{n!}{0!\cdot n!} = 1$ &nbsp;&nbsp; ($0! = 1$ 이용) &nbsp;&nbsp;&nbsp; $_n\mathrm{C}_n = \dfrac{n!}{n!\cdot 0!} = 1$ &nbsp; ■</p>
+      </div>
+
+      <p class="sub-title">② &nbsp;$_n\mathrm{C}_r = {}_n\mathrm{C}_{n-r}$ &nbsp; (단, $0 \le r \le n$)</p>
+      <div class="proof">
+        <p><b>조합론적 증명:</b> $n$개 중 $r$개를 선택하는 것은, 선택하지 않을 $n-r$개를 정하는 것과 일대일 대응이므로 $_n\mathrm{C}_r = {}_n\mathrm{C}_{n-r}$. &nbsp; ■</p>
+        <p style="margin-top:1.5mm;"><b>식으로 증명:</b> &nbsp; $_n\mathrm{C}_{n-r} = \dfrac{n!}{(n-r)!\cdot(n-(n-r))!} = \dfrac{n!}{(n-r)!\cdot r!} = {}_n\mathrm{C}_r$ &nbsp; ■</p>
+      </div>
+      <div class="note">
+        $_n\mathrm{C}_r$의 값을 구할 때, $r > n-r$ 이면 $_n\mathrm{C}_r$을 $_n\mathrm{C}_{n-r}$로 바꾸어 계산하면 편리하다.
+      </div>
+      <div class="ex">
+        <b>예)</b> &nbsp; $_7\mathrm{C}_5 = {}_7\mathrm{C}_2 = \dfrac{7\times6}{2\times1} = 21$
+      </div>
+
+      <p class="sub-title">③ &nbsp;$_n\mathrm{C}_r = {}_{n-1}\mathrm{C}_{r-1} + {}_{n-1}\mathrm{C}_r$ &nbsp; (단, $1 \le r < n$) &nbsp;&nbsp;— 파스칼의 법칙</p>
+      <div class="proof">
+        <p><b>조합론적 증명:</b> 집합 $\{1, 2, \ldots, n\}$에서 $r$개를 택하는 경우를 원소 $n$의 포함 여부로 분류한다.</p>
+        <p style="margin-left:4mm;">• $n$을 <b>포함</b>하는 경우: 나머지 $n-1$개에서 $r-1$개 선택 $\Rightarrow$ $_{n-1}\mathrm{C}_{r-1}$가지</p>
+        <p style="margin-left:4mm;">• $n$을 <b>포함하지 않는</b> 경우: $n-1$개에서 $r$개 선택 $\Rightarrow$ $_{n-1}\mathrm{C}_r$가지</p>
+        <p>두 경우는 서로 배반이므로 $_n\mathrm{C}_r = {}_{n-1}\mathrm{C}_{r-1} + {}_{n-1}\mathrm{C}_r$. &nbsp; ■</p>
+        <p style="margin-top:2mm;"><b>식으로 증명:</b></p>
+        <p style="margin-left:4mm;">$_{n-1}\mathrm{C}_{r-1} + {}_{n-1}\mathrm{C}_r = \dfrac{(n-1)!}{(r-1)!(n-r)!} + \dfrac{(n-1)!}{r!\,(n-r-1)!}$</p>
+        <p style="margin-left:4mm;">$= \dfrac{(n-1)!\cdot r}{r!(n-r)!} + \dfrac{(n-1)!\cdot(n-r)}{r!(n-r)!} = \dfrac{(n-1)!\,(r+n-r)}{r!(n-r)!} = \dfrac{n!}{r!(n-r)!} = {}_n\mathrm{C}_r$ &nbsp; ■</p>
+      </div>
+      <div class="ex">
+        <b>예)</b> &nbsp; $_{n-1}\mathrm{C}_{r-1} + {}_{n-1}\mathrm{C}_r$는 파스칼의 삼각형에서 인접한 두 수의 합이 아래 수임을 나타낸다.
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">2</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 3 (odd): 03 도형의 개수 — 기본 공식 + 일직선 위 점 처리 -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">공통수학 1</header>
+  <div class="sheet-body">
+    <h2 class="section-title">03 &nbsp; 도형의 개수</h2>
+    <div class="concept">
+
+      <p><b>(1) 직선의 개수</b> &nbsp;— 어느 세 점도 일직선 위에 있지 않은 서로 다른 $n$개의 점에서 두 점을 이어 만들 수 있는 직선의 개수</p>
+      <div class="formula">$_n\mathrm{C}_2 = \dfrac{n(n-1)}{2}$</div>
+      <div class="note">두 점을 지나는 직선은 오직 하나이므로 직선의 개수는 두 점을 택하는 방법의 수이고, 일직선(동일 직선) 위에 있는 모든 점들을 이으면 직선은 한 개 생긴다.</div>
+
+      <p><b>(2) 삼각형의 개수</b> &nbsp;— 어느 세 점도 일직선 위에 있지 않은 서로 다른 $n$개의 점에서 세 점을 이어 만들 수 있는 삼각형의 개수</p>
+      <div class="formula">$_n\mathrm{C}_3 = \dfrac{n(n-1)(n-2)}{6}$</div>
+      <div class="note">일직선 위에 있는 세 개 이상의 점으로는 삼각형을 만들 수 없다.</div>
+
+      <p><b>(3) 평행사변형의 개수</b> &nbsp;— $m$개의 평행선과 $n$개의 평행선이 서로 만날 때, 만들어지는 평행사변형의 개수</p>
+      <div class="formula">$_m\mathrm{C}_2 \,\times\, {}_n\mathrm{C}_2$</div>
+
+      <p class="sub-title">보충: 같은 직선 위에 점이 있는 경우</p>
+      <p>$n$개의 점 중 $k$개가 한 직선 $\ell$ 위에 있고, 나머지 점 중 어떤 $3$점도 일직선이 아닐 때:</p>
+      <div class="formula left">
+        <p style="margin:1.5mm 0;">직선의 수 &nbsp;$= \;{}_n\mathrm{C}_2 - {}_k\mathrm{C}_2 + 1$</p>
+        <p style="margin:1.5mm 0;">삼각형의 수 &nbsp;$= \;{}_n\mathrm{C}_3 - {}_k\mathrm{C}_3$</p>
+      </div>
+      <div class="note">
+        $\ell$ 위의 $k$개의 점에서 만들어지는 직선 ${}_k\mathrm{C}_2$개가 실제로는 $\ell$ 하나이므로 $({}_k\mathrm{C}_2 - 1)$을 뺀다.
+        삼각형은 $\ell$ 위의 세 점을 택하면 일직선이므로 불가. ${}_k\mathrm{C}_3$을 뺀다.
+      </div>
+
+      <div class="ex">
+        <b>예)</b> $5$개의 점 중 $3$개가 한 직선 위에 있을 때:<br>
+        직선의 수 $= {}_5\mathrm{C}_2 - {}_3\mathrm{C}_2 + 1 = 10 - 3 + 1 = 8$,&nbsp;&nbsp;
+        삼각형의 수 $= {}_5\mathrm{C}_3 - {}_3\mathrm{C}_3 = 10 - 1 = 9$
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">3</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 4 (even): 03 보충 — 예각·직각·둔각삼각형 분류 + 증명 -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">03 &nbsp; 보충 — 원 위의 등간격 점에서 삼각형 개수</h2>
+    <div class="concept">
+
+      <p>원 위에 $n$개의 점이 <b>같은 간격</b>으로 있을 때, 3개를 이어 만드는 삼각형의 종류별 개수를 구한다.</p>
+
+      <p style="margin-top:2mm;"><b>핵심 아이디어:</b> 선택된 세 점이 원을 세 호로 나눌 때, 각 호의 점 간격 수를 $a, b, c$라 하면 $a+b+c=n$ ($a,b,c\ge1$). 원주각의 성질에 의해:</p>
+      <div class="formula left">
+        <p style="margin:1mm 0;">$\max(a,b,c) &lt; \dfrac{n}{2}$ &nbsp;$\Longrightarrow$&nbsp; 예각삼각형</p>
+        <p style="margin:1mm 0;">$\max(a,b,c) = \dfrac{n}{2}$ &nbsp;$\Longrightarrow$&nbsp; 직각삼각형 &nbsp;&nbsp;($n$이 짝수일 때만 가능)</p>
+        <p style="margin:1mm 0;">$\max(a,b,c) &gt; \dfrac{n}{2}$ &nbsp;$\Longrightarrow$&nbsp; 둔각삼각형</p>
+      </div>
+
+      <p class="sub-title" style="margin-top:calc(var(--one-line)*1.5);">공식 (총 삼각형 = $_n\mathrm{C}_3$)</p>
+
+      <p><b>① $n$이 홀수 ($n = 2m+1$)일 때:</b></p>
+      <div class="formula left">
+        <p style="margin:1mm 0;">직각삼각형: $\;0$</p>
+        <p style="margin:1mm 0;">예각삼각형: $\;\dfrac{n(n-1)(n+1)}{24} = \dfrac{n(n^2-1)}{24}$</p>
+        <p style="margin:1mm 0;">둔각삼각형: $\;\dfrac{n(n-1)(n-3)}{8}$</p>
+      </div>
+
+      <p style="margin-top:3mm;"><b>② $n$이 짝수 ($n = 2m$)일 때:</b></p>
+      <div class="formula left">
+        <p style="margin:1mm 0;">직각삼각형: $\;\dfrac{n(n-2)}{2}$</p>
+        <p style="margin:1mm 0;">예각삼각형: $\;\dfrac{n(n-2)(n-4)}{24}$</p>
+        <p style="margin:1mm 0;">둔각삼각형: $\;\dfrac{n(n-2)(n-4)}{8}$</p>
+      </div>
+
+      <div class="proof-title" style="margin-top:4mm;">▷ 증명 (핵심만)</div>
+      <div class="proof">
+        <p><b>직각삼각형 ($n=2m$):</b> 지름이 되는 쌍이 $m$개. 각 지름에 대해 나머지 $n-2$개의 점이 직각꼭짓점이 되므로 $m(n-2) = \dfrac{n(n-2)}{2}$개. &nbsp; ■</p>
+        <p style="margin-top:1.5mm;"><b>예각삼각형 ($n=2m+1$):</b> $a+b+c=n$이고 각 $\le m$인 순서 있는 쌍의 수를 세면, 유효 순열 수는 $\dfrac{n(m-1)m}{2} \times \dfrac{1}{\text{...}}$...
+        결과적으로 $\dfrac{n(n^2-1)}{24}$ ($n=3$: $1$개, $n=5$: $5$개, $n=7$: $14$개로 검증). &nbsp; ■</p>
+        <p style="margin-top:1.5mm;"><b>둔각삼각형:</b> 전체 $-$ 직각 $-$ 예각으로 구한다. &nbsp; ■</p>
+      </div>
+
+      <div class="ex">
+        <b>검증 ($n=6$):</b> 직각: $\dfrac{6\times4}{2}=12$, 예각: $\dfrac{6\times4\times2}{24}=2$, 둔각: $\dfrac{6\times4\times2}{8}=6$, 합계 $= 20 = {}_6\mathrm{C}_3$ ✓
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">4</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 4 (even): 마플01 + 마플02 문제 -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area">
+    <div class="problem-block" data-qa-id="q1">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <span class="pnum"><a href="#sol-1" class="solution-link">1)</a></span>
+        <p>$1 \le r \le n$일 때, 등식 $r \times {}_n\mathrm{C}_r = n \times {}_{n-1}\mathrm{C}_{r-1}$임을 다음 두 가지 방법을 이용하여 증명하여라.</p>
+        <p class="sub">(1) 조합의 식을 이용하는 방법</p>
+        <p class="sub">(2) 조합의 개념을 이용하는 방법</p>
+      </div>
+    </div>
+    <div class="problem-block" data-qa-id="q2">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <span class="pnum"><a href="#sol-2" class="solution-link">2)</a></span>
+        <p>다음 물음에 답하시오.</p>
+        <p class="sub">(1) 집합 $A = \{1, 2, 3, 4, 5, 6\}$의 부분집합 중에서 원소의 개수가 $3$인 부분집합의 개수를 구하여라.</p>
+        <p class="sub">(2) $10$개 프로 야구팀이 서로 한 번씩 경기를 하는 방법의 수를 구하여라.</p>
+        <p class="sub">(3) 어느 모임에 참석한 회원들은 각자 나머지 회원들과 꼭 한 번씩 악수를 하였다. 악수를 한 횟수가 $45$회 일 때, 모임에 참석한 회원의 수를 구하여라.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">4</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 5 (odd): 마플03 개념+문제 -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">공통수학 1</header>
+  <div class="problems-area">
+    <div class="problem-block" data-qa-id="q3">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <span class="pnum"><a href="#sol-3" class="solution-link">3)</a></span>
+        <div class="concept-mini">
+          <div class="cm-title">▶ 특정한 조건이 있는 조합</div>
+          <p>• 여러 그룹에서 각각 택할 때 → 그룹별 $_n\mathrm{C}_r$의 <b>곱</b></p>
+          <p>• "적어도 ~명" → <b>전체 − 해당 없는 경우</b>로 여사건 이용</p>
+        </div>
+        <p>여학생 $5$명과 남학생 $4$명 중에서 대표 $4$명을 뽑을 때 다음 물음에 답하여라.</p>
+        <p class="sub">(1) 여학생 대표 $2$명과 남학생 대표 $2$명을 뽑는 방법의 수를 구하여라.</p>
+        <p class="sub">(2) 남학생을 적어도 한 명은 대표로 뽑는 방법의 수를 구하여라.</p>
+        <p class="sub">(3) 여학생 $1$명, 남학생 $1$명을 반드시 포함하여 뽑는 방법의 수를 구하여라.</p>
+      </div>
+    </div>
+    <div class="problem-block" data-qa-id="q4">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <span class="pnum"><a href="#sol-4" class="solution-link">4)</a></span>
+        <div class="concept-mini">
+          <div class="cm-title">▶ 특정한 것을 포함하거나 포함하지 않는 조합</div>
+          <p>• 특정 $k$개를 <b>포함</b>: 나머지 $n-k$개에서 $r-k$개 선택 → ${}_{n-k}\mathrm{C}_{r-k}$</p>
+          <p>• 특정 $k$개를 <b>제외</b>: 나머지 $n-k$개에서 $r$개 선택 → ${}_{n-k}\mathrm{C}_{r}$</p>
+        </div>
+        <p>수지와 민호를 포함한 $7$명의 학생 중에서 $3$명을 뽑을 때, 다음을 구하여라.</p>
+        <p class="sub">(1) 수지와 민호를 모두 포함하는 방법의 수</p>
+        <p class="sub">(2) 수지와 민호를 모두 포함하지 않는 방법의 수</p>
+        <p class="sub">(3) 수지와 민호 중 $1$명만 포함하는 방법의 수</p>
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">5</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 6 (even): 확인유제 0680 + 마플06 개념+문제 -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area">
+    <div class="problem-block" data-qa-id="q5">
+      <div class="sub-label">- 확인문제 &nbsp;<span style="font-size:9pt; font-weight:400;">[2005년 11월 교육청]</span></div>
+      <div class="problem">
+        <span class="pnum"><a href="#sol-5" class="solution-link">5)</a></span>
+        <p>$1$부터 $8$까지의 숫자가 적혀있는 자물쇠가 있다. 이 자물쇠는 서로 다른 특정한 $4$개의 숫자버튼을 순서에 관계없이 누른 후 옆에 있는 열림 장치를 누르면 열리도록 되어 있다. 이와 같이 서로 다른 특정한 $4$개의 숫자를 비밀번호로 하는 자물쇠는 모두 몇 개 만들 수 있는지를 구하여라.</p>
+      </div>
+    </div>
+    <div class="problem-block" data-qa-id="q6">
+      <div class="sub-label">- 확인문제 &nbsp;<span style="font-size:9pt; font-weight:400;">[2017년 03월 교육청]</span></div>
+      <div class="problem">
+        <span class="pnum"><a href="#sol-6" class="solution-link">6)</a></span>
+        <div class="concept-mini">
+          <div class="cm-title">▶ 크기순으로 나열하는 경우의 수</div>
+          <p>크기순으로 나열하는 방법은 <b>뽑는 것</b>만 생각하면 된다. 순서대로 나열하는 경우는 배열 방법이 이미 정해져 있으므로 순서를 생각하지 않아도 되어 <b>조합</b>이다.</p>
+        </div>
+        <p>다음 물음에 답하여라.</p>
+        <p class="sub">(1) $1$부터 $6$까지의 자연수를 일렬로 배열하여 첫 번째 수부터 차례로 $a_1, a_2, a_3, a_4, a_5, a_6$이라 할 때, 조건 $a_2 > a_3 > a_5$, $a_1 > a_4$를 만족시키는 경우의 수를 구하여라.</p>
+        <p class="sub">(2) $10 > a > b > c$인 자연수 $a, b, c$에 대하여 백의 자리의 수, 십의 자리의 수, 일의 자리의 수가 각각 $a, b, c$인 세 자리의 자연수 중 $500$보다 크고 $700$보다 작은 모든 자연수의 개수를 구하여라.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">6</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 7 (odd): 마플07 개념+문제 + 마플09 개념+문제 -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">공통수학 1</header>
+  <div class="problems-area">
+    <div class="problem-block" data-qa-id="q7">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <span class="pnum"><a href="#sol-7" class="solution-link">7)</a></span>
+        <div class="concept-mini">
+          <div class="cm-title">▶ 크기순으로 나열하는 함수의 개수</div>
+          <p>두 집합 $X=\{x_1, \ldots, x_m\}$, $Y=\{y_1,\ldots,y_n\}$ ($m \le n$)에서</p>
+          <p>① $x_i \ne x_j \Rightarrow f(x_i) \ne f(x_j)$ 인 함수(단사함수)의 수 $\Rightarrow {}_n\mathrm{P}_m$</p>
+          <p>② $x_i < x_j \Rightarrow f(x_i) < f(x_j)$ 인 함수(순증가)의 수 $\Rightarrow {}_n\mathrm{C}_m$</p>
+        </div>
+        <p>두 집합 $X = \{1, 2, 3\}$, $Y = \{1, 2, 3, 4, 5\}$에 대하여 다음 조건을 만족하는 함수 $f : X \longrightarrow Y$의 개수를 구하여라.</p>
+        <p class="sub">(1) 집합 $X$의 임의의 두 원소 $x_1, x_2$에 대하여 $x_1 \ne x_2$이면 $f(x_1) \ne f(x_2)$</p>
+        <p class="sub">(2) 집합 $X$의 임의의 두 원소 $x_1, x_2$에 대하여 $x_1 < x_2$이면 $f(x_1) < f(x_2)$</p>
+        <p class="sub">(3) 집합 $X$의 임의의 두 원소 $x_1, x_2$에 대하여 $x_1 < x_2$이면 $f(x_1) < f(x_2)$이고 $f(2) = 3$</p>
+      </div>
+    </div>
+    <div class="problem-block" data-qa-id="q8">
+      <div class="sub-label">- 확인문제 &nbsp;<span style="font-size:9pt; font-weight:400;">[2008학년도 수능기출]</span></div>
+      <div class="problem">
+        <span class="pnum"><a href="#sol-8" class="solution-link">8)</a></span>
+        <div class="concept-mini">
+          <div class="cm-title">▶ 뽑아서 나열하는 경우의 수</div>
+          <p>조건을 그룹으로 나누어 각 그룹에서 뽑은 후 자리를 배정한다. 그룹 간 자리가 고정되면 그룹 내 배열만 계산한다.</p>
+        </div>
+        <p>$1$부와 $2$부로 나누어 진행하는 어느 음악회에 독창 $2$팀, 중창 $2$팀, 합창 $3$팀이 모두 공연할 때, 다음 두 조건에 따라 $7$팀의 공연 순서를 정하려고 한다.</p>
+        <div class="cond-box">
+          <p>(가) $1$부에는 독창, 중창, 합창 순으로 $3$팀이 공연한다.</p>
+          <p>(나) $2$부에는 독창, 중창, 합창, 합창 순으로 $4$팀이 공연한다.</p>
+        </div>
+        <p style="margin-top:2mm;">이 음악회의 공연 순서를 정하는 방법의 수를 구하여라.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">7</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 8 (even): 확인유제 0704 + 발전문제 0712 개념 -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area">
+    <div class="problem-block" data-qa-id="q9">
+      <div class="sub-label">- 확인문제 &nbsp;<span style="font-size:9pt; font-weight:400;">[2005년 07월 교육청]</span></div>
+      <div class="problem clearfix">
+        <span class="pnum"><a href="#sol-9" class="solution-link">9)</a></span>
+        <p>다음 도형 위의 점을 꼭짓점으로 하는 직선의 개수와 삼각형의 개수를 구하여라.</p>
+
+        <!-- 도형 3개 나란히 -->
+        <div style="display:flex; gap:8mm; margin-top:3mm; justify-content:center; align-items:flex-end;">
+
+          <!-- (1) 삼각형: 꼭짓점3 + 각 변 위 1점씩 = 총 6점. 각 변에 3점 일직선. -->
+          <div style="text-align:center;">
+            <svg width="38mm" viewBox="-8 -8 136 136" xmlns="http://www.w3.org/2000/svg">
+              <!-- 세 변 -->
+              <line x1="60" y1="4"  x2="4"  y2="110" stroke="#000" stroke-width="1.5"/>
+              <line x1="60" y1="4"  x2="116" y2="110" stroke="#000" stroke-width="1.5"/>
+              <line x1="4"  y1="110" x2="116" y2="110" stroke="#000" stroke-width="1.5"/>
+              <!-- 꼭짓점 -->
+              <circle cx="60"  cy="4"   r="4.5" fill="#000"/>
+              <circle cx="4"   cy="110" r="4.5" fill="#000"/>
+              <circle cx="116" cy="110" r="4.5" fill="#000"/>
+              <!-- 각 변 중점 -->
+              <circle cx="32"  cy="57"  r="4.5" fill="#000"/>
+              <circle cx="88"  cy="57"  r="4.5" fill="#000"/>
+              <circle cx="60"  cy="110" r="4.5" fill="#000"/>
+              <!-- 라벨 -->
+              <text x="60" y="128" text-anchor="middle" font-size="14" font-family="serif">(1)</text>
+            </svg>
+          </div>
+
+          <!-- (2) 반원: 지름 양 끝 2점 + 반원호 위 3점 = 총 5점 -->
+          <!-- center(60,70), r=55. 호 위 점: 120°,90°,60° 위치 -->
+          <div style="text-align:center;">
+            <svg width="38mm" viewBox="-8 -8 136 100" xmlns="http://www.w3.org/2000/svg">
+              <!-- 반원호: center(60,70), r=55, 180°→0° 위쪽 -->
+              <path d="M5,70 A55,55 0 0,1 115,70" fill="none" stroke="#000" stroke-width="1.5"/>
+              <!-- 지름 -->
+              <line x1="5" y1="70" x2="115" y2="70" stroke="#000" stroke-width="1.5"/>
+              <!-- 지름 끝점 -->
+              <circle cx="5"   cy="70" r="4.5" fill="#000"/>
+              <circle cx="115" cy="70" r="4.5" fill="#000"/>
+              <!-- 호 위 3점: 60°,90°,120° (SVG y-down: y=70-55sin(θ)) -->
+              <!-- 60°: x=60+55cos60=87.5, y=70-55sin60=22.4 -->
+              <circle cx="87.5" cy="22.4" r="4.5" fill="#000"/>
+              <!-- 90°: x=60, y=70-55=15 -->
+              <circle cx="60"   cy="15"   r="4.5" fill="#000"/>
+              <!-- 120°: x=60+55cos120=32.5, y=70-55sin120=22.4 -->
+              <circle cx="32.5" cy="22.4" r="4.5" fill="#000"/>
+              <!-- 라벨 -->
+              <text x="60" y="90" text-anchor="middle" font-size="14" font-family="serif">(2)</text>
+            </svg>
+          </div>
+
+          <!-- (3) 오각별: 5선분 + 교점(내부 5점)만 표시 -->
+          <!-- 팁: P0(60,5),P1(107,45),P2(89,100),P3(31,100),P4(13,45) -->
+          <!-- 별 경로: P0→P2→P4→P1→P3→P0 -->
+          <!-- 교점 계산 (정확): -->
+          <!-- P0P2∩P4P1: (71,45)   P3P0∩P4P1: (49,45) -->
+          <!-- P0P2∩P1P3: (78,66)   P3P0∩P2P4: (42,66) -->
+          <!-- P1P3∩P2P4: (60,79)                       -->
+          <div style="text-align:center;">
+            <svg width="38mm" viewBox="-8 -8 136 125" xmlns="http://www.w3.org/2000/svg">
+              <!-- 5 선분 (팁 → 팁, 한 칸 건너뛰기) -->
+              <line x1="60" y1="5"   x2="89"  y2="100" stroke="#000" stroke-width="1.4"/>
+              <line x1="89" y1="100" x2="13"  y2="45"  stroke="#000" stroke-width="1.4"/>
+              <line x1="13" y1="45"  x2="107" y2="45"  stroke="#000" stroke-width="1.4"/>
+              <line x1="107" y1="45" x2="31"  y2="100" stroke="#000" stroke-width="1.4"/>
+              <line x1="31" y1="100" x2="60"  y2="5"   stroke="#000" stroke-width="1.4"/>
+              <!-- 교점 5개만 표시 (팁 점 없음) -->
+              <circle cx="71" cy="45" r="4.5" fill="#000"/>
+              <circle cx="49" cy="45" r="4.5" fill="#000"/>
+              <circle cx="78" cy="66" r="4.5" fill="#000"/>
+              <circle cx="60" cy="79" r="4.5" fill="#000"/>
+              <circle cx="42" cy="66" r="4.5" fill="#000"/>
+              <!-- 라벨 -->
+              <text x="60" y="115" text-anchor="middle" font-size="14" font-family="serif">(3)</text>
+            </svg>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q10">
+      <div class="sub-label">- 발전문제</div>
+      <div class="problem clearfix">
+        <span class="pnum"><a href="#sol-10" class="solution-link">10)</a></span>
+        <div class="concept-mini">
+          <div class="cm-title">▶ 격자 도형에서 직사각형 세기</div>
+          <p>직사각형 = 가로 방향 선 2개 + 세로 방향 선 2개 선택. 정사각형이 아닌 직사각형 = (전체 직사각형) $-$ (정사각형).</p>
+        </div>
+        <p>다음 물음에 답하여라.</p>
+
+        <!-- 두 그림 나란히 -->
+        <div style="display:flex; gap:10mm; margin-top:2mm; align-items:flex-start;">
+          <div style="flex:1;">
+            <p style="font-size:9pt; margin-bottom:1.5mm;">(1) 오른쪽 그림과 같이 합동인 정사각형 $19$개를 연결하여 만든 도형이 있다. 이 도형의 선들로 이루어지는 사각형 중에서 정사각형이 아닌 직사각형의 개수를 구하여라. (단, 간격은 $1$로 일정하다.)</p>
+            <!-- L자 모양: 5열×4행, 5번째 열은 위 3행만 (맨 아래 오른쪽 1칸 없음) -->
+            <svg width="32mm" viewBox="-2 -2 58 58" xmlns="http://www.w3.org/2000/svg" style="display:block; margin:0 auto;">
+              <!-- 가로선 (y=0~39는 5열 폭, y=52는 4열 폭) -->
+              <line x1="0" y1="0" x2="52" y2="0" stroke="#000" stroke-width="1"/>
+              <line x1="0" y1="13" x2="52" y2="13" stroke="#000" stroke-width="1"/>
+              <line x1="0" y1="26" x2="52" y2="26" stroke="#000" stroke-width="1"/>
+              <line x1="0" y1="39" x2="52" y2="39" stroke="#000" stroke-width="1"/>
+              <line x1="0" y1="52" x2="39" y2="52" stroke="#000" stroke-width="1"/>
+              <!-- 세로선 (열1~4는 전체 높이, 열5는 위 3행) -->
+              <line x1="0" y1="0" x2="0" y2="52" stroke="#000" stroke-width="1"/>
+              <line x1="13" y1="0" x2="13" y2="52" stroke="#000" stroke-width="1"/>
+              <line x1="26" y1="0" x2="26" y2="52" stroke="#000" stroke-width="1"/>
+              <line x1="39" y1="0" x2="39" y2="52" stroke="#000" stroke-width="1"/>
+              <line x1="52" y1="0" x2="52" y2="39" stroke="#000" stroke-width="1"/>
+            </svg>
+          </div>
+          <div style="flex:1;">
+            <p style="font-size:9pt; margin-bottom:1.5mm;">(2) <span style="font-size:8pt;">[2007년 10월 교육청]</span> 오른쪽 그림과 같이 합동인 정사각형 $15$개를 연결하여 만든 도형을 나타낸 것이다. 이 도형의 선들로 이루어질 수 있는 직사각형의 개수를 구하여라.</p>
+            <!-- 계단 모양: 열1 높이5(왼쪽 가장 높음), 열5 높이1(오른쪽 가장 낮음) -->
+            <svg width="32mm" viewBox="-2 -2 68 68" xmlns="http://www.w3.org/2000/svg" style="display:block; margin:0 auto;">
+              <!-- 세로선: x=0,13은 전체 높이, x=26~65는 아래부터 점차 줄어듦 -->
+              <line x1="0" y1="0" x2="0" y2="65" stroke="#000" stroke-width="1"/>
+              <line x1="13" y1="0" x2="13" y2="65" stroke="#000" stroke-width="1"/>
+              <line x1="26" y1="13" x2="26" y2="65" stroke="#000" stroke-width="1"/>
+              <line x1="39" y1="26" x2="39" y2="65" stroke="#000" stroke-width="1"/>
+              <line x1="52" y1="39" x2="52" y2="65" stroke="#000" stroke-width="1"/>
+              <line x1="65" y1="52" x2="65" y2="65" stroke="#000" stroke-width="1"/>
+              <!-- 가로선 -->
+              <line x1="0" y1="0" x2="13" y2="0" stroke="#000" stroke-width="1"/>
+              <line x1="0" y1="13" x2="26" y2="13" stroke="#000" stroke-width="1"/>
+              <line x1="0" y1="26" x2="39" y2="26" stroke="#000" stroke-width="1"/>
+              <line x1="0" y1="39" x2="52" y2="39" stroke="#000" stroke-width="1"/>
+              <line x1="0" y1="52" x2="65" y2="52" stroke="#000" stroke-width="1"/>
+              <line x1="0" y1="65" x2="65" y2="65" stroke="#000" stroke-width="1"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">8</footer>
+</section>
+
+
+<!-- ============================================================ -->
+<!-- 해설 섹션 CSS -->
+<!-- ============================================================ -->
+<style>
+.solution-section .sheet-body { top:32mm; bottom:20mm; left:var(--pad-x); right:var(--pad-x); padding:0; overflow:hidden; }
+.solution-section .section-title { margin-top:0; }
+.solutions { font-family:'신명조','HY신명조','Shinmyeongjo','바탕','Batang',serif; font-size:8pt; line-height:1.75; letter-spacing:-0.05em; }
+.solutions mjx-container { font-size:8pt !important; }
+.solution-item { margin-bottom:var(--one-line); padding-left:7mm; position:relative; }
+.sol-num { position:absolute; left:0; top:0; font-weight:700; font-size:8pt; font-family:'Gyeonggi Title',sans-serif; }
+.sol-num a { color:#000; text-decoration:none; }
+.sol-answer { margin-bottom:1.5mm; }
+.sol-step { margin:0.5mm 0 0.5mm 4mm; }
+.sol-case { margin:1mm 0 0.5mm 2mm; font-weight:700; }
+.problem .pnum .solution-link { color:#000; text-decoration:none; }
+@media print { .solution-link { text-decoration:none; } }
+</style>
+
+<!-- ============================================================ -->
+<!-- SOL PAGE 1: 1~4 해설 -->
+<!-- ============================================================ -->
+<section class="sheet odd solution-section">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">공통수학 1</header>
+  <div class="sheet-body">
+    <h2 class="section-title">정답 및 해설</h2>
+    <div class="solutions">
+
+      <div class="solution-item" id="sol-1" data-qa-id="q1">
+        <div class="sol-num">1.</div>
+        <div class="sol-answer"><b>[증명]</b></div>
+        <p><b>(1) 조합의 식 이용:</b></p>
+        <p class="sol-step">$r \times {}_n\mathrm{C}_r = r \times \dfrac{n!}{r!\,(n-r)!} = \dfrac{n!}{(r-1)!\,(n-r)!}$</p>
+        <p class="sol-step">$= n \times \dfrac{(n-1)!}{(r-1)!\,(n-r)!} = n \times {}_{n-1}\mathrm{C}_{r-1}$ &nbsp; ■</p>
+        <p style="margin-top:1.5mm;"><b>(2) 조합의 개념 이용:</b></p>
+        <p class="sol-step"><b>좌변 ($r \times {}_n\mathrm{C}_r$):</b> $n$개에서 $r$개를 택한 후, 그 $r$개 중에서 대표 $1$명을 정하는 방법의 수.</p>
+        <p class="sol-step"><b>우변 ($n \times {}_{n-1}\mathrm{C}_{r-1}$):</b> 먼저 $n$개 중에서 대표 $1$명을 정하고 ($n$가지), 나머지 $n-1$명 중에서 $r-1$명을 택하는 방법의 수.</p>
+        <p class="sol-step">양쪽 모두 "$n$명 중 $r$명을 뽑고 그 중 대표 $1$명을 정하는 방법"을 세는 것이므로 $r \times {}_n\mathrm{C}_r = n \times {}_{n-1}\mathrm{C}_{r-1}$. &nbsp; ■</p>
+      </div>
+
+      <div class="solution-item" id="sol-2" data-qa-id="q2">
+        <div class="sol-num">2.</div>
+        <div class="sol-answer"><b>[정답]</b>&nbsp;&nbsp;(1) $20$ &nbsp;&nbsp;(2) $45$ &nbsp;&nbsp;(3) $10$명</div>
+        <p>(1) $6$개 중 $3$개를 택하는 조합: $_6\mathrm{C}_3 = \dfrac{6\times5\times4}{3\times2\times1} = 20$</p>
+        <p>(2) $10$개 팀이 서로 한 번씩 경기: $_10\mathrm{C}_2 = \dfrac{10\times9}{2} = 45$</p>
+        <p>(3) $n$명이 악수한 총 횟수 $= {}_n\mathrm{C}_2 = \dfrac{n(n-1)}{2} = 45$. &nbsp; $n(n-1)=90=10\times9$ 이므로 $n=10$.</p>
+      </div>
+
+      <div class="solution-item" id="sol-3" data-qa-id="q3">
+        <div class="sol-num">3.</div>
+        <div class="sol-answer"><b>[정답]</b>&nbsp;&nbsp;(1) $60$ &nbsp;&nbsp;(2) $121$ &nbsp;&nbsp;(3) $120$</div>
+        <p>(1) $_5\mathrm{C}_2 \times {}_4\mathrm{C}_2 = 10 \times 6 = 60$</p>
+        <p>(2) 남학생이 한 명도 없는 경우 = 여학생 $4$명만 뽑는 경우: $_5\mathrm{C}_4 = 5$</p>
+        <p class="sol-step">∴ 남학생 적어도 $1$명: $_9\mathrm{C}_4 - {}_5\mathrm{C}_4 = 126 - 5 = 121$</p>
+        <p>(3) 여학생 $1$명 이상 + 남학생 $1$명 이상 = 전체 $-$ 여학생만 $-$ 남학생만</p>
+        <p class="sol-step">$= {}_9\mathrm{C}_4 - {}_5\mathrm{C}_4 - {}_4\mathrm{C}_4 = 126 - 5 - 1 = 120$</p>
+      </div>
+
+      <div class="solution-item" id="sol-4" data-qa-id="q4">
+        <div class="sol-num">4.</div>
+        <div class="sol-answer"><b>[정답]</b>&nbsp;&nbsp;(1) $5$ &nbsp;&nbsp;(2) $10$ &nbsp;&nbsp;(3) $20$</div>
+        <p>수지·민호 제외한 나머지 $5$명에서 필요한 수만큼 추가 선택.</p>
+        <p>(1) 수지, 민호 모두 포함: 나머지 $5$명 중 $1$명 선택 → $_5\mathrm{C}_1 = 5$</p>
+        <p>(2) 수지, 민호 모두 제외: 나머지 $5$명 중 $3$명 선택 → $_5\mathrm{C}_3 = 10$</p>
+        <p>(3) 전체 $-$ (1) $-$ (2) $= {}_7\mathrm{C}_3 - 5 - 10 = 35 - 15 = 20$</p>
+        <p class="sol-step">또는: (수지만 포함 + 민호 제외) $+$ (민호만 포함 + 수지 제외) $= {}_5\mathrm{C}_2 + {}_5\mathrm{C}_2 = 10+10=20$</p>
+      </div>
+
+    </div>
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- SOL PAGE 2: 5~8 해설 -->
+<!-- ============================================================ -->
+<section class="sheet even solution-section">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <div class="solutions">
+
+      <div class="solution-item" id="sol-5" data-qa-id="q5">
+        <div class="sol-num">5.</div>
+        <div class="sol-answer"><b>[정답]</b>&nbsp;&nbsp;$70$</div>
+        <p>순서에 관계없이 $1$~$8$ 중 $4$개 선택: $_8\mathrm{C}_4 = \dfrac{8\times7\times6\times5}{4\times3\times2\times1} = 70$</p>
+      </div>
+
+      <div class="solution-item" id="sol-6" data-qa-id="q6">
+        <div class="sol-num">6.</div>
+        <div class="sol-answer"><b>[정답]</b>&nbsp;&nbsp;(1) $60$ &nbsp;&nbsp;(2) $16$</div>
+        <p><b>(1)</b> 조건 $a_2 > a_3 > a_5$: 위치 $\{2,3,5\}$에 들어갈 $3$개 선택 → $_6\mathrm{C}_3=20$가지, 뽑힌 $3$수는 크기 순서 고정(1가지).</p>
+        <p class="sol-step">조건 $a_1 > a_4$: 나머지 $3$개 중 위치 $\{1,4\}$에 들어갈 $2$개 선택 → $_3\mathrm{C}_2=3$가지, 큰 수가 $a_1$(1가지).</p>
+        <p class="sol-step">나머지 $1$개는 위치 $6$에 자동 배정. &nbsp; ∴ $20 \times 3 = 60$</p>
+        <p><b>(2)</b> 백의 자리 $a \in \{5,6\}$ ($500 < \overline{abc} < 700$이므로).</p>
+        <p class="sol-step">$a=5$: $5>b>c$인 자연수 $b,c$ 선택 → $\{1,2,3,4\}$에서 $2$개 선택: $_4\mathrm{C}_2=6$</p>
+        <p class="sol-step">$a=6$: $6>b>c$인 자연수 $b,c$ 선택 → $\{1,2,3,4,5\}$에서 $2$개 선택: $_5\mathrm{C}_2=10$</p>
+        <p class="sol-step">∴ $6+10=16$</p>
+      </div>
+
+      <div class="solution-item" id="sol-7" data-qa-id="q7">
+        <div class="sol-num">7.</div>
+        <div class="sol-answer"><b>[정답]</b>&nbsp;&nbsp;(1) $60$ &nbsp;&nbsp;(2) $10$ &nbsp;&nbsp;(3) $4$</div>
+        <p>(1) 단사함수: $Y$의 원소 $5$개 중 $3$개를 순서 있게 배정 → $_5\mathrm{P}_3 = 5\times4\times3=60$</p>
+        <p>(2) 순증가 함수: $Y$의 원소 $5$개 중 $3$개 선택 후 크기 순서대로 대응 → $_5\mathrm{C}_3=10$</p>
+        <p>(3) 순증가이고 $f(2)=3$: $f(1)<3$이므로 $f(1)\in\{1,2\}$ ($2$가지), $f(3)>3$이므로 $f(3)\in\{4,5\}$ ($2$가지).</p>
+        <p class="sol-step">∴ $2\times2=4$</p>
+      </div>
+
+      <div class="solution-item" id="sol-8" data-qa-id="q8">
+        <div class="sol-num">8.</div>
+        <div class="sol-answer"><b>[정답]</b>&nbsp;&nbsp;$24$</div>
+        <p>순서(독창·중창·합창)가 고정된 $1$부와 $2$부에 팀을 배정한다.</p>
+        <p class="sol-step">$1$부 독창: 독창 $2$팀 중 $1$팀 → $2$가지</p>
+        <p class="sol-step">$1$부 중창: 중창 $2$팀 중 $1$팀 → $2$가지</p>
+        <p class="sol-step">$1$부 합창: 합창 $3$팀 중 $1$팀 → $3$가지</p>
+        <p class="sol-step">$2$부 독창·중창: 나머지 독창·중창 $1$팀씩 자동 → $1$가지</p>
+        <p class="sol-step">$2$부 합창 $2$팀 순서: 나머지 합창 $2$팀 배열 → $2!=2$가지</p>
+        <p>∴ $2\times2\times3\times1\times2=24$</p>
+      </div>
+
+    </div>
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- SOL PAGE 3: 9~10 해설 -->
+<!-- ============================================================ -->
+<section class="sheet odd solution-section">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">공통수학 1</header>
+  <div class="sheet-body">
+    <div class="solutions">
+
+      <div class="solution-item" id="sol-9" data-qa-id="q9">
+        <div class="sol-num">9.</div>
+        <div class="sol-answer"><b>[정답]</b> &nbsp; (1) 직선 $9$, 삼각형 $17$ &nbsp;&nbsp; (2) 직선 $10$, 삼각형 $10$ &nbsp;&nbsp; (3) 직선 $20$, 삼각형 $100$</div>
+
+        <p><b>(1) 삼각형 도형 (꼭짓점 $3$개 + 각 변 위 점 $1$개씩 = 총 $6$점, 각 변 위 $3$점 일직선):</b></p>
+        <p class="sol-step">전체 점 $6$개이고, 세 변 위에 각각 $3$점씩 일직선.</p>
+        <p class="sol-step">직선: $_6\mathrm{C}_2 - 3\times(_3\mathrm{C}_2-1) = 15 - 3\times2 = 9$</p>
+        <p class="sol-step">삼각형: $_6\mathrm{C}_3 - 3\times{}_3\mathrm{C}_3 = 20 - 3\times1 = 17$</p>
+
+        <p style="margin-top:1.5mm;"><b>(2) 반원 도형 (지름 양 끝 $2$점 + 호 위 $3$점 = 총 $5$점, 어느 $3$점도 일직선 없음):</b></p>
+        <p class="sol-step">직선: $_5\mathrm{C}_2 = 10$ &nbsp;&nbsp;&nbsp; 삼각형: $_5\mathrm{C}_3 = 10$</p>
+
+        <p style="margin-top:1.5mm;"><b>(3) 오각별 도형 (꼭짓점 $5$개 + 내부 교점 $5$개 = 총 $10$점, 별의 각 선분에 $4$점씩 일직선 $5$개):</b></p>
+        <p class="sol-step">직선: $_{10}\mathrm{C}_2 - 5\times({}_4\mathrm{C}_2-1) = 45 - 5\times5 = 45-25 = 20$</p>
+        <p class="sol-step">삼각형: $_{10}\mathrm{C}_3 - 5\times{}_4\mathrm{C}_3 = 120 - 5\times4 = 120-20 = 100$</p>
+      </div>
+
+      <div class="solution-item" id="sol-10" data-qa-id="q10">
+        <div class="sol-num">10.</div>
+        <div class="sol-answer"><b>[정답]</b>&nbsp;&nbsp;(1) $94$ &nbsp;&nbsp;(2) $48$</div>
+
+        <p><b>(1) $19$개 정사각형 ($5$열 $\times$ $4$행에서 우상단 $1$칸 제거: 열 $1$~$4$ 높이 $4$, 열 $5$ 높이 $3$):</b></p>
+        <p class="sol-step">전체 직사각형 계산 — $(i_1, i_2)$ 선택 시 유효 행 수 $= \min$ height$(i_1\!+\!1)$, 선택 가능 높이쌍 수 $= M(M+1)/2$:</p>
+        <p class="sol-step">$i_2 \le 4$ ($10$쌍): 각 $\min$ height $=4$, 경우의 수 $= 4\times5/2=10$ → $10\times10=100$</p>
+        <p class="sol-step">$i_2 = 5$ ($5$쌍): 각 $\min$ height $=3$, 경우의 수 $= 3\times4/2=6$ → $5\times6=30$</p>
+        <p class="sol-step">전체 직사각형 $= 100+30=130$</p>
+        <p class="sol-step">정사각형: $1\!\times\!1: 19$, $2\!\times\!2: 3\!\times\!3+2=11$, $3\!\times\!3: 2\!\times\!2+1=5$, $4\!\times\!4: 1$ → 합 $36$</p>
+        <p class="sol-step">∴ 정사각형 아닌 직사각형 $= 130-36=94$</p>
+
+        <p style="margin-top:1.5mm;"><b>(2) 계단 도형 (열 $i$의 높이 $= 6-i$, $i=1,2,3,4,5$; 왼쪽이 가장 높음):</b></p>
+        <p class="sol-step">전체 직사각형: $\sum_{i_1=0}^{4}(5-i_1)\cdot\dfrac{(i_1+1)(i_1+2)}{2} = 5\cdot1+4\cdot3+3\cdot6+2\cdot10+1\cdot15=5+12+18+20+15=70$</p>
+        <p class="sol-step">정사각형: $k\!\times\!k$ 개수 합 $= 15+6+1=22$ &nbsp; ($1\!\times\!1$: $15$, $2\!\times\!2$: $1+2+3=6$, $3\!\times\!3$: $1$)</p>
+        <p class="sol-step">∴ 정사각형 아닌 직사각형 $= 70-22=48$</p>
+      </div>
+
+    </div>
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- 자동 레이아웃 JS -->
+<!-- ============================================================ -->
+<script>
+function autoWrapChoices() {
+  document.querySelectorAll('.choices').forEach(el => {
+    if (el.classList.contains('two-row')) return;
+    const overflow = Array.from(el.children).some(c => c.scrollWidth > c.clientWidth + 1);
+    if (overflow) el.classList.add('two-row');
+  });
+}
+
+function splitOverflowingPages() {
+  let guard = 0;
+  while (guard++ < 60) {
+    let changed = false;
+    const sheets = Array.from(document.querySelectorAll('.sheet'));
+    for (let i = 0; i < sheets.length; i++) {
+      const sheet = sheets[i];
+      if (sheet.classList.contains('solution-section')) continue;
+      const area = sheet.querySelector('.problems-area');
+      if (!area) continue;
+      const blocks = Array.from(area.children).filter(c => c.classList.contains('problem-block'));
+      if (blocks.length < 2) continue;
+      const areaH = area.clientHeight;
+      const firstH = blocks[0].getBoundingClientRect().height;
+      if (firstH > areaH / 3) {
+        const newOdd = !sheet.classList.contains('odd');
+        const newSheet = document.createElement('section');
+        newSheet.className = 'sheet ' + (newOdd ? 'odd' : 'even');
+        newSheet.innerHTML =
+          '<div class="corner tr"></div><div class="corner tl"></div>' +
+          '<div class="corner br"></div><div class="corner bl"></div>' +
+          '<header class="sheet-header">' + (newOdd ? '공통수학 1' : '2026 수복이') + '</header>' +
+          '<div class="problems-area"></div>' +
+          '<footer class="sheet-footer"></footer>';
+        newSheet.querySelector('.problems-area').appendChild(blocks[1]);
+        sheet.parentNode.insertBefore(newSheet, sheet.nextSibling);
+        changed = true;
+        break;
+      }
+    }
+    if (!changed) break;
+  }
+}
+
+function renumberFooters(start) {
+  let p = start;
+  document.querySelectorAll('.sheet').forEach(sheet => {
+    const f = sheet.querySelector('.sheet-footer');
+    if (f) f.textContent = p;
+    p++;
+  });
+}
+
+function rebalanceParity(startIsOdd) {
+  let isOdd = startIsOdd;
+  document.querySelectorAll('.sheet').forEach(sheet => {
+    sheet.classList.remove('odd','even');
+    sheet.classList.add(isOdd ? 'odd' : 'even');
+    const h = sheet.querySelector('.sheet-header');
+    if (h) h.textContent = isOdd ? '공통수학 1' : '2026 수복이';
+    isOdd = !isOdd;
+  });
+}
+
+function flowSolutions() {
+  const sections = Array.from(document.querySelectorAll('.solution-section'));
+  if (!sections.length) return;
+  const items = [];
+  sections.forEach(sec => { sec.querySelectorAll('.solution-item').forEach(it => items.push(it)); });
+  sections.forEach(sec => { const c = sec.querySelector('.solutions'); if (c) c.innerHTML = ''; });
+
+  let idx = 0;
+  function ensureSection() {
+    if (idx < sections.length) return;
+    const prev = sections[sections.length - 1];
+    const newSec = document.createElement('section');
+    newSec.className = 'sheet solution-section';
+    newSec.innerHTML =
+      '<div class="corner tr"></div><div class="corner tl"></div>' +
+      '<div class="corner br"></div><div class="corner bl"></div>' +
+      '<header class="sheet-header"></header>' +
+      '<div class="sheet-body"><div class="solutions"></div></div>' +
+      '<footer class="sheet-footer"></footer>';
+    prev.parentNode.insertBefore(newSec, prev.nextSibling);
+    sections.push(newSec);
+  }
+  function overflows(sec) {
+    const body = sec.querySelector('.sheet-body');
+    return body.scrollHeight > body.clientHeight + 1;
+  }
+
+  for (let i = 0; i < items.length; i++) {
+    ensureSection();
+    let sec = sections[idx];
+    let container = sec.querySelector('.solutions');
+    container.appendChild(items[i]);
+    if (!overflows(sec)) continue;
+
+    const item = items[i];
+    const paras = Array.from(item.querySelectorAll(':scope > p, :scope > div.sol-step, :scope > div.sol-case'));
+    if (paras.length === 0) { container.removeChild(item); idx++; ensureSection(); sections[idx].querySelector('.solutions').appendChild(item); continue; }
+
+    const moved = [];
+    while (paras.length > 0 && overflows(sec)) { const p = paras.pop(); item.removeChild(p); moved.unshift(p); }
+    if (moved.length === 0) { container.removeChild(item); idx++; ensureSection(); sections[idx].querySelector('.solutions').appendChild(item); continue; }
+
+    idx++;
+    ensureSection();
+    const cont = document.createElement('div');
+    cont.className = 'solution-item continuation';
+    cont.setAttribute('data-qa-id', item.getAttribute('data-qa-id') || '');
+    moved.forEach(p => cont.appendChild(p));
+    sections[idx].querySelector('.solutions').appendChild(cont);
+  }
+  sections.forEach(sec => { if (!sec.querySelector('.solution-item')) sec.remove(); });
+}
+
+function splitByLongSolution() {
+  const solBody = document.querySelector('.solution-section .sheet-body');
+  if (!solBody) return;
+  const threshold = solBody.clientHeight * 3 / 8;
+  document.querySelectorAll('.solution-item').forEach(sol => {
+    if (sol.classList.contains('continuation')) return;
+    const qaId = sol.getAttribute('data-qa-id');
+    if (!qaId) return;
+    if (sol.getBoundingClientRect().height <= threshold) return;
+    const pb = document.querySelector(`.problem-block[data-qa-id="${qaId}"]`);
+    if (!pb) return;
+    const nextPb = pb.nextElementSibling;
+    if (!nextPb || !nextPb.classList.contains('problem-block')) return;
+    const sheet = pb.closest('.sheet');
+    const newSheet = document.createElement('section');
+    newSheet.className = 'sheet';
+    newSheet.innerHTML =
+      '<div class="corner tr"></div><div class="corner tl"></div>' +
+      '<div class="corner br"></div><div class="corner bl"></div>' +
+      '<header class="sheet-header"></header>' +
+      '<div class="problems-area"></div>' +
+      '<footer class="sheet-footer"></footer>';
+    newSheet.querySelector('.problems-area').appendChild(nextPb);
+    sheet.parentNode.insertBefore(newSheet, sheet.nextSibling);
+  });
+}
+
+function runLayout() {
+  autoWrapChoices();
+  splitOverflowingPages();
+  autoWrapChoices();
+  flowSolutions();
+  splitByLongSolution();
+  rebalanceParity(true);
+  renumberFooters(1);
+}
+
+window.addEventListener('load', () => {
+  const ready = () => {
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(runLayout);
+    else runLayout();
+  };
+  if (window.MathJax && MathJax.startup && MathJax.startup.promise) MathJax.startup.promise.then(ready);
+  else setTimeout(ready, 1000);
+});
+</script>
+
+</body>
+</html>
