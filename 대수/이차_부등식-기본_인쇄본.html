@@ -155,34 +155,43 @@ svg { overflow:visible; }
         ① $ax^2+bx+c\gt 0$의 해 &nbsp;$\Rightarrow$&nbsp; 그래프가 $x$축보다 <b>위쪽</b>에 있는 $x$의 범위<br>
         ② $ax^2+bx+c\lt 0$의 해 &nbsp;$\Rightarrow$&nbsp; 그래프가 $x$축보다 <b>아래쪽</b>에 있는 $x$의 범위
       </div>
-      <div class="fig-row">
-        <svg viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg" style="max-width:45%; max-height:45mm;">
-          <line x1="20" y1="140" x2="260" y2="140" stroke="#222" stroke-width="1"/>
-          <polygon points="260,140 250,136 250,144" fill="#222"/>
-          <foreignObject x="263" y="146" width="25" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:16px;line-height:1;">$x$</div></foreignObject>
-          <path d="M 40 60 Q 140 240 240 60" fill="none" stroke="#222" stroke-width="2"/>
-          <foreignObject x="71" y="146" width="25" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:16px;line-height:1;">$\alpha$</div></foreignObject>
-          <foreignObject x="195" y="146" width="25" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:16px;line-height:1;">$\beta$</div></foreignObject>
-          <foreignObject x="180" y="30" width="100" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;color:#2563eb;">$a\gt 0,\ y=ax^2+bx+c$</div></foreignObject>
-          <foreignObject x="30" y="110" width="20" height="20"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;color:#e53e3e;">$+$</div></foreignObject>
-          <foreignObject x="133" y="155" width="20" height="20"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;color:#2563eb;">$-$</div></foreignObject>
-          <foreignObject x="235" y="110" width="20" height="20"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;color:#e53e3e;">$+$</div></foreignObject>
-          <circle cx="80" cy="140" r="2" fill="#222"/>
-          <circle cx="200" cy="140" r="2" fill="#222"/>
+      <div class="fig-row" style="gap:16mm;">
+        <!-- a>0 (아래로 볼록): viewBox 240x220, 축 y=110, 근 (60,110) (180,110), 꼭짓점 (120, 180) -->
+        <svg viewBox="0 0 240 220" xmlns="http://www.w3.org/2000/svg" style="max-width:38%; max-height:50mm;">
+          <line x1="15" y1="110" x2="225" y2="110" stroke="#222" stroke-width="1"/>
+          <polygon points="225,110 216,106 216,114" fill="#222"/>
+          <foreignObject x="228" y="116" width="22" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:15px;line-height:1;">$x$</div></foreignObject>
+          <!-- 베지어 근사: M (35,39) Q (120,321) (205,39) → 근점 (60,110), (180,110) 정확 통과, 꼭짓점 (120,180) -->
+          <path d="M 35 39 Q 120 321 205 39" fill="none" stroke="#222" stroke-width="2"/>
+          <!-- α, β 정확 교점 표시 -->
+          <circle cx="60" cy="110" r="2.5" fill="#222"/>
+          <circle cx="180" cy="110" r="2.5" fill="#222"/>
+          <foreignObject x="52" y="114" width="22" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:15px;line-height:1;">$\alpha$</div></foreignObject>
+          <foreignObject x="172" y="114" width="22" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:15px;line-height:1;">$\beta$</div></foreignObject>
+          <!-- 함수 라벨 -->
+          <foreignObject x="115" y="14" width="115" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:12px;line-height:1;color:#2563eb;">$a\gt 0,\ y=ax^2+bx+c$</div></foreignObject>
+          <!-- 부호: x<α에서 + (위), α<x<β에서 - (아래), x>β에서 + (위) -->
+          <foreignObject x="25" y="72" width="18" height="18"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;color:#e53e3e;">$+$</div></foreignObject>
+          <foreignObject x="113" y="142" width="18" height="18"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;color:#2563eb;">$-$</div></foreignObject>
+          <foreignObject x="205" y="72" width="18" height="18"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;color:#e53e3e;">$+$</div></foreignObject>
         </svg>
-        <svg viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg" style="max-width:45%; max-height:45mm;">
-          <line x1="20" y1="60" x2="260" y2="60" stroke="#222" stroke-width="1"/>
-          <polygon points="260,60 250,56 250,64" fill="#222"/>
-          <foreignObject x="263" y="66" width="25" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:16px;line-height:1;">$x$</div></foreignObject>
-          <path d="M 40 140 Q 140 -40 240 140" fill="none" stroke="#222" stroke-width="2"/>
-          <foreignObject x="71" y="66" width="25" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:16px;line-height:1;">$\alpha$</div></foreignObject>
-          <foreignObject x="195" y="66" width="25" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:16px;line-height:1;">$\beta$</div></foreignObject>
-          <foreignObject x="180" y="155" width="100" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;color:#2563eb;">$a\lt 0,\ y=ax^2+bx+c$</div></foreignObject>
-          <foreignObject x="30" y="70" width="20" height="20"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;color:#2563eb;">$-$</div></foreignObject>
-          <foreignObject x="133" y="30" width="20" height="20"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;color:#e53e3e;">$+$</div></foreignObject>
-          <foreignObject x="235" y="70" width="20" height="20"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;color:#2563eb;">$-$</div></foreignObject>
-          <circle cx="80" cy="60" r="2" fill="#222"/>
-          <circle cx="200" cy="60" r="2" fill="#222"/>
+
+        <!-- a<0 (위로 볼록): 꼭짓점 (120, 40) -->
+        <svg viewBox="0 0 240 220" xmlns="http://www.w3.org/2000/svg" style="max-width:38%; max-height:50mm;">
+          <line x1="15" y1="110" x2="225" y2="110" stroke="#222" stroke-width="1"/>
+          <polygon points="225,110 216,106 216,114" fill="#222"/>
+          <foreignObject x="228" y="116" width="22" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:15px;line-height:1;">$x$</div></foreignObject>
+          <!-- 베지어: M (35,181) Q (120,-101) (205,181) -->
+          <path d="M 35 181 Q 120 -101 205 181" fill="none" stroke="#222" stroke-width="2"/>
+          <circle cx="60" cy="110" r="2.5" fill="#222"/>
+          <circle cx="180" cy="110" r="2.5" fill="#222"/>
+          <foreignObject x="52" y="114" width="22" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:15px;line-height:1;">$\alpha$</div></foreignObject>
+          <foreignObject x="172" y="114" width="22" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:15px;line-height:1;">$\beta$</div></foreignObject>
+          <foreignObject x="115" y="190" width="115" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:12px;line-height:1;color:#2563eb;">$a\lt 0,\ y=ax^2+bx+c$</div></foreignObject>
+          <!-- 부호: x<α에서 -, α<x<β에서 +, x>β에서 - -->
+          <foreignObject x="25" y="128" width="18" height="18"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;color:#2563eb;">$-$</div></foreignObject>
+          <foreignObject x="113" y="62" width="18" height="18"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;color:#e53e3e;">$+$</div></foreignObject>
+          <foreignObject x="205" y="128" width="18" height="18"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;color:#2563eb;">$-$</div></foreignObject>
         </svg>
       </div>
       <div class="note">$\leq,\ \geq$ 부등호면 그래프가 $x$축과 만나는 점(근 $\alpha,\beta$)까지 포함. $x^2$ 계수가 음수이면 양변에 $-1$을 곱해 양수로 고친 뒤 풀되, 부등호 방향이 <b>바뀜</b>에 주의.</div>
