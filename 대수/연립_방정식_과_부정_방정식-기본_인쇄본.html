@@ -98,13 +98,16 @@ html, body {
   font-family:'신명조','HY신명조','바탕','Batang',serif;
   font-size:10pt; line-height:var(--line-h);
   letter-spacing:-0.05em;
-  position:relative; padding-left:8mm;
+  position:relative;
 }
+.problem > p:first-of-type { padding-left:5.5mm; text-indent:-5.5mm; }
 .problem .pnum {
-  position:absolute; left:0; top:0;
-  font-size:11pt; font-weight:700;
-  line-height:var(--line-h);
+  display:inline-block;
+  min-width:4mm; margin-right:1.5mm;
   font-family:'Gyeonggi Title',sans-serif;
+  font-size:11pt; font-weight:700;
+  text-indent:0;
+  vertical-align:baseline;
 }
 .problem .pnum a { color:#000; text-decoration:none; font-weight:700; }
 .problem p { margin-bottom:1.5mm; }
@@ -201,8 +204,7 @@ svg { overflow:visible; }
     <div class="problem-block" data-qa-id="q1">
       <div class="sub-label">- 확인문제</div>
       <div class="problem">
-        <span class="pnum"><a href="#sol-1" class="solution-link">1</a></span>
-        <p>두 연립방정식 $\begin{cases} ax^2+y^2=13 \\ x-y=-7 \end{cases}$,&nbsp; $\begin{cases} x+2y=b \\ x^2-y^2=-21 \end{cases}$의 공통인 해가 존재할 때, 실수 $a,\,b$에 대하여 $a+b$의 값을 구하시오.</p>
+        <p><span class="pnum"><a href="#sol-1" class="solution-link">1</a></span>두 연립방정식 $\begin{cases} ax^2+y^2=13 \\ x-y=-7 \end{cases}$,&nbsp; $\begin{cases} x+2y=b \\ x^2-y^2=-21 \end{cases}$의 공통인 해가 존재할 때, 실수 $a,\,b$에 대하여 $a+b$의 값을 구하시오.</p>
       </div>
     </div>
   </div>
@@ -230,8 +232,7 @@ svg { overflow:visible; }
     <div class="problem-block" data-qa-id="q2">
       <div class="sub-label">- 확인문제</div>
       <div class="problem">
-        <span class="pnum"><a href="#sol-2" class="solution-link">2</a></span>
-        <p>연립방정식 $\begin{cases} x^2-3xy+2y^2=0 \\ x^2+y^2=10 \end{cases}$을 만족시키는 $x,\,y$에 대하여 $xy$의 최댓값을 구하시오.</p>
+        <p><span class="pnum"><a href="#sol-2" class="solution-link">2</a></span>연립방정식 $\begin{cases} x^2-3xy+2y^2=0 \\ x^2+y^2=10 \end{cases}$을 만족시키는 $x,\,y$에 대하여 $xy$의 최댓값을 구하시오.</p>
       </div>
     </div>
   </div>
@@ -258,8 +259,7 @@ svg { overflow:visible; }
     <div class="problem-block" data-qa-id="q3">
       <div class="sub-label">- 확인문제</div>
       <div class="problem">
-        <span class="pnum"><a href="#sol-3" class="solution-link">3</a></span>
-        <p>연립방정식 $\begin{cases} x^2+y^2=13 \\ xy=6 \end{cases}$을 풀이하시오.</p>
+        <p><span class="pnum"><a href="#sol-3" class="solution-link">3</a></span>연립방정식 $\begin{cases} x^2+y^2=13 \\ xy=6 \end{cases}$을 풀이하시오.</p>
       </div>
     </div>
   </div>
@@ -276,8 +276,7 @@ svg { overflow:visible; }
     <div class="problem-block" data-qa-id="q4">
       <div class="sub-label">- 확인문제</div>
       <div class="problem">
-        <span class="pnum"><a href="#sol-4" class="solution-link">4</a></span>
-        <p>연립방정식 $\begin{cases} x+y=8 \\ xy+x+y=5k-1 \end{cases}$의 해가 실수가 되도록 하는 양의 정수 $k$의 개수는?</p>
+        <p><span class="pnum"><a href="#sol-4" class="solution-link">4</a></span>연립방정식 $\begin{cases} x+y=8 \\ xy+x+y=5k-1 \end{cases}$의 해가 실수가 되도록 하는 양의 정수 $k$의 개수는?</p>
         <div class="choices">
           <span>① $3$</span>
           <span>② $4$</span>
@@ -311,8 +310,7 @@ svg { overflow:visible; }
     <div class="problem-block" data-qa-id="q5">
       <div class="sub-label">- 확인문제</div>
       <div class="problem">
-        <span class="pnum"><a href="#sol-5" class="solution-link">5</a></span>
-        <p>두 이차방정식 $x^2+kx+3=0$,&nbsp; $x^2+3x+k=0$이 공통근을 가질 때, 실수 $k$의 값을 구하시오.</p>
+        <p><span class="pnum"><a href="#sol-5" class="solution-link">5</a></span>두 이차방정식 $x^2+kx+3=0$,&nbsp; $x^2+3x+k=0$이 공통근을 가질 때, 실수 $k$의 값을 구하시오.</p>
       </div>
     </div>
   </div>
@@ -341,8 +339,7 @@ svg { overflow:visible; }
     <div class="problem-block" data-qa-id="q6">
       <div class="sub-label">- 확인문제</div>
       <div class="problem">
-        <span class="pnum"><a href="#sol-6" class="solution-link">6</a></span>
-        <p>방정식 $xy-x-y+1=2$를 만족시키는 정수 $x,\,y$의 값을 구하시오.</p>
+        <p><span class="pnum"><a href="#sol-6" class="solution-link">6</a></span>방정식 $xy-x-y+1=2$를 만족시키는 정수 $x,\,y$의 값을 구하시오.</p>
       </div>
     </div>
   </div>
@@ -359,8 +356,7 @@ svg { overflow:visible; }
     <div class="problem-block" data-qa-id="q7">
       <div class="sub-label">- 확인문제</div>
       <div class="problem">
-        <span class="pnum"><a href="#sol-7" class="solution-link">7</a></span>
-        <p>$x$에 대한 이차방정식 $x^2-(m+2)x+m+3=0$의 두 근 $\alpha,\,\beta\;(\alpha \gt \beta)$가 모두 정수일 때, 상수 $m$의 값을 모두 구하시오.</p>
+        <p><span class="pnum"><a href="#sol-7" class="solution-link">7</a></span>$x$에 대한 이차방정식 $x^2-(m+2)x+m+3=0$의 두 근 $\alpha,\,\beta\;(\alpha \gt \beta)$가 모두 정수일 때, 상수 $m$의 값을 모두 구하시오.</p>
       </div>
     </div>
   </div>
@@ -386,8 +382,7 @@ svg { overflow:visible; }
     <div class="problem-block" data-qa-id="q8">
       <div class="sub-label">- 확인문제</div>
       <div class="problem">
-        <span class="pnum"><a href="#sol-8" class="solution-link">8</a></span>
-        <p>다음 방정식을 만족시키는 실수 $x,\,y$의 값을 구하시오.</p>
+        <p><span class="pnum"><a href="#sol-8" class="solution-link">8</a></span>다음 방정식을 만족시키는 실수 $x,\,y$의 값을 구하시오.</p>
         <p class="sub">(1) $x^2+y^2-4x+6y+13=0$</p>
         <p class="sub">(2) $2x^2+9y^2+6xy+6x+9=0$</p>
       </div>
