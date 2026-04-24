@@ -135,7 +135,7 @@ svg { overflow:visible; }
 </head>
 <body>
 
-<!-- PAGE 1 -->
+<!-- PAGE 1 (P1+P2 통합, JS splitOverflowingConcepts가 자동 분할) -->
 <section class="sheet odd">
   <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
   <header class="sheet-header">공통수학 1</header>
@@ -146,23 +146,10 @@ svg { overflow:visible; }
       <p>부등식 풀이의 핵심 전략은 <b>그래프로 판정</b>하는 것이다. 이차부등식도 대응하는 이차함수의 그래프가 $x$축보다 위·아래 어디에 있는지로 해를 읽어 낸다.</p>
       <div class="sub-title" style="margin-top:calc(var(--one-line)*1.5);">1) 이차부등식의 정의</div>
       <p>부등식에서 모든 항을 좌변으로 이항하여 정리하였을 때,</p>
-      <div class="formula">
-        $ax^2+bx+c\gt 0,\ ax^2+bx+c\lt 0,\ ax^2+bx+c\geq 0,\ ax^2+bx+c\leq 0$<br>
-        (단, $a\neq 0$)
-      </div>
+      <p style="text-align:center; margin:2mm 0;">$ax^2+bx+c\gt 0,\ ax^2+bx+c\lt 0,\ ax^2+bx+c\geq 0,\ ax^2+bx+c\leq 0$ &nbsp;(단, $a\neq 0$)</p>
       <p>과 같이 좌변이 $x$에 대한 이차식이 되는 부등식을 <b>$x$에 대한 이차부등식</b>이라 한다.</p>
-    </div>
-  </div>
-  <footer class="sheet-footer">1</footer>
-</section>
 
-<!-- PAGE 2 -->
-<section class="sheet even">
-  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
-  <header class="sheet-header">2026 수복이</header>
-  <div class="sheet-body">
-    <div class="concept">
-      <div class="sub-title" style="margin-top:0;">2) 이차함수의 그래프와 이차부등식의 해</div>
+      <div class="sub-title">2) 이차함수의 그래프와 이차부등식의 해</div>
       <p>이차부등식의 해와 이차함수 $y=ax^2+bx+c$의 그래프 사이에는 다음 관계가 성립한다.</p>
       <div class="formula left">
         ① $ax^2+bx+c\gt 0$의 해 &nbsp;$\Rightarrow$&nbsp; 그래프가 $x$축보다 <b>위쪽</b>에 있는 $x$의 범위<br>
@@ -201,7 +188,7 @@ svg { overflow:visible; }
       <div class="note">$\leq,\ \geq$ 부등호면 그래프가 $x$축과 만나는 점(근 $\alpha,\beta$)까지 포함. $x^2$ 계수가 음수이면 양변에 $-1$을 곱해 양수로 고친 뒤 풀되, 부등호 방향이 <b>바뀜</b>에 주의.</div>
     </div>
   </div>
-  <footer class="sheet-footer">2</footer>
+  <footer class="sheet-footer">1</footer>
 </section>
 
 <!-- PAGE 3 -->
