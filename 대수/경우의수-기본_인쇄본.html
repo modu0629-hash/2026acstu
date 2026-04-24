@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>경우의 수 — 인쇄본</title>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']] },
+  chtml: { matchFontHeight: false },
+  startup: { typeset: true }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+@font-face { font-family:'Gyeonggi Title'; src:url('../%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/woff/Title_Bold.woff') format('woff'); font-weight:700; font-display:swap; }
+@font-face { font-family:'Gyeonggi Title'; src:url('../%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/woff/Title_Medium.woff') format('woff'); font-weight:500; font-display:swap; }
+@font-face { font-family:'Gyeonggi Batang'; src:url('../%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/woff/Batang_Regular.woff') format('woff'); font-weight:400; font-display:swap; }
+@font-face { font-family:'Gyeonggi Batang'; src:url('../%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/woff/Batang_Bold.woff') format('woff'); font-weight:700; font-display:swap; }
+
+@page { size: A4; margin: 0; }
+* { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --line-h: 1.75; --one-line: 7.4mm;
+  --pad-x: 22mm; --pad-top: 20mm; --pad-bottom: 18mm;
+  --corner-x: 22mm; --corner-len: 48mm;
+}
+
+html, body { background:#fff; color:#000; font-family:'신명조','HY신명조','Shinmyeongjo','바탕','Batang',serif; font-size:11pt; line-height:var(--line-h); }
+@media screen { body { background:#dcdcdc; padding:24px 0; } .sheet { box-shadow:0 3px 14px rgba(0,0,0,0.2); margin:0 auto 24px; } }
+
+.sheet { width:210mm; height:297mm; background:#fff; position:relative; overflow:hidden; }
+@media print { .sheet { page-break-after:always; margin:0; box-shadow:none; } .sheet:last-child { page-break-after:auto; } }
+
+.corner { position:absolute; height:0; width:var(--corner-len); border-top:1pt solid #000; }
+.corner::after { content:''; position:absolute; height:3mm; width:0; }
+.corner.tr { top:12mm; right:var(--corner-x); }
+.corner.tr::after { right:0; top:0; border-right:1pt solid #000; }
+.corner.tl { top:12mm; left:var(--corner-x); }
+.corner.tl::after { left:0; top:0; border-left:1pt solid #000; }
+.corner.br { bottom:14mm; right:var(--corner-x); }
+.corner.br::after { right:0; bottom:0; border-right:1pt solid #000; }
+.corner.bl { bottom:14mm; left:var(--corner-x); }
+.corner.bl::after { left:0; bottom:0; border-left:1pt solid #000; }
+.corner.tr, .corner.tl { display:none; }
+.sheet.odd .corner.bl { display:none; }
+.sheet.even .corner.br { display:none; }
+
+.sheet-header { position:absolute; top:21mm; left:var(--pad-x); right:var(--pad-x); font-family:'Gyeonggi Title',sans-serif; font-weight:700; font-size:10.5pt; }
+.sheet.odd .sheet-header { text-align:right; }
+.sheet.even .sheet-header { text-align:left; }
+.sheet-footer { position:absolute; bottom:8mm; left:0; right:0; text-align:center; font-family:'Gyeonggi Batang',serif; font-size:10pt; }
+
+.sheet-body { position:absolute; top:calc(var(--pad-top) + 14mm); bottom:calc(var(--pad-bottom) + 6mm); left:var(--pad-x); right:var(--pad-x); }
+
+.chapter-title { font-family:'Gyeonggi Title',sans-serif; font-weight:700; font-size:18pt; letter-spacing:0.5pt; margin-bottom:calc(var(--one-line) * 2); }
+.section-title { font-family:'Gyeonggi Batang',serif; font-weight:700; font-size:13pt; margin-bottom:calc(var(--one-line) * 1); }
+.sub-label { font-family:'Gyeonggi Title',sans-serif; font-weight:700; font-size:11pt; margin-bottom:3mm; }
+
+.concept { font-family:'Gyeonggi Batang','신명조','HY신명조','바탕','Batang',serif; font-size:11pt; line-height:1.85; }
+.concept p { margin-bottom:2mm; }
+.concept .sub-title { font-family:'Gyeonggi Batang',serif; font-weight:400; font-size:11.5pt; margin:calc(var(--one-line)*2) 0 2mm; }
+.concept .sub-title:first-child { margin-top:0; }
+.concept .formula { border:0.7pt solid #000; padding:3mm 5mm; margin:3mm 0; text-align:center; }
+.concept .formula.left { text-align:left; padding:3mm 3mm; }
+.concept .formula.compact { padding:1.5mm 5mm; margin:1.5mm 0; }
+.concept .note { padding:2mm 0; margin:3mm 0; font-size:8pt; line-height:1.6; }
+.concept .note::before { content:"[참고] "; font-weight:700; }
+.concept .proof { font-size:8pt; line-height:1.6; padding:2mm 0 2mm 10mm; text-indent:-10mm; margin:3mm 0 6mm 0; }
+.concept .ex { padding:2mm 0; margin:3mm 0; font-size:9pt; }
+.concept.dense { line-height:1.7; }
+.concept.dense .sub-title { margin:calc(var(--one-line)*1.1) 0 1.5mm; }
+.concept.dense .sub-title:first-child { margin-top:0; }
+.concept.dense p { margin-bottom:1mm; }
+.concept.dense .note { margin:2mm 0; }
+.concept.dense .formula { padding:2mm 5mm; margin:2mm 0; }
+.concept.dense .ex { margin:1.5mm 0; }
+.concept table { width:100%; border-collapse:collapse; margin:3mm 0; font-size:9.5pt; }
+.concept table th, .concept table td { border:0.5pt solid #000; padding:1.5mm 2mm; text-align:center; vertical-align:middle; }
+.concept table th { font-weight:700; background:#f7f7f7; }
+
+.problem-block { }
+.sheet-body > .problem-block { margin-top:8mm; }
+.problem { font-family:'신명조','HY신명조','바탕','Batang',serif; font-size:10pt; line-height:var(--line-h); letter-spacing:-0.05em; position:relative; }
+.problem > p:first-of-type { padding-left:5.5mm; text-indent:-5.5mm; }
+.problem .pnum { display:inline-block; min-width:4mm; margin-right:1.5mm; font-family:'Gyeonggi Title',sans-serif; font-size:11pt; font-weight:700; text-indent:0; vertical-align:baseline; }
+.problem .pnum a { color:#000; text-decoration:none; font-weight:700; }
+.problem p { margin-bottom:1.5mm; }
+.problem .sub { margin-left:4mm; }
+.cond-box { display:block; width:fit-content; max-width:92%; border:0.7pt solid #000; padding:2.5mm 6mm; margin:2mm auto; }
+.cond-box p { margin:0.5mm 0; }
+
+.choices { display:grid; grid-template-columns:repeat(5, minmax(0,1fr)); gap:2mm 5mm; margin-top:4mm; font-size:10pt; clear:both; }
+.choices.two-row { grid-template-columns:repeat(3, minmax(0,1fr)); }
+.choices span { white-space:nowrap; }
+
+.problems-area { position:absolute; top:calc(var(--pad-top) + var(--one-line) + 5mm); bottom:calc(var(--pad-bottom) + 6mm); left:var(--pad-x); right:var(--pad-x); display:flex; flex-direction:column; }
+.problems-area > .problem-block:first-child { margin-bottom:0; }
+.problems-area > .problem-block:nth-child(2) { margin:auto 0; }
+.problems-area.single > .problem-block { margin:0; }
+
+mjx-container { font-weight:400 !important; }
+
+.fig-right { float:right; margin:0 0 2mm 5mm; overflow:visible; }
+.fig-center { text-align:center; margin:3mm 0; overflow:visible; }
+.fig-row { display:flex; justify-content:center; gap:6mm; margin:3mm 0; flex-wrap:wrap; }
+svg { overflow:visible; }
+.fig-center svg text, .fig-right svg text { font-family: MJXZERO, MJXTEX-I, "STIX Two Math", "Cambria Math", "Times New Roman", serif; font-size: 16px; fill: #111; }
+.fig-center svg text.lg, .fig-right svg text.lg { font-size: 20px; }
+.fig-center svg text.small, .fig-right svg text.small { font-size: 14px; }
+.fig-center svg text.ko, .fig-right svg text.ko { font-family: '신명조','HY신명조','바탕','Batang',serif; font-size: 14px; }
+
+.quick-answer-section .sheet-body { top:32mm; bottom:20mm; padding:0; overflow:hidden; display:flex; flex-direction:column; }
+.quick-answer-section .section-title { margin-top:0; flex:0 0 auto; }
+.quick-answers { flex:1 1 auto; min-height:0; position:relative; column-count:3; column-fill:auto; column-gap:7mm; column-rule:0.3pt solid #888; font-family:'신명조','HY신명조','Shinmyeongjo','바탕','Batang',serif; font-size:8pt; line-height:1.85; letter-spacing:-0.1em; }
+.quick-answers mjx-container { font-size:8pt !important; }
+.quick-answers::before, .quick-answers::after { content:''; position:absolute; top:0; bottom:0; width:0.3pt; background:#888; pointer-events:none; }
+.quick-answers::before { left:calc((100% - 14mm) / 3 + 3.5mm); }
+.quick-answers::after { left:calc((100% - 14mm) / 3 * 2 + 10.5mm); }
+.qa-item { break-inside:avoid-column; page-break-inside:avoid; -webkit-column-break-inside:avoid; margin-bottom:2mm; display:flex; align-items:baseline; }
+.qa-num { flex:0 0 auto; display:inline-block; min-width:3mm; margin-right:1.5mm; font-family:'Gyeonggi Title',sans-serif; font-size:8pt; }
+.qa-ans { flex:1 1 auto; min-width:0; }
+
+.solution-section .sheet-body { top:32mm; bottom:20mm; padding:0; overflow:hidden; display:flex; flex-direction:column; }
+.solution-section .section-title { margin-top:0; flex:0 0 auto; }
+.solutions { flex:1 1 auto; min-height:0; position:relative; column-count:2; column-fill:auto; column-gap:8mm; column-rule:0.3pt solid #888; font-family:'신명조','HY신명조','Shinmyeongjo','바탕','Batang',serif; font-size:8pt; line-height:1.75; letter-spacing:-0.05em; }
+.solutions::before { content:''; position:absolute; top:0; bottom:0; left:calc((100% - 8mm) / 2 + 4mm); width:0.3pt; background:#888; pointer-events:none; }
+.solutions mjx-container { font-size:8pt !important; max-width:100%; }
+.solution-item { break-inside:avoid-column; page-break-inside:avoid; -webkit-column-break-inside:avoid; margin-bottom:var(--one-line); padding-left:5mm; padding-right:2mm; position:relative; overflow-wrap:break-word; }
+.solution-item p { text-indent:0; margin:0; }
+.sol-num { position:absolute; left:0; top:0; font-weight:700; font-size:8pt; font-family:'Gyeonggi Title',sans-serif; }
+.sol-num a { color:#000; text-decoration:none; }
+.sol-answer { margin-bottom:1.5mm; }
+@media print { .solution-link { text-decoration:none; } }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1 : chapter + 3 기본 개념 -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">공통수학 2</header>
+  <div class="sheet-body">
+    <h1 class="chapter-title">경우의 수</h1>
+    <h2 class="section-title">사건·합의 법칙·곱의 법칙</h2>
+    <div class="concept">
+      <div class="sub-title">1) 사건과 경우의 수</div>
+      <p>어떤 실험이나 관찰에 의하여 일어나는 결과를 <b>사건</b>, 사건이 일어나는 가짓수를 <b>경우의 수</b>라 한다. 예를 들어 한 개의 주사위를 던질 때 짝수의 눈이 나오는 경우는 $\{2,\,4,\,6\}$이므로 경우의 수는 $3$이다.</p>
+      <div class="note">경우의 수를 구할 때는 빠짐없이, 중복되지 않게 센다. 수형도 또는 순서쌍을 이용하면 편리하다.</div>
+
+      <div class="sub-title">2) 합의 법칙</div>
+      <p>두 사건 $A,\,B$가 <b>동시에 일어나지 않을 때</b>, 사건 $A$가 일어나는 경우의 수가 $m$, 사건 $B$가 일어나는 경우의 수가 $n$이면</p>
+      <div class="formula">(사건 $A$ <b>또는</b> 사건 $B$가 일어나는 경우의 수) $= m + n$</div>
+      <div class="note">① '또는', '이거나' 등의 표현이 있으면 합의 법칙. ② 세 사건 이상에 대해서도 성립한다. ③ 동시에 일어날 수 있으면 교집합만큼 빼 준다 (포함배제).</div>
+
+      <div class="sub-title">3) 곱의 법칙</div>
+      <p>잇달아 일어나는 두 사건 $A,\,B$에 대하여 사건 $A$가 일어나는 경우의 수가 $m$이고 그 각각에 대하여 사건 $B$가 일어나는 경우의 수가 $n$일 때</p>
+      <div class="formula">(사건 $A$ <b>잇달아</b> 사건 $B$가 일어나는 경우의 수) $= m \times n$</div>
+      <div class="note">① '연이어(잇달아)', '그리고', '동시에' 등의 표현이 있으면 곱의 법칙. ② 잇달아 일어나는 세 사건 이상에 대해서도 성립한다.</div>
+    </div>
+  </div>
+  <footer class="sheet-footer">1</footer>
+</section>
+
+<!-- PAGE 2 : q1, q2 -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area">
+    <div class="problem-block" data-qa-id="q1">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-1" class="solution-link">1</a></span>서로 다른 두 개의 주사위를 동시에 던질 때, 나오는 두 눈의 수의 합이 $4$의 배수가 되는 경우의 수를 구하시오.</p>
+      </div>
+    </div>
+    <div class="problem-block" data-qa-id="q2">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-2" class="solution-link">2</a></span>$1$부터 $20$까지의 자연수가 각각 적힌 $20$장의 카드에서 한 장의 카드를 뽑을 때, 다음을 구하시오.</p>
+        <p class="sub">(1) $10$의 약수 또는 $4$의 배수가 적힌 카드를 뽑는 경우의 수</p>
+        <p class="sub">(2) $4$의 배수 또는 $5$의 배수가 적힌 카드를 뽑는 경우의 수</p>
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">2</footer>
+</section>
+
+<!-- PAGE 3 : q3, q4 -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">공통수학 2</header>
+  <div class="problems-area">
+    <div class="problem-block" data-qa-id="q3">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-3" class="solution-link">3</a></span>$1$부터 $5$까지의 자연수가 각각 하나씩 적힌 $5$개의 공이 들어 있는 주머니에서 $1$개씩 세 번 공을 꺼낼 때, 꺼낸 공에 적힌 세 수의 합이 $5$ 이하인 경우의 수는? (단, 꺼낸 공은 다시 넣는다.)</p>
+        <div class="choices">
+          <span>① $8$</span><span>② $9$</span><span>③ $10$</span><span>④ $11$</span><span>⑤ $12$</span>
+        </div>
+      </div>
+    </div>
+    <div class="problem-block" data-qa-id="q4">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-4" class="solution-link">4</a></span>다음 물음에 답하시오.</p>
+        <p class="sub">(1) 방정식 $x+2y+3z=10$을 만족하는 자연수의 순서쌍 $(x,\,y,\,z)$의 개수를 구하시오.</p>
+        <p class="sub">(2) 부등식 $3x+y\leq 10$을 만족시키는 자연수의 순서쌍 $(x,\,y)$의 개수를 구하시오.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">3</footer>
+</section>
+
+<!-- PAGE 4 : q5, q6 -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area">
+    <div class="problem-block" data-qa-id="q5">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-5" class="solution-link">5</a></span>다음 물음에 답하시오.</p>
+        <p class="sub">(1) 백의 자리 숫자는 소수, 십의 자리 숫자는 $3$의 배수, 일의 자리 숫자는 $8$의 약수인 세 자리 자연수의 개수를 구하시오. (단, 십의 자리의 수는 $0$이 아니다.)</p>
+        <p class="sub">(2) 다항식 $(a+b-c)(p+q)+(x+y)(r+s)$의 전개식에서 항의 개수를 구하시오.</p>
+      </div>
+    </div>
+    <div class="problem-block" data-qa-id="q6">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-6" class="solution-link">6</a></span>다음 물음에 답하시오.</p>
+        <p class="sub">(1) $72$의 양의 약수의 개수를 구하시오.</p>
+        <p class="sub">(2) $72$의 양의 약수의 총합을 구하시오.</p>
+        <p class="sub">(3) $12^n$의 양의 약수의 개수가 $66$일 때, 자연수 $n$을 구하시오.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">4</footer>
+</section>
+
+<!-- PAGE 5 : q7 (도로망), q8 (지불) -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">공통수학 2</header>
+  <div class="problems-area">
+    <div class="problem-block" data-qa-id="q7">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <svg class="fig-right" viewBox="0 0 160 120" xmlns="http://www.w3.org/2000/svg" style="width:40mm;">
+          <!-- A-P 3개 -->
+          <path d="M 20 60 Q 30 10 80 10" fill="none" stroke="#222" stroke-width="1"/>
+          <path d="M 20 60 Q 50 25 80 10" fill="none" stroke="#222" stroke-width="1"/>
+          <path d="M 20 60 Q 65 45 80 10" fill="none" stroke="#222" stroke-width="1"/>
+          <!-- P-B 2개: 위로 볼록(apex y=25) / 아래로 볼록(apex y=45) -->
+          <path d="M 80 10 Q 110 15 140 60" fill="none" stroke="#222" stroke-width="1"/>
+          <path d="M 80 10 Q 110 55 140 60" fill="none" stroke="#222" stroke-width="1"/>
+          <!-- A-Q 2개: 위로 볼록(apex y=75) / 아래로 볼록(apex y=95) -->
+          <path d="M 20 60 Q 50 65 80 110" fill="none" stroke="#222" stroke-width="1"/>
+          <path d="M 20 60 Q 50 105 80 110" fill="none" stroke="#222" stroke-width="1"/>
+          <!-- B-Q 4개 -->
+          <path d="M 140 60 Q 88 70 80 110" fill="none" stroke="#222" stroke-width="1"/>
+          <path d="M 140 60 Q 102 82 80 110" fill="none" stroke="#222" stroke-width="1"/>
+          <path d="M 140 60 Q 115 93 80 110" fill="none" stroke="#222" stroke-width="1"/>
+          <path d="M 140 60 Q 130 107 80 110" fill="none" stroke="#222" stroke-width="1"/>
+          <!-- 네 점 -->
+          <circle cx="20" cy="60" r="2.5" fill="#222"/>
+          <circle cx="140" cy="60" r="2.5" fill="#222"/>
+          <circle cx="80" cy="10" r="2.5" fill="#222"/>
+          <circle cx="80" cy="110" r="2.5" fill="#222"/>
+          <!-- 지점 라벨 -->
+          <foreignObject x="5" y="50" width="14" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$A$</div></foreignObject>
+          <foreignObject x="142" y="50" width="14" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$B$</div></foreignObject>
+          <foreignObject x="75" y="-5" width="14" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$P$</div></foreignObject>
+          <foreignObject x="75" y="114" width="14" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$Q$</div></foreignObject>
+        </svg>
+        <p><span class="pnum"><a href="#sol-7" class="solution-link">7</a></span>오른쪽 그림과 같이 네 지점 $A,\,B,\,P,\,Q$를 연결하는 도로가 있을 때, 다음 물음에 답하시오. (단, 한 번 지나간 지점은 다시 지날 수 없다.)</p>
+        <p class="sub">(1) $A$지점에서 $P$지점을 거쳐 $B$지점으로 가는 경우의 수를 구하시오.</p>
+        <p class="sub">(2) $A$에서 $B$로 가는 경우의 수를 구하시오.</p>
+        <p class="sub">(3) $A$와 $B$ 사이를 왕복하는데, $P$를 반드시, 그리고 오직 한 번만 지나는 경우의 수를 구하시오.</p>
+      </div>
+    </div>
+    <div class="problem-block" data-qa-id="q8">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-8" class="solution-link">8</a></span>$100$원짜리 동전 $2$개, $50$원짜리 동전 $2$개, $10$원짜리 동전 $4$개를 일부 또는 전부 사용하여 거스름돈 없이 지불할 때, 다음을 구하시오. (단, $0$원을 지불하는 것은 제외한다.)</p>
+        <p class="sub">(1) 지불 방법의 수</p>
+        <p class="sub">(2) 지불할 수 있는 금액의 수</p>
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">5</footer>
+</section>
+
+<!-- PAGE 6 : 도형 색칠 개념 + 채색다항식 + q9 -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">도형에 색칠하기</h2>
+    <div class="concept">
+      <p>인접한 영역의 개수가 많은 영역을 먼저 칠하고, 그 다음에 이미 색칠된 영역과 가장 많이 인접한 영역을 차례로 칠한다. 각 단계에서 <b>이전 영역과 달라야 하는 색의 수</b>를 곱의 법칙으로 센다.</p>
+      <div class="formula left">
+        <b>❶</b> 인접한 영역이 가장 많은 영역을 먼저 칠한다.<br>
+        <b>❷</b> 인접하는 영역 중 이미 색칠된 영역과 가장 많이 인접한 영역을 칠한다.<br>
+        <b>❸</b> 위 과정을 차례로 되풀이한다.
+      </div>
+      <div class="sub-title">채색다항식 (chromatic polynomial)</div>
+      <p>그래프 $G$의 꼭짓점을 $k$가지 색으로, 인접한 두 꼭짓점은 서로 다른 색이 되도록 칠하는 경우의 수를 $P(G,\,k)$로 나타내고 이를 <b>채색다항식</b>이라 한다.</p>
+      <div class="formula left">
+        <b>①</b> 완전그래프 $K_n$: $P(K_n,\,k)=k(k-1)(k-2)\cdots(k-n+1)$<br>
+        <b>②</b> 경로 $P_n$ (꼭짓점 $n$개): $P(P_n,\,k)=k(k-1)^{n-1}$<br>
+        <b>③</b> 트리 $T_n$ (꼭짓점 $n$개): $P(T_n,\,k)=k(k-1)^{n-1}$<br>
+        <b>④</b> 사이클 $C_n$: $P(C_n,\,k)=(k-1)^n+(-1)^n(k-1)$
+      </div>
+
+      <div class="sub-title">완전그래프 $K_n$ 채색 — 직관 증명</div>
+      <p>$K_n$은 $n$개의 꼭짓점이 모두 서로 인접. 꼭짓점을 하나씩 순서대로 칠할 때 $i$번째 꼭짓점은 앞서 칠한 $i-1$개와 <b>모두 달라야</b> 하므로 선택지는 $k-(i-1)$가지. 곱의 법칙을 적용하면 공식이 나온다.</p>
+      <div class="fig-row" style="gap:6mm; align-items:flex-end;">
+        <svg viewBox="0 0 150 160" xmlns="http://www.w3.org/2000/svg" style="width:30%; max-width:38mm;">
+          <!-- K_3: 삼각형 -->
+          <line x1="75" y1="30" x2="28" y2="110" stroke="#222" stroke-width="1.3"/>
+          <line x1="75" y1="30" x2="122" y2="110" stroke="#222" stroke-width="1.3"/>
+          <line x1="28" y1="110" x2="122" y2="110" stroke="#222" stroke-width="1.3"/>
+          <circle cx="75" cy="30" r="3.5" fill="#fff" stroke="#222" stroke-width="1.3"/>
+          <circle cx="28" cy="110" r="3.5" fill="#fff" stroke="#222" stroke-width="1.3"/>
+          <circle cx="122" cy="110" r="3.5" fill="#fff" stroke="#222" stroke-width="1.3"/>
+          <foreignObject x="60" y="4" width="30" height="20" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;color:#e53e3e;text-align:center;">$k$</div></foreignObject>
+          <foreignObject x="-5" y="116" width="40" height="20" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;color:#e53e3e;text-align:center;">$k\!-\!1$</div></foreignObject>
+          <foreignObject x="115" y="116" width="40" height="20" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;color:#e53e3e;text-align:center;">$k\!-\!2$</div></foreignObject>
+          <foreignObject x="55" y="140" width="40" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11.5pt;line-height:1;text-align:center;">$K_3$</div></foreignObject>
+        </svg>
+        <svg viewBox="0 0 150 160" xmlns="http://www.w3.org/2000/svg" style="width:30%; max-width:38mm;">
+          <!-- K_4: 사각형 + 대각선 두 개 -->
+          <rect x="32" y="32" width="86" height="86" fill="none" stroke="#222" stroke-width="1.3"/>
+          <line x1="32" y1="32" x2="118" y2="118" stroke="#222" stroke-width="1.3"/>
+          <line x1="118" y1="32" x2="32" y2="118" stroke="#222" stroke-width="1.3"/>
+          <circle cx="32" cy="32" r="3.5" fill="#fff" stroke="#222" stroke-width="1.3"/>
+          <circle cx="118" cy="32" r="3.5" fill="#fff" stroke="#222" stroke-width="1.3"/>
+          <circle cx="118" cy="118" r="3.5" fill="#fff" stroke="#222" stroke-width="1.3"/>
+          <circle cx="32" cy="118" r="3.5" fill="#fff" stroke="#222" stroke-width="1.3"/>
+          <foreignObject x="3" y="22" width="24" height="20" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;color:#e53e3e;text-align:right;">$k$</div></foreignObject>
+          <foreignObject x="122" y="22" width="40" height="20" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;color:#e53e3e;text-align:left;">$k\!-\!1$</div></foreignObject>
+          <foreignObject x="122" y="114" width="40" height="20" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;color:#e53e3e;text-align:left;">$k\!-\!2$</div></foreignObject>
+          <foreignObject x="-13" y="114" width="40" height="20" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;color:#e53e3e;text-align:right;">$k\!-\!3$</div></foreignObject>
+          <foreignObject x="55" y="140" width="40" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11.5pt;line-height:1;text-align:center;">$K_4$</div></foreignObject>
+        </svg>
+        <svg viewBox="0 0 150 160" xmlns="http://www.w3.org/2000/svg" style="width:30%; max-width:38mm;">
+          <!-- K_5: 정오각형 + 모든 대각선(pentagram) -->
+          <!-- 꼭짓점: 중심 (75,80), 반지름 55, 각 72도 간격, v1 꼭대기 -->
+          <!-- v1(75,25), v2(127,63), v3(107,124), v4(43,124), v5(23,63) -->
+          <!-- 10개 변: 5변 + 5대각선 -->
+          <line x1="75" y1="25" x2="127" y2="63" stroke="#222" stroke-width="1.1"/>
+          <line x1="127" y1="63" x2="107" y2="124" stroke="#222" stroke-width="1.1"/>
+          <line x1="107" y1="124" x2="43" y2="124" stroke="#222" stroke-width="1.1"/>
+          <line x1="43" y1="124" x2="23" y2="63" stroke="#222" stroke-width="1.1"/>
+          <line x1="23" y1="63" x2="75" y2="25" stroke="#222" stroke-width="1.1"/>
+          <line x1="75" y1="25" x2="107" y2="124" stroke="#222" stroke-width="1.1"/>
+          <line x1="75" y1="25" x2="43" y2="124" stroke="#222" stroke-width="1.1"/>
+          <line x1="127" y1="63" x2="43" y2="124" stroke="#222" stroke-width="1.1"/>
+          <line x1="127" y1="63" x2="23" y2="63" stroke="#222" stroke-width="1.1"/>
+          <line x1="23" y1="63" x2="107" y2="124" stroke="#222" stroke-width="1.1"/>
+          <circle cx="75" cy="25" r="3" fill="#fff" stroke="#222" stroke-width="1.3"/>
+          <circle cx="127" cy="63" r="3" fill="#fff" stroke="#222" stroke-width="1.3"/>
+          <circle cx="107" cy="124" r="3" fill="#fff" stroke="#222" stroke-width="1.3"/>
+          <circle cx="43" cy="124" r="3" fill="#fff" stroke="#222" stroke-width="1.3"/>
+          <circle cx="23" cy="63" r="3" fill="#fff" stroke="#222" stroke-width="1.3"/>
+          <foreignObject x="62" y="3" width="26" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;color:#e53e3e;text-align:center;">$k$</div></foreignObject>
+          <foreignObject x="130" y="55" width="40" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;color:#e53e3e;text-align:left;">$k\!-\!1$</div></foreignObject>
+          <foreignObject x="105" y="126" width="40" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;color:#e53e3e;text-align:left;">$k\!-\!2$</div></foreignObject>
+          <foreignObject x="5" y="126" width="40" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;color:#e53e3e;text-align:right;">$k\!-\!3$</div></foreignObject>
+          <foreignObject x="-17" y="55" width="40" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;color:#e53e3e;text-align:right;">$k\!-\!4$</div></foreignObject>
+          <foreignObject x="55" y="140" width="40" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11.5pt;line-height:1;text-align:center;">$K_5$</div></foreignObject>
+        </svg>
+      </div>
+      <div class="formula left" style="font-size:10.5pt;">
+        $P(K_3,\,k)=k(k\!-\!1)(k\!-\!2)$ (삼각형)<br>
+        $P(K_4,\,k)=k(k\!-\!1)(k\!-\!2)(k\!-\!3)$ (사각형 + 대각선 2개)<br>
+        $P(K_5,\,k)=k(k\!-\!1)(k\!-\!2)(k\!-\!3)(k\!-\!4)$ (오각형 + 대각선 5개)<br>
+        일반: $P(K_n,\,k)=k(k\!-\!1)(k\!-\!2)\cdots(k\!-\!n\!+\!1)$
+      </div>
+
+      <div class="sub-title">경로 $P_n$ 채색 — 직관 증명</div>
+      <p>$P_n$은 $n$개의 꼭짓점이 일렬로 연결된 그래프. 첫 꼭짓점 $v_1$은 제약이 없어 $k$가지. 이후 꼭짓점은 <b>직전 꼭짓점과만 인접</b>하므로 그 색 하나만 피하면 되어 $(k\!-\!1)$가지. 뒤쪽 꼭짓점은 앞의 다른 꼭짓점과는 인접하지 않아 제약이 추가되지 않는다.</p>
+      <div class="fig-row" style="gap:4mm; align-items:center;">
+        <svg viewBox="0 0 150 60" xmlns="http://www.w3.org/2000/svg" style="width:30%; max-width:42mm;">
+          <!-- P_3: 3 vertices in a row -->
+          <line x1="25" y1="35" x2="75" y2="35" stroke="#222" stroke-width="1.3"/>
+          <line x1="75" y1="35" x2="125" y2="35" stroke="#222" stroke-width="1.3"/>
+          <circle cx="25" cy="35" r="3.5" fill="#fff" stroke="#222" stroke-width="1.3"/>
+          <circle cx="75" cy="35" r="3.5" fill="#fff" stroke="#222" stroke-width="1.3"/>
+          <circle cx="125" cy="35" r="3.5" fill="#fff" stroke="#222" stroke-width="1.3"/>
+          <foreignObject x="15" y="12" width="20" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;color:#e53e3e;text-align:center;">$k$</div></foreignObject>
+          <foreignObject x="57" y="12" width="36" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;color:#e53e3e;text-align:center;">$k\!-\!1$</div></foreignObject>
+          <foreignObject x="107" y="12" width="36" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;color:#e53e3e;text-align:center;">$k\!-\!1$</div></foreignObject>
+          <foreignObject x="55" y="45" width="40" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11.5pt;line-height:1;text-align:center;">$P_3$</div></foreignObject>
+        </svg>
+        <svg viewBox="0 0 150 60" xmlns="http://www.w3.org/2000/svg" style="width:30%; max-width:42mm;">
+          <!-- P_4: 4 vertices in a row -->
+          <line x1="18" y1="35" x2="54" y2="35" stroke="#222" stroke-width="1.3"/>
+          <line x1="54" y1="35" x2="90" y2="35" stroke="#222" stroke-width="1.3"/>
+          <line x1="90" y1="35" x2="126" y2="35" stroke="#222" stroke-width="1.3"/>
+          <circle cx="18" cy="35" r="3.5" fill="#fff" stroke="#222" stroke-width="1.3"/>
+          <circle cx="54" cy="35" r="3.5" fill="#fff" stroke="#222" stroke-width="1.3"/>
+          <circle cx="90" cy="35" r="3.5" fill="#fff" stroke="#222" stroke-width="1.3"/>
+          <circle cx="126" cy="35" r="3.5" fill="#fff" stroke="#222" stroke-width="1.3"/>
+          <foreignObject x="8" y="12" width="20" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10px;line-height:1;color:#e53e3e;text-align:center;">$k$</div></foreignObject>
+          <foreignObject x="36" y="12" width="36" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10px;line-height:1;color:#e53e3e;text-align:center;">$k\!-\!1$</div></foreignObject>
+          <foreignObject x="72" y="12" width="36" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10px;line-height:1;color:#e53e3e;text-align:center;">$k\!-\!1$</div></foreignObject>
+          <foreignObject x="108" y="12" width="36" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10px;line-height:1;color:#e53e3e;text-align:center;">$k\!-\!1$</div></foreignObject>
+          <foreignObject x="55" y="45" width="40" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11.5pt;line-height:1;text-align:center;">$P_4$</div></foreignObject>
+        </svg>
+        <svg viewBox="0 0 150 60" xmlns="http://www.w3.org/2000/svg" style="width:30%; max-width:42mm;">
+          <!-- P_5: 5 vertices in a row -->
+          <line x1="15" y1="35" x2="45" y2="35" stroke="#222" stroke-width="1.3"/>
+          <line x1="45" y1="35" x2="75" y2="35" stroke="#222" stroke-width="1.3"/>
+          <line x1="75" y1="35" x2="105" y2="35" stroke="#222" stroke-width="1.3"/>
+          <line x1="105" y1="35" x2="135" y2="35" stroke="#222" stroke-width="1.3"/>
+          <circle cx="15" cy="35" r="3" fill="#fff" stroke="#222" stroke-width="1.3"/>
+          <circle cx="45" cy="35" r="3" fill="#fff" stroke="#222" stroke-width="1.3"/>
+          <circle cx="75" cy="35" r="3" fill="#fff" stroke="#222" stroke-width="1.3"/>
+          <circle cx="105" cy="35" r="3" fill="#fff" stroke="#222" stroke-width="1.3"/>
+          <circle cx="135" cy="35" r="3" fill="#fff" stroke="#222" stroke-width="1.3"/>
+          <foreignObject x="5" y="14" width="20" height="16" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:9px;line-height:1;color:#e53e3e;text-align:center;">$k$</div></foreignObject>
+          <foreignObject x="28" y="14" width="34" height="16" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:9px;line-height:1;color:#e53e3e;text-align:center;">$k\!-\!1$</div></foreignObject>
+          <foreignObject x="58" y="14" width="34" height="16" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:9px;line-height:1;color:#e53e3e;text-align:center;">$k\!-\!1$</div></foreignObject>
+          <foreignObject x="88" y="14" width="34" height="16" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:9px;line-height:1;color:#e53e3e;text-align:center;">$k\!-\!1$</div></foreignObject>
+          <foreignObject x="118" y="14" width="34" height="16" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:9px;line-height:1;color:#e53e3e;text-align:center;">$k\!-\!1$</div></foreignObject>
+          <foreignObject x="55" y="45" width="40" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11.5pt;line-height:1;text-align:center;">$P_5$</div></foreignObject>
+        </svg>
+      </div>
+      <div class="formula left" style="font-size:10.5pt;">
+        $P(P_3,\,k)=k(k\!-\!1)^2,\ \ P(P_4,\,k)=k(k\!-\!1)^3,\ \ P(P_5,\,k)=k(k\!-\!1)^4$<br>
+        일반: $P(P_n,\,k)=k(k\!-\!1)^{n-1}$ (트리 $T_n$도 동일 — 부모와만 다르면 됨)
+      </div>
+
+      <div class="sub-title">사이클 $C_n$ 채색 — 재귀 증명 (삭제-축약)</div>
+      <p>$C_n$의 한 변을 지우면 경로 $P_n$이 되어 $k(k\!-\!1)^{n-1}$가지 경우가 나온다. 이 중 일부는 <b>$v_1=v_n$</b>인 경우 (사이클로 닫히지 않는 "나쁜" 경우)인데, 이는 $v_1$과 $v_n$을 동일시한 <b>$C_{n-1}$의 채색</b>과 일대일 대응. 따라서</p>
+      <div class="formula" style="font-size:10.5pt;">$P(C_n,\,k)=k(k\!-\!1)^{n-1}-P(C_{n-1},\,k)$</div>
+      <div class="fig-row" style="gap:4mm; align-items:flex-end;">
+        <svg viewBox="0 0 150 160" xmlns="http://www.w3.org/2000/svg" style="width:30%; max-width:38mm;">
+          <!-- C_3 = 삼각형 (K_3와 동일) -->
+          <line x1="75" y1="30" x2="28" y2="110" stroke="#222" stroke-width="1.3"/>
+          <line x1="75" y1="30" x2="122" y2="110" stroke="#222" stroke-width="1.3"/>
+          <line x1="28" y1="110" x2="122" y2="110" stroke="#222" stroke-width="1.3"/>
+          <circle cx="75" cy="30" r="3.5" fill="#fff" stroke="#222" stroke-width="1.3"/>
+          <circle cx="28" cy="110" r="3.5" fill="#fff" stroke="#222" stroke-width="1.3"/>
+          <circle cx="122" cy="110" r="3.5" fill="#fff" stroke="#222" stroke-width="1.3"/>
+          <foreignObject x="55" y="140" width="40" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11.5pt;line-height:1;text-align:center;">$C_3$</div></foreignObject>
+        </svg>
+        <svg viewBox="0 0 150 160" xmlns="http://www.w3.org/2000/svg" style="width:30%; max-width:38mm;">
+          <!-- C_4 = 사각형 (대각선 없음) -->
+          <rect x="32" y="32" width="86" height="86" fill="none" stroke="#222" stroke-width="1.3"/>
+          <circle cx="32" cy="32" r="3.5" fill="#fff" stroke="#222" stroke-width="1.3"/>
+          <circle cx="118" cy="32" r="3.5" fill="#fff" stroke="#222" stroke-width="1.3"/>
+          <circle cx="118" cy="118" r="3.5" fill="#fff" stroke="#222" stroke-width="1.3"/>
+          <circle cx="32" cy="118" r="3.5" fill="#fff" stroke="#222" stroke-width="1.3"/>
+          <foreignObject x="55" y="140" width="40" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11.5pt;line-height:1;text-align:center;">$C_4$</div></foreignObject>
+        </svg>
+        <svg viewBox="0 0 150 160" xmlns="http://www.w3.org/2000/svg" style="width:30%; max-width:38mm;">
+          <!-- C_5 = 정오각형 (대각선 없음) -->
+          <line x1="75" y1="25" x2="127" y2="63" stroke="#222" stroke-width="1.3"/>
+          <line x1="127" y1="63" x2="107" y2="124" stroke="#222" stroke-width="1.3"/>
+          <line x1="107" y1="124" x2="43" y2="124" stroke="#222" stroke-width="1.3"/>
+          <line x1="43" y1="124" x2="23" y2="63" stroke="#222" stroke-width="1.3"/>
+          <line x1="23" y1="63" x2="75" y2="25" stroke="#222" stroke-width="1.3"/>
+          <circle cx="75" cy="25" r="3" fill="#fff" stroke="#222" stroke-width="1.3"/>
+          <circle cx="127" cy="63" r="3" fill="#fff" stroke="#222" stroke-width="1.3"/>
+          <circle cx="107" cy="124" r="3" fill="#fff" stroke="#222" stroke-width="1.3"/>
+          <circle cx="43" cy="124" r="3" fill="#fff" stroke="#222" stroke-width="1.3"/>
+          <circle cx="23" cy="63" r="3" fill="#fff" stroke="#222" stroke-width="1.3"/>
+          <foreignObject x="55" y="140" width="40" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11.5pt;line-height:1;text-align:center;">$C_5$</div></foreignObject>
+        </svg>
+      </div>
+      <p><b>단계별 계산</b>:</p>
+      <div class="formula left" style="font-size:10pt;">
+        $C_3=K_3$: $P(C_3,\,k)=k(k\!-\!1)(k\!-\!2)$<br>
+        $P(C_4,\,k)=k(k\!-\!1)^3-P(C_3,\,k)=k(k\!-\!1)\!\left[(k\!-\!1)^2-(k\!-\!2)\right]=k(k\!-\!1)(k^2\!-\!3k\!+\!3)$<br>
+        $P(C_5,\,k)=k(k\!-\!1)^4-P(C_4,\,k)=(k\!-\!1)^5-(k\!-\!1)$<br>
+        일반: $P(C_n,\,k)=(k\!-\!1)^n+(-1)^n(k\!-\!1)$
+      </div>
+
+      <div class="note">영역 색칠 문제는 인접 관계를 그래프로 바꾼 뒤 채색다항식에 대입하거나, ❶∼❸ 순서 규칙으로 곱의 법칙을 적용한다. 일반적으로 $k=3,\,4,\,5$ 정도의 작은 값.</div>
+    </div>
+  </div>
+  <footer class="sheet-footer">6</footer>
+</section>
+
+<!-- PAGE 7 : Q9 단독 (도형 색칠 확인문제) -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">공통수학 2</header>
+  <div class="problems-area single">
+    <div class="problem-block" data-qa-id="q9">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <svg class="fig-right" viewBox="0 0 160 100" xmlns="http://www.w3.org/2000/svg" style="width:45mm;">
+          <!-- 외곽 사각형 -->
+          <rect x="5" y="5" width="150" height="90" fill="none" stroke="#222" stroke-width="1"/>
+          <!-- A : 왼쪽 세로 열 (전체 높이) -->
+          <line x1="50" y1="5" x2="50" y2="95" stroke="#222" stroke-width="1"/>
+          <!-- B-E 경계: 슬랜트(평행사변형 왼변) -->
+          <line x1="100" y1="5" x2="85" y2="50" stroke="#222" stroke-width="1"/>
+          <!-- 상단(B, E)과 하단(D, C) 수평 분리선 : (50,50)~(155,50) -->
+          <line x1="50" y1="50" x2="155" y2="50" stroke="#222" stroke-width="1"/>
+          <!-- D-C 경계 : 수직 -->
+          <line x1="110" y1="50" x2="110" y2="95" stroke="#222" stroke-width="1"/>
+          <!-- 영역 라벨 -->
+          <foreignObject x="22" y="42" width="18" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$A$</div></foreignObject>
+          <foreignObject x="64" y="22" width="18" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$B$</div></foreignObject>
+          <foreignObject x="118" y="22" width="18" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$E$</div></foreignObject>
+          <foreignObject x="75" y="68" width="18" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$D$</div></foreignObject>
+          <foreignObject x="128" y="68" width="18" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$C$</div></foreignObject>
+        </svg>
+        <p><span class="pnum"><a href="#sol-9" class="solution-link">9</a></span>오른쪽 그림과 같이 $5$개의 영역을 서로 다른 $5$개의 색으로 칠하려고 한다. 같은 색을 중복하여 사용해도 좋으나 인접한 영역은 서로 다른 색으로 칠하는 경우의 수를 구하시오.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">7</footer>
+</section>
+
+<!-- PAGE 8 : 교란순열 개념 + q10 -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">공통수학 2</header>
+  <div class="sheet-body">
+    <h2 class="section-title">교란순열 (완전순열)</h2>
+    <div class="concept">
+      <p>$n$개의 숫자 $1,\,2,\,3,\,\cdots,\,n$을 일렬로 배열하여 $n$자리 자연수 $a_1 a_2 a_3 \cdots a_n$을 만들 때, $a_1\neq 1,\ a_2\neq 2,\ \cdots,\ a_n\neq n$, 즉 모든 $i$에 대하여 $a_i\neq i$인 배열의 개수를 <b>교란순열</b>(derangement) 또는 <b>완전순열</b>(complete permutation)이라 하고 $D_n$으로 나타낸다.</p>
+
+      <div class="sub-title">1) 점화식</div>
+      <div class="formula">$D_n=(n-1)\!\left(D_{n-1}+D_{n-2}\right),\ \ \ D_1=0,\ D_2=1$</div>
+      <p><b>유도</b> — $n$자리 중 $a_n$의 자리에 올 수 있는 값은 $1,\,2,\,\cdots,\,n-1$의 $(n-1)$가지. $a_n=k$라 하면 두 경우로 나뉜다.</p>
+      <div class="formula left" style="font-size:10pt;">
+        (i) $a_k=n$인 경우: 나머지 $n-2$자리에서 교란 $D_{n-2}$<br>
+        (ii) $a_k\neq n$인 경우: $n-1$자리에서 교란 $D_{n-1}$
+      </div>
+      <p>따라서 $D_n=(n-1)(D_{n-1}+D_{n-2})$.</p>
+
+      <div class="sub-title">2) 포함배제 공식</div>
+      <div class="formula">$D_n=n!\!\displaystyle\sum_{k=0}^{n}\dfrac{(-1)^k}{k!}=n!\!\left(1-\dfrac{1}{1!}+\dfrac{1}{2!}-\dfrac{1}{3!}+\cdots+\dfrac{(-1)^n}{n!}\right)$</div>
+
+      <div class="sub-title">3) $D_n$의 값</div>
+      <table>
+        <thead><tr><th>$n$</th><th>$1$</th><th>$2$</th><th>$3$</th><th>$4$</th><th>$5$</th><th>$6$</th></tr></thead>
+        <tbody><tr><td>$D_n$</td><td>$0$</td><td>$1$</td><td>$2$</td><td>$9$</td><td>$44$</td><td>$265$</td></tr></tbody>
+      </table>
+      <div class="note">$n$이 작을 때 ($n\leq 4$)는 수형도 또는 직접 나열이 빠르다. $D_3=2$는 $(2,3,1),\,(3,1,2)$, $D_4=9$는 아홉 가지를 체계적으로 나열한다.</div>
+    </div>
+    <div class="problem-block" data-qa-id="q10">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-10" class="solution-link">10</a></span>$A,\,B,\,C,\,D$ 네 명의 학생이 각각 자신의 물건 $a,\,b,\,c,\,d$를 내놓고 사다리 타기를 통해 나온 물건을 가져가는 게임을 하고 있다. 네 명 모두 다른 사람의 물건을 가져가는 경우의 수를 구하시오.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">7</footer>
+</section>
+
+<!-- PAGE 8 : Q11 단독 -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area single">
+    <div class="problem-block" data-qa-id="q11">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-11" class="solution-link">11</a></span>$1,\,2,\,3$으로 만들 수 있는 세 자리의 자연수는 $27$개가 있다. 이 중에서 다음 규칙을 만족시키는 세 자리의 자연수의 개수를 구하시오.</p>
+        <div class="cond-box">
+          <p>(가) $1$ 바로 다음에는 $3$이다.</p>
+          <p>(나) $2$ 바로 다음에는 $1$ 또는 $3$이다.</p>
+          <p>(다) $3$ 바로 다음에는 $1$ 또는 $2$ 또는 $3$이다.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">8</footer>
+</section>
+
+<!-- PAGE 10 : 빠른 정답 -->
+<section class="sheet even quick-answer-section">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">빠른 정답</h2>
+    <div class="quick-answers">
+      <div class="qa-item"><span class="qa-num">1.</span><span class="qa-ans">$9$</span></div>
+      <div class="qa-item"><span class="qa-num">2.</span><span class="qa-ans">(1) $9$<br>(2) $8$</span></div>
+      <div class="qa-item"><span class="qa-num">3.</span><span class="qa-ans">③ $10$</span></div>
+      <div class="qa-item"><span class="qa-num">4.</span><span class="qa-ans">(1) $4$<br>(2) $12$</span></div>
+      <div class="qa-item"><span class="qa-num">5.</span><span class="qa-ans">(1) $48$<br>(2) $10$</span></div>
+      <div class="qa-item"><span class="qa-num">6.</span><span class="qa-ans">(1) $12$<br>(2) $195$<br>(3) $n=5$</span></div>
+      <div class="qa-item"><span class="qa-num">7.</span><span class="qa-ans">(1) $6$<br>(2) $14$<br>(3) $96$</span></div>
+      <div class="qa-item"><span class="qa-num">8.</span><span class="qa-ans">(1) $44$<br>(2) $34$</span></div>
+      <div class="qa-item"><span class="qa-num">9.</span><span class="qa-ans">$540$</span></div>
+      <div class="qa-item"><span class="qa-num">10.</span><span class="qa-ans">$9$</span></div>
+      <div class="qa-item"><span class="qa-num">11.</span><span class="qa-ans">$13$</span></div>
+    </div>
+  </div>
+  <footer class="sheet-footer">10</footer>
+</section>
+
+<!-- PAGE 11 : 정답 및 해설 -->
+<section class="sheet odd solution-section">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">공통수학 2</header>
+  <div class="sheet-body">
+    <h2 class="section-title">정답 및 해설</h2>
+    <div class="solutions">
+
+      <div class="solution-item" id="sol-1" data-qa-id="q1">
+        <div class="sol-num">1.</div>
+        <div class="sol-answer"><b>[정답]</b> $9$</div>
+        <p>두 눈의 합 $= 2,\,3,\,\cdots,\,12.$ $4$의 배수는 $4,\,8,\,12.$</p>
+        <p>합 $4$: $(1,3),(2,2),(3,1)$ $\Rightarrow 3$가지. 합 $8$: $(2,6),(3,5),(4,4),(5,3),(6,2)$ $\Rightarrow 5$가지. 합 $12$: $(6,6)$ $\Rightarrow 1$가지.</p>
+        <p>합의 법칙으로 $3+5+1=9.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-2" data-qa-id="q2">
+        <div class="sol-num">2.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $9$ (2) $8$</div>
+        <p>(1) $10$의 약수 $=\{1,2,5,10\}$ ($4$개), $4$의 배수 $=\{4,8,12,16,20\}$ ($5$개), 교집합 없음. $4+5=9.$</p>
+        <p>(2) $4$의 배수 $5$개, $5$의 배수 $=\{5,10,15,20\}$ ($4$개), 교집합 $\{20\}$ ($1$개). $5+4-1=8.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-3" data-qa-id="q3">
+        <div class="sol-num">3.</div>
+        <div class="sol-answer"><b>[정답]</b> ③ $10$</div>
+        <p>복원이므로 $(a,b,c)$는 순서 있는 삼중합. $a+b+c\leq 5$ 중 자연수 삼중합.</p>
+        <p>합 $3$: $(1,1,1)$ $\Rightarrow 1.$ 합 $4$: $(1,1,2)$ 순열 $3.$ 합 $5$: $(1,1,3)$ 순열 $3$ + $(1,2,2)$ 순열 $3=6.$</p>
+        <p>합의 법칙: $1+3+6=10.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-4" data-qa-id="q4">
+        <div class="sol-num">4.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $4$ (2) $12$</div>
+        <p>(1) $z=1$: $x+2y=7$ $\Rightarrow (5,1,1),(3,2,1),(1,3,1)$ $\Rightarrow 3.$ $z=2$: $x+2y=4$ $\Rightarrow (2,1,2)$ $\Rightarrow 1.$ $z=3$: $x+2y=1$ 불가. 합 $4.$</p>
+        <p>(2) $x=1$: $y\leq 7$ $\Rightarrow 7.$ $x=2$: $y\leq 4$ $\Rightarrow 4.$ $x=3$: $y\leq 1$ $\Rightarrow 1.$ $x\geq 4$: 불가. 합 $12.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-5" data-qa-id="q5">
+        <div class="sol-num">5.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $48$ (2) $10$</div>
+        <p>(1) 백 $\in\{2,3,5,7\}$ $4$개. 십 $\in\{3,6,9\}$ ($0$ 제외) $3$개. 일 $\in\{1,2,4,8\}$ $4$개. 곱의 법칙 $4\cdot 3\cdot 4=48.$</p>
+        <p>(2) $(a+b-c)(p+q)$는 $3\cdot 2=6$항, $(x+y)(r+s)$는 $2\cdot 2=4$항. 변수 집합이 서로 달라 같은 항 없음. $6+4=10.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-6" data-qa-id="q6">
+        <div class="sol-num">6.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $12$ (2) $195$ (3) $n=5$</div>
+        <p>(1) $72=2^3\cdot 3^2.$ 약수의 개수 $=(3+1)(2+1)=12.$</p>
+        <p>(2) 약수의 총합 $=(1+2+4+8)(1+3+9)=15\cdot 13=195.$</p>
+        <p>(3) $12^n=2^{2n}\cdot 3^n.$ 약수의 개수 $=(2n+1)(n+1)=66.$ $2n^2+3n-65=0,\ (2n+13)(n-5)=0 \Rightarrow n=5.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-7" data-qa-id="q7">
+        <div class="sol-num">7.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $6$ (2) $14$ (3) $96$</div>
+        <p>도로 수: $A\!-\!P$ $3$개, $P\!-\!B$ $2$개, $A\!-\!Q$ $2$개, $B\!-\!Q$ $4$개.</p>
+        <p>(1) $A\!\to\!P\!\to\!B$: $3\cdot 2=6.$</p>
+        <p>(2) $A\!\to\!B$는 $A\!-\!P\!-\!B$ 또는 $A\!-\!Q\!-\!B$. $3\cdot 2+2\cdot 4=6+8=14.$</p>
+        <p>(3) 왕복 $A\!\to\!B\!\to\!A$에서 $P$를 정확히 한 번 지나려면 두 구간 중 한 구간만 $P$ 경로.<br>
+        ① $A\!\to\!B$에 $P$ 지남($3\cdot 2=6$) & $B\!\to\!A$에 $Q$만 지남($4\cdot 2=8$): $6\cdot 8=48.$<br>
+        ② $A\!\to\!B$에 $Q$만 지남($2\cdot 4=8$) & $B\!\to\!A$에 $P$ 지남($2\cdot 3=6$): $8\cdot 6=48.$<br>
+        합 $48+48=96.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-8" data-qa-id="q8">
+        <div class="sol-num">8.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $44$ (2) $34$</div>
+        <p>(1) 각 동전의 선택 가지수: $100$원 $0\!\sim\!2$ ($3$), $50$원 $0\!\sim\!2$ ($3$), $10$원 $0\!\sim\!4$ ($5$). 모두 곱하면 $45$. $0$원(모두 $0$) 제외 $\Rightarrow 45-1=44.$</p>
+        <p>(2) $100$원 $x$개, $50$원 $y$개를 묶어 $50(2x+y)$ 꼴. $2x+y$의 값은 $\{0,1,2,3,4,5,6\}$ 모두 가능 ($7$가지). $10$원 $z$개로 $10z\in\{0,10,20,30,40\}$ ($5$가지).</p>
+        <p>총 금액 $= 50(2x+y)+10z$. $50$의 배수 부분은 $0,50,\cdots,300$, $10$의 배수 부분은 $0\!\sim\!40$. 두 부분 합은 서로 다른 $7\cdot 5=35$개의 값. $0$원 제외 $\Rightarrow 34.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-9" data-qa-id="q9">
+        <div class="sol-num">9.</div>
+        <div class="sol-answer"><b>[정답]</b> $540$</div>
+        <p>인접 관계: $D$는 $A,B,C,E$와 모두 인접 ($4$개, 최다). $B$는 $A,C,D$, $C$는 $B,D,E$, $A$는 $B,D$, $E$는 $C,D$.</p>
+        <p>순서 $D\to B\to A\to C\to E$로 칠한다: $D$ $5$가지, $B$ (D와 다름) $4$, $A$ (B,D와 다름) $3$, $C$ (B,D와 다름) $3$, $E$ (C,D와 다름) $3.$</p>
+        <p>곱의 법칙: $5\cdot 4\cdot 3\cdot 3\cdot 3=540.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-10" data-qa-id="q10">
+        <div class="sol-num">10.</div>
+        <div class="sol-answer"><b>[정답]</b> $9$</div>
+        <p>네 명 모두 다른 사람의 물건을 가져가는 경우 $=$ 교란순열 $D_4.$ 점화식 $D_n=(n-1)(D_{n-1}+D_{n-2})$: $D_2=1,\,D_3=2\cdot(1+0)=2,\,D_4=3\cdot(2+1)=9.$</p>
+        <p>포함배제: $D_4=4!\!\left(1-\tfrac{1}{1!}+\tfrac{1}{2!}-\tfrac{1}{3!}+\tfrac{1}{4!}\right)=24\cdot\tfrac{9}{24}=9.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-11" data-qa-id="q11">
+        <div class="sol-num">11.</div>
+        <div class="sol-answer"><b>[정답]</b> $13$</div>
+        <p>자리 이전 숫자에 따른 다음 숫자의 허용 집합: $1\!\to\!\{3\}$, $2\!\to\!\{1,3\}$, $3\!\to\!\{1,2,3\}.$</p>
+        <p>세 자리 $abc$ 각각 세기:<br>
+        $a=1,b=3$: $c\in\{1,2,3\}$ $\Rightarrow 3.$<br>
+        $a=2,b=1$: $c=3$ $\Rightarrow 1.$<br>
+        $a=2,b=3$: $c\in\{1,2,3\}$ $\Rightarrow 3.$<br>
+        $a=3,b=1$: $c=3$ $\Rightarrow 1.$<br>
+        $a=3,b=2$: $c\in\{1,3\}$ $\Rightarrow 2.$<br>
+        $a=3,b=3$: $c\in\{1,2,3\}$ $\Rightarrow 3.$<br>
+        합 $3+1+3+1+2+3=13.$</p>
+      </div>
+
+    </div>
+  </div>
+  <footer class="sheet-footer">11</footer>
+</section>
+
+<!-- 해설 이월 예비 -->
+<section class="sheet even solution-section">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body"><div class="solutions"></div></div>
+  <footer class="sheet-footer">12</footer>
+</section>
+
+<script>
+const _ready = Promise.all([
+  document.fonts.ready,
+  (window.MathJax && MathJax.startup && MathJax.startup.promise) ? MathJax.startup.promise : Promise.resolve()
+]);
+_ready.then(() => {
+  (function autoWrapChoices(){
+    document.querySelectorAll('.choices').forEach(c => {
+      if (c.scrollWidth > c.clientWidth) c.classList.add('two-row');
+    });
+  })();
+  (function compactAndSplitConcepts(){
+    const SLACK_PX = (() => {
+      const probe = document.createElement('div');
+      probe.style.cssText = 'position:absolute;visibility:hidden;width:10mm;';
+      document.body.appendChild(probe);
+      const px = probe.getBoundingClientRect().width;
+      document.body.removeChild(probe);
+      return px;
+    })();
+    function overflows(body){ return body.scrollHeight > body.clientHeight + SLACK_PX; }
+    function conceptSheets(){
+      return Array.from(document.querySelectorAll('.sheet')).filter(s =>
+        s.querySelector('.concept') && !s.classList.contains('solution-section')
+          && !s.classList.contains('quick-answer-section')
+      );
+    }
+    conceptSheets().forEach(sheet => {
+      const body = sheet.querySelector('.sheet-body');
+      if (!overflows(body)) return;
+      body.querySelectorAll('.concept .formula').forEach(f => f.classList.add('compact'));
+    });
+    conceptSheets().forEach(sheet => {
+      const body = sheet.querySelector('.sheet-body');
+      if (!overflows(body)) return;
+      const concept = body.querySelector('.concept');
+      if (concept) concept.classList.add('dense');
+    });
+    const queue = conceptSheets();
+    while (queue.length){
+      const sheet = queue.shift();
+      const body = sheet.querySelector('.sheet-body');
+      if (!body || !overflows(body)) continue;
+      const concept = body.querySelector('.concept');
+      if (!concept) continue;
+      const groups = [];
+      let cur = null;
+      Array.from(concept.children).forEach(ch => {
+        if (ch.classList.contains('sub-title')) { cur = [ch]; groups.push(cur); }
+        else if (cur) { cur.push(ch); }
+        else { cur = [ch]; groups.push(cur); }
+      });
+      if (groups.length < 2) continue;
+      const bodyBottom = body.getBoundingClientRect().bottom;
+      let splitAt = -1;
+      for (let i = 0; i < groups.length; i++){
+        const last = groups[i][groups[i].length - 1];
+        if (last.getBoundingClientRect().bottom > bodyBottom + SLACK_PX) { splitAt = i; break; }
+      }
+      if (splitAt <= 0) continue;
+      const isDense = concept.classList.contains('dense');
+      const ns = document.createElement('section');
+      ns.className = 'sheet';
+      ns.innerHTML =
+        '<div class="corner tr"></div><div class="corner tl"></div>' +
+        '<div class="corner br"></div><div class="corner bl"></div>' +
+        '<header class="sheet-header"></header>' +
+        '<div class="sheet-body"><div class="concept' + (isDense ? ' dense' : '') + '"></div></div>' +
+        '<footer class="sheet-footer"></footer>';
+      const newConcept = ns.querySelector('.concept');
+      for (let i = splitAt; i < groups.length; i++){
+        groups[i].forEach(el => newConcept.appendChild(el));
+      }
+      sheet.parentNode.insertBefore(ns, sheet.nextSibling);
+      queue.push(ns);
+    }
+  })();
+  (function flowSolutions(){
+    const sections = Array.from(document.querySelectorAll('.solution-section'));
+    if (!sections.length) return;
+    const items = [];
+    sections.forEach(sec => { sec.querySelectorAll('.solution-item').forEach(it => items.push(it)); });
+    sections.forEach(sec => { const c = sec.querySelector('.solutions'); if (c) c.innerHTML = ''; });
+    let idx = 0;
+    function ensureSection() {
+      if (idx < sections.length) return;
+      const prev = sections[sections.length - 1];
+      const ns = document.createElement('section');
+      ns.className = 'sheet solution-section';
+      ns.innerHTML =
+        '<div class="corner tr"></div><div class="corner tl"></div>' +
+        '<div class="corner br"></div><div class="corner bl"></div>' +
+        '<header class="sheet-header"></header>' +
+        '<div class="sheet-body"><div class="solutions"></div></div>' +
+        '<footer class="sheet-footer"></footer>';
+      prev.parentNode.insertBefore(ns, prev.nextSibling);
+      sections.push(ns);
+    }
+    function overflows(sec) {
+      // 단단/다단 레이아웃 모두 커버. 다단(column-count>=2)은 오버플로 시 가로로 가상 열 생성되므로 scrollWidth 확인.
+      const body = sec.querySelector('.sheet-body');
+      const solutions = sec.querySelector('.solutions');
+      if (!body) return false;
+      if (body.scrollHeight > body.clientHeight + 1) return true;
+      if (solutions && solutions.scrollWidth > solutions.clientWidth + 2) return true;
+      return false;
+    }
+    for (let i = 0; i < items.length; i++) {
+      ensureSection();
+      let sec = sections[idx];
+      let container = sec.querySelector('.solutions');
+      container.appendChild(items[i]);
+      if (!overflows(sec)) continue;
+      const item = items[i];
+      const paras = Array.from(item.querySelectorAll(':scope > p'));
+      if (paras.length === 0) { container.removeChild(item); idx++; ensureSection(); sections[idx].querySelector('.solutions').appendChild(item); continue; }
+      const moved = [];
+      while (paras.length > 0 && overflows(sec)) { const p = paras.pop(); item.removeChild(p); moved.unshift(p); }
+      if (moved.length === 0) { container.removeChild(item); idx++; ensureSection(); sections[idx].querySelector('.solutions').appendChild(item); continue; }
+      idx++; ensureSection();
+      const cont = document.createElement('div');
+      cont.className = 'solution-item continuation';
+      cont.setAttribute('data-qa-id', item.getAttribute('data-qa-id') || '');
+      moved.forEach(p => cont.appendChild(p));
+      sections[idx].querySelector('.solutions').appendChild(cont);
+    }
+    sections.forEach(sec => { if (!sec.querySelector('.solution-item')) sec.remove(); });
+  })();
+  (function rebalanceParity(){
+    const sheets = document.querySelectorAll('.sheet');
+    sheets.forEach((s, i) => {
+      const isOdd = (i % 2 === 0);
+      s.classList.toggle('odd', isOdd);
+      s.classList.toggle('even', !isOdd);
+      const hdr = s.querySelector('.sheet-header');
+      if (hdr) hdr.textContent = isOdd ? '공통수학 2' : '2026 수복이';
+    });
+  })();
+  (function renumberFooters(){
+    document.querySelectorAll('.sheet-footer').forEach((f, i) => { f.textContent = i + 1; });
+  })();
+});
+</script>
+</body>
+</html>

@@ -123,7 +123,8 @@ svg { overflow:visible; }
 
 .solution-section .sheet-body { top:32mm; bottom:20mm; padding:0; overflow:hidden; display:flex; flex-direction:column; }
 .solution-section .section-title { margin-top:0; flex:0 0 auto; }
-.solutions { flex:1 1 auto; min-height:0; column-count:2; column-fill:auto; column-gap:8mm; column-rule:0.3pt solid #888; font-family:'신명조','HY신명조','Shinmyeongjo','바탕','Batang',serif; font-size:8pt; line-height:1.75; letter-spacing:-0.05em; }
+.solutions { flex:1 1 auto; min-height:0; position:relative; column-count:2; column-fill:auto; column-gap:8mm; column-rule:0.3pt solid #888; font-family:'신명조','HY신명조','Shinmyeongjo','바탕','Batang',serif; font-size:8pt; line-height:1.75; letter-spacing:-0.05em; }
+.solutions::before { content:''; position:absolute; top:0; bottom:0; left:calc((100% - 8mm) / 2 + 4mm); width:0.3pt; background:#888; pointer-events:none; }
 .solutions mjx-container { font-size:8pt !important; max-width:100%; }
 .solution-item { break-inside:avoid-column; page-break-inside:avoid; -webkit-column-break-inside:avoid; margin-bottom:var(--one-line); padding-left:5mm; padding-right:2mm; position:relative; overflow-wrap:break-word; }
 .solution-item p { text-indent:0; margin:0; }
@@ -817,7 +818,15 @@ _ready.then(() => {
       prev.parentNode.insertBefore(ns, prev.nextSibling);
       sections.push(ns);
     }
-    function overflows(sec) { const body = sec.querySelector('.sheet-body'); return body.scrollHeight > body.clientHeight + 1; }
+    function overflows(sec) {
+      // 단단/다단 레이아웃 모두 커버. 다단(column-count>=2)은 오버플로 시 가로로 가상 열 생성되므로 scrollWidth 확인.
+      const body = sec.querySelector('.sheet-body');
+      const solutions = sec.querySelector('.solutions');
+      if (!body) return false;
+      if (body.scrollHeight > body.clientHeight + 1) return true;
+      if (solutions && solutions.scrollWidth > solutions.clientWidth + 2) return true;
+      return false;
+    }
     for (let i = 0; i < items.length; i++) {
       ensureSection();
       let sec = sections[idx];

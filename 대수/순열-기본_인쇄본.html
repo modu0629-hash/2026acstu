@@ -788,8 +788,13 @@ document.fonts.ready.then(() => {
       sections.push(ns);
     }
     function overflows(sec) {
+      // 단단/다단 레이아웃 모두 커버. 다단(column-count>=2)은 오버플로 시 가로로 가상 열 생성되므로 scrollWidth 확인.
       const body = sec.querySelector('.sheet-body');
-      return body.scrollHeight > body.clientHeight + 1;
+      const solutions = sec.querySelector('.solutions');
+      if (!body) return false;
+      if (body.scrollHeight > body.clientHeight + 1) return true;
+      if (solutions && solutions.scrollWidth > solutions.clientWidth + 2) return true;
+      return false;
     }
     for (let i = 0; i < items.length; i++) {
       ensureSection();
