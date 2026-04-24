@@ -445,23 +445,24 @@ svg { overflow:visible; }
         $|x|\lt a \;\iff\; -a\lt x\lt a$
       </div>
       <div class="fig-center">
-        <svg viewBox="0 0 480 70" xmlns="http://www.w3.org/2000/svg"
-             style="max-width:75%; max-height:18mm;">
-          <!-- x축 (geometry-svg 주선 #222 width 1) -->
-          <line x1="20" y1="35" x2="445" y2="35" stroke="#222" stroke-width="1"/>
-          <polygon points="445,35 433,30 433,40" fill="#222"/>
-          <text x="453" y="41" font-size="20" font-style="italic" font-family="serif" fill="#111">x</text>
-          <!-- 원점 0 (꼭짓점 #222 r=4) -->
-          <circle cx="232" cy="35" r="4" fill="#222"/>
-          <text x="226" y="60" font-size="16" font-family="serif" fill="#111">0</text>
-          <!-- -3 open (stroke-width 2) -->
-          <circle cx="115" cy="35" r="6" fill="#fff" stroke="#222" stroke-width="2"/>
-          <text x="103" y="60" font-size="16" font-family="serif" fill="#111">-3</text>
+        <svg viewBox="0 0 560 100" xmlns="http://www.w3.org/2000/svg"
+             style="max-width:80%; max-height:22mm;">
+          <!-- 좌표: x축 line 25~520; 원점 x=272; 단위 47; -3→131, 3→413 -->
+          <!-- x축 (geometry-svg 주선 #222 width 1.5) -->
+          <line x1="25" y1="50" x2="520" y2="50" stroke="#222" stroke-width="1.5"/>
+          <polygon points="520,50 506,44 506,56" fill="#222"/>
+          <text x="528" y="68" font-size="20" font-style="italic" font-weight="bold" font-family="serif" fill="#111">x</text>
+          <!-- 원점 0 (꼭짓점 #222 r=5) -->
+          <circle cx="272" cy="50" r="5" fill="#222"/>
+          <text x="265" y="82" font-size="20" font-weight="bold" font-family="serif" fill="#111">0</text>
+          <!-- -3 open (stroke-width 2.5) -->
+          <circle cx="131" cy="50" r="8" fill="#fff" stroke="#222" stroke-width="2.5"/>
+          <text x="116" y="82" font-size="20" font-weight="bold" font-family="serif" fill="#111">-3</text>
           <!-- 3 open -->
-          <circle cx="349" cy="35" r="6" fill="#fff" stroke="#222" stroke-width="2"/>
-          <text x="343" y="60" font-size="16" font-family="serif" fill="#111">3</text>
-          <!-- 해 구간 (특수점 색 #e53e3e width 3) -->
-          <line x1="122" y1="35" x2="342" y2="35" stroke="#e53e3e" stroke-width="3"/>
+          <circle cx="413" cy="50" r="8" fill="#fff" stroke="#222" stroke-width="2.5"/>
+          <text x="406" y="82" font-size="20" font-weight="bold" font-family="serif" fill="#111">3</text>
+          <!-- 해 구간 (특수점 색 #e53e3e, width 4) -->
+          <line x1="141" y1="50" x2="403" y2="50" stroke="#e53e3e" stroke-width="4"/>
         </svg>
       </div>
       <p class="ex" style="text-align:center;"><b>예)</b> $|x|\lt 3 \;\iff\; -3\lt x\lt 3$</p>
