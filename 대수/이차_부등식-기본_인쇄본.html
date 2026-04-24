@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>이차 부등식 — 인쇄본</title>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']] },
+  chtml: { matchFontHeight: false },
+  startup: { typeset: true }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+@font-face { font-family:'Gyeonggi Title'; src:url('../%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/woff/Title_Bold.woff') format('woff'); font-weight:700; font-display:swap; }
+@font-face { font-family:'Gyeonggi Title'; src:url('../%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/woff/Title_Medium.woff') format('woff'); font-weight:500; font-display:swap; }
+@font-face { font-family:'Gyeonggi Batang'; src:url('../%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/woff/Batang_Regular.woff') format('woff'); font-weight:400; font-display:swap; }
+@font-face { font-family:'Gyeonggi Batang'; src:url('../%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/woff/Batang_Bold.woff') format('woff'); font-weight:700; font-display:swap; }
+
+@page { size: A4; margin: 0; }
+* { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --line-h: 1.75; --one-line: 7.4mm;
+  --pad-x: 22mm; --pad-top: 20mm; --pad-bottom: 18mm;
+  --corner-x: 22mm; --corner-len: 48mm;
+}
+
+html, body { background:#fff; color:#000; font-family:'신명조','HY신명조','Shinmyeongjo','바탕','Batang',serif; font-size:11pt; line-height:var(--line-h); }
+@media screen { body { background:#dcdcdc; padding:24px 0; } .sheet { box-shadow:0 3px 14px rgba(0,0,0,0.2); margin:0 auto 24px; } }
+
+.sheet { width:210mm; height:297mm; background:#fff; position:relative; overflow:hidden; }
+@media print { .sheet { page-break-after:always; margin:0; box-shadow:none; } .sheet:last-child { page-break-after:auto; } }
+
+.corner { position:absolute; height:0; width:var(--corner-len); border-top:1pt solid #000; }
+.corner::after { content:''; position:absolute; height:3mm; width:0; }
+.corner.tr { top:12mm; right:var(--corner-x); }
+.corner.tr::after { right:0; top:0; border-right:1pt solid #000; }
+.corner.tl { top:12mm; left:var(--corner-x); }
+.corner.tl::after { left:0; top:0; border-left:1pt solid #000; }
+.corner.br { bottom:14mm; right:var(--corner-x); }
+.corner.br::after { right:0; bottom:0; border-right:1pt solid #000; }
+.corner.bl { bottom:14mm; left:var(--corner-x); }
+.corner.bl::after { left:0; bottom:0; border-left:1pt solid #000; }
+.corner.tr, .corner.tl { display:none; }
+.sheet.odd .corner.bl { display:none; }
+.sheet.even .corner.br { display:none; }
+
+.sheet-header { position:absolute; top:21mm; left:var(--pad-x); right:var(--pad-x); font-family:'Gyeonggi Title',sans-serif; font-weight:700; font-size:10.5pt; }
+.sheet.odd .sheet-header { text-align:right; }
+.sheet.even .sheet-header { text-align:left; }
+.sheet-footer { position:absolute; bottom:8mm; left:0; right:0; text-align:center; font-family:'Gyeonggi Batang',serif; font-size:10pt; }
+
+.sheet-body { position:absolute; top:calc(var(--pad-top) + 14mm); bottom:calc(var(--pad-bottom) + 6mm); left:var(--pad-x); right:var(--pad-x); }
+
+.chapter-title { font-family:'Gyeonggi Title',sans-serif; font-weight:700; font-size:18pt; letter-spacing:0.5pt; margin-bottom:calc(var(--one-line) * 2); }
+.section-title { font-family:'Gyeonggi Batang',serif; font-weight:700; font-size:13pt; margin-bottom:calc(var(--one-line) * 1); }
+.sub-label { font-family:'Gyeonggi Title',sans-serif; font-weight:700; font-size:11pt; margin-bottom:3mm; }
+
+.concept { font-family:'Gyeonggi Batang','신명조','HY신명조','바탕','Batang',serif; font-size:11pt; line-height:1.85; }
+.concept p { margin-bottom:2mm; }
+.concept .sub-title { font-family:'Gyeonggi Batang',serif; font-weight:400; font-size:11.5pt; margin:calc(var(--one-line)*2) 0 2mm; }
+.concept .sub-title:first-child { margin-top:0; }
+.concept .formula { border:0.7pt solid #000; padding:3mm 5mm; margin:3mm 0; text-align:center; }
+.concept .formula.left { text-align:left; padding:3mm 3mm; }
+.concept .formula.compact { padding:1.5mm 5mm; margin:1.5mm 0; }
+.concept .note { padding:2mm 0; margin:3mm 0; font-size:8pt; line-height:1.6; }
+.concept .note::before { content:"[참고] "; font-weight:700; }
+.concept .proof { font-size:8pt; line-height:1.6; padding:2mm 0 2mm 10mm; text-indent:-10mm; margin:3mm 0 6mm 0; }
+.concept .ex { padding:2mm 0; margin:3mm 0; font-size:9pt; }
+.concept.dense { line-height:1.7; }
+.concept.dense .sub-title { margin:calc(var(--one-line)*1.1) 0 1.5mm; }
+.concept.dense .sub-title:first-child { margin-top:0; }
+.concept.dense p { margin-bottom:1mm; }
+.concept.dense .note { margin:2mm 0; }
+.concept.dense .formula { padding:2mm 5mm; margin:2mm 0; }
+.concept.dense .ex { margin:1.5mm 0; }
+.concept table { width:100%; border-collapse:collapse; margin:3mm 0; font-size:9.5pt; }
+.concept table th, .concept table td { border:0.5pt solid #000; padding:1.5mm 2mm; text-align:center; vertical-align:middle; }
+.concept table th { font-weight:700; background:#f7f7f7; }
+
+.problem-block { }
+.sheet-body > .problem-block { margin-top:8mm; }
+.problem { font-family:'신명조','HY신명조','바탕','Batang',serif; font-size:10pt; line-height:var(--line-h); letter-spacing:-0.05em; position:relative; }
+.problem > p:first-of-type { padding-left:5.5mm; text-indent:-5.5mm; }
+.problem .pnum { display:inline-block; min-width:4mm; margin-right:1.5mm; font-family:'Gyeonggi Title',sans-serif; font-size:11pt; font-weight:700; text-indent:0; vertical-align:baseline; }
+.problem .pnum a { color:#000; text-decoration:none; font-weight:700; }
+.problem p { margin-bottom:1.5mm; }
+.problem .sub { margin-left:4mm; }
+.cond-box { display:block; width:fit-content; max-width:92%; border:0.7pt solid #000; padding:2.5mm 6mm; margin:2mm auto; }
+.cond-box p { margin:0.5mm 0; }
+
+.choices { display:grid; grid-template-columns:repeat(5, minmax(0,1fr)); gap:2mm 5mm; margin-top:4mm; font-size:10pt; clear:both; }
+.choices.two-row { grid-template-columns:repeat(3, minmax(0,1fr)); }
+.choices span { white-space:nowrap; }
+
+.problems-area { position:absolute; top:calc(var(--pad-top) + var(--one-line) + 5mm); bottom:calc(var(--pad-bottom) + 6mm); left:var(--pad-x); right:var(--pad-x); display:flex; flex-direction:column; }
+.problems-area > .problem-block:first-child { margin-bottom:0; }
+.problems-area > .problem-block:nth-child(2) { margin:auto 0; }
+.problems-area.single > .problem-block { margin:0; }
+
+mjx-container { font-weight:400 !important; }
+
+.fig-right { float:right; margin:0 0 2mm 5mm; overflow:visible; }
+.fig-center { text-align:center; margin:3mm 0; overflow:visible; }
+.fig-row { display:flex; justify-content:center; gap:6mm; margin:3mm 0; flex-wrap:wrap; }
+svg { overflow:visible; }
+.fig-center svg text, .fig-right svg text { font-family: MJXZERO, MJXTEX-I, "STIX Two Math", "Cambria Math", "Times New Roman", serif; font-size: 16px; fill: #111; }
+.fig-center svg text.lg, .fig-right svg text.lg { font-size: 20px; }
+.fig-center svg text.small, .fig-right svg text.small { font-size: 14px; }
+.fig-center svg text.ko, .fig-right svg text.ko { font-family: '신명조','HY신명조','바탕','Batang',serif; font-size: 14px; }
+
+.quick-answer-section .sheet-body { top:32mm; bottom:20mm; padding:0; overflow:hidden; display:flex; flex-direction:column; }
+.quick-answer-section .section-title { margin-top:0; flex:0 0 auto; }
+.quick-answers { flex:1 1 auto; min-height:0; position:relative; column-count:3; column-fill:auto; column-gap:7mm; column-rule:0.3pt solid #888; font-family:'신명조','HY신명조','Shinmyeongjo','바탕','Batang',serif; font-size:8pt; line-height:1.85; letter-spacing:-0.1em; }
+.quick-answers mjx-container { font-size:8pt !important; }
+.quick-answers::before, .quick-answers::after { content:''; position:absolute; top:0; bottom:0; width:0.3pt; background:#888; pointer-events:none; }
+.quick-answers::before { left:calc((100% - 14mm) / 3 + 3.5mm); }
+.quick-answers::after { left:calc((100% - 14mm) / 3 * 2 + 10.5mm); }
+.qa-item { break-inside:avoid-column; page-break-inside:avoid; -webkit-column-break-inside:avoid; margin-bottom:2mm; display:flex; align-items:baseline; }
+.qa-num { flex:0 0 auto; display:inline-block; min-width:3mm; margin-right:1.5mm; font-family:'Gyeonggi Title',sans-serif; font-size:8pt; }
+.qa-ans { flex:1 1 auto; min-width:0; }
+
+.solution-section .sheet-body { top:32mm; bottom:20mm; padding:0; overflow:hidden; display:flex; flex-direction:column; }
+.solution-section .section-title { margin-top:0; flex:0 0 auto; }
+.solutions { flex:1 1 auto; min-height:0; column-count:2; column-fill:auto; column-gap:8mm; column-rule:0.3pt solid #888; font-family:'신명조','HY신명조','Shinmyeongjo','바탕','Batang',serif; font-size:8pt; line-height:1.75; letter-spacing:-0.05em; }
+.solutions mjx-container { font-size:8pt !important; max-width:100%; }
+.solution-item { break-inside:avoid-column; page-break-inside:avoid; -webkit-column-break-inside:avoid; margin-bottom:var(--one-line); padding-left:5mm; padding-right:2mm; position:relative; overflow-wrap:break-word; }
+.solution-item p { text-indent:0; margin:0; }
+.sol-num { position:absolute; left:0; top:0; font-weight:700; font-size:8pt; font-family:'Gyeonggi Title',sans-serif; }
+.sol-num a { color:#000; text-decoration:none; }
+.sol-answer { margin-bottom:1.5mm; }
+@media print { .solution-link { text-decoration:none; } }
+</style>
+</head>
+<body>
+
+<!-- PAGE 1 -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">공통수학 1</header>
+  <div class="sheet-body">
+    <h1 class="chapter-title">이차 부등식</h1>
+    <h2 class="section-title">이차함수와 이차부등식의 관계</h2>
+    <div class="concept">
+      <p>부등식 풀이의 핵심 전략은 <b>그래프로 판정</b>하는 것이다. 이차부등식도 대응하는 이차함수의 그래프가 $x$축보다 위·아래 어디에 있는지로 해를 읽어 낸다.</p>
+      <div class="sub-title" style="margin-top:calc(var(--one-line)*1.5);">1) 이차부등식의 정의</div>
+      <p>부등식에서 모든 항을 좌변으로 이항하여 정리하였을 때,</p>
+      <div class="formula">
+        $ax^2+bx+c\gt 0,\ ax^2+bx+c\lt 0,\ ax^2+bx+c\geq 0,\ ax^2+bx+c\leq 0$<br>
+        (단, $a\neq 0$)
+      </div>
+      <p>과 같이 좌변이 $x$에 대한 이차식이 되는 부등식을 <b>$x$에 대한 이차부등식</b>이라 한다.</p>
+    </div>
+  </div>
+  <footer class="sheet-footer">1</footer>
+</section>
+
+<!-- PAGE 2 -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">2) 이차함수의 그래프와 이차부등식의 해</div>
+      <p>이차부등식의 해와 이차함수 $y=ax^2+bx+c$의 그래프 사이에는 다음 관계가 성립한다.</p>
+      <div class="formula left">
+        ① $ax^2+bx+c\gt 0$의 해 &nbsp;$\Rightarrow$&nbsp; 그래프가 $x$축보다 <b>위쪽</b>에 있는 $x$의 범위<br>
+        ② $ax^2+bx+c\lt 0$의 해 &nbsp;$\Rightarrow$&nbsp; 그래프가 $x$축보다 <b>아래쪽</b>에 있는 $x$의 범위
+      </div>
+      <div class="fig-row">
+        <svg viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg" style="max-width:45%; max-height:45mm;">
+          <line x1="20" y1="140" x2="260" y2="140" stroke="#222" stroke-width="1"/>
+          <polygon points="260,140 250,136 250,144" fill="#222"/>
+          <foreignObject x="263" y="146" width="25" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:16px;line-height:1;">$x$</div></foreignObject>
+          <path d="M 40 60 Q 140 240 240 60" fill="none" stroke="#222" stroke-width="2"/>
+          <foreignObject x="71" y="146" width="25" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:16px;line-height:1;">$\alpha$</div></foreignObject>
+          <foreignObject x="195" y="146" width="25" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:16px;line-height:1;">$\beta$</div></foreignObject>
+          <foreignObject x="180" y="30" width="100" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;color:#2563eb;">$a\gt 0,\ y=ax^2+bx+c$</div></foreignObject>
+          <foreignObject x="30" y="110" width="20" height="20"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;color:#e53e3e;">$+$</div></foreignObject>
+          <foreignObject x="133" y="155" width="20" height="20"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;color:#2563eb;">$-$</div></foreignObject>
+          <foreignObject x="235" y="110" width="20" height="20"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;color:#e53e3e;">$+$</div></foreignObject>
+          <circle cx="80" cy="140" r="2" fill="#222"/>
+          <circle cx="200" cy="140" r="2" fill="#222"/>
+        </svg>
+        <svg viewBox="0 0 280 200" xmlns="http://www.w3.org/2000/svg" style="max-width:45%; max-height:45mm;">
+          <line x1="20" y1="60" x2="260" y2="60" stroke="#222" stroke-width="1"/>
+          <polygon points="260,60 250,56 250,64" fill="#222"/>
+          <foreignObject x="263" y="66" width="25" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:16px;line-height:1;">$x$</div></foreignObject>
+          <path d="M 40 140 Q 140 -40 240 140" fill="none" stroke="#222" stroke-width="2"/>
+          <foreignObject x="71" y="66" width="25" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:16px;line-height:1;">$\alpha$</div></foreignObject>
+          <foreignObject x="195" y="66" width="25" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:16px;line-height:1;">$\beta$</div></foreignObject>
+          <foreignObject x="180" y="155" width="100" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;color:#2563eb;">$a\lt 0,\ y=ax^2+bx+c$</div></foreignObject>
+          <foreignObject x="30" y="70" width="20" height="20"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;color:#2563eb;">$-$</div></foreignObject>
+          <foreignObject x="133" y="30" width="20" height="20"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;color:#e53e3e;">$+$</div></foreignObject>
+          <foreignObject x="235" y="70" width="20" height="20"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;color:#2563eb;">$-$</div></foreignObject>
+          <circle cx="80" cy="60" r="2" fill="#222"/>
+          <circle cx="200" cy="60" r="2" fill="#222"/>
+        </svg>
+      </div>
+      <div class="note">$\leq,\ \geq$ 부등호면 그래프가 $x$축과 만나는 점(근 $\alpha,\beta$)까지 포함. $x^2$ 계수가 음수이면 양변에 $-1$을 곱해 양수로 고친 뒤 풀되, 부등호 방향이 <b>바뀜</b>에 주의.</div>
+    </div>
+  </div>
+  <footer class="sheet-footer">2</footer>
+</section>
+
+<!-- PAGE 3 -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">공통수학 1</header>
+  <div class="problems-area single">
+    <div class="problem-block" data-qa-id="q1">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-1" class="solution-link">1</a></span>다음 이차부등식을 풀이하시오.</p>
+        <p class="sub">(1) $x^2-x-6\lt 0$</p>
+        <p class="sub">(2) $x^2\geq 4x+21$</p>
+        <p class="sub">(3) $-x^2+4x\gt 7$</p>
+        <p class="sub">(4) $-x^2+6x-9\lt 0$</p>
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">3</footer>
+</section>
+
+<!-- PAGE 4 -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area single">
+    <div class="problem-block" data-qa-id="q2">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-2" class="solution-link">2</a></span>다음 부등식의 해를 구하시오. (절댓값 기호 포함 이차부등식)</p>
+        <p class="sub">(1) $x^2+|x|-6\lt 0$</p>
+        <p class="sub">(2) $x^2-2x-3\gt 3|x-1|$</p>
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">4</footer>
+</section>
+
+<!-- PAGE 5 -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">공통수학 1</header>
+  <div class="sheet-body">
+    <h2 class="section-title">해가 주어진 이차부등식의 작성</h2>
+    <div class="concept">
+      <p>이차부등식의 해가 주어졌을 때, 다음과 같이 이차부등식을 역으로 구할 수 있다.</p>
+      <div class="formula left">
+        1) 해가 $\alpha\lt x\lt\beta$이고 $x^2$의 계수가 $1$인 이차부등식<br>
+        $\quad\Rightarrow\ (x-\alpha)(x-\beta)\lt 0$, 즉 $x^2-(\alpha+\beta)x+\alpha\beta\lt 0$<br>
+        2) 해가 $x\lt\alpha$ 또는 $x\gt\beta$이고 $x^2$의 계수가 $1$인 이차부등식<br>
+        $\quad\Rightarrow\ (x-\alpha)(x-\beta)\gt 0$
+      </div>
+      <div class="note">① 해가 $x=\alpha$이고 $x^2$의 계수 $1$: $(x-\alpha)^2\leq 0$ &nbsp; ② 해가 $x\neq\alpha$인 모든 실수이고 $x^2$의 계수 $1$: $(x-\alpha)^2\gt 0$</div>
+    </div>
+    <div class="problem-block" data-qa-id="q3">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-3" class="solution-link">3</a></span>다음 물음에 답하시오.</p>
+        <p class="sub">(1) 이차부등식 $x^2+ax+b\gt 0$의 해가 $x\lt -2$ 또는 $x\gt 3$일 때, 상수 $a,\,b$의 값을 구하시오.</p>
+        <p class="sub">(2) 이차부등식 $ax^2-3x+b\gt 0$의 해가 $-2\lt x\lt 1$일 때, 상수 $a,\,b$의 값을 구하시오.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">5</footer>
+</section>
+
+<!-- PAGE 6 -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area">
+    <div class="problem-block" data-qa-id="q4">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-4" class="solution-link">4</a></span>다음 물음에 답하시오. (모든 실수에 대하여 성립)</p>
+        <p class="sub">(1) 모든 실수 $x$에 대하여 부등식 $x^2-2kx+k+6\gt 0$이 성립하도록 상수 $k$의 값의 범위를 구하시오.</p>
+        <p class="sub">(2) 모든 실수 $x$에 대하여 부등식 $-x^2-kx-k+1\leq 0$이 성립하도록 상수 $k$의 값의 범위를 구하시오.</p>
+      </div>
+    </div>
+    <div class="problem-block" data-qa-id="q5">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-5" class="solution-link">5</a></span>다음 물음에 답하시오. (이차항 계수가 $a$)</p>
+        <p class="sub">(1) 모든 실수 $x$에 대하여 부등식 $ax^2-ax+1\gt 0$이 성립하도록 하는 실수 $a$의 값의 범위를 구하시오.</p>
+        <p class="sub">(2) 모든 실수 $x$에 대하여 부등식 $ax^2+ax-1\leq 0$이 성립하도록 하는 실수 $a$의 값의 범위를 구하시오.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">6</footer>
+</section>
+
+<!-- PAGE 7 -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">공통수학 1</header>
+  <div class="problems-area">
+    <div class="problem-block" data-qa-id="q6">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-6" class="solution-link">6</a></span>다음 물음에 답하시오. (해가 없는 이차부등식)</p>
+        <p class="sub">(1) 이차부등식 $x^2-2(a+3)x+4(a+3)\lt 0$의 해가 존재하지 않을 때, 실수 $a$의 값의 범위를 구하시오.</p>
+        <p class="sub">(2) 이차부등식 $x^2-(k+2)x+2k+1\leq 0$의 해가 존재하지 않을 때, 실수 $k$의 값의 범위를 구하시오.</p>
+      </div>
+    </div>
+    <div class="problem-block" data-qa-id="q7">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-7" class="solution-link">7</a></span>다음 물음에 답하시오. (제한된 범위에서 항상 성립)</p>
+        <p class="sub">(1) $0\leq x\leq 3$에서 $x$에 대한 이차부등식 $x^2-2x+a-2\geq 0$이 항상 성립하도록 상수 $a$의 값의 범위를 구하시오.</p>
+        <p class="sub">(2) $0\leq x\leq 3$에서 $x$에 대한 이차부등식 $x^2-ax+a^2-9\leq 0$이 항상 성립하도록 상수 $a$의 값의 범위를 구하시오.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">7</footer>
+</section>
+
+<!-- PAGE 8 -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">이차함수 그래프와 직선의 위치 관계</h2>
+    <div class="concept">
+      <p>이차함수 $y=ax^2+bx+c\;(a\gt 0)$와 직선 $y=mx+n$을 연립한 이차방정식</p>
+      <div class="formula">$ax^2+(b-m)x+c-n=0$</div>
+      <p>의 판별식을 $D$라 할 때, $D$의 부호에 따른 부등식의 해는 다음과 같다.</p>
+      <table>
+        <thead>
+          <tr><th>판별식 부호</th><th>$D\gt 0$</th><th>$D=0$</th><th>$D\lt 0$</th></tr>
+          <tr><th>이차방정식의 해</th><th>서로 다른 두 실근 $\alpha,\,\beta$</th><th>중근 $\alpha$</th><th>허근</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>$ax^2+bx+c\gt mx+n$</td><td>$x\lt\alpha$ 또는 $x\gt\beta$</td><td>$x\neq\alpha$인 모든 실수</td><td>모든 실수</td></tr>
+          <tr><td>$ax^2+bx+c\geq mx+n$</td><td>$x\leq\alpha$ 또는 $x\geq\beta$</td><td>모든 실수</td><td>모든 실수</td></tr>
+          <tr><td>$ax^2+bx+c\lt mx+n$</td><td>$\alpha\lt x\lt\beta$</td><td>해 없음</td><td>해 없음</td></tr>
+          <tr><td>$ax^2+bx+c\leq mx+n$</td><td>$\alpha\leq x\leq\beta$</td><td>$x=\alpha$</td><td>해 없음</td></tr>
+        </tbody>
+      </table>
+      <div class="note">$a\lt 0$인 경우는 양변에 $-1$을 곱해 $a\gt 0$의 경우로 환원 후 부등호 방향을 바꾸어 본다.</div>
+    </div>
+  </div>
+  <footer class="sheet-footer">8</footer>
+</section>
+
+<!-- PAGE 9 -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">공통수학 1</header>
+  <div class="problems-area">
+    <div class="problem-block" data-qa-id="q8">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <svg class="fig-right" viewBox="0 0 260 180" xmlns="http://www.w3.org/2000/svg" style="width:55mm; margin-top:0;">
+          <line x1="10" y1="100" x2="250" y2="100" stroke="#222" stroke-width="1"/>
+          <polygon points="250,100 240,96 240,104" fill="#222"/>
+          <foreignObject x="252" y="106" width="22" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$x$</div></foreignObject>
+          <line x1="70" y1="170" x2="70" y2="15" stroke="#222" stroke-width="1"/>
+          <polygon points="70,15 66,24 74,24" fill="#222"/>
+          <foreignObject x="75" y="18" width="22" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$y$</div></foreignObject>
+          <path d="M 50 100 Q 132.5 200 215 100" fill="none" stroke="#222" stroke-width="1.5"/>
+          <path d="M 60 100 Q 125 -30 190 100" fill="none" stroke="#222" stroke-width="1.5"/>
+          <foreignObject x="195" y="15" width="65" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$y=f(x)$</div></foreignObject>
+          <foreignObject x="195" y="125" width="65" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$y=g(x)$</div></foreignObject>
+          <foreignObject x="41" y="105" width="22" height="20" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:12px;line-height:1;">$-2$</div></foreignObject>
+          <foreignObject x="55" y="105" width="22" height="20" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:12px;line-height:1;">$-1$</div></foreignObject>
+          <foreignObject x="155" y="105" width="16" height="20" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:12px;line-height:1;">$4$</div></foreignObject>
+          <foreignObject x="183" y="105" width="16" height="20" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:12px;line-height:1;">$5$</div></foreignObject>
+          <foreignObject x="210" y="105" width="16" height="20" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:12px;line-height:1;">$7$</div></foreignObject>
+        </svg>
+        <p><span class="pnum"><a href="#sol-8" class="solution-link">8</a></span>두 이차함수 $y=f(x),\,y=g(x)$의 그래프가 오른쪽 그림과 같을 때, 다음 부등식의 해를 구하시오.</p>
+        <p class="sub">(1) $f(x)\leq g(x)$</p>
+        <p class="sub">(2) $f(x)g(x)\gt 0$</p>
+      </div>
+    </div>
+    <div class="problem-block" data-qa-id="q9">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-9" class="solution-link">9</a></span>다음 물음에 답하시오. (두 그래프의 위치 관계)</p>
+        <p class="sub">(1) 이차함수 $y=x^2-2x+2$의 그래프가 직선 $y=mx-2$보다 항상 위쪽에 있을 때, 실수 $m$의 값의 범위를 구하시오.</p>
+        <p class="sub">(2) 이차함수 $y=-4x^2+2x+1$의 그래프가 직선 $y=kx+2$보다 항상 아래쪽에 있도록 하는 실수 $k$의 값의 범위를 구하시오.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">9</footer>
+</section>
+
+<!-- PAGE 10 -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">연립 이차 부등식</h2>
+    <div class="concept">
+      <p>두 개 이상의 부등식(일차·이차 혼합 가능)을 한 묶음으로 모아 놓은 것을 <b>연립 부등식</b>이라 하고, 각 부등식을 모두 만족시키는 $x$의 값 전체를 해라 한다.</p>
+      <div class="sub-title">풀이 순서</div>
+      <div class="formula left">
+        ❶ 각각의 부등식을 (그래프·수직선 이용) 따로 푼다.<br>
+        ❷ 각 해를 하나의 수직선 위에 겹쳐 표시한다.<br>
+        ❸ 수직선에서 <b>공통부분</b>을 해로 한다.
+      </div>
+      <div class="sub-title">경우에 따른 $a\lt b,\ a\leq b$ 표기</div>
+      <p>부등식의 정수해 개수·경계값 조건을 다룰 때 등호 유무가 정수 하나를 좌우하므로 구간 표기를 정확히 구분해야 한다.</p>
+      <div class="formula left">
+        $a\lt x\lt b$: 양 끝 모두 포함 X (개구간 $(a,b)$)<br>
+        $a\leq x\leq b$: 양 끝 모두 포함 (폐구간 $[a,b]$)<br>
+        $a\lt x\leq b$: 왼쪽 X, 오른쪽 O (반개구간 $(a,b]$)
+      </div>
+      <div class="note">정수해 개수 문제에서는 경계값의 개·폐 여부에 따라 정수 1개 차이가 결정적이다. 항상 등호 유무를 먼저 확인.</div>
+    </div>
+  </div>
+  <footer class="sheet-footer">10</footer>
+</section>
+
+<!-- PAGE 11 -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">공통수학 1</header>
+  <div class="problems-area">
+    <div class="problem-block" data-qa-id="q10">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-10" class="solution-link">10</a></span>연립부등식 $\begin{cases} x^2-3x-4\gt 0 \\ x^2-(1+k)x+k\lt 0 \end{cases}$을 만족시키는 정수 $x$의 값이 $5$뿐일 때, 실수 $k$의 값의 범위를 구하시오.</p>
+      </div>
+    </div>
+    <div class="problem-block" data-qa-id="q11">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-11" class="solution-link">11</a></span>다음 물음에 답하시오.</p>
+        <p class="sub">(1) 연립부등식 $\begin{cases} x^2-2x-3\leq 0 \\ x^2-(a+4)x+4a\leq 0 \end{cases}$을 만족시키는 정수 $x$의 개수가 $4$가 되도록 하는 실수 $a$의 값의 범위는?</p>
+        <div class="choices">
+          <span>① $-1\leq a\leq 0$</span><span>② $-1\leq a\lt 0$</span><span>③ $-1\lt a\leq 0$</span><span>④ $0\leq a\lt 1$</span><span>⑤ $0\lt a\leq 1$</span>
+        </div>
+        <p class="sub">(2) 연립부등식 $\begin{cases} |x-3|\lt k \\ x^2-3x-4\leq 0 \end{cases}$을 만족시키는 정수 $x$의 개수가 $3$개일 때, 양의 정수 $k$의 최솟값은?</p>
+        <div class="choices">
+          <span>① $2$</span><span>② $3$</span><span>③ $4$</span><span>④ $5$</span><span>⑤ $6$</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">11</footer>
+</section>
+
+<!-- PAGE 12 -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">이차방정식의 실근의 부호</h2>
+    <div class="concept">
+      <p>계수가 실수인 이차방정식의 두 근이 <b>실수</b>일 때, 직접 근을 구하지 않고 판별식과 근과 계수의 관계를 이용하여 실근의 부호를 판별할 수 있다.</p>
+      <p>계수가 실수인 이차방정식 $ax^2+bx+c=0$의 두 실근을 $\alpha,\,\beta$라 하고 판별식을 $D$라 할 때, $\alpha,\,\beta$의 부호에 따른 조건은 다음과 같다.</p>
+      <div class="formula left">
+        1) 두 실근 모두 양수 &nbsp;$\Rightarrow$&nbsp; $D\geq 0,\ \alpha+\beta\gt 0,\ \alpha\beta\gt 0$의 공통범위<br>
+        2) 두 실근 모두 음수 &nbsp;$\Rightarrow$&nbsp; $D\geq 0,\ \alpha+\beta\lt 0,\ \alpha\beta\gt 0$의 공통범위<br>
+        3) 두 실근 서로 다른 부호 &nbsp;$\Rightarrow$&nbsp; $\alpha\beta\lt 0$
+      </div>
+      <div class="note">두 근이 "서로 다름" 조건이 명시되지 않으면 $D\geq 0$이면 된다(중근 포함). $\alpha\beta\lt 0$이면 자동으로 서로 다른 부호이므로 $D\gt 0$이 자동 보장된다.</div>
+    </div>
+  </div>
+  <footer class="sheet-footer">12</footer>
+</section>
+
+<!-- PAGE 13 -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">공통수학 1</header>
+  <div class="sheet-body">
+    <h2 class="section-title">이차방정식의 실근의 위치 (근의 분리)</h2>
+    <div class="concept">
+      <p>이차방정식 $ax^2+bx+c=0\;(a\gt 0)$의 두 실근 $\alpha,\,\beta\;(\alpha\leq\beta)$는 이차함수 $f(x)=ax^2+bx+c$의 그래프와 $x$축의 교점의 $x$좌표이다. 근의 위치 판별에는 다음 세 조건을 확인한다.</p>
+      <div class="formula">❶ 판별식 $D$의 부호 &nbsp;❷ 경계에서의 함숫값의 부호 &nbsp;❸ 그래프의 축의 위치</div>
+      <div class="sub-title">1) 두 근이 모두 $p$보다 클 조건</div>
+      <div class="formula left">
+        (i) $D\geq 0$ &nbsp;(ii) $f(p)\gt 0$ &nbsp;(iii) 축이 $x=p$의 오른쪽: $-\dfrac{b}{2a}\gt p$
+      </div>
+      <div class="sub-title">2) 두 근이 모두 $p$보다 작을 조건</div>
+      <div class="formula left">
+        (i) $D\geq 0$ &nbsp;(ii) $f(p)\gt 0$ &nbsp;(iii) 축이 $x=p$의 왼쪽: $-\dfrac{b}{2a}\lt p$
+      </div>
+      <div class="sub-title">3) 두 근 사이에 $p$가 있을 조건</div>
+      <div class="formula left">
+        $f(p)\lt 0$ (하나만). $a\gt 0$이고 $f(p)\lt 0$이면 $x$축과 두 점에서 반드시 만나므로 $D\gt 0$은 자동 보장.
+      </div>
+      <div class="sub-title">4) 두 근이 모두 $p,\,q$ 사이에 있을 조건 (단, $p\lt q$)</div>
+      <div class="formula left">
+        (i) $D\geq 0$ &nbsp;(ii) 축이 $p$와 $q$ 사이: $p\lt -\dfrac{b}{2a}\lt q$ &nbsp;(iii) $f(p)\gt 0,\ f(q)\gt 0$
+      </div>
+      <div class="note">$a\lt 0$이면 양변에 $-1$을 곱해 $a\gt 0$의 꼴로 환원 후 적용. 경계값에서의 함숫값 부호와 축의 위치로 근의 위치를 읽어 내는 것이 핵심.</div>
+    </div>
+  </div>
+  <footer class="sheet-footer">13</footer>
+</section>
+
+<!-- PAGE 14 -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area single">
+    <div class="problem-block" data-qa-id="q12">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-12" class="solution-link">12</a></span>다음 물음에 답하시오. (이차방정식의 실근의 부호)</p>
+        <p class="sub">(1) $x$에 대한 이차방정식 $x^2-2kx+k+12=0$의 서로 다른 두 근이 모두 양수가 되도록 하는 실수 $k$의 값의 범위를 구하시오.</p>
+        <p class="sub">(2) $x$에 대한 이차방정식 $x^2-2(2k+1)x+k+2=0$의 두 근이 모두 음수가 되기 위한 실수 $k$의 값의 범위를 구하시오.</p>
+        <p class="sub">(3) $x$에 대한 이차방정식 $x^2-kx+k-1=0$이 서로 다른 부호의 실근을 가질 때, 실수 $k$의 값의 범위를 구하시오.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">14</footer>
+</section>
+
+<!-- PAGE 15 -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">공통수학 1</header>
+  <div class="problems-area">
+    <div class="problem-block" data-qa-id="q13">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-13" class="solution-link">13</a></span>다음 물음에 답하시오. (이차방정식의 근의 위치)</p>
+        <p class="sub">(1) 이차방정식 $x^2-2kx+k+12=0$의 두 근이 $1$보다 클 때, 실수 $k$의 값의 범위를 구하시오.</p>
+        <p class="sub">(2) 이차방정식 $x^2-(6+k)x+k^2=0$의 두 근 사이에 $2$가 있을 때, 실수 $k$의 값의 범위를 구하시오.</p>
+      </div>
+    </div>
+    <div class="problem-block" data-qa-id="q14">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-14" class="solution-link">14</a></span>다음 물음에 답하시오. (사차방정식의 근)</p>
+        <p class="sub">(1) 사차방정식 $x^4+(m+2)x^2+m+5=0$이 서로 다른 네 개의 실근을 가질 때, 실수 $m$의 값의 범위를 구하시오.</p>
+        <p class="sub">(2) $x$에 대한 사차방정식 $x^4-9x^2+k-10=0$의 모든 근이 실수가 되도록 하는 자연수 $k$의 개수를 구하시오.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">15</footer>
+</section>
+
+<!-- PAGE 16 : 빠른 정답 -->
+<section class="sheet even quick-answer-section">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">빠른 정답</h2>
+    <div class="quick-answers">
+      <div class="qa-item"><span class="qa-num">1.</span><span class="qa-ans">(1) $-2\lt x\lt 3$<br>(2) $x\leq -3$ 또는 $x\geq 7$<br>(3) 해 없음<br>(4) $x\neq 3$인 모든 실수</span></div>
+      <div class="qa-item"><span class="qa-num">2.</span><span class="qa-ans">(1) $-2\lt x\lt 2$<br>(2) $x\lt -3$ 또는 $x\gt 5$</span></div>
+      <div class="qa-item"><span class="qa-num">3.</span><span class="qa-ans">(1) $a=-1,\,b=-6$<br>(2) $a=-3,\,b=6$</span></div>
+      <div class="qa-item"><span class="qa-num">4.</span><span class="qa-ans">(1) $-2\lt k\lt 3$<br>(2) $k=2$</span></div>
+      <div class="qa-item"><span class="qa-num">5.</span><span class="qa-ans">(1) $0\leq a\lt 4$<br>(2) $-4\leq a\leq 0$</span></div>
+      <div class="qa-item"><span class="qa-num">6.</span><span class="qa-ans">(1) $-3\leq a\leq 1$<br>(2) $0\lt k\lt 4$</span></div>
+      <div class="qa-item"><span class="qa-num">7.</span><span class="qa-ans">(1) $a\geq 3$<br>(2) $0\leq a\leq 3$</span></div>
+      <div class="qa-item"><span class="qa-num">8.</span><span class="qa-ans">(1) $-1\leq x\leq 5$<br>(2) $-2\lt x\lt -1$<br>또는 $5\lt x\lt 7$</span></div>
+      <div class="qa-item"><span class="qa-num">9.</span><span class="qa-ans">(1) $-6\lt m\lt 2$<br>(2) $-2\lt k\lt 6$</span></div>
+      <div class="qa-item"><span class="qa-num">10.</span><span class="qa-ans">$5\lt k\leq 6$</span></div>
+      <div class="qa-item"><span class="qa-num">11.</span><span class="qa-ans">(1) ③ $-1\lt a\leq 0$<br>(2) ② $k=2$</span></div>
+      <div class="qa-item"><span class="qa-num">12.</span><span class="qa-ans">(1) $k\gt 4$<br>(2) $-2\lt k\leq -1$<br>(3) $k\lt 1$</span></div>
+      <div class="qa-item"><span class="qa-num">13.</span><span class="qa-ans">(1) $4\leq k\lt 13$<br>(2) $-2\lt k\lt 4$</span></div>
+      <div class="qa-item"><span class="qa-num">14.</span><span class="qa-ans">(1) $-5\lt m\lt -4$<br>(2) $21$개</span></div>
+    </div>
+  </div>
+  <footer class="sheet-footer">16</footer>
+</section>
+
+<!-- SOLUTION PAGES -->
+<section class="sheet odd solution-section">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">공통수학 1</header>
+  <div class="sheet-body">
+    <h2 class="section-title">정답 및 해설</h2>
+    <div class="solutions">
+
+      <div class="solution-item" id="sol-1" data-qa-id="q1">
+        <div class="sol-num">1.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $-2\lt x\lt 3$ (2) $x\leq -3$ 또는 $x\geq 7$ (3) 해 없음 (4) $x\neq 3$인 모든 실수</div>
+        <p>(1) $(x-3)(x+2)\lt 0 \Rightarrow -2\lt x\lt 3.$</p>
+        <p>(2) $x^2-4x-21\geq 0,\ (x-7)(x+3)\geq 0 \Rightarrow x\leq -3$ 또는 $x\geq 7.$</p>
+        <p>(3) $x^2-4x+7\lt 0.$ $D/4=4-7\lt 0$이라 좌변 항상 양수 $\Rightarrow$ 해 없음.</p>
+        <p>(4) $x^2-6x+9\gt 0,\ (x-3)^2\gt 0 \Rightarrow x\neq 3$인 모든 실수.</p>
+      </div>
+
+      <div class="solution-item" id="sol-2" data-qa-id="q2">
+        <div class="sol-num">2.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $-2\lt x\lt 2$ (2) $x\lt -3$ 또는 $x\gt 5$</div>
+        <p>(1) $x\geq 0$: $x^2+x-6\lt 0,\ (x+3)(x-2)\lt 0 \Rightarrow 0\leq x\lt 2.$ $x\lt 0$: $x^2-x-6\lt 0,\ (x-3)(x+2)\lt 0 \Rightarrow -2\lt x\lt 0.$ 합 $-2\lt x\lt 2.$</p>
+        <p>(2) $x\geq 1$: $x^2-5x\gt 0 \Rightarrow x\gt 5.$ $x\lt 1$: $x^2+x-6\gt 0 \Rightarrow x\lt -3.$ 합 $x\lt -3$ 또는 $x\gt 5.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-3" data-qa-id="q3">
+        <div class="sol-num">3.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $a=-1,\,b=-6$ (2) $a=-3,\,b=6$</div>
+        <p>(1) 해가 $x\lt -2$ 또는 $x\gt 3$이고 $x^2$계수 $1$: $(x+2)(x-3)\gt 0 \Rightarrow x^2-x-6\gt 0.$ 계수 비교 $a=-1,\ b=-6.$</p>
+        <p>(2) 해가 $-2\lt x\lt 1$ $\Rightarrow$ $a\lt 0$, 두 근 $-2,\,1$. 근과 계수의 관계: $-2+1=\dfrac{3}{a} \Rightarrow a=-3,$ $(-2)(1)=\dfrac{b}{a} \Rightarrow b=6.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-4" data-qa-id="q4">
+        <div class="sol-num">4.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $-2\lt k\lt 3$ (2) $k=2$</div>
+        <p>(1) 계수 $1\gt 0$이므로 $D/4=k^2-(k+6)\lt 0,\ (k-3)(k+2)\lt 0 \Rightarrow -2\lt k\lt 3.$</p>
+        <p>(2) 양변 $-1$: $x^2+kx+k-1\geq 0$이 모든 $x$. $D=(k-2)^2\leq 0 \Rightarrow k=2.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-5" data-qa-id="q5">
+        <div class="sol-num">5.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $0\leq a\lt 4$ (2) $-4\leq a\leq 0$</div>
+        <p>(1) $a=0$: $1\gt 0$ 성립. $a\gt 0$: $D=a^2-4a\lt 0 \Rightarrow 0\lt a\lt 4.$ $a\lt 0$: 위로 볼록이라 $-\infty$로 감 $\Rightarrow$ 불성립. 합 $0\leq a\lt 4.$</p>
+        <p>(2) $a=0$: $-1\leq 0$ 성립. $a\lt 0$: $D=a^2+4a\leq 0 \Rightarrow -4\leq a\lt 0.$ $a\gt 0$: $+\infty$로 감 $\Rightarrow$ 불성립. 합 $-4\leq a\leq 0.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-6" data-qa-id="q6">
+        <div class="sol-num">6.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $-3\leq a\leq 1$ (2) $0\lt k\lt 4$</div>
+        <p>(1) 해 없음 $\iff$ 모든 $x$에서 $\geq 0$. $D/4=(a+3)(a-1)\leq 0 \Rightarrow -3\leq a\leq 1.$</p>
+        <p>(2) 해 없음 $\iff$ 모든 $x$에서 $\gt 0$. $D=(k+2)^2-4(2k+1)=k^2-4k\lt 0,\ k(k-4)\lt 0 \Rightarrow 0\lt k\lt 4.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-7" data-qa-id="q7">
+        <div class="sol-num">7.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $a\geq 3$ (2) $0\leq a\leq 3$</div>
+        <p>(1) $f(x)=(x-1)^2+a-3,$ 축 $x=1\in[0,3]$. 최솟값 $f(1)=a-3\geq 0 \Rightarrow a\geq 3.$</p>
+        <p>(2) $g(x)=x^2-ax+a^2-9$ 아래로 볼록. $[0,3]$에서 $\leq 0$이려면 양 끝값 $\leq 0$: $g(0)=a^2-9\leq 0,\ g(3)=a^2-3a\leq 0$의 교집합 $0\leq a\leq 3.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-8" data-qa-id="q8">
+        <div class="sol-num">8.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $-1\leq x\leq 5$ (2) $-2\lt x\lt -1$ 또는 $5\lt x\lt 7$</div>
+        <p>그림에서 $f(x)=0$의 근 $-1,\,5$, $g(x)=0$의 근 $-2,\,7$, 두 곡선의 교점도 $x=-1,\,5$.</p>
+        <p>(1) $f-g$는 위로 볼록이고 근이 $-1,\,5$ $\Rightarrow$ $f-g\leq 0 \iff -1\leq x\leq 5.$</p>
+        <p>(2) $f\gt 0 \iff x\lt -1$ 또는 $x\gt 5.$ $g\gt 0 \iff -2\lt x\lt 7.$ 동부호(둘 다 양): $-2\lt x\lt -1$ 또는 $5\lt x\lt 7.$ 둘 다 음: 공집합.</p>
+      </div>
+
+      <div class="solution-item" id="sol-9" data-qa-id="q9">
+        <div class="sol-num">9.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $-6\lt m\lt 2$ (2) $-2\lt k\lt 6$</div>
+        <p>(1) $x^2-(m+2)x+4\gt 0$이 모든 $x$. $D=(m+2)^2-16\lt 0,\ (m-2)(m+6)\lt 0 \Rightarrow -6\lt m\lt 2.$</p>
+        <p>(2) $4x^2+(k-2)x+1\gt 0$이 모든 $x$. $D=(k-2)^2-16\lt 0,\ (k-6)(k+2)\lt 0 \Rightarrow -2\lt k\lt 6.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-10" data-qa-id="q10">
+        <div class="sol-num">10.</div>
+        <div class="sol-answer"><b>[정답]</b> $5\lt k\leq 6$</div>
+        <p>$(x-4)(x+1)\gt 0 \Rightarrow x\lt -1$ 또는 $x\gt 4.$ $(x-1)(x-k)\lt 0$: $k\gt 1$이면 $1\lt x\lt k.$</p>
+        <p>첫 조건과 교집합에 정수 $5$만 있으려면 $k\gt 5$이고 $6$이 포함 X. 열린 구간이므로 $k\leq 6$. 답 $5\lt k\leq 6.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-11" data-qa-id="q11">
+        <div class="sol-num">11.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) ③ $-1\lt a\leq 0$ (2) ② $k=2$</div>
+        <p>(1) 첫째 $-1\leq x\leq 3.$ 둘째 $(x-a)(x-4)\leq 0$: $a\lt 4$면 $a\leq x\leq 4.$ 교집합 $[\max(-1,a),3]$의 정수 4개 $\Rightarrow \max(-1,a)=0 \Rightarrow -1\lt a\leq 0.$</p>
+        <p>(2) 둘째 $-1\leq x\leq 4.$ 첫째 $3-k\lt x\lt 3+k.$ $k=2$: $1\lt x\lt 5$의 정수 $\{2,3,4\}$ 3개. 양의 정수 $k$ 최솟값 $2.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-12" data-qa-id="q12">
+        <div class="sol-num">12.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $k\gt 4$ (2) $-2\lt k\leq -1$ (3) $k\lt 1$</div>
+        <p>(1) $D/4=k^2-k-12\gt 0 \Rightarrow k\gt 4$ 또는 $k\lt -3.$ $\alpha+\beta=2k\gt 0 \Rightarrow k\gt 0.$ $\alpha\beta=k+12\gt 0 \Rightarrow k\gt -12.$ 교집합 $k\gt 4.$</p>
+        <p>(2) $D/4=(2k+1)^2-(k+2)=4k^2+3k-1=(4k-1)(k+1)\geq 0 \Rightarrow k\geq\dfrac{1}{4}$ 또는 $k\leq -1.$ $\alpha+\beta\lt 0 \Rightarrow k\lt -\dfrac{1}{2}.$ $\alpha\beta\gt 0 \Rightarrow k\gt -2.$ 교집합 $-2\lt k\leq -1.$</p>
+        <p>(3) $\alpha\beta=k-1\lt 0 \Rightarrow k\lt 1.$ 서로 다른 부호이면 $D\gt 0$ 자동 보장.</p>
+      </div>
+
+      <div class="solution-item" id="sol-13" data-qa-id="q13">
+        <div class="sol-num">13.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $4\leq k\lt 13$ (2) $-2\lt k\lt 4$</div>
+        <p>(1) $f(x)=x^2-2kx+k+12.$ (i) $D/4\geq 0 \Rightarrow k\geq 4$ 또는 $k\leq -3.$ (ii) $f(1)=13-k\gt 0 \Rightarrow k\lt 13.$ (iii) 축 $k\gt 1.$ 교집합 $4\leq k\lt 13.$</p>
+        <p>(2) 두 근 사이에 $2$ $\iff f(2)\lt 0.$ $4-2(6+k)+k^2\lt 0,\ (k-4)(k+2)\lt 0 \Rightarrow -2\lt k\lt 4.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-14" data-qa-id="q14">
+        <div class="sol-num">14.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $-5\lt m\lt -4$ (2) $21$개 ($k=10,\ldots,30$)</div>
+        <p>(1) $t=x^2$ 치환: $t^2+(m+2)t+m+5=0.$ 서로 다른 네 실근 $\iff$ $t$에 대한 이차방정식이 서로 다른 두 양근. $D=m^2-16\gt 0,\ m\gt 4$ 또는 $m\lt -4.$ 합 $-(m+2)\gt 0 \Rightarrow m\lt -2.$ 곱 $m+5\gt 0 \Rightarrow m\gt -5.$ 교집합 $-5\lt m\lt -4.$</p>
+        <p>(2) $t=x^2$: $t^2-9t+k-10=0.$ 모든 근 실근 $\iff$ $t$의 두 근 $\geq 0.$ $D=121-4k\geq 0 \Rightarrow k\leq 30.25.$ 합 $9\gt 0$ 자동. 곱 $k-10\geq 0 \Rightarrow k\geq 10.$ 자연수 $k$: $10\leq k\leq 30 \Rightarrow 21$개.</p>
+      </div>
+
+    </div>
+  </div>
+  <footer class="sheet-footer">17</footer>
+</section>
+
+<section class="sheet even solution-section">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body"><div class="solutions"></div></div>
+  <footer class="sheet-footer">18</footer>
+</section>
+
+<script>
+const _ready = Promise.all([
+  document.fonts.ready,
+  (window.MathJax && MathJax.startup && MathJax.startup.promise) ? MathJax.startup.promise : Promise.resolve()
+]);
+_ready.then(() => {
+  (function autoWrapChoices(){
+    document.querySelectorAll('.choices').forEach(c => {
+      if (c.scrollWidth > c.clientWidth) c.classList.add('two-row');
+    });
+  })();
+  (function compactAndSplitConcepts(){
+    const SLACK_PX = (() => {
+      const probe = document.createElement('div');
+      probe.style.cssText = 'position:absolute;visibility:hidden;width:10mm;';
+      document.body.appendChild(probe);
+      const px = probe.getBoundingClientRect().width;
+      document.body.removeChild(probe);
+      return px;
+    })();
+    function overflows(body){ return body.scrollHeight > body.clientHeight + SLACK_PX; }
+    function conceptSheets(){
+      return Array.from(document.querySelectorAll('.sheet')).filter(s =>
+        s.querySelector('.concept') && !s.classList.contains('solution-section')
+          && !s.classList.contains('quick-answer-section')
+      );
+    }
+    conceptSheets().forEach(sheet => {
+      const body = sheet.querySelector('.sheet-body');
+      if (!overflows(body)) return;
+      body.querySelectorAll('.concept .formula').forEach(f => f.classList.add('compact'));
+    });
+    conceptSheets().forEach(sheet => {
+      const body = sheet.querySelector('.sheet-body');
+      if (!overflows(body)) return;
+      const concept = body.querySelector('.concept');
+      if (concept) concept.classList.add('dense');
+    });
+    const queue = conceptSheets();
+    while (queue.length){
+      const sheet = queue.shift();
+      const body = sheet.querySelector('.sheet-body');
+      if (!body || !overflows(body)) continue;
+      const concept = body.querySelector('.concept');
+      if (!concept) continue;
+      const groups = [];
+      let cur = null;
+      Array.from(concept.children).forEach(ch => {
+        if (ch.classList.contains('sub-title')) { cur = [ch]; groups.push(cur); }
+        else if (cur) { cur.push(ch); }
+        else { cur = [ch]; groups.push(cur); }
+      });
+      if (groups.length < 2) continue;
+      const bodyBottom = body.getBoundingClientRect().bottom;
+      let splitAt = -1;
+      for (let i = 0; i < groups.length; i++){
+        const last = groups[i][groups[i].length - 1];
+        if (last.getBoundingClientRect().bottom > bodyBottom + SLACK_PX) { splitAt = i; break; }
+      }
+      if (splitAt <= 0) continue;
+      const isDense = concept.classList.contains('dense');
+      const ns = document.createElement('section');
+      ns.className = 'sheet';
+      ns.innerHTML =
+        '<div class="corner tr"></div><div class="corner tl"></div>' +
+        '<div class="corner br"></div><div class="corner bl"></div>' +
+        '<header class="sheet-header"></header>' +
+        '<div class="sheet-body"><div class="concept' + (isDense ? ' dense' : '') + '"></div></div>' +
+        '<footer class="sheet-footer"></footer>';
+      const newConcept = ns.querySelector('.concept');
+      for (let i = splitAt; i < groups.length; i++){
+        groups[i].forEach(el => newConcept.appendChild(el));
+      }
+      sheet.parentNode.insertBefore(ns, sheet.nextSibling);
+      queue.push(ns);
+    }
+  })();
+  (function flowSolutions(){
+    const sections = Array.from(document.querySelectorAll('.solution-section'));
+    if (!sections.length) return;
+    const items = [];
+    sections.forEach(sec => { sec.querySelectorAll('.solution-item').forEach(it => items.push(it)); });
+    sections.forEach(sec => { const c = sec.querySelector('.solutions'); if (c) c.innerHTML = ''; });
+    let idx = 0;
+    function ensureSection() {
+      if (idx < sections.length) return;
+      const prev = sections[sections.length - 1];
+      const ns = document.createElement('section');
+      ns.className = 'sheet solution-section';
+      ns.innerHTML =
+        '<div class="corner tr"></div><div class="corner tl"></div>' +
+        '<div class="corner br"></div><div class="corner bl"></div>' +
+        '<header class="sheet-header"></header>' +
+        '<div class="sheet-body"><div class="solutions"></div></div>' +
+        '<footer class="sheet-footer"></footer>';
+      prev.parentNode.insertBefore(ns, prev.nextSibling);
+      sections.push(ns);
+    }
+    function overflows(sec) { const body = sec.querySelector('.sheet-body'); return body.scrollHeight > body.clientHeight + 1; }
+    for (let i = 0; i < items.length; i++) {
+      ensureSection();
+      let sec = sections[idx];
+      let container = sec.querySelector('.solutions');
+      container.appendChild(items[i]);
+      if (!overflows(sec)) continue;
+      const item = items[i];
+      const paras = Array.from(item.querySelectorAll(':scope > p'));
+      if (paras.length === 0) { container.removeChild(item); idx++; ensureSection(); sections[idx].querySelector('.solutions').appendChild(item); continue; }
+      const moved = [];
+      while (paras.length > 0 && overflows(sec)) { const p = paras.pop(); item.removeChild(p); moved.unshift(p); }
+      if (moved.length === 0) { container.removeChild(item); idx++; ensureSection(); sections[idx].querySelector('.solutions').appendChild(item); continue; }
+      idx++; ensureSection();
+      const cont = document.createElement('div');
+      cont.className = 'solution-item continuation';
+      cont.setAttribute('data-qa-id', item.getAttribute('data-qa-id') || '');
+      moved.forEach(p => cont.appendChild(p));
+      sections[idx].querySelector('.solutions').appendChild(cont);
+    }
+    sections.forEach(sec => { if (!sec.querySelector('.solution-item')) sec.remove(); });
+  })();
+  (function rebalanceParity(){
+    const sheets = document.querySelectorAll('.sheet');
+    sheets.forEach((s, i) => {
+      const isOdd = (i % 2 === 0);
+      s.classList.toggle('odd', isOdd);
+      s.classList.toggle('even', !isOdd);
+      const hdr = s.querySelector('.sheet-header');
+      if (hdr) hdr.textContent = isOdd ? '공통수학 1' : '2026 수복이';
+    });
+  })();
+  (function renumberFooters(){
+    document.querySelectorAll('.sheet-footer').forEach((f, i) => { f.textContent = i + 1; });
+  })();
+});
+</script>
+</body>
+</html>
