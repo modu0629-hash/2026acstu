@@ -482,6 +482,37 @@ svg { overflow:visible; }
       <div class="formula">
         $|x|\gt a \;\iff\; x\lt -a\ \text{또는}\ x\gt a$
       </div>
+      <div class="fig-center">
+        <svg viewBox="0 0 560 100" xmlns="http://www.w3.org/2000/svg"
+             style="max-width:80%; max-height:22mm;">
+          <!-- x축 -->
+          <line x1="25" y1="50" x2="520" y2="50" stroke="#222" stroke-width="1.5"/>
+          <polygon points="520,50 506,44 506,56" fill="#222"/>
+          <foreignObject x="525" y="55" width="30" height="28" overflow="visible">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:18px;line-height:1;white-space:nowrap;">$x$</div>
+          </foreignObject>
+          <!-- 원점 0 -->
+          <circle cx="272" cy="50" r="5" fill="#222"/>
+          <foreignObject x="266" y="64" width="20" height="24" overflow="visible">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:18px;line-height:1;white-space:nowrap;">$0$</div>
+          </foreignObject>
+          <!-- -3 open -->
+          <circle cx="131" cy="50" r="8" fill="#fff" stroke="#222" stroke-width="2.5"/>
+          <foreignObject x="117" y="64" width="32" height="24" overflow="visible">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:18px;line-height:1;white-space:nowrap;">$-3$</div>
+          </foreignObject>
+          <!-- 3 open -->
+          <circle cx="413" cy="50" r="8" fill="#fff" stroke="#222" stroke-width="2.5"/>
+          <foreignObject x="407" y="64" width="20" height="24" overflow="visible">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:18px;line-height:1;white-space:nowrap;">$3$</div>
+          </foreignObject>
+          <!-- 해 구간: 왼쪽 x<-3 -->
+          <line x1="25" y1="50" x2="123" y2="50" stroke="#e53e3e" stroke-width="4"/>
+          <!-- 해 구간: 오른쪽 x>3 -->
+          <line x1="421" y1="50" x2="510" y2="50" stroke="#e53e3e" stroke-width="4"/>
+        </svg>
+      </div>
+      <p class="ex" style="text-align:center;"><b>예)</b> $|x|\gt 3 \;\iff\; x\lt -3\ \text{또는}\ x\gt 3$</p>
 
       <div class="sub-title">3) 일반형 $|x-k|$</div>
       <p>$|x-k|$는 수 $k$로부터의 거리이므로</p>
