@@ -88,9 +88,18 @@ html, body {
 .concept .sub-title:first-child { margin-top:0; }
 .concept .formula { border:0.7pt solid #000; padding:3mm 5mm; margin:3mm 0; text-align:center; }
 .concept .formula.left { text-align:left; }
+.concept .formula.compact { padding:1.5mm 5mm; margin:1.5mm 0; }
 .concept .note { padding:2mm 0 2mm 0; margin:3mm 0; font-size:8pt; line-height:1.6; }
 .concept .note::before { content:"[참고] "; font-weight:700; }
 .concept .ex { padding:2mm 0; margin:3mm 0; font-size:9pt; }
+/* 공통 §5: 조밀 조판 */
+.concept.dense { line-height:1.7; }
+.concept.dense .sub-title { margin:calc(var(--one-line)*1.1) 0 1.5mm; }
+.concept.dense .sub-title:first-child { margin-top:0; }
+.concept.dense p { margin-bottom:1mm; }
+.concept.dense .note { margin:2mm 0; }
+.concept.dense .formula { padding:2mm 5mm; margin:2mm 0; }
+.concept.dense .ex { margin:1.5mm 0; }
 
 .problem-block { }
 .sheet-body > .problem-block { margin-top:8mm; }
@@ -813,8 +822,9 @@ _ready.then(() => {
     });
   })();
 
-  // 공통 §8: 개념 오버플로 시 sub-title 경계로 자동 분할
-  (function splitOverflowingConcepts(){
+  // 공통 §6 공간 조정 우선순위 + §8 개념 오버플로 자동 분할
+  // 1단계: formula.compact → 2단계: concept.dense → 3단계: sub-title 경계 분할
+  (function compactAndSplitConcepts(){
     const SLACK_PX = (() => {
       const probe = document.createElement('div');
       probe.style.cssText = 'position:absolute;visibility:hidden;width:10mm;';
@@ -823,15 +833,38 @@ _ready.then(() => {
       document.body.removeChild(probe);
       return px;
     })();
-    const queue = Array.from(document.querySelectorAll('.sheet')).filter(s =>
-      s.querySelector('.concept') && !s.classList.contains('solution-section')
-        && !s.classList.contains('quick-answer-section')
-    );
+    function overflows(body){
+      return body.scrollHeight > body.clientHeight + SLACK_PX;
+    }
+    function conceptSheets(){
+      return Array.from(document.querySelectorAll('.sheet')).filter(s =>
+        s.querySelector('.concept')
+          && !s.classList.contains('solution-section')
+          && !s.classList.contains('quick-answer-section')
+      );
+    }
+
+    // 1단계: 오버플로 시 formula에 compact
+    conceptSheets().forEach(sheet => {
+      const body = sheet.querySelector('.sheet-body');
+      if (!overflows(body)) return;
+      body.querySelectorAll('.concept .formula').forEach(f => f.classList.add('compact'));
+    });
+    // 2단계: 그래도 넘치면 concept에 dense
+    conceptSheets().forEach(sheet => {
+      const body = sheet.querySelector('.sheet-body');
+      if (!overflows(body)) return;
+      const concept = body.querySelector('.concept');
+      if (concept) concept.classList.add('dense');
+    });
+
+    // 3단계: 그래도 넘치면 sub-title 경계 분할 (연쇄)
+    const queue = conceptSheets();
     while (queue.length){
       const sheet = queue.shift();
       const body = sheet.querySelector('.sheet-body');
       if (!body) continue;
-      if (body.scrollHeight <= body.clientHeight + SLACK_PX) continue;
+      if (!overflows(body)) continue;
       const concept = body.querySelector('.concept');
       if (!concept) continue;
       const groups = [];
@@ -849,13 +882,14 @@ _ready.then(() => {
         if (last.getBoundingClientRect().bottom > bodyBottom + SLACK_PX) { splitAt = i; break; }
       }
       if (splitAt <= 0) continue;
+      const isDense = concept.classList.contains('dense');
       const ns = document.createElement('section');
       ns.className = 'sheet';
       ns.innerHTML =
         '<div class="corner tr"></div><div class="corner tl"></div>' +
         '<div class="corner br"></div><div class="corner bl"></div>' +
         '<header class="sheet-header"></header>' +
-        '<div class="sheet-body"><div class="concept"></div></div>' +
+        '<div class="sheet-body"><div class="concept' + (isDense ? ' dense' : '') + '"></div></div>' +
         '<footer class="sheet-footer"></footer>';
       const newConcept = ns.querySelector('.concept');
       for (let i = splitAt; i < groups.length; i++){
