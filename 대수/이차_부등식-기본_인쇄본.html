@@ -326,14 +326,20 @@ svg { overflow:visible; }
       <p>이차함수 $y=ax^2+bx+c\;(a\gt 0)$와 직선 $y=mx+n$을 연립한 이차방정식</p>
       <div class="formula">$ax^2+(b-m)x+c-n=0$</div>
       <p>의 판별식을 $D$라 할 때, $D$의 부호에 따른 부등식의 해는 다음과 같다.</p>
-      <table>
+      <table style="table-layout:fixed; width:100%;">
+        <colgroup>
+          <col style="width:26mm;">
+          <col>
+          <col>
+          <col>
+        </colgroup>
         <thead>
           <tr><th>판별식 부호</th><th>$D\gt 0$</th><th>$D=0$</th><th>$D\lt 0$</th></tr>
           <tr><th>이차방정식의 해</th><th>서로 다른 두 실근 $\alpha,\,\beta$</th><th>중근 $\alpha$</th><th>허근</th></tr>
           <tr>
             <th>그래프<br>(포물선·직선)</th>
             <th style="padding:2mm;">
-              <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" style="max-width:90%; max-height:30mm;">
+              <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width:38mm; max-height:38mm;">
                 <!-- 공통 포물선: M 40 30 Q 80 160 120 30, 꼭짓점 (80, 95), k=0.04 -->
                 <path d="M 40 30 Q 80 160 120 30" fill="none" stroke="#222" stroke-width="1.5"/>
                 <!-- D>0: 기울기 1 직선 y=-x+140, 두 교점 (60.4, 79.6) (124.6, 15.4) -->
@@ -345,7 +351,7 @@ svg { overflow:visible; }
               </svg>
             </th>
             <th style="padding:2mm;">
-              <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" style="max-width:90%; max-height:30mm;">
+              <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width:38mm; max-height:38mm;">
                 <path d="M 40 30 Q 80 160 120 30" fill="none" stroke="#222" stroke-width="1.5"/>
                 <!-- D=0: 기울기 1 직선 y=-x+181, 접점 (92.5, 88.5) -->
                 <line x1="40" y1="141" x2="150" y2="31" stroke="#2563eb" stroke-width="1.3"/>
@@ -354,7 +360,7 @@ svg { overflow:visible; }
               </svg>
             </th>
             <th style="padding:2mm;">
-              <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" style="max-width:90%; max-height:30mm;">
+              <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width:38mm; max-height:38mm;">
                 <path d="M 40 30 Q 80 160 120 30" fill="none" stroke="#222" stroke-width="1.5"/>
                 <!-- D<0: 기울기 1 직선 y=-x+220, 포물선 아래 완전 분리, 교점 없음 -->
                 <line x1="70" y1="150" x2="150" y2="70" stroke="#2563eb" stroke-width="1.3"/>
