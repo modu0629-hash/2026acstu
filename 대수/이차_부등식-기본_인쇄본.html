@@ -390,21 +390,36 @@ svg { overflow:visible; }
       <div class="sub-label">- 확인문제</div>
       <div class="problem">
         <svg class="fig-right" viewBox="0 0 260 180" xmlns="http://www.w3.org/2000/svg" style="width:55mm; margin-top:0;">
+          <!-- x축 -->
           <line x1="10" y1="100" x2="250" y2="100" stroke="#222" stroke-width="1"/>
           <polygon points="250,100 240,96 240,104" fill="#222"/>
           <foreignObject x="252" y="106" width="22" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$x$</div></foreignObject>
+          <!-- y축 -->
           <line x1="70" y1="170" x2="70" y2="15" stroke="#222" stroke-width="1"/>
           <polygon points="70,15 66,24 74,24" fill="#222"/>
           <foreignObject x="75" y="18" width="22" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$y$</div></foreignObject>
-          <path d="M 50 100 Q 132.5 200 215 100" fill="none" stroke="#222" stroke-width="1.5"/>
-          <path d="M 60 100 Q 125 -30 190 100" fill="none" stroke="#222" stroke-width="1.5"/>
-          <foreignObject x="195" y="15" width="65" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$y=f(x)$</div></foreignObject>
-          <foreignObject x="195" y="125" width="65" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$y=g(x)$</div></foreignObject>
-          <foreignObject x="41" y="105" width="22" height="20" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:12px;line-height:1;">$-2$</div></foreignObject>
-          <foreignObject x="55" y="105" width="22" height="20" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:12px;line-height:1;">$-1$</div></foreignObject>
-          <foreignObject x="155" y="105" width="16" height="20" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:12px;line-height:1;">$4$</div></foreignObject>
-          <foreignObject x="183" y="105" width="16" height="20" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:12px;line-height:1;">$5$</div></foreignObject>
-          <foreignObject x="210" y="105" width="16" height="20" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:12px;line-height:1;">$7$</div></foreignObject>
+          <!-- 교점→x축 보조 점선 -->
+          <line x1="60" y1="100" x2="60" y2="135" stroke="#222" stroke-width="0.8" stroke-dasharray="2.5,2"/>
+          <line x1="120" y1="51" x2="120" y2="100" stroke="#222" stroke-width="0.8" stroke-dasharray="2.5,2"/>
+          <!-- f(x): 아래로 볼록, 근 -2, 4, 꼭짓점 (1,-9); x in [-3.5, 5.5] -->
+          <path d="M 35 21 Q 80 305 125 21" fill="none" stroke="#222" stroke-width="1.5"/>
+          <!-- g(x): 위로 볼록, 근 0, 7, 꼭짓점 (3.5, 7.66); x in [-1.5, 8.5] -->
+          <path d="M 55 156 Q 105 -63 155 156" fill="none" stroke="#222" stroke-width="1.5"/>
+          <!-- 눈금 -->
+          <line x1="50" y1="97" x2="50" y2="103" stroke="#222" stroke-width="1"/>
+          <line x1="60" y1="97" x2="60" y2="103" stroke="#222" stroke-width="1"/>
+          <line x1="110" y1="97" x2="110" y2="103" stroke="#222" stroke-width="1"/>
+          <line x1="120" y1="97" x2="120" y2="103" stroke="#222" stroke-width="1"/>
+          <line x1="140" y1="97" x2="140" y2="103" stroke="#222" stroke-width="1"/>
+          <!-- 곡선 라벨 -->
+          <foreignObject x="130" y="15" width="65" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$y=f(x)$</div></foreignObject>
+          <foreignObject x="160" y="150" width="65" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$y=g(x)$</div></foreignObject>
+          <!-- x절편 라벨 (간격이 좁아 폰트 축소) -->
+          <foreignObject x="34" y="105" width="12" height="20" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10px;line-height:1;text-align:center;">$-2$</div></foreignObject>
+          <foreignObject x="54" y="84" width="12" height="20" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10px;line-height:1;text-align:center;">$-1$</div></foreignObject>
+          <foreignObject x="106" y="105" width="8" height="20" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10px;line-height:1;text-align:center;">$4$</div></foreignObject>
+          <foreignObject x="116" y="105" width="8" height="20" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10px;line-height:1;text-align:center;">$5$</div></foreignObject>
+          <foreignObject x="136" y="105" width="8" height="20" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10px;line-height:1;text-align:center;">$7$</div></foreignObject>
         </svg>
         <p><span class="pnum"><a href="#sol-8" class="solution-link">8</a></span>두 이차함수 $y=f(x),\,y=g(x)$의 그래프가 오른쪽 그림과 같을 때, 다음 부등식의 해를 구하시오.</p>
         <p class="sub">(1) $f(x)\leq g(x)$</p>
@@ -437,14 +452,12 @@ svg { overflow:visible; }
         ❷ 각 해를 하나의 수직선 위에 겹쳐 표시한다.<br>
         ❸ 수직선에서 <b>공통부분</b>을 해로 한다.
       </div>
-      <div class="sub-title">경우에 따른 $a\lt b,\ a\leq b$ 표기</div>
-      <p>부등식의 정수해 개수·경계값 조건을 다룰 때 등호 유무가 정수 하나를 좌우하므로 구간 표기를 정확히 구분해야 한다.</p>
-      <div class="formula left">
-        $a\lt x\lt b$: 양 끝 모두 포함 X (개구간 $(a,b)$)<br>
-        $a\leq x\leq b$: 양 끝 모두 포함 (폐구간 $[a,b]$)<br>
-        $a\lt x\leq b$: 왼쪽 X, 오른쪽 O (반개구간 $(a,b]$)
+    </div>
+    <div class="problem-block" data-qa-id="q10">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-10" class="solution-link">10</a></span>연립부등식 $\begin{cases} x^2-3x-4\gt 0 \\ x^2-(1+k)x+k\lt 0 \end{cases}$을 만족시키는 정수 $x$의 값이 $5$뿐일 때, 실수 $k$의 값의 범위를 구하시오.</p>
       </div>
-      <div class="note">정수해 개수 문제에서는 경계값의 개·폐 여부에 따라 정수 1개 차이가 결정적이다. 항상 등호 유무를 먼저 확인.</div>
     </div>
   </div>
   <footer class="sheet-footer">10</footer>
@@ -455,12 +468,6 @@ svg { overflow:visible; }
   <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
   <header class="sheet-header">공통수학 1</header>
   <div class="problems-area">
-    <div class="problem-block" data-qa-id="q10">
-      <div class="sub-label">- 확인문제</div>
-      <div class="problem">
-        <p><span class="pnum"><a href="#sol-10" class="solution-link">10</a></span>연립부등식 $\begin{cases} x^2-3x-4\gt 0 \\ x^2-(1+k)x+k\lt 0 \end{cases}$을 만족시키는 정수 $x$의 값이 $5$뿐일 때, 실수 $k$의 값의 범위를 구하시오.</p>
-      </div>
-    </div>
     <div class="problem-block" data-qa-id="q11">
       <div class="sub-label">- 확인문제</div>
       <div class="problem">
@@ -469,7 +476,7 @@ svg { overflow:visible; }
         <div class="choices">
           <span>① $-1\leq a\leq 0$</span><span>② $-1\leq a\lt 0$</span><span>③ $-1\lt a\leq 0$</span><span>④ $0\leq a\lt 1$</span><span>⑤ $0\lt a\leq 1$</span>
         </div>
-        <p class="sub">(2) 연립부등식 $\begin{cases} |x-3|\lt k \\ x^2-3x-4\leq 0 \end{cases}$을 만족시키는 정수 $x$의 개수가 $3$개일 때, 양의 정수 $k$의 최솟값은?</p>
+        <p class="sub" style="margin-top:calc(var(--one-line)*2);">(2) 연립부등식 $\begin{cases} |x-3|\lt k \\ x^2-3x-4\leq 0 \end{cases}$을 만족시키는 정수 $x$의 개수가 $3$개일 때, 양의 정수 $k$의 최솟값은?</p>
         <div class="choices">
           <span>① $2$</span><span>② $3$</span><span>③ $4$</span><span>④ $5$</span><span>⑤ $6$</span>
         </div>
@@ -494,6 +501,15 @@ svg { overflow:visible; }
         3) 두 실근 서로 다른 부호 &nbsp;$\Rightarrow$&nbsp; $\alpha\beta\lt 0$
       </div>
       <div class="note">두 근이 "서로 다름" 조건이 명시되지 않으면 $D\geq 0$이면 된다(중근 포함). $\alpha\beta\lt 0$이면 자동으로 서로 다른 부호이므로 $D\gt 0$이 자동 보장된다.</div>
+    </div>
+    <div class="problem-block" data-qa-id="q12">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-12" class="solution-link">12</a></span>다음 물음에 답하시오.</p>
+        <p class="sub">(1) $x$에 대한 이차방정식 $x^2-2kx+k+12=0$의 서로 다른 두 근이 모두 양수가 되도록 하는 실수 $k$의 값의 범위를 구하시오.</p>
+        <p class="sub">(2) $x$에 대한 이차방정식 $x^2-2(2k+1)x+k+2=0$의 두 근이 모두 음수가 되기 위한 실수 $k$의 값의 범위를 구하시오.</p>
+        <p class="sub">(3) $x$에 대한 이차방정식 $x^2-kx+k-1=0$이 서로 다른 부호의 실근을 가질 때, 실수 $k$의 값의 범위를 구하시오.</p>
+      </div>
     </div>
   </div>
   <footer class="sheet-footer">12</footer>
@@ -531,24 +547,6 @@ svg { overflow:visible; }
 </section>
 
 <!-- PAGE 14 -->
-<section class="sheet even">
-  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
-  <header class="sheet-header">2026 수복이</header>
-  <div class="problems-area single">
-    <div class="problem-block" data-qa-id="q12">
-      <div class="sub-label">- 확인문제</div>
-      <div class="problem">
-        <p><span class="pnum"><a href="#sol-12" class="solution-link">12</a></span>다음 물음에 답하시오.</p>
-        <p class="sub">(1) $x$에 대한 이차방정식 $x^2-2kx+k+12=0$의 서로 다른 두 근이 모두 양수가 되도록 하는 실수 $k$의 값의 범위를 구하시오.</p>
-        <p class="sub">(2) $x$에 대한 이차방정식 $x^2-2(2k+1)x+k+2=0$의 두 근이 모두 음수가 되기 위한 실수 $k$의 값의 범위를 구하시오.</p>
-        <p class="sub">(3) $x$에 대한 이차방정식 $x^2-kx+k-1=0$이 서로 다른 부호의 실근을 가질 때, 실수 $k$의 값의 범위를 구하시오.</p>
-      </div>
-    </div>
-  </div>
-  <footer class="sheet-footer">14</footer>
-</section>
-
-<!-- PAGE 15 -->
 <section class="sheet odd">
   <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
   <header class="sheet-header">공통수학 1</header>
@@ -587,7 +585,7 @@ svg { overflow:visible; }
       <div class="qa-item"><span class="qa-num">5.</span><span class="qa-ans">(1) $0\leq a\lt 4$<br>(2) $-4\leq a\leq 0$</span></div>
       <div class="qa-item"><span class="qa-num">6.</span><span class="qa-ans">(1) $-3\leq a\leq 1$<br>(2) $0\lt k\lt 4$</span></div>
       <div class="qa-item"><span class="qa-num">7.</span><span class="qa-ans">(1) $a\geq 3$<br>(2) $0\leq a\leq 3$</span></div>
-      <div class="qa-item"><span class="qa-num">8.</span><span class="qa-ans">(1) $-1\leq x\leq 5$<br>(2) $-2\lt x\lt -1$<br>또는 $5\lt x\lt 7$</span></div>
+      <div class="qa-item"><span class="qa-num">8.</span><span class="qa-ans">(1) $-1\leq x\leq 5$<br>(2) $-2\lt x\lt 0$<br>또는 $4\lt x\lt 7$</span></div>
       <div class="qa-item"><span class="qa-num">9.</span><span class="qa-ans">(1) $-6\lt m\lt 2$<br>(2) $-2\lt k\lt 6$</span></div>
       <div class="qa-item"><span class="qa-num">10.</span><span class="qa-ans">$5\lt k\leq 6$</span></div>
       <div class="qa-item"><span class="qa-num">11.</span><span class="qa-ans">(1) ③ $-1\lt a\leq 0$<br>(2) ② $k=2$</span></div>
@@ -660,10 +658,10 @@ svg { overflow:visible; }
 
       <div class="solution-item" id="sol-8" data-qa-id="q8">
         <div class="sol-num">8.</div>
-        <div class="sol-answer"><b>[정답]</b> (1) $-1\leq x\leq 5$ (2) $-2\lt x\lt -1$ 또는 $5\lt x\lt 7$</div>
-        <p>그림에서 $f(x)=0$의 근 $-1,\,5$, $g(x)=0$의 근 $-2,\,7$, 두 곡선의 교점도 $x=-1,\,5$.</p>
-        <p>(1) $f-g$는 위로 볼록이고 근이 $-1,\,5$ $\Rightarrow$ $f-g\leq 0 \iff -1\leq x\leq 5.$</p>
-        <p>(2) $f\gt 0 \iff x\lt -1$ 또는 $x\gt 5.$ $g\gt 0 \iff -2\lt x\lt 7.$ 동부호(둘 다 양): $-2\lt x\lt -1$ 또는 $5\lt x\lt 7.$ 둘 다 음: 공집합.</p>
+        <div class="sol-answer"><b>[정답]</b> (1) $-1\leq x\leq 5$ (2) $-2\lt x\lt 0$ 또는 $4\lt x\lt 7$</div>
+        <p>그림에서 $f(x)=0$의 근 $-2,\,4$(아래로 볼록), $g(x)=0$의 근 $0,\,7$(위로 볼록), 두 곡선의 교점 $x=-1,\,5$.</p>
+        <p>(1) $f-g$는 아래로 볼록이고 근이 $-1,\,5$ $\Rightarrow$ $f-g\leq 0 \iff -1\leq x\leq 5.$</p>
+        <p>(2) $f\gt 0 \iff x\lt -2$ 또는 $x\gt 4.$ $g\gt 0 \iff 0\lt x\lt 7.$ 둘 다 양: $4\lt x\lt 7.$ 둘 다 음: $-2\lt x\lt 0.$ 따라서 $-2\lt x\lt 0$ 또는 $4\lt x\lt 7.$</p>
       </div>
 
       <div class="solution-item" id="sol-9" data-qa-id="q9">
