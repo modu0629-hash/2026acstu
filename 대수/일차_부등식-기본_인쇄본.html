@@ -140,11 +140,11 @@ mjx-container { font-weight:400 !important; }
 svg { overflow:visible; }
 .fig-center svg text, .fig-right svg text {
   font-family: MJXZERO, MJXTEX-I, "STIX Two Math", "Cambria Math", "Times New Roman", serif;
-  font-size: 11px;
+  font-size: 16px;
 }
-.fig-center svg text.small, .fig-right svg text.small { font-size: 9px; }
+.fig-center svg text.small, .fig-right svg text.small { font-size: 14px; }
 .fig-center svg text.ko, .fig-right svg text.ko {
-  font-family: '신명조','HY신명조','바탕','Batang',serif; font-size: 10px;
+  font-family: '신명조','HY신명조','바탕','Batang',serif; font-size: 14px;
 }
 .clearfix::after { content:''; display:table; clear:both; }
 
@@ -445,17 +445,22 @@ svg { overflow:visible; }
         $|x|\lt a \;\iff\; -a\lt x\lt a$
       </div>
       <div class="fig-center">
-        <svg viewBox="0 0 240 40" xmlns="http://www.w3.org/2000/svg" style="max-width:75%;">
-          <line x1="10" y1="18" x2="218" y2="18" stroke="#000" stroke-width="0.5"/>
-          <polygon points="218,18 210,15 210,21" fill="#000"/>
-          <text x="222" y="22" font-style="italic">x</text>
-          <circle cx="115" cy="18" r="1.2" fill="#000"/>
-          <text x="112" y="32">0</text>
-          <circle cx="55" cy="18" r="3" fill="#fff" stroke="#000" stroke-width="1.2"/>
-          <text x="48" y="32">-3</text>
-          <circle cx="175" cy="18" r="3" fill="#fff" stroke="#000" stroke-width="1.2"/>
-          <text x="172" y="32">3</text>
-          <line x1="58" y1="18" x2="172" y2="18" stroke="#c00" stroke-width="2"/>
+        <svg viewBox="0 0 240 50" xmlns="http://www.w3.org/2000/svg" style="max-width:80%; max-height:16mm;">
+          <!-- x축 (§10.5 stroke-width 0.5, 화살촉 길이 7) -->
+          <line x1="10" y1="22" x2="218" y2="22" stroke="#222" stroke-width="0.5"/>
+          <polygon points="218,22 211,19 211,25" fill="#222"/>
+          <text x="222" y="36" font-style="italic">x</text>
+          <!-- 원점 0 (r=1.8, §10.5 점 규격) -->
+          <circle cx="115" cy="22" r="1.8" fill="#222"/>
+          <text x="110" y="40">0</text>
+          <!-- -3 open (주 도형 stroke-width 1.5) -->
+          <circle cx="55" cy="22" r="3.2" fill="#fff" stroke="#222" stroke-width="1.5"/>
+          <text x="45" y="40">-3</text>
+          <!-- 3 open -->
+          <circle cx="175" cy="22" r="3.2" fill="#fff" stroke="#222" stroke-width="1.5"/>
+          <text x="170" y="40">3</text>
+          <!-- 해 구간 -->
+          <line x1="58.2" y1="22" x2="171.8" y2="22" stroke="#c00" stroke-width="2"/>
         </svg>
       </div>
       <p class="ex" style="text-align:center;"><b>예)</b> $|x|\lt 3 \;\iff\; -3\lt x\lt 3$</p>
@@ -492,30 +497,41 @@ svg { overflow:visible; }
       <div class="sub-title">2) 그래프를 이용한 풀이</div>
       <p>좌변과 우변을 각각 함수 $y$의 그래프로 그리고, <b>상하 관계</b>를 비교하여 부등식의 해를 읽어낸다. 절댓값 함수는 꺾은선 모양이다.</p>
       <div class="fig-center">
-        <svg viewBox="0 0 250 170" xmlns="http://www.w3.org/2000/svg" style="max-width:65%;">
-          <!-- 좌표계: x∈[-4,5] → 10~225 (unit 23.89); origin x=105.6; y∈[0,7] → 140~25 (unit 16.43) -->
-          <line x1="10" y1="140" x2="238" y2="140" stroke="#000" stroke-width="0.5"/>
-          <polygon points="238,140 230,137 230,143" fill="#000"/>
-          <text x="241" y="144" font-style="italic">x</text>
-          <line x1="105.6" y1="160" x2="105.6" y2="12" stroke="#000" stroke-width="0.5"/>
-          <polygon points="105.6,12 102.6,20 108.6,20" fill="#000"/>
-          <text x="110" y="18" font-style="italic">y</text>
-          <text x="97" y="152" class="small">O</text>
+        <svg viewBox="0 0 260 180" xmlns="http://www.w3.org/2000/svg" style="max-width:70%; max-height:55mm;">
+          <!-- 좌표계: x∈[-4,5] → 15~223 (unit 23.11); origin x=107.44; y∈[0,7] → 150~28 (unit 17.43) -->
+          <!-- x축 (§10.5 stroke-width 0.5, 화살촉 길이 7) -->
+          <line x1="15" y1="150" x2="247" y2="150" stroke="#222" stroke-width="0.5"/>
+          <polygon points="247,150 240,147 240,153" fill="#222"/>
+          <text x="251" y="154" font-style="italic">x</text>
+          <!-- y축 -->
+          <line x1="107.44" y1="170" x2="107.44" y2="14" stroke="#222" stroke-width="0.5"/>
+          <polygon points="107.44,14 104.44,21 110.44,21" fill="#222"/>
+          <text x="113" y="20" font-style="italic">y</text>
+          <!-- 원점 O (좌하단 1mm ≈ 7 유닛) -->
+          <text x="96" y="163" class="small" font-style="italic">O</text>
           <!-- y=|x+1|+|x-2| 꺾은선: (-4,7)→(-1,3)→(2,3)→(5,7) -->
-          <polyline points="10,25 81.7,90.7 153.4,90.7 225.1,25" fill="none" stroke="#222" stroke-width="1.5"/>
-          <text x="160" y="38" class="small" font-style="italic">y=|x+1|+|x-2|</text>
-          <!-- y=5 보조선 (청색 파선) -->
-          <line x1="10" y1="57.9" x2="225" y2="57.9" stroke="#2563eb" stroke-width="0.7" stroke-dasharray="4,2.5" opacity="0.7"/>
-          <text x="204" y="54" class="small" font-style="italic">y=5</text>
+          <!-- x=-4: 107.44-4*23.11=15.00; x=-1: 84.33; x=2: 153.66; x=5: 222.99 -->
+          <!-- y=7: 150-7*17.43=28.0; y=3: 150-3*17.43=97.72 -->
+          <polyline points="15,28 84.33,97.72 153.66,97.72 222.99,28"
+                    fill="none" stroke="#222" stroke-width="1.5"/>
+          <text x="160" y="42" class="small" font-style="italic">y=|x+1|+|x-2|</text>
+          <!-- y=5 보조선 (§10.5 청색 파선 stroke-width 0.6, opacity 0.55) -->
+          <!-- y=5: 150-5*17.43=62.86 -->
+          <line x1="15" y1="62.86" x2="223" y2="62.86"
+                stroke="#2563eb" stroke-width="0.6"
+                stroke-dasharray="4,2.5" opacity="0.55"/>
+          <text x="208" y="59" class="small" font-style="italic">y=5</text>
           <!-- 교점: (-2, 5), (3, 5) -->
-          <circle cx="57.8" cy="57.9" r="2" fill="#c00"/>
-          <circle cx="177.3" cy="57.9" r="2" fill="#c00"/>
-          <text x="50" y="72" class="small">-2</text>
-          <text x="174" y="72" class="small">3</text>
-          <!-- 해 구간 -2<x<3 -->
-          <line x1="57.8" y1="140" x2="177.3" y2="140" stroke="#c00" stroke-width="2"/>
-          <circle cx="57.8" cy="140" r="2.5" fill="#fff" stroke="#c00" stroke-width="1.2"/>
-          <circle cx="177.3" cy="140" r="2.5" fill="#fff" stroke="#c00" stroke-width="1.2"/>
+          <!-- x=-2: 107.44-2*23.11=61.22; x=3: 107.44+3*23.11=176.77 -->
+          <circle cx="61.22" cy="62.86" r="2.2" fill="#c00"/>
+          <circle cx="176.77" cy="62.86" r="2.2" fill="#c00"/>
+          <!-- 교점 x값 라벨 -->
+          <text x="52" y="77" class="small">-2</text>
+          <text x="172" y="77" class="small">3</text>
+          <!-- 해 구간 -2<x<3 (x축 위에 빨간 선 + open circle) -->
+          <line x1="64" y1="150" x2="174" y2="150" stroke="#c00" stroke-width="2"/>
+          <circle cx="61.22" cy="150" r="2.8" fill="#fff" stroke="#c00" stroke-width="1.4"/>
+          <circle cx="176.77" cy="150" r="2.8" fill="#fff" stroke="#c00" stroke-width="1.4"/>
         </svg>
       </div>
       <p class="ex" style="text-align:center;"><b>예)</b> $|x+1|+|x-2|\lt 5$의 해 : 꺾은선이 $y=5$ 아래인 구간 $\;\Rightarrow\; -2\lt x\lt 3$</p>
