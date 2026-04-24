@@ -163,17 +163,18 @@ svg { overflow:visible; }
           <foreignObject x="228" y="116" width="22" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:15px;line-height:1;">$x$</div></foreignObject>
           <!-- 베지어 근사: M (35,39) Q (120,321) (205,39) → 근점 (60,110), (180,110) 정확 통과, 꼭짓점 (120,180) -->
           <path d="M 35 39 Q 120 321 205 39" fill="none" stroke="#222" stroke-width="2"/>
-          <!-- α, β 정확 교점 표시 -->
+          <!-- α, β 정확 교점 표시 (r=2.5 fill #222) -->
           <circle cx="60" cy="110" r="2.5" fill="#222"/>
           <circle cx="180" cy="110" r="2.5" fill="#222"/>
-          <foreignObject x="52" y="114" width="22" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:15px;line-height:1;">$\alpha$</div></foreignObject>
-          <foreignObject x="172" y="114" width="22" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:15px;line-height:1;">$\beta$</div></foreignObject>
-          <!-- 함수 라벨 -->
-          <foreignObject x="115" y="14" width="115" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:12px;line-height:1;color:#2563eb;">$a\gt 0,\ y=ax^2+bx+c$</div></foreignObject>
-          <!-- 부호: x<α에서 + (위), α<x<β에서 - (아래), x>β에서 + (위) -->
-          <foreignObject x="25" y="72" width="18" height="18"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;color:#e53e3e;">$+$</div></foreignObject>
-          <foreignObject x="113" y="142" width="18" height="18"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;color:#2563eb;">$-$</div></foreignObject>
-          <foreignObject x="205" y="72" width="18" height="18"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;color:#e53e3e;">$+$</div></foreignObject>
+          <!-- α, β 라벨: 점의 "바깥 방향" (α는 왼쪽, β는 오른쪽)으로 offset, MIN_CLEAR≥5 -->
+          <foreignObject x="38" y="118" width="22" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:15px;line-height:1;">$\alpha$</div></foreignObject>
+          <foreignObject x="184" y="118" width="22" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:15px;line-height:1;">$\beta$</div></foreignObject>
+          <!-- 함수 라벨: 오른쪽 위 여백 -->
+          <foreignObject x="115" y="8" width="120" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:12px;line-height:1;color:#2563eb;">$a\gt 0,\ y=ax^2+bx+c$</div></foreignObject>
+          <!-- 부호: x<α(+축위), α<x<β(-축아래), x>β(+축위). 곡선과 MIN_CLEAR≥5 검증 -->
+          <foreignObject x="18" y="82" width="18" height="18"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;color:#e53e3e;">$+$</div></foreignObject>
+          <foreignObject x="113" y="140" width="18" height="18"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;color:#2563eb;">$-$</div></foreignObject>
+          <foreignObject x="205" y="82" width="18" height="18"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;color:#e53e3e;">$+$</div></foreignObject>
         </svg>
 
         <!-- a<0 (위로 볼록): 꼭짓점 (120, 40) -->
@@ -185,13 +186,14 @@ svg { overflow:visible; }
           <path d="M 35 181 Q 120 -101 205 181" fill="none" stroke="#222" stroke-width="2"/>
           <circle cx="60" cy="110" r="2.5" fill="#222"/>
           <circle cx="180" cy="110" r="2.5" fill="#222"/>
-          <foreignObject x="52" y="114" width="22" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:15px;line-height:1;">$\alpha$</div></foreignObject>
-          <foreignObject x="172" y="114" width="22" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:15px;line-height:1;">$\beta$</div></foreignObject>
-          <foreignObject x="115" y="190" width="115" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:12px;line-height:1;color:#2563eb;">$a\lt 0,\ y=ax^2+bx+c$</div></foreignObject>
-          <!-- 부호: x<α에서 -, α<x<β에서 +, x>β에서 - -->
-          <foreignObject x="25" y="128" width="18" height="18"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;color:#2563eb;">$-$</div></foreignObject>
+          <!-- a<0: α, β 왼쪽/오른쪽 바깥 + 축 위쪽(곡선 반대쪽)으로 배치 -->
+          <foreignObject x="38" y="90" width="22" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:15px;line-height:1;">$\alpha$</div></foreignObject>
+          <foreignObject x="184" y="90" width="22" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:15px;line-height:1;">$\beta$</div></foreignObject>
+          <foreignObject x="115" y="196" width="120" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:12px;line-height:1;color:#2563eb;">$a\lt 0,\ y=ax^2+bx+c$</div></foreignObject>
+          <!-- 부호: x<α(-축아래), α<x<β(+축위), x>β(-축아래) -->
+          <foreignObject x="18" y="138" width="18" height="18"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;color:#2563eb;">$-$</div></foreignObject>
           <foreignObject x="113" y="62" width="18" height="18"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;color:#e53e3e;">$+$</div></foreignObject>
-          <foreignObject x="205" y="128" width="18" height="18"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;color:#2563eb;">$-$</div></foreignObject>
+          <foreignObject x="205" y="138" width="18" height="18"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;color:#2563eb;">$-$</div></foreignObject>
         </svg>
       </div>
       <div class="note">$\leq,\ \geq$ 부등호면 그래프가 $x$축과 만나는 점(근 $\alpha,\beta$)까지 포함. $x^2$ 계수가 음수이면 양변에 $-1$을 곱해 양수로 고친 뒤 풀되, 부등호 방향이 <b>바뀜</b>에 주의.</div>
