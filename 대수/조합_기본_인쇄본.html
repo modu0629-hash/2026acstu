@@ -209,13 +209,13 @@ a, a:link, a:visited, a:hover, a:active { color:#000 !important; }
         <p style="margin-top:1.5mm;"><b>식으로 증명:</b> &nbsp; $_n\mathrm{C}_{n-r} = \dfrac{n!}{(n-r)!\cdot(n-(n-r))!} = \dfrac{n!}{(n-r)!\cdot r!} = {}_n\mathrm{C}_r$</p>
       </div>
       <div class="note">
-        $_n\mathrm{C}_r$의 값을 구할 때, $r > n-r$ 이면 $_n\mathrm{C}_r$을 $_n\mathrm{C}_{n-r}$로 바꾸어 계산하면 편리하다.
+        $_n\mathrm{C}_r$의 값을 구할 때, $r \gt  n-r$ 이면 $_n\mathrm{C}_r$을 $_n\mathrm{C}_{n-r}$로 바꾸어 계산하면 편리하다.
       </div>
       <div class="ex">
         <b>예)</b> &nbsp; $_7\mathrm{C}_5 = {}_7\mathrm{C}_2 = \dfrac{7\times6}{2\times1} = 21$
       </div>
 
-      <p class="sub-title">③ &nbsp;$_n\mathrm{C}_r = {}_{n-1}\mathrm{C}_{r-1} + {}_{n-1}\mathrm{C}_r$ &nbsp; (단, $1 \le r < n$) &nbsp;&nbsp;— 파스칼의 법칙</p>
+      <p class="sub-title">③ &nbsp;$_n\mathrm{C}_r = {}_{n-1}\mathrm{C}_{r-1} + {}_{n-1}\mathrm{C}_r$ &nbsp; (단, $1 \le r \lt  n$) &nbsp;&nbsp;— 파스칼의 법칙</p>
       <div class="proof">
         <p><b>조합론적 증명:</b> 집합 $\{1, 2, \ldots, n\}$에서 $r$개를 택하는 경우를 원소 $n$의 포함 여부로 분류한다.</p>
         <p style="margin-left:4mm;">• $n$을 <b>포함</b>하는 경우: 나머지 $n-1$개에서 $r-1$개 선택 $\Rightarrow$ $_{n-1}\mathrm{C}_{r-1}$가지</p>
@@ -400,8 +400,8 @@ a, a:link, a:visited, a:hover, a:active { color:#000 !important; }
       <div class="sub-label">- 확인문제</div>
       <div class="problem">
         <p><span class="pnum"><a href="#sol-6" class="solution-link">6</a></span>다음 물음에 답하여라.</p>
-        <p class="sub">(1) $1$부터 $6$까지의 자연수를 일렬로 배열하여 첫 번째 수부터 차례로 $a_1, a_2, a_3, a_4, a_5, a_6$이라 할 때, 조건 $a_2 > a_3 > a_5$, $a_1 > a_4$를 만족시키는 경우의 수를 구하여라.</p>
-        <p class="sub">(2) $10 > a > b > c$인 자연수 $a, b, c$에 대하여 백의 자리의 수, 십의 자리의 수, 일의 자리의 수가 각각 $a, b, c$인 세 자리의 자연수 중 $500$보다 크고 $700$보다 작은 모든 자연수의 개수를 구하여라.</p>
+        <p class="sub">(1) $1$부터 $6$까지의 자연수를 일렬로 배열하여 첫 번째 수부터 차례로 $a_1, a_2, a_3, a_4, a_5, a_6$이라 할 때, 조건 $a_2 \gt  a_3 \gt  a_5$, $a_1 \gt  a_4$를 만족시키는 경우의 수를 구하여라.</p>
+        <p class="sub">(2) $10 \gt  a \gt  b \gt  c$인 자연수 $a, b, c$에 대하여 백의 자리의 수, 십의 자리의 수, 일의 자리의 수가 각각 $a, b, c$인 세 자리의 자연수 중 $500$보다 크고 $700$보다 작은 모든 자연수의 개수를 구하여라.</p>
       </div>
     </div>
   </div>
@@ -420,8 +420,8 @@ a, a:link, a:visited, a:hover, a:active { color:#000 !important; }
       <div class="problem">
         <p><span class="pnum"><a href="#sol-7" class="solution-link">7</a></span>두 집합 $X = \{1, 2, 3\}$, $Y = \{1, 2, 3, 4, 5\}$에 대하여 다음 조건을 만족하는 함수 $f : X \longrightarrow Y$의 개수를 구하여라.</p>
         <p class="sub">(1) 집합 $X$의 임의의 두 원소 $x_1, x_2$에 대하여 $x_1 \ne x_2$이면 $f(x_1) \ne f(x_2)$</p>
-        <p class="sub">(2) 집합 $X$의 임의의 두 원소 $x_1, x_2$에 대하여 $x_1 < x_2$이면 $f(x_1) < f(x_2)$</p>
-        <p class="sub">(3) 집합 $X$의 임의의 두 원소 $x_1, x_2$에 대하여 $x_1 < x_2$이면 $f(x_1) < f(x_2)$이고 $f(2) = 3$</p>
+        <p class="sub">(2) 집합 $X$의 임의의 두 원소 $x_1, x_2$에 대하여 $x_1 \lt  x_2$이면 $f(x_1) \lt  f(x_2)$</p>
+        <p class="sub">(3) 집합 $X$의 임의의 두 원소 $x_1, x_2$에 대하여 $x_1 \lt  x_2$이면 $f(x_1) \lt  f(x_2)$이고 $f(2) = 3$</p>
       </div>
     </div>
     <div class="problem-block" data-qa-id="q8">
@@ -658,12 +658,12 @@ a, a:link, a:visited, a:hover, a:active { color:#000 !important; }
       <div class="solution-item" id="sol-6" data-qa-id="q6">
         <div class="sol-num">6.</div>
         <div class="sol-answer"><b>[정답]</b>&nbsp;&nbsp;(1) $60$ &nbsp;&nbsp;(2) $16$</div>
-        <p><b>(1)</b> 조건 $a_2 > a_3 > a_5$: 위치 $\{2,3,5\}$에 들어갈 $3$개 선택 → $_6\mathrm{C}_3=20$가지, 뽑힌 $3$수는 크기 순서 고정(1가지).</p>
-        <p class="sol-step">조건 $a_1 > a_4$: 나머지 $3$개 중 위치 $\{1,4\}$에 들어갈 $2$개 선택 → $_3\mathrm{C}_2=3$가지, 큰 수가 $a_1$(1가지).</p>
+        <p><b>(1)</b> 조건 $a_2 \gt  a_3 \gt  a_5$: 위치 $\{2,3,5\}$에 들어갈 $3$개 선택 → $_6\mathrm{C}_3=20$가지, 뽑힌 $3$수는 크기 순서 고정(1가지).</p>
+        <p class="sol-step">조건 $a_1 \gt  a_4$: 나머지 $3$개 중 위치 $\{1,4\}$에 들어갈 $2$개 선택 → $_3\mathrm{C}_2=3$가지, 큰 수가 $a_1$(1가지).</p>
         <p class="sol-step">나머지 $1$개는 위치 $6$에 자동 배정. &nbsp; ∴ $20 \times 3 = 60$</p>
-        <p><b>(2)</b> 백의 자리 $a \in \{5,6\}$ ($500 < \overline{abc} < 700$이므로).</p>
-        <p class="sol-step">$a=5$: $5>b>c$인 자연수 $b,c$ 선택 → $\{1,2,3,4\}$에서 $2$개 선택: $_4\mathrm{C}_2=6$</p>
-        <p class="sol-step">$a=6$: $6>b>c$인 자연수 $b,c$ 선택 → $\{1,2,3,4,5\}$에서 $2$개 선택: $_5\mathrm{C}_2=10$</p>
+        <p><b>(2)</b> 백의 자리 $a \in \{5,6\}$ ($500 \lt  \overline{abc} \lt  700$이므로).</p>
+        <p class="sol-step">$a=5$: $5\gt b\gt c$인 자연수 $b,c$ 선택 → $\{1,2,3,4\}$에서 $2$개 선택: $_4\mathrm{C}_2=6$</p>
+        <p class="sol-step">$a=6$: $6\gt b\gt c$인 자연수 $b,c$ 선택 → $\{1,2,3,4,5\}$에서 $2$개 선택: $_5\mathrm{C}_2=10$</p>
         <p class="sol-step">∴ $6+10=16$</p>
       </div>
 
@@ -672,7 +672,7 @@ a, a:link, a:visited, a:hover, a:active { color:#000 !important; }
         <div class="sol-answer"><b>[정답]</b>&nbsp;&nbsp;(1) $60$ &nbsp;&nbsp;(2) $10$ &nbsp;&nbsp;(3) $4$</div>
         <p>(1) 단사함수: $Y$의 원소 $5$개 중 $3$개를 순서 있게 배정 → $_5\mathrm{P}_3 = 5\times4\times3=60$</p>
         <p>(2) 순증가 함수: $Y$의 원소 $5$개 중 $3$개 선택 후 크기 순서대로 대응 → $_5\mathrm{C}_3=10$</p>
-        <p>(3) 순증가이고 $f(2)=3$: $f(1)<3$이므로 $f(1)\in\{1,2\}$ ($2$가지), $f(3)>3$이므로 $f(3)\in\{4,5\}$ ($2$가지).</p>
+        <p>(3) 순증가이고 $f(2)=3$: $f(1)\lt 3$이므로 $f(1)\in\{1,2\}$ ($2$가지), $f(3)\gt 3$이므로 $f(3)\in\{4,5\}$ ($2$가지).</p>
         <p class="sol-step">∴ $2\times2=4$</p>
       </div>
 
