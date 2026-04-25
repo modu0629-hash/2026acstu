@@ -132,6 +132,17 @@ svg { overflow:visible; }
 .sol-num a { color:#000; text-decoration:none; }
 .sol-answer { margin-bottom:1.5mm; }
 @media print { .solution-link { text-decoration:none; } }
+
+/* /mathbook:_공통 §9.2 — 깜빡임 방지 */
+.solution-section { visibility:hidden; }
+body.ready .solution-section { visibility:visible; }
+
+/* /mathbook:_공통 §10.3 — 이어서 마커 */
+.solution-item.continuation { padding-left:5mm; }
+.solution-item.continuation::before { content:'(이어서) '; font-size:0.9em; color:#666; font-style:italic; }
+
+/* 색상 통일 */
+a, a:link, a:visited, a:hover, a:active { color:#000 !important; }
 </style>
 </head>
 <body>
@@ -724,7 +735,10 @@ svg { overflow:visible; }
 const _ready = Promise.all([
   document.fonts.ready,
   (window.MathJax && MathJax.startup && MathJax.startup.promise) ? MathJax.startup.promise : Promise.resolve()
-]);
+]).then(() => new Promise(resolve => {
+  // /mathbook:_공통 §9.1 — MathJax/폰트 layout 안정화 대기
+  requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(resolve, 100)));
+}));
 _ready.then(() => {
   (function autoWrapChoices(){
     document.querySelectorAll('.choices').forEach(c => {
@@ -798,14 +812,17 @@ _ready.then(() => {
     }
   })();
   (function flowSolutions(){
+    // 라이브러리 표준 패턴 — incremental add-and-measure (regionize/Bindery/paged.js)
+    // 1) 한 항목씩 append → 마지막 항목 rect.bottom/right 검사
+    // 2) 오버플로면 split 시도: 마지막 <p>부터 떼며 fit 찾기, 헤더+첫 단락은 유지
+    // 3) 분할 실패면 통째로 다음 페이지
     const sections = Array.from(document.querySelectorAll('.solution-section'));
     if (!sections.length) return;
-    const items = [];
-    sections.forEach(sec => { sec.querySelectorAll('.solution-item').forEach(it => items.push(it)); });
+    const allItems = [];
+    sections.forEach(sec => { sec.querySelectorAll('.solution-item').forEach(it => allItems.push(it)); });
     sections.forEach(sec => { const c = sec.querySelector('.solutions'); if (c) c.innerHTML = ''; });
-    let idx = 0;
-    function ensureSection() {
-      if (idx < sections.length) return;
+
+    function makeSection() {
       const prev = sections[sections.length - 1];
       const ns = document.createElement('section');
       ns.className = 'sheet solution-section';
@@ -817,34 +834,59 @@ _ready.then(() => {
         '<footer class="sheet-footer"></footer>';
       prev.parentNode.insertBefore(ns, prev.nextSibling);
       sections.push(ns);
+      return ns;
     }
-    function overflows(sec) {
-      // 단단/다단 레이아웃 모두 커버. 다단(column-count>=2)은 오버플로 시 가로로 가상 열 생성되므로 scrollWidth 확인.
+    function lastItemOverflows(sec) {
       const body = sec.querySelector('.sheet-body');
-      const solutions = sec.querySelector('.solutions');
-      if (!body) return false;
-      if (body.scrollHeight > body.clientHeight + 1) return true;
-      if (solutions && solutions.scrollWidth > solutions.clientWidth + 2) return true;
-      return false;
+      const last = sec.querySelector('.solutions > :last-child');
+      if (!body || !last) return false;
+      void body.offsetHeight;
+      const br = body.getBoundingClientRect();
+      const lr = last.getBoundingClientRect();
+      return lr.bottom > br.bottom + 1 || lr.right > br.right + 1;
     }
-    for (let i = 0; i < items.length; i++) {
-      ensureSection();
-      let sec = sections[idx];
-      let container = sec.querySelector('.solutions');
-      container.appendChild(items[i]);
-      if (!overflows(sec)) continue;
-      const item = items[i];
-      const paras = Array.from(item.querySelectorAll(':scope > p'));
-      if (paras.length === 0) { container.removeChild(item); idx++; ensureSection(); sections[idx].querySelector('.solutions').appendChild(item); continue; }
-      const moved = [];
-      while (paras.length > 0 && overflows(sec)) { const p = paras.pop(); item.removeChild(p); moved.unshift(p); }
-      if (moved.length === 0) { container.removeChild(item); idx++; ensureSection(); sections[idx].querySelector('.solutions').appendChild(item); continue; }
-      idx++; ensureSection();
+    function makeContinuation(item, paras) {
       const cont = document.createElement('div');
       cont.className = 'solution-item continuation';
       cont.setAttribute('data-qa-id', item.getAttribute('data-qa-id') || '');
-      moved.forEach(p => cont.appendChild(p));
-      sections[idx].querySelector('.solutions').appendChild(cont);
+      paras.forEach(p => cont.appendChild(p));
+      return cont;
+    }
+
+    let queue = allItems.slice();
+    let secIdx = 0;
+    let safety = 0;
+    while (queue.length > 0 && safety++ < 600) {
+      if (secIdx >= sections.length) makeSection();
+      const sec = sections[secIdx];
+      const container = sec.querySelector('.solutions');
+      let advancedToNextSection = false;
+      while (queue.length > 0) {
+        const item = queue.shift();
+        container.appendChild(item);
+        if (!lastItemOverflows(sec)) continue;
+        const paras = Array.from(item.querySelectorAll(':scope > p'));
+        if (paras.length >= 2) {
+          const moved = [];
+          while (paras.length > 1 && lastItemOverflows(sec)) {
+            const p = paras.pop();
+            item.removeChild(p);
+            moved.unshift(p);
+          }
+          if (!lastItemOverflows(sec) && moved.length > 0) {
+            queue.unshift(makeContinuation(item, moved));
+            advancedToNextSection = true;
+            break;
+          }
+          moved.forEach(p => item.appendChild(p));
+        }
+        container.removeChild(item);
+        queue.unshift(item);
+        advancedToNextSection = true;
+        break;
+      }
+      if (advancedToNextSection) secIdx++;
+      else break;
     }
     sections.forEach(sec => { if (!sec.querySelector('.solution-item')) sec.remove(); });
   })();
@@ -861,6 +903,7 @@ _ready.then(() => {
   (function renumberFooters(){
     document.querySelectorAll('.sheet-footer').forEach((f, i) => { f.textContent = i + 1; });
   })();
+  document.body.classList.add('ready');
 });
 </script>
 </body>
