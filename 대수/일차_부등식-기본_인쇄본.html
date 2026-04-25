@@ -232,7 +232,7 @@ svg { overflow:visible; }
 .solution-item {
   margin-bottom:var(--one-line);
   padding-left:5mm; padding-right:2mm; position:relative;
-  overflow-wrap: break-word;
+  overflow-wrap: break-word; break-inside:avoid; -webkit-column-break-inside:avoid; page-break-inside:avoid;
 }
 .solution-item p { text-indent:0; margin:0; }
 .sol-num {
