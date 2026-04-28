@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>행렬 — 인쇄본</title>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']] },
+  chtml: { matchFontHeight: false },
+  startup: { typeset: true }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+@font-face { font-family:'Gyeonggi Title'; src:url('../%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/woff/Title_Bold.woff') format('woff'); font-weight:700; font-display:swap; }
+@font-face { font-family:'Gyeonggi Title'; src:url('../%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/woff/Title_Medium.woff') format('woff'); font-weight:500; font-display:swap; }
+@font-face { font-family:'Gyeonggi Batang'; src:url('../%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/woff/Batang_Regular.woff') format('woff'); font-weight:400; font-display:swap; }
+@font-face { font-family:'Gyeonggi Batang'; src:url('../%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/woff/Batang_Bold.woff') format('woff'); font-weight:700; font-display:swap; }
+
+@page { size: A4; margin: 0; }
+* { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --line-h: 1.75; --one-line: 7.4mm;
+  --pad-x: 22mm; --pad-top: 20mm; --pad-bottom: 18mm;
+  --corner-x: 22mm; --corner-len: 48mm;
+}
+
+html, body { background:#fff; color:#000; font-family:'신명조','HY신명조','Shinmyeongjo','바탕','Batang',serif; font-size:11pt; line-height:var(--line-h); }
+@media screen { body { background:#dcdcdc; padding:24px 0; } .sheet { box-shadow:0 3px 14px rgba(0,0,0,0.2); margin:0 auto 24px; } }
+
+.sheet { width:210mm; height:297mm; background:#fff; position:relative; overflow:hidden; }
+@media print { .sheet { page-break-after:always; margin:0; box-shadow:none; } .sheet:last-child { page-break-after:auto; } }
+
+.corner { position:absolute; height:0; width:var(--corner-len); border-top:1pt solid #000; }
+.corner::after { content:''; position:absolute; height:3mm; width:0; }
+.corner.tr { top:12mm; right:var(--corner-x); }
+.corner.tr::after { right:0; top:0; border-right:1pt solid #000; }
+.corner.tl { top:12mm; left:var(--corner-x); }
+.corner.tl::after { left:0; top:0; border-left:1pt solid #000; }
+.corner.br { bottom:14mm; right:var(--corner-x); }
+.corner.br::after { right:0; bottom:0; border-right:1pt solid #000; }
+.corner.bl { bottom:14mm; left:var(--corner-x); }
+.corner.bl::after { left:0; bottom:0; border-left:1pt solid #000; }
+.corner.tr, .corner.tl { display:none; }
+.sheet.odd .corner.bl { display:none; }
+.sheet.even .corner.br { display:none; }
+
+.sheet-header { position:absolute; top:21mm; left:var(--pad-x); right:var(--pad-x); font-family:'Gyeonggi Title',sans-serif; font-weight:700; font-size:10.5pt; }
+.sheet.odd .sheet-header { text-align:right; }
+.sheet.even .sheet-header { text-align:left; }
+.sheet-footer { position:absolute; bottom:8mm; left:0; right:0; text-align:center; font-family:'Gyeonggi Batang',serif; font-size:10pt; }
+
+.sheet-body { position:absolute; top:calc(var(--pad-top) + 14mm); bottom:calc(var(--pad-bottom) + 6mm); left:var(--pad-x); right:var(--pad-x); }
+
+.chapter-title { font-family:'Gyeonggi Title',sans-serif; font-weight:700; font-size:18pt; letter-spacing:0.5pt; margin-bottom:calc(var(--one-line) * 2); }
+.section-title { font-family:'Gyeonggi Batang',serif; font-weight:700; font-size:13pt; margin-bottom:calc(var(--one-line) * 1); }
+.sub-label { font-family:'Gyeonggi Title',sans-serif; font-weight:700; font-size:11pt; margin-bottom:3mm; }
+
+.concept { font-family:'Gyeonggi Batang','신명조','HY신명조','바탕','Batang',serif; font-size:11pt; line-height:1.85; }
+.concept p { margin-bottom:2mm; }
+.concept .sub-title { font-family:'Gyeonggi Batang',serif; font-weight:400; font-size:11.5pt; margin:calc(var(--one-line)*2) 0 2mm; }
+.concept .sub-title:first-child { margin-top:0; }
+.concept .formula { border:0.7pt solid #000; padding:3mm 5mm; margin:3mm 0; text-align:center; }
+.concept .formula.left { text-align:left; padding:3mm 3mm; }
+.concept .formula.compact { padding:1.5mm 5mm; margin:1.5mm 0; }
+.concept .note { padding:2mm 0; margin:3mm 0; font-size:8pt; line-height:1.6; }
+.concept .note::before { content:"[참고] "; font-weight:700; }
+.concept .proof { font-size:8pt; line-height:1.6; padding:2mm 0 2mm 10mm; text-indent:-10mm; margin:3mm 0 6mm 0; }
+.concept .ex { padding:2mm 0; margin:3mm 0; font-size:9pt; }
+.concept.dense { line-height:1.7; }
+.concept.dense .sub-title { margin:calc(var(--one-line)*1.1) 0 1.5mm; }
+.concept.dense .sub-title:first-child { margin-top:0; }
+.concept.dense p { margin-bottom:1mm; }
+.concept.dense .note { margin:2mm 0; }
+.concept.dense .formula { padding:2mm 5mm; margin:2mm 0; }
+.concept.dense .ex { margin:1.5mm 0; }
+.concept table { width:100%; border-collapse:collapse; margin:3mm 0; font-size:9.5pt; }
+.concept table th, .concept table td { border:0.5pt solid #000; padding:1.5mm 2mm; text-align:center; vertical-align:middle; }
+.concept table th { font-weight:700; background:#f7f7f7; }
+
+.problem-block { }
+.sheet-body > .problem-block { margin-top:8mm; }
+.problem { font-family:'신명조','HY신명조','바탕','Batang',serif; font-size:10pt; line-height:var(--line-h); letter-spacing:-0.05em; position:relative; }
+.problem > p:first-of-type { padding-left:5.5mm; text-indent:-5.5mm; }
+.problem .pnum { display:inline-block; min-width:4mm; margin-right:1.5mm; font-family:'Gyeonggi Title',sans-serif; font-size:11pt; font-weight:700; text-indent:0; vertical-align:baseline; }
+.problem .pnum a { color:#000; text-decoration:none; font-weight:700; }
+.problem p { margin-bottom:1.5mm; }
+.problem .sub { margin-left:4mm; }
+.problem table { border-collapse:collapse; margin:2mm auto; font-size:9.5pt; }
+.problem table th, .problem table td { border:0.5pt solid #000; padding:1mm 2.5mm; text-align:center; vertical-align:middle; }
+.problem table th { font-weight:700; background:#f7f7f7; }
+.problem .table-pair { display:flex; gap:6mm; justify-content:center; flex-wrap:wrap; margin:2mm 0; }
+.problem .table-pair .table-cap { font-size:8.5pt; text-align:center; margin-top:1mm; }
+.cond-box { display:block; width:fit-content; max-width:92%; border:0.7pt solid #000; padding:2.5mm 6mm; margin:2mm auto; }
+.cond-box p { margin:0.5mm 0; }
+
+.choices { display:grid; grid-template-columns:repeat(5, minmax(0,1fr)); gap:2mm 5mm; margin-top:4mm; font-size:10pt; clear:both; }
+.choices.two-row { grid-template-columns:repeat(3, minmax(0,1fr)); }
+.choices span { white-space:nowrap; }
+
+.problems-area { position:absolute; top:calc(var(--pad-top) + var(--one-line) + 5mm); bottom:calc(var(--pad-bottom) + 6mm); left:var(--pad-x); right:var(--pad-x); display:flex; flex-direction:column; }
+.problems-area > .problem-block:first-child { margin-bottom:0; }
+.problems-area > .problem-block:nth-child(2) { margin:auto 0; }
+.problems-area.single > .problem-block { margin:0; }
+
+mjx-container { font-weight:400 !important; }
+
+.fig-right { float:right; margin:0 0 2mm 5mm; overflow:visible; }
+.fig-center { text-align:center; margin:3mm 0; overflow:visible; }
+.fig-row { display:flex; justify-content:center; gap:6mm; margin:3mm 0; flex-wrap:wrap; }
+svg { overflow:visible; }
+
+.quick-answer-section .sheet-body { top:32mm; bottom:20mm; padding:0; overflow:hidden; display:flex; flex-direction:column; }
+.quick-answer-section .section-title { margin-top:0; flex:0 0 auto; }
+.quick-answers { flex:1 1 auto; min-height:0; position:relative; column-count:3; column-fill:auto; column-gap:7mm; column-rule:0.3pt solid #888; font-family:'신명조','HY신명조','Shinmyeongjo','바탕','Batang',serif; font-size:8pt; line-height:1.85; letter-spacing:-0.1em; }
+.quick-answers mjx-container { font-size:8pt !important; }
+.quick-answers::before, .quick-answers::after { content:''; position:absolute; top:0; bottom:0; width:0.3pt; background:#888; pointer-events:none; }
+.quick-answers::before { left:calc((100% - 14mm) / 3 + 3.5mm); }
+.quick-answers::after { left:calc((100% - 14mm) / 3 * 2 + 10.5mm); }
+.qa-item { break-inside:avoid-column; page-break-inside:avoid; -webkit-column-break-inside:avoid; margin-bottom:2mm; display:flex; align-items:baseline; }
+.qa-num { flex:0 0 auto; display:inline-block; min-width:3mm; margin-right:1.5mm; font-family:'Gyeonggi Title',sans-serif; font-size:8pt; }
+.qa-ans { flex:1 1 auto; min-width:0; }
+
+.solution-section .sheet-body { top:32mm; bottom:20mm; padding:0; overflow:hidden; display:flex; flex-direction:column; }
+.solution-section .section-title { margin-top:0; flex:0 0 auto; }
+.solutions { flex:1 1 auto; min-height:0; position:relative; column-count:2; column-fill:auto; column-gap:8mm; column-rule:0.3pt solid #888; font-family:'신명조','HY신명조','Shinmyeongjo','바탕','Batang',serif; font-size:8pt; line-height:1.75; letter-spacing:-0.05em; }
+.solutions::before { content:''; position:absolute; top:0; bottom:0; left:calc((100% - 8mm) / 2 + 4mm); width:0.3pt; background:#888; pointer-events:none; }
+.solutions mjx-container { font-size:8pt !important; max-width:100%; }
+.solution-item { margin-bottom:var(--one-line); padding-left:5mm; padding-right:2mm; position:relative; overflow-wrap:break-word; }
+.solution-item p { text-indent:0; margin:0; }
+.sol-num { position:absolute; left:0; top:0; font-weight:700; font-size:8pt; font-family:'Gyeonggi Title',sans-serif; }
+.sol-num a { color:#000; text-decoration:none; }
+.sol-answer { margin-bottom:1.5mm; }
+@media print { .solution-link { text-decoration:none; } }
+
+.solution-section { visibility:hidden; }
+body.ready .solution-section { visibility:visible; }
+
+.solution-item.continuation { padding-left:5mm; }
+.solution-item.continuation::before { content:'(이어서) '; font-size:0.9em; color:#666; font-style:italic; }
+
+a, a:link, a:visited, a:hover, a:active { color:#000 !important; }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- PAGE 1 (odd) : 대단원 + 행렬과 그 연산 (1)(2) -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">공통수학 1</header>
+  <div class="sheet-body">
+    <h1 class="chapter-title">행렬</h1>
+
+    <h2 class="section-title">행렬과 그 연산</h2>
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">1) 행렬의 뜻</div>
+      <p>여러 개의 수 또는 문자를 직사각형 모양으로 배열하여 괄호로 묶은 것을 <b>행렬</b>이라 한다. 이때 가로줄을 <b>행</b>, 세로줄을 <b>열</b>이라 하고, 행렬을 이루는 각각의 수 또는 문자를 그 행렬의 <b>성분</b>이라 한다.</p>
+
+      <div class="formula left">
+        $m$개의 행과 $n$개의 열로 이루어진 행렬을 $m\times n$ 행렬이라 하고, 특히 $m=n$인 행렬을 $n$차 <b>정사각행렬</b>이라 한다.
+      </div>
+
+      <div class="note">행렬은 보통 $A,\,B,\,C,\,\cdots$와 같이 알파벳 대문자로 나타낸다.</div>
+
+      <div class="sub-title">2) 행렬의 꼴</div>
+      <p>$m\times n$ 행렬은 $m$개의 행, $n$개의 열로 구성되며 모두 $mn$개의 성분을 가진다.</p>
+
+      <div class="formula left">
+        ・$1\times n$ 행렬을 <b>행벡터</b>, &nbsp;$m\times 1$ 행렬을 <b>열벡터</b>라 한다.<br>
+        ・$n$차 정사각행렬에서 $i$행 $i$열의 성분, 즉 $a_{ii}$를 <b>대각성분</b>이라 한다.
+      </div>
+
+      <div class="ex"><b>예)</b> $\begin{pmatrix} 2 &amp; -1 &amp; 3 \\ 0 &amp; 5 &amp; 4 \end{pmatrix}$ 는 $2\times 3$ 행렬이고, $\begin{pmatrix} 1 &amp; 2 \\ 3 &amp; 4 \end{pmatrix}$ 는 $2$차 정사각행렬이다.</div>
+    </div>
+  </div>
+  <footer class="sheet-footer">1</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 2 (even) : 행렬의 성분 표시 + 서로 같은 행렬 -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">3) 행렬의 성분 표시</div>
+      <p>행렬 $A$의 $i$행 $j$열에 있는 성분을 행렬 $A$의 $(i,\,j)$ 성분이라 하고, 기호 $a_{ij}$로 나타낸다.</p>
+      <p>행렬을 일반항을 사용하여 나타내면 다음과 같다.</p>
+
+      <div class="formula left">
+        $A=(a_{ij})\;\;$ 또는 $\;\;A=(a_{ij})\,(i=1,2,\cdots,m;\;j=1,2,\cdots,n)$
+      </div>
+
+      <div class="ex">
+        <b>예)</b> $A=\begin{pmatrix} a_{11} &amp; a_{12} &amp; a_{13} \\ a_{21} &amp; a_{22} &amp; a_{23} \\ a_{31} &amp; a_{32} &amp; a_{33} \end{pmatrix}$ 는 $3$차 정사각행렬의 일반형이다.
+      </div>
+
+      <div class="sub-title">4) 서로 같은 행렬</div>
+      <p>두 행렬이 모두 같은 꼴이고 대응하는 각 성분이 같을 때, 두 행렬은 서로 <b>같은 행렬</b>이라 한다.</p>
+
+      <div class="formula left">
+        두 $m\times n$ 행렬 $A=(a_{ij})$, $B=(b_{ij})$에 대하여
+        $$A=B \iff a_{ij}=b_{ij}\;\;(i=1,2,\cdots,m;\;j=1,2,\cdots,n)$$
+      </div>
+
+      <div class="note">두 행렬이 서로 같다는 것은 행과 열의 수도 같고, 대응하는 모든 성분도 각각 같다는 뜻이다. 따라서 행과 열의 수가 다르면 모든 성분이 일치해도 서로 같은 행렬이라 할 수 없다.</div>
+    </div>
+  </div>
+  <footer class="sheet-footer">2</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 3 (odd) : 문제 1, 2 (소단원 1) -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">공통수학 1</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q1">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-1" class="solution-link">1</a></span>행렬 $A=(a_{ij})$를 &nbsp;$a_{ij}=\begin{cases} 3-i &amp; (i\lt j) \\ -1+i &amp; (i=j) \\ a_{ji} &amp; (i\gt j) \end{cases}\;(i,\,j=1,\,2,\,3)$로 정의할 때, 행렬 $A$의 모든 성분의 합을 구하여라.</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q2">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <svg class="fig-right" viewBox="0 0 110 100" width="110" height="100" style="width:33mm;">
+          <circle cx="55" cy="15" r="9" fill="none" stroke="#000" stroke-width="1.2"/>
+          <circle cx="22" cy="78" r="9" fill="none" stroke="#000" stroke-width="1.2"/>
+          <circle cx="88" cy="78" r="9" fill="none" stroke="#000" stroke-width="1.2"/>
+          <foreignObject x="49" y="7" width="14" height="14"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:9px;text-align:center;">1</div></foreignObject>
+          <foreignObject x="16" y="70" width="14" height="14"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:9px;text-align:center;">2</div></foreignObject>
+          <foreignObject x="82" y="70" width="14" height="14"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:9px;text-align:center;">3</div></foreignObject>
+          <path d="M 48 22 Q 32 50 28 70" fill="none" stroke="#000" stroke-width="0.9" marker-end="url(#ar)"/>
+          <path d="M 30 70 Q 38 48 50 24" fill="none" stroke="#000" stroke-width="0.9" marker-end="url(#ar)"/>
+          <path d="M 62 22 Q 78 50 82 70" fill="none" stroke="#000" stroke-width="0.9" marker-end="url(#ar)"/>
+          <path d="M 33 78 L 77 78" fill="none" stroke="#000" stroke-width="0.9" marker-end="url(#ar)"/>
+          <path d="M 77 82 L 33 82" fill="none" stroke="#000" stroke-width="0.9" marker-end="url(#ar)"/>
+          <path d="M 96 84 C 108 92 100 98 90 88" fill="none" stroke="#000" stroke-width="0.9" marker-end="url(#ar)"/>
+          <defs>
+            <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+              <path d="M0,0 L10,5 L0,10 z" fill="#000"/>
+            </marker>
+          </defs>
+        </svg>
+        <p><span class="pnum"><a href="#sol-2" class="solution-link">2</a></span>오른쪽 그림은 세 도시 $1,\,2,\,3$ 사이의 일방통행 도로를 나타낸 것이다. 행렬 $A$의 $(i,\,j)$ 성분 $a_{ij}$는 $i$도시에서 $j$도시로 직접 가는 도로의 수를 나타낸다고 할 때, 행렬 $A$의 모든 성분의 합을 구하여라. (단, $i=1,\,2,\,3,\;j=1,\,2,\,3$)</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">3</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 4 (even) : 문제 3 (소단원 1, single) -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area single">
+
+    <div class="problem-block" data-qa-id="q3">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-3" class="solution-link">3</a></span>행렬 $A=(a_{ij})$, $B=\begin{pmatrix} 0 &amp; x+y &amp; -6 \\ 2 &amp; x-y &amp; -4 \end{pmatrix}$에 대하여 $a_{ij}$가 &nbsp;$a_{ij}=2i-3j+1\;(i=1,\,2;\;j=1,\,2,\,3)$&nbsp;으로 주어질 때, $A=B$를 만족시키는 상수 $x,\,y$에 대하여 $x-2y$의 값을 구하여라.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">4</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 5 (odd) : 덧셈·뺄셈·실수배 -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">공통수학 1</header>
+  <div class="sheet-body">
+    <h2 class="section-title">행렬의 덧셈과 뺄셈 및 실수배</h2>
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">1) 행렬의 덧셈</div>
+      <p>같은 꼴인 두 행렬 $A,\,B$에 대하여 같은 위치의 성분끼리 더한 행렬을 $A,\,B$의 <b>합</b>이라 하고 $A+B$로 나타낸다.</p>
+
+      <div class="formula">
+        $A=(a_{ij}),\;B=(b_{ij})$일 때, &nbsp;$A+B=(a_{ij}+b_{ij})$
+      </div>
+
+      <div class="sub-title">2) 행렬의 뺄셈</div>
+      <p>같은 꼴인 두 행렬 $A,\,B$에 대하여 $-B$는 $B$의 모든 성분의 부호를 바꾼 행렬이고, $A-B=A+(-B)$로 정의한다.</p>
+
+      <div class="formula">
+        $A-B=(a_{ij}-b_{ij})$
+      </div>
+
+      <div class="sub-title">3) 행렬의 실수배</div>
+      <p>임의의 실수 $k$에 대하여 행렬 $A$의 모든 성분에 같은 수 $k$를 곱한 행렬을 $A$의 $k$배라 하고, 기호 $kA$로 나타낸다.</p>
+
+      <div class="formula">
+        $kA=(k\cdot a_{ij})\;\;($특히 $0\cdot A=O,\;1\cdot A=A)$
+      </div>
+
+      <div class="note">덧셈에 관한 성질 — 같은 꼴 행렬 $A,\,B,\,C$에 대하여 ① 교환법칙: $A+B=B+A$, ② 결합법칙: $(A+B)+C=A+(B+C)$, ③ $A+O=A$, ④ $A+(-A)=O$. 실수배의 성질 — $(k+l)A=kA+lA$, $k(A+B)=kA+kB$, $k(lA)=(kl)A$.</div>
+    </div>
+  </div>
+  <footer class="sheet-footer">5</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 6 (even) : 문제 4, 5 (소단원 2) -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q4">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-4" class="solution-link">4</a></span>두 이차정사각행렬 $A,\,B$가 &nbsp;$2A+B=\begin{pmatrix} 1 &amp; 8 \\ 1 &amp; 5 \end{pmatrix},\;A+2B=\begin{pmatrix} -7 &amp; 1 \\ 5 &amp; 4 \end{pmatrix}$&nbsp;를 만족시킬 때, 행렬 $A$의 $(2,\,1)$ 성분과 행렬 $B$의 $(1,\,2)$ 성분의 합은?</p>
+        <div class="choices">
+          <span>① $-5$</span><span>② $-3$</span><span>③ $0$</span><span>④ $3$</span><span>⑤ $5$</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q5">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-5" class="solution-link">5</a></span>이차방정식 $x^{2}-px+q=0$의 두 근을 $\alpha,\,\beta$라 할 때, &nbsp;$\alpha\!\begin{pmatrix} 1 &amp; \alpha \\ 0 &amp; \beta \end{pmatrix}+\beta\!\begin{pmatrix} 1 &amp; \beta \\ 0 &amp; \alpha \end{pmatrix}=\begin{pmatrix} 5 &amp; 13 \\ 0 &amp; 2\alpha\beta \end{pmatrix}$&nbsp;를 만족시키는 상수 $p,\,q$에 대하여 $p+q$의 값은?</p>
+        <div class="choices">
+          <span>① $7$</span><span>② $9$</span><span>③ $11$</span><span>④ $13$</span><span>⑤ $15$</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">6</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 7 (odd) : 행렬의 곱셈 (1)(2)(3) -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">공통수학 1</header>
+  <div class="sheet-body">
+    <h2 class="section-title">행렬의 곱셈</h2>
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">1) 행렬의 곱셈</div>
+      <p>두 행렬 $A,\,B$에 대하여 $A$의 열의 개수와 $B$의 행의 개수가 같을 때, $A$와 $B$의 <b>곱</b> $AB$를 다음과 같이 정의한다.</p>
+
+      <div class="formula left">
+        $A$가 $m\times k$ 행렬, $B$가 $k\times n$ 행렬일 때, &nbsp;$AB$는 $m\times n$ 행렬이고
+        $$(AB)\text{의 }(i,\,j)\text{ 성분} = \sum_{p=1}^{k} a_{ip}\,b_{pj} = a_{i1}b_{1j}+a_{i2}b_{2j}+\cdots+a_{ik}b_{kj}$$
+      </div>
+
+      <div class="sub-title">2) 행렬의 곱셈에 관한 성질</div>
+      <p>곱셈이 정의되는 행렬 $A,\,B,\,C$와 실수 $k$에 대하여 다음이 성립한다.</p>
+      <div class="formula left">
+        ① 결합법칙: $(AB)C=A(BC)$<br>
+        ② 분배법칙: $A(B+C)=AB+AC,\;\;(A+B)C=AC+BC$<br>
+        ③ 실수배: $k(AB)=(kA)B=A(kB)$
+      </div>
+
+      <div class="note">행렬의 곱셈에서는 일반적으로 <b>교환법칙이 성립하지 않는다</b>. 즉, 일반적으로 $AB\neq BA$이다.</div>
+
+      <div class="sub-title">3) 행렬의 거듭제곱</div>
+      <p>정사각행렬 $A$와 자연수 $m,\,n$에 대하여</p>
+      <div class="formula">
+        $A^{2}=AA,\;\;A^{3}=AAA,\;\;\cdots,\;\;A^{m+1}=A^{m}A\;(m\ge 1)$
+      </div>
+      <div class="formula left">
+        ・$A^{m}A^{n}=A^{m+n},\;\;(A^{m})^{n}=A^{mn}$<br>
+        ・$(kA)^{n}=k^{n}A^{n}\;\;($단, $k$는 실수$)$
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">7</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 8 (even) : 행렬의 곱셈 (4)(5)(6)(7)(8) -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">4) 행렬의 곱과 영행렬</div>
+      <p>모든 성분이 $0$인 행렬을 <b>영행렬</b>이라 하고 기호 $O$로 나타낸다. 곱셈이 정의되는 행렬 $A,\,B$와 영행렬 $O$에 대하여</p>
+      <div class="formula left">
+        ① $AO=O,\;\;OA=O$<br>
+        ② $A=O$ 또는 $B=O$이면 $AB=O$이지만, 그 역은 일반적으로 성립하지 않는다.<br>
+        ③ $A\neq O$, $AB=AC$이면 $B=C$가 일반적으로 성립하지 않는다.
+      </div>
+
+      <div class="sub-title">5) 실수의 곱셈과 구별되는 행렬의 곱셈에 관한 성질</div>
+      <p>행렬의 곱셈에서는 교환법칙이 일반적으로 성립하지 않는다. 합과 곱이 정의되는 세 행렬 $A,\,B,\,C$에 대하여 다음이 성립한다.</p>
+      <div class="formula left">
+        ① $AB\neq BA$ &nbsp; ② $(AB)C=A(BC)$ &nbsp; ③ $A(B+C)=AB+AC$ &nbsp; ④ $k(AB)=(kA)B=A(kB)$
+      </div>
+
+      <div class="sub-title">6) 행렬의 곱셈에서 전개할 때, 주의해야 하는 경우</div>
+      <p>행렬의 곱셈에서는 $AB=BA$가 일반적으로 성립하지 않으므로 다음과 같은 항등식이 일반적으로 성립하지 않는다.</p>
+      <div class="formula left">
+        ① $(A+B)^{2}\neq A^{2}+2AB+B^{2}$ &nbsp;($AB+BA$가 $2AB$와 다름)<br>
+        ② $(A-B)^{2}\neq A^{2}-2AB+B^{2}$<br>
+        ③ $(A+B)(A-B)\neq A^{2}-B^{2}$<br>
+        ④ $(AB)^{2}\neq A^{2}B^{2}$
+      </div>
+      <div class="note">단, $AB=BA$이면 위의 식들은 모두 실수에서와 같이 그대로 성립한다.</div>
+
+      <div class="sub-title">7) 단위행렬</div>
+      <p>$n$차 정사각행렬 가운데 대각성분이 모두 $1$이고 나머지 성분이 모두 $0$인 행렬을 $n$차 <b>단위행렬</b>이라 하고 기호 $E$로 나타낸다.</p>
+      <div class="formula">
+        $E=\begin{pmatrix} 1 &amp; 0 \\ 0 &amp; 1 \end{pmatrix}\;\text{ 또는 }\; E=\begin{pmatrix} 1 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 1 \end{pmatrix}\;,\;\cdots$
+      </div>
+
+      <div class="sub-title">8) 단위행렬의 성질</div>
+      <div class="formula left">
+        ① $AE=EA=A\;\;($단, $A$는 $E$와 같은 차수의 정사각행렬$)$<br>
+        ② $E^{2}=E,\;E^{3}=E,\;\cdots,\;E^{n}=E\;\;(n$은 자연수$)$
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">8</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 9 (odd) : 문제 6, 7 (소단원 3) -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">공통수학 1</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q6">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-6" class="solution-link">6</a></span>이차방정식 $x^{2}-5x-3=0$의 두 근을 $\alpha,\,\beta$라 할 때, 두 행렬 &nbsp;$A=\begin{pmatrix} \alpha &amp; \beta \\ \beta &amp; 1 \end{pmatrix},\;B=\begin{pmatrix} \beta &amp; \alpha \\ \alpha &amp; 1 \end{pmatrix}$&nbsp;에 대하여 행렬 $AB$의 모든 성분의 합은?</p>
+        <div class="choices">
+          <span>① $22$</span><span>② $24$</span><span>③ $26$</span><span>④ $28$</span><span>⑤ $30$</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q7">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-7" class="solution-link">7</a></span>두 행렬 $X,\,Y$에 대하여 &nbsp;$X+Y=\begin{pmatrix} -1 &amp; -1 \\ 1 &amp; 0 \end{pmatrix},\;X-Y=\begin{pmatrix} -1 &amp; 1 \\ -1 &amp; -2 \end{pmatrix}$&nbsp;일 때, $X^{2}+XY$의 모든 성분의 합은?</p>
+        <div class="choices">
+          <span>① $1$</span><span>② $5$</span><span>③ $6$</span><span>④ $7$</span><span>⑤ $8$</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">9</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 10 (even) : 문제 8, 9 -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q8">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-8" class="solution-link">8</a></span>다음 행렬 $A$에 대하여 $A^{m}$을 구하여라. (단, $m$은 자연수)</p>
+        <p class="sub">(1) $A=\begin{pmatrix} 1 &amp; 0 \\ -1 &amp; 1 \end{pmatrix}$</p>
+        <p class="sub">(2) $A=\begin{pmatrix} 2 &amp; 0 \\ 0 &amp; -1 \end{pmatrix}$</p>
+        <p class="sub">(3) $A=\begin{pmatrix} 1 &amp; -2 \\ -1 &amp; 2 \end{pmatrix}$</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q9">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-9" class="solution-link">9</a></span>두 행렬 $A=\begin{pmatrix} 4 &amp; 3 \\ 1 &amp; 2 \end{pmatrix},\;B=\begin{pmatrix} 1 &amp; 2 \\ x &amp; y \end{pmatrix}$가 &nbsp;$A^{2}+B^{2}=AB+BA$&nbsp;를 만족시킬 때, 실수 $x,\,y$에 대하여 $x+y$의 값은?</p>
+        <div class="choices">
+          <span>① $15$</span><span>② $16$</span><span>③ $17$</span><span>④ $18$</span><span>⑤ $19$</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">10</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 11 (odd) : 문제 10, 11 -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">공통수학 1</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q10">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-10" class="solution-link">10</a></span>두 이차정사각행렬 $A,\,B$가 &nbsp;$A-B=\begin{pmatrix} 2 &amp; -1 \\ -1 &amp; 3 \end{pmatrix},\;A^{2}+B^{2}=\begin{pmatrix} 3 &amp; 2 \\ 1 &amp; 4 \end{pmatrix}$&nbsp;을 만족시킬 때, 행렬 $AB+BA$의 모든 성분의 합은?</p>
+        <div class="choices">
+          <span>① $2$</span><span>② $3$</span><span>③ $4$</span><span>④ $5$</span><span>⑤ $6$</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q11">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-11" class="solution-link">11</a></span>두 이차정사각행렬 $A,\,B$에 대하여 &nbsp;$AB+BA=O$&nbsp;이 성립할 때, 다음 [보기]에서 항상 옳은 것은?</p>
+        <div class="cond-box">
+          <p>ㄱ. $(AB)^{2}=A^{2}B^{2}$</p>
+          <p>ㄴ. $(A+B)^{2}=A^{2}+B^{2}$</p>
+          <p>ㄷ. $(A+B)(A-B)=A^{2}-B^{2}$</p>
+        </div>
+        <div class="choices">
+          <span>① ㄱ</span><span>② ㄴ</span><span>③ ㄱ, ㄴ</span><span>④ ㄴ, ㄷ</span><span>⑤ ㄱ, ㄴ, ㄷ</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">11</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 13 (odd) : 문제 12, 13 (소단원 3) -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">공통수학 1</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q12">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-12" class="solution-link">12</a></span>행렬 $A=\begin{pmatrix} 0 &amp; -1 \\ 1 &amp; 1 \end{pmatrix}$에 대하여 $A^{k}=E$를 만족시키는 두 자리 자연수 $k$의 개수는? (단, $E$는 단위행렬)</p>
+        <div class="choices">
+          <span>① $15$</span><span>② $16$</span><span>③ $17$</span><span>④ $18$</span><span>⑤ $19$</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q13">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-13" class="solution-link">13</a></span>두 이차정사각행렬 $A,\,B$에 대하여 &nbsp;$A^{2}+A=E,\;\;AB=2E$&nbsp;가 성립할 때, $B^{2}$를 $A$와 $E$를 사용하여 나타내면? (단, $E$는 단위행렬)</p>
+        <div class="choices">
+          <span>① $2A+4E$</span><span>② $2A-E$</span><span>③ $4A+8E$</span><span>④ $4A-2E$</span><span>⑤ $8A-4E$</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">13</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 14 (even) : 문제 14, 15 (소단원 3) -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q14">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-14" class="solution-link">14</a></span>다음 [보기] 중 옳은 것을 모두 고르면?</p>
+        <div class="cond-box">
+          <p>ㄱ. 행렬 $A$에 대하여 $AA$가 정의되면 행렬 $A$는 정사각행렬이다.</p>
+          <p>ㄴ. 두 행렬 $A,\,B$에 대하여 $AB$와 $BA$가 모두 정의되면 행렬 $A$는 정사각행렬이다.</p>
+          <p>ㄷ. 두 행렬 $A,\,B$에 대하여 $AB$와 $BA$가 모두 정의되면 행렬 $AB$는 정사각행렬이다.</p>
+        </div>
+        <div class="choices">
+          <span>① ㄱ</span><span>② ㄴ</span><span>③ ㄱ, ㄴ</span><span>④ ㄱ, ㄷ</span><span>⑤ ㄱ, ㄴ, ㄷ</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q15">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-15" class="solution-link">15</a></span>이차정사각행렬 $A$가 다음 조건을 만족시킨다. (단, $E$는 단위행렬, $O$는 영행렬)</p>
+        <div class="cond-box">
+          <p>(가) $A^{2}-2A+E=O$</p>
+          <p>(나) $A\begin{pmatrix} 2 \\ 1 \end{pmatrix}=\begin{pmatrix} 4 \\ 3 \end{pmatrix}$</p>
+        </div>
+        <p>$A\begin{pmatrix} 4 \\ 3 \end{pmatrix}=\begin{pmatrix} a \\ b \end{pmatrix}$를 만족시키는 두 실수 $a,\,b$에 대하여 $a-b$의 값은?</p>
+        <div class="choices">
+          <span>① $1$</span><span>② $2$</span><span>③ $3$</span><span>④ $4$</span><span>⑤ $5$</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">14</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 15 (odd) : 문제 16 (single — 실생활) -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">공통수학 1</header>
+  <div class="problems-area single">
+
+    <div class="problem-block" data-qa-id="q16">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-16" class="solution-link">16</a></span>철수와 영희는 두 편의점 $\mathrm{P}$와 $\mathrm{Q}$에서 삼각김밥과 컵라면을 사려고 한다. [표 1]은 두 편의점의 삼각김밥과 컵라면의 가격을 나타낸 것이고, [표 2]는 철수와 영희가 사려는 삼각김밥과 컵라면의 개수를 나타낸 것이다. 다음에 답하여라.</p>
+        <div class="table-pair">
+          <div>
+            <table>
+              <tr><th></th><th>삼각김밥</th><th>컵라면</th></tr>
+              <tr><th>편의점 P</th><td>3000</td><td>1200</td></tr>
+              <tr><th>편의점 Q</th><td>3500</td><td>1000</td></tr>
+            </table>
+            <div class="table-cap">[표 1] (단위: 원)</div>
+          </div>
+          <div>
+            <table>
+              <tr><th></th><th>철수</th><th>영희</th></tr>
+              <tr><th>삼각김밥</th><td>3</td><td>3</td></tr>
+              <tr><th>컵라면</th><td>4</td><td>5</td></tr>
+            </table>
+            <div class="table-cap">[표 2] (단위: 개)</div>
+          </div>
+        </div>
+        <p class="sub">(1) 철수와 영희가 두 편의점 $\mathrm{P}$와 $\mathrm{Q}$에서 지불해야 할 금액을 행렬로 나타내어라.</p>
+        <p class="sub">(2) 철수와 영희는 두 편의점 $\mathrm{P}$와 $\mathrm{Q}$ 중 어디에서 사야 비용이 더 적게 드는지 구하여라.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">15</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 16 (even) : 행렬의 진위 판정 + 영인자 -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">행렬의 진위 판정</h2>
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">$AB=BA$에 관련된 잘못된 표현</div>
+      <p>두 행렬 $A,\,B$의 교환법칙이 성립하지 않으면 다음 식들은 일반적으로 성립하지 않는다.</p>
+      <div class="formula left">
+        $(A+B)^{2}\neq A^{2}+2AB+B^{2}\quad,\quad (A-B)^{2}\neq A^{2}-2AB+B^{2}$<br>
+        $(A+B)(A-B)\neq A^{2}-B^{2}\quad,\quad (AB)^{2}\neq A^{2}B^{2}$
+      </div>
+
+      <div class="sub-title">$A,\,B$의 관계식이 주어질 때 $AB=BA$의 성립 여부</div>
+      <p>예를 들어 조건 $(A+B)^{2}=A^{2}+2AB+B^{2}$가 주어지면 $A^{2}+AB+BA+B^{2}=A^{2}+2AB+B^{2}\Rightarrow AB+BA=2AB \Rightarrow AB=BA$이다. 마찬가지로 $(A-B)^{2}=A^{2}-2AB+B^{2}$나 $(A+B)(A-B)=A^{2}-B^{2}$ 등이 주어지면 $AB=BA$가 유도된다.</p>
+    </div>
+
+    <h2 class="section-title" style="margin-top:7mm;">영인자</h2>
+    <div class="concept">
+      <p>$A,\,B$가 모두 영행렬이 아니지만 $AB$가 영행렬이 될 때, 이러한 행렬 $A,\,B$를 <b>영인자</b>(zero divisor)라 부른다. 영인자가 존재하기 때문에 행렬의 연산에서는</p>
+      <div class="formula">
+        $AB=O\;\not\Rightarrow\;A=O\;\text{ 또는 }\;B=O$
+      </div>
+      <p>가 성립한다. 또한 $A\neq O$이고 $AB=AC$이더라도 $B=C$가 일반적으로 성립하지 않는다.</p>
+
+      <div class="ex"><b>예)</b> $A=\begin{pmatrix} a &amp; b \\ ka &amp; kb \end{pmatrix},\;B=\begin{pmatrix} b &amp; -b \\ -a &amp; a \end{pmatrix}$이면 $A,\,B$ 모두 영행렬이 아니지만 $AB=O$이다.</div>
+    </div>
+  </div>
+  <footer class="sheet-footer">16</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 17 (odd) : 케일리-해밀턴 정리 -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">공통수학 1</header>
+  <div class="sheet-body">
+    <h2 class="section-title">케일리-해밀턴 정리</h2>
+    <div class="concept">
+      <p>$2$차 정사각행렬에 대한 다음 정리는 단원의 핵심 도구로 사용된다.</p>
+
+      <div class="formula left">
+        $2$차 정사각행렬 $A=\begin{pmatrix} a &amp; b \\ c &amp; d \end{pmatrix}$에 대하여
+        $$A^{2}-(a+d)A+(ad-bc)E=O$$
+      </div>
+
+      <div class="proof"><b>(증명)</b>&nbsp;$A^{2}=\begin{pmatrix} a &amp; b \\ c &amp; d \end{pmatrix}\!\begin{pmatrix} a &amp; b \\ c &amp; d \end{pmatrix}=\begin{pmatrix} a^{2}+bc &amp; b(a+d) \\ c(a+d) &amp; d^{2}+bc \end{pmatrix},\;\;\;(a+d)A=\begin{pmatrix} a(a+d) &amp; b(a+d) \\ c(a+d) &amp; d(a+d) \end{pmatrix}$이므로 $A^{2}-(a+d)A=\begin{pmatrix} bc-ad &amp; 0 \\ 0 &amp; bc-ad \end{pmatrix}=-(ad-bc)E$.&nbsp;따라서 $A^{2}-(a+d)A+(ad-bc)E=O$. &emsp;$\therefore$</div>
+
+      <div class="note">케일리-해밀턴 정리의 <b>역은 성립하지 않는다</b>. 즉, $A$가 어떤 식 $A^{2}-pA+qE=O$를 만족시킨다고 해서 반드시 $p=a+d,\;q=ad-bc$인 것은 아니다. 예를 들어 $A=k\,E$ ($k$는 실수)이면 $A^{2}-2kA+k^{2}E=O$ 외에 $A^{2}-kA=O$도 동시에 성립하므로 $p,\,q$가 유일하게 결정되지 않는다.</div>
+
+      <div class="sub-title">활용</div>
+      <p>케일리-해밀턴 정리는 $A^{2}$를 $A,\,E$의 일차결합으로 바꿔준다. 따라서 $A^{n}$ ($n$은 자연수)도 모두 $A,\,E$의 일차결합 $\alpha A+\beta E$ 꼴로 환원된다. 거듭제곱 문제에서 $A^{2}=pA-qE$를 반복 대입해 차수를 낮추는 것이 표준 풀이.</p>
+
+      <div class="ex"><b>예)</b> $A=\begin{pmatrix} 1 &amp; -1 \\ 1 &amp; 1 \end{pmatrix}$이면 $a+d=2,\;ad-bc=2$이므로 $A^{2}-2A+2E=O$, 즉 $A^{2}=2A-2E$. 이를 이용해 $A^{3}=A\cdot A^{2}=A(2A-2E)=2A^{2}-2A=2(2A-2E)-2A=2A-4E$.</div>
+    </div>
+  </div>
+  <footer class="sheet-footer">17</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 18 (even) : 문제 17, 18 (소단원 6) -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q17">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-17" class="solution-link">17</a></span>행렬 $A=\begin{pmatrix} 1 &amp; -3 \\ 1 &amp; -2 \end{pmatrix}$에 대하여 $A^{4}\begin{pmatrix} -1 \\ 2 \end{pmatrix}=\begin{pmatrix} a \\ b \end{pmatrix}$를 만족시킬 때, 두 상수 $a,\,b$에 대하여 $a+b$의 값을 구하여라.</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q18">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-18" class="solution-link">18</a></span>행렬 $A=\begin{pmatrix} a &amp; b \\ c &amp; d \end{pmatrix}$가 &nbsp;$A^{2}-3A-4E=O$&nbsp;를 만족시킬 때, 상수 $a,\,d$에 대하여 $a+d$의 최댓값은? (단, $b,\,c$는 정수, $E$는 단위행렬)</p>
+        <div class="choices">
+          <span>① $4$</span><span>② $6$</span><span>③ $8$</span><span>④ $10$</span><span>⑤ $12$</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">18</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 19 (odd) : 문제 19 (single — 케일리-해밀턴) -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">공통수학 1</header>
+  <div class="problems-area single">
+
+    <div class="problem-block" data-qa-id="q19">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-19" class="solution-link">19</a></span>행렬 $A=\begin{pmatrix} 2 &amp; 3 \\ -1 &amp; 1 \end{pmatrix}$에 대하여 행렬 $A^{4}-3A^{3}+3A+E$의 모든 성분의 합은? (단, $E$는 단위행렬)</p>
+        <div class="choices">
+          <span>① $-10$</span><span>② $-8$</span><span>③ $-6$</span><span>④ $-4$</span><span>⑤ $-2$</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">19</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- QUICK ANSWER -->
+<!-- ============================================================ -->
+<section class="sheet even quick-answer-section">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">빠른 정답</h2>
+    <div class="quick-answers">
+      <div class="qa-item"><span class="qa-num">1.</span><span class="qa-ans">$13$</span></div>
+      <div class="qa-item"><span class="qa-num">2.</span><span class="qa-ans">$7$</span></div>
+      <div class="qa-item"><span class="qa-num">3.</span><span class="qa-ans">$0$</span></div>
+      <div class="qa-item"><span class="qa-num">4.</span><span class="qa-ans">② $-3$</span></div>
+      <div class="qa-item"><span class="qa-num">5.</span><span class="qa-ans">③ $11$</span></div>
+      <div class="qa-item"><span class="qa-num">6.</span><span class="qa-ans">④ $28$</span></div>
+      <div class="qa-item"><span class="qa-num">7.</span><span class="qa-ans">① $1$</span></div>
+      <div class="qa-item"><span class="qa-num">8.</span><span class="qa-ans">(1) $\begin{pmatrix} 1 &amp; 0 \\ -m &amp; 1 \end{pmatrix}$<br>(2) $\begin{pmatrix} 2^{m} &amp; 0 \\ 0 &amp; (-1)^{m} \end{pmatrix}$<br>(3) $3^{m-1}A$</span></div>
+      <div class="qa-item"><span class="qa-num">9.</span><span class="qa-ans">① $15$</span></div>
+      <div class="qa-item"><span class="qa-num">10.</span><span class="qa-ans">④ $5$</span></div>
+      <div class="qa-item"><span class="qa-num">11.</span><span class="qa-ans">② ㄴ</span></div>
+      <div class="qa-item"><span class="qa-num">12.</span><span class="qa-ans">① $15$</span></div>
+      <div class="qa-item"><span class="qa-num">13.</span><span class="qa-ans">③ $4A+8E$</span></div>
+      <div class="qa-item"><span class="qa-num">14.</span><span class="qa-ans">④ ㄱ, ㄷ</span></div>
+      <div class="qa-item"><span class="qa-num">15.</span><span class="qa-ans">① $1$</span></div>
+      <div class="qa-item"><span class="qa-num">16.</span><span class="qa-ans">(1) $\begin{pmatrix} 13800 &amp; 15000 \\ 14500 &amp; 15500 \end{pmatrix}$<br>(2) 편의점 $\mathrm{P}$</span></div>
+      <div class="qa-item"><span class="qa-num">17.</span><span class="qa-ans">$-12$</span></div>
+      <div class="qa-item"><span class="qa-num">18.</span><span class="qa-ans">③ $8$</span></div>
+      <div class="qa-item"><span class="qa-num">19.</span><span class="qa-ans">② $-8$</span></div>
+    </div>
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- SOLUTION PAGES -->
+<!-- ============================================================ -->
+<section class="sheet odd solution-section">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">공통수학 1</header>
+  <div class="sheet-body">
+    <h2 class="section-title">정답 및 해설</h2>
+    <div class="solutions">
+
+      <div class="solution-item" id="sol-1" data-qa-id="q1">
+        <div class="sol-num">1.</div>
+        <div class="sol-answer"><b>[정답]</b> $13$</div>
+        <p>대각성분: $a_{11}=0,\;a_{22}=1,\;a_{33}=2$</p>
+        <p>$i\lt j$ 부분: $a_{12}=2,\;a_{13}=2,\;a_{23}=1$</p>
+        <p>$i\gt j$ 부분은 $a_{ji}$로 정의 → $a_{21}=2,\;a_{31}=2,\;a_{32}=1$</p>
+        <p>모든 성분의 합 $=0+2+2+2+1+1+2+1+2=13$</p>
+      </div>
+
+      <div class="solution-item" id="sol-2" data-qa-id="q2">
+        <div class="sol-num">2.</div>
+        <div class="sol-answer"><b>[정답]</b> $7$</div>
+        <p>$a_{ij}$는 $i\to j$ 직접 도로 수.</p>
+        <p>$1\leftrightarrow 2$ 양방향 각 1개, $1\to 3$ 1개, $3\to 1$ 1개, $2\leftrightarrow 3$ 양방향 각 1개, $3\to 3$ 자기 루프 1개.</p>
+        <p>$A=\begin{pmatrix} 0 &amp; 1 &amp; 1 \\ 1 &amp; 0 &amp; 1 \\ 1 &amp; 1 &amp; 1 \end{pmatrix}$ → 합 $=7$</p>
+      </div>
+
+      <div class="solution-item" id="sol-3" data-qa-id="q3">
+        <div class="sol-num">3.</div>
+        <div class="sol-answer"><b>[정답]</b> $0$</div>
+        <p>$a_{12}=2-6+1=-3=x+y$</p>
+        <p>$a_{22}=4-6+1=-1=x-y$</p>
+        <p>두 식: $x+y=-3,\;x-y=-1\Rightarrow x=-2,\;y=-1$</p>
+        <p>$x-2y=-2-2(-1)=0$</p>
+      </div>
+
+      <div class="solution-item" id="sol-4" data-qa-id="q4">
+        <div class="sol-num">4.</div>
+        <div class="sol-answer"><b>[정답]</b> ② $-3$</div>
+        <p>$A$의 $(2,1)$ 성분 $= a$, $B$의 $(2,1)$ 성분 $= b$로 놓으면</p>
+        <p>$2a+b=1,\;a+2b=5\Rightarrow 3a=-3\Rightarrow a=-1$</p>
+        <p>$A$의 $(1,2)$ 성분 $= c$, $B$의 $(1,2)$ 성분 $= d$로 놓으면</p>
+        <p>$2c+d=8,\;c+2d=1\Rightarrow 3c=15\Rightarrow c=5,\;d=-2$</p>
+        <p>구하는 것은 $A$의 $(2,1)$ 성분과 $B$의 $(1,2)$ 성분의 합 $= a+d = -1+(-2)=-3$</p>
+      </div>
+
+      <div class="solution-item" id="sol-5" data-qa-id="q5">
+        <div class="sol-num">5.</div>
+        <div class="sol-answer"><b>[정답]</b> ③ $11$</div>
+        <p>좌변 $=\begin{pmatrix} \alpha+\beta &amp; \alpha^{2}+\beta^{2} \\ 0 &amp; 2\alpha\beta \end{pmatrix}$</p>
+        <p>$\quad\;\;=\begin{pmatrix} 5 &amp; 13 \\ 0 &amp; 2\alpha\beta \end{pmatrix}$</p>
+        <p>$\alpha+\beta=5,\;\alpha^{2}+\beta^{2}=13$</p>
+        <p>$\alpha^{2}+\beta^{2}=(\alpha+\beta)^{2}-2\alpha\beta=25-2\alpha\beta=13\Rightarrow \alpha\beta=6$</p>
+        <p>$p=\alpha+\beta=5,\;q=\alpha\beta=6\Rightarrow p+q=11$</p>
+      </div>
+
+      <div class="solution-item" id="sol-6" data-qa-id="q6">
+        <div class="sol-num">6.</div>
+        <div class="sol-answer"><b>[정답]</b> ④ $28$</div>
+        <p>$\alpha+\beta=5,\;\alpha\beta=-3$</p>
+        <p>$AB=\begin{pmatrix} \alpha\beta+\beta\alpha &amp; \alpha^{2}+\beta \\ \beta^{2}+\alpha &amp; \alpha\beta+1 \end{pmatrix}$</p>
+        <p>모든 성분의 합 $=2\alpha\beta+(\alpha^{2}+\beta^{2})+(\alpha+\beta)+\alpha\beta+1$</p>
+        <p>$=3\alpha\beta+(\alpha+\beta)^{2}-2\alpha\beta+(\alpha+\beta)+1$</p>
+        <p>$=\alpha\beta+(\alpha+\beta)^{2}+(\alpha+\beta)+1=-3+25+5+1=28$</p>
+      </div>
+
+      <div class="solution-item" id="sol-7" data-qa-id="q7">
+        <div class="sol-num">7.</div>
+        <div class="sol-answer"><b>[정답]</b> ① $1$</div>
+        <p>$X=\dfrac{1}{2}\!\left[(X+Y)+(X-Y)\right]$</p>
+        <p>$\quad\;\;=\begin{pmatrix} -1 &amp; 0 \\ 0 &amp; -1 \end{pmatrix}=-E$</p>
+        <p>$X^{2}+XY=X(X+Y)=(-E)(X+Y)=-(X+Y)$</p>
+        <p>$=\begin{pmatrix} 1 &amp; 1 \\ -1 &amp; 0 \end{pmatrix}$ → 모든 성분의 합 $=1+1+(-1)+0=1$</p>
+      </div>
+
+      <div class="solution-item" id="sol-8" data-qa-id="q8">
+        <div class="sol-num">8.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $\begin{pmatrix} 1 &amp; 0 \\ -m &amp; 1 \end{pmatrix}$ &nbsp; (2) $\begin{pmatrix} 2^{m} &amp; 0 \\ 0 &amp; (-1)^{m} \end{pmatrix}$ &nbsp; (3) $3^{m-1}A$</div>
+        <p>(1) $A=E-N$, $N=\begin{pmatrix} 0 &amp; 0 \\ 1 &amp; 0 \end{pmatrix}$, $N^{2}=O$. 이항정리로 $A^{m}=E-mN$</p>
+        <p>(2) 대각행렬이므로 각 대각성분의 $m$제곱.</p>
+        <p>(3) $A^{2}=\begin{pmatrix} 3 &amp; -6 \\ -3 &amp; 6 \end{pmatrix}=3A$. 따라서 $A^{m}=3^{m-1}A\;(m\ge 1)$</p>
+      </div>
+
+      <div class="solution-item" id="sol-9" data-qa-id="q9">
+        <div class="sol-num">9.</div>
+        <div class="sol-answer"><b>[정답]</b> ① $15$</div>
+        <p>$A^{2}+B^{2}=AB+BA \;\Rightarrow\; A^{2}-AB-BA+B^{2}=O$</p>
+        <p>$\Rightarrow A(A-B)-B(A-B)=O \;\Rightarrow\; (A-B)^{2}=O$</p>
+        <p>$M=A-B=\begin{pmatrix} 3 &amp; 1 \\ 1-x &amp; 2-y \end{pmatrix}$. $M^{2}=O$이려면 케일리-해밀턴에 의해 $\mathrm{tr}(M)=0,\;\det(M)=0$</p>
+        <p>$\mathrm{tr}(M)=3+(2-y)=5-y=0\Rightarrow y=5$</p>
+        <p>$\det(M)=3(2-y)-(1-x)=-9-1+x=0\Rightarrow x=10$</p>
+        <p>$x+y=10+5=15$</p>
+      </div>
+
+      <div class="solution-item" id="sol-10" data-qa-id="q10">
+        <div class="sol-num">10.</div>
+        <div class="sol-answer"><b>[정답]</b> ④ $5$</div>
+        <p>$(A-B)^{2}=A^{2}-AB-BA+B^{2}\;\Rightarrow\; AB+BA=(A^{2}+B^{2})-(A-B)^{2}$</p>
+        <p>$(A-B)^{2}=\begin{pmatrix} 2 &amp; -1 \\ -1 &amp; 3 \end{pmatrix}^{2}=\begin{pmatrix} 5 &amp; -5 \\ -5 &amp; 10 \end{pmatrix}$</p>
+        <p>$AB+BA=\begin{pmatrix} 3 &amp; 2 \\ 1 &amp; 4 \end{pmatrix}-\begin{pmatrix} 5 &amp; -5 \\ -5 &amp; 10 \end{pmatrix}$</p>
+        <p>$\quad\;\;=\begin{pmatrix} -2 &amp; 7 \\ 6 &amp; -6 \end{pmatrix}$</p>
+        <p>모든 성분의 합 $=-2+7+6-6=5$</p>
+      </div>
+
+      <div class="solution-item" id="sol-11" data-qa-id="q11">
+        <div class="sol-num">11.</div>
+        <div class="sol-answer"><b>[정답]</b> ② ㄴ</div>
+        <p>조건 $AB+BA=O\Rightarrow BA=-AB$.</p>
+        <p>ㄱ. $(AB)^{2}=ABAB=A(BA)B=A(-AB)B=-A^{2}B^{2}\neq A^{2}B^{2}$ (일반적 거짓)</p>
+        <p>ㄴ. $(A+B)^{2}=A^{2}+AB+BA+B^{2}=A^{2}+B^{2}$ <b>(참)</b></p>
+        <p>ㄷ. $(A+B)(A-B)=A^{2}-AB+BA-B^{2}$</p>
+        <p>$\quad\;\;=A^{2}-AB-AB-B^{2}=A^{2}-2AB-B^{2}\neq A^{2}-B^{2}$ (거짓)</p>
+        <p>따라서 옳은 것은 ㄴ뿐이다.</p>
+      </div>
+
+      <div class="solution-item" id="sol-12" data-qa-id="q12">
+        <div class="sol-num">12.</div>
+        <div class="sol-answer"><b>[정답]</b> ① $15$</div>
+        <p>케일리-해밀턴: $A^{2}-(0+1)A+(0\cdot 1-(-1)\cdot 1)E=O$</p>
+        <p>$\Rightarrow A^{2}-A+E=O\;\Rightarrow\; A^{2}=A-E$</p>
+        <p>$A^{3}=A\cdot A^{2}=A(A-E)=A^{2}-A=(A-E)-A=-E$</p>
+        <p>$A^{6}=(A^{3})^{2}=E$이므로 $A^{k}=E\iff k$는 $6$의 배수</p>
+        <p>두 자리 자연수 ($10\le k\le 99$) 중 $6$의 배수: $12,18,\cdots,96$</p>
+        <p>개수 $=\dfrac{96-12}{6}+1=15$</p>
+      </div>
+
+      <div class="solution-item" id="sol-13" data-qa-id="q13">
+        <div class="sol-num">13.</div>
+        <div class="sol-answer"><b>[정답]</b> ③ $4A+8E$</div>
+        <p>$AB=2E$ 양변에 왼쪽에서 $A$를 곱:</p>
+        <p>$A^{2}B=2A\;\Rightarrow\;(E-A)B=2A$</p>
+        <p>$\quad\;\;(\because A^{2}=E-A)$</p>
+        <p>$B-AB=2A\;\Rightarrow\;B-2E=2A\;\Rightarrow\;B=2A+2E$</p>
+        <p>$B^{2}=(2A+2E)^{2}=4A^{2}+8A+4E$</p>
+        <p>$\quad\;\;=4(E-A)+8A+4E=4A+8E$</p>
+      </div>
+
+      <div class="solution-item" id="sol-14" data-qa-id="q14">
+        <div class="sol-num">14.</div>
+        <div class="sol-answer"><b>[정답]</b> ④ ㄱ, ㄷ</div>
+        <p>ㄱ. $A$가 $m\times n$이라 하면 $AA$ 정의 $\Rightarrow n=m$. 즉 $A$는 정사각. <b>참</b></p>
+        <p>ㄴ. $A:m\times n,\;B:p\times q$. $AB$ 정의 $\Rightarrow n=p$, $BA$ 정의 $\Rightarrow q=m$. 즉 $A:m\times n,\;B:n\times m$. $A$가 정사각일 필요는 없음. <b>거짓</b> (예: $m=2,\,n=3$)</p>
+        <p>ㄷ. ㄴ과 같은 꼴이면 $AB$는 $m\times m$ 정사각. <b>참</b></p>
+      </div>
+
+      <div class="solution-item" id="sol-15" data-qa-id="q15">
+        <div class="sol-num">15.</div>
+        <div class="sol-answer"><b>[정답]</b> ① $1$</div>
+        <p>(가) $A^{2}-2A+E=O\;\Rightarrow\; A^{2}=2A-E$</p>
+        <p>(나) $A\begin{pmatrix} 2 \\ 1 \end{pmatrix}=\begin{pmatrix} 4 \\ 3 \end{pmatrix}$</p>
+        <p>$A^{2}\begin{pmatrix} 2 \\ 1 \end{pmatrix}=A\!\left(\!A\begin{pmatrix} 2 \\ 1 \end{pmatrix}\!\right)$</p>
+        <p>$\quad\;\;=A\begin{pmatrix} 4 \\ 3 \end{pmatrix}=\begin{pmatrix} a \\ b \end{pmatrix}$</p>
+        <p>한편 $A^{2}=2A-E$이므로</p>
+        <p>$A^{2}\begin{pmatrix} 2 \\ 1 \end{pmatrix}=2A\begin{pmatrix} 2 \\ 1 \end{pmatrix}-\begin{pmatrix} 2 \\ 1 \end{pmatrix}$</p>
+        <p>$\quad\;\;=2\begin{pmatrix} 4 \\ 3 \end{pmatrix}-\begin{pmatrix} 2 \\ 1 \end{pmatrix}=\begin{pmatrix} 6 \\ 5 \end{pmatrix}$</p>
+        <p>따라서 $a=6,\;b=5\;\Rightarrow\;a-b=1$</p>
+      </div>
+
+      <div class="solution-item" id="sol-16" data-qa-id="q16">
+        <div class="sol-num">16.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $\begin{pmatrix} 13800 &amp; 15000 \\ 14500 &amp; 15500 \end{pmatrix}$ &nbsp; (2) 편의점 $\mathrm{P}$</div>
+        <p>가격 행렬 $V=\begin{pmatrix} 3000 &amp; 1200 \\ 3500 &amp; 1000 \end{pmatrix}$ (행: 편의점 P, Q / 열: 삼각김밥, 컵라면)</p>
+        <p>개수 행렬 $N=\begin{pmatrix} 3 &amp; 3 \\ 4 &amp; 5 \end{pmatrix}$ (행: 삼각김밥, 컵라면 / 열: 철수, 영희)</p>
+        <p>$VN=\begin{pmatrix} 3000\cdot 3+1200\cdot 4 &amp; 3000\cdot 3+1200\cdot 5 \\ 3500\cdot 3+1000\cdot 4 &amp; 3500\cdot 3+1000\cdot 5 \end{pmatrix}$</p>
+        <p>$\quad\;\;=\begin{pmatrix} 13800 &amp; 15000 \\ 14500 &amp; 15500 \end{pmatrix}$</p>
+        <p>(2) 철수: $\mathrm{P}\;13800$ vs $\mathrm{Q}\;14500\Rightarrow \mathrm{P}$가 저렴</p>
+        <p>영희: $\mathrm{P}\;15000$ vs $\mathrm{Q}\;15500\Rightarrow \mathrm{P}$가 저렴</p>
+        <p>두 사람 모두 편의점 $\mathrm{P}$에서 사야 비용이 더 적게 든다.</p>
+      </div>
+
+      <div class="solution-item" id="sol-17" data-qa-id="q17">
+        <div class="sol-num">17.</div>
+        <div class="sol-answer"><b>[정답]</b> $-12$</div>
+        <p>케일리-해밀턴: $a+d=1+(-2)=-1,\;ad-bc=1\cdot(-2)-(-3)\cdot 1=1$</p>
+        <p>$\Rightarrow A^{2}+A+E=O\;\Rightarrow\;A^{2}=-A-E$</p>
+        <p>$A^{3}=A\cdot A^{2}=A(-A-E)=-A^{2}-A=(A+E)-A=E$</p>
+        <p>$A^{4}=A^{3}\cdot A=A$</p>
+        <p>$A\begin{pmatrix} -1 \\ 2 \end{pmatrix}=\begin{pmatrix} 1\cdot(-1)+(-3)\cdot 2 \\ 1\cdot(-1)+(-2)\cdot 2 \end{pmatrix}$</p>
+        <p>$\quad\;\;=\begin{pmatrix} -7 \\ -5 \end{pmatrix}$</p>
+        <p>$\Rightarrow a=-7,\;b=-5,\;a+b=-12$</p>
+      </div>
+
+      <div class="solution-item" id="sol-18" data-qa-id="q18">
+        <div class="sol-num">18.</div>
+        <div class="sol-answer"><b>[정답]</b> ③ $8$</div>
+        <p>케일리-해밀턴: $A^{2}-(a+d)A+(ad-bc)E=O$. 주어진 식 $A^{2}-3A-4E=O$와 비교.</p>
+        <p>① $A=kE$ ($k$ 실수) 꼴이면 $A^{2}=k^{2}E$, 식에 대입 $k^{2}-3k-4=0\Rightarrow k=4$ 또는 $k=-1$. 이때 $a+d=2k$이므로 최댓값 $=8$ ($k=4$ 일 때)</p>
+        <p>② 일반 꼴이면 두 식이 일치 $\Rightarrow a+d=3,\;ad-bc=-4$. 이때 $a+d=3$.</p>
+        <p>두 경우 비교 $\Rightarrow a+d$의 최댓값 $=8$</p>
+      </div>
+
+      <div class="solution-item" id="sol-19" data-qa-id="q19">
+        <div class="sol-num">19.</div>
+        <div class="sol-answer"><b>[정답]</b> ② $-8$</div>
+        <p>케일리-해밀턴: $a+d=2+1=3,\;ad-bc=2-(-3)=5$</p>
+        <p>$\Rightarrow A^{2}-3A+5E=O\;\Rightarrow\;A^{2}=3A-5E$</p>
+        <p>$A^{3}=A(3A-5E)=3A^{2}-5A=3(3A-5E)-5A=4A-15E$</p>
+        <p>$A^{4}=A(4A-15E)=4A^{2}-15A=4(3A-5E)-15A=-3A-20E$</p>
+        <p>$A^{4}-3A^{3}+3A+E$</p>
+        <p>$\quad\;\;=(-3A-20E)-3(4A-15E)+3A+E$</p>
+        <p>$\quad\;\;=(-3-12+3)A+(-20+45+1)E$</p>
+        <p>$\quad\;\;=-12A+26E$</p>
+        <p>$\quad\;\;=\begin{pmatrix} -24+26 &amp; -36 \\ 12 &amp; -12+26 \end{pmatrix}$</p>
+        <p>$\quad\;\;=\begin{pmatrix} 2 &amp; -36 \\ 12 &amp; 14 \end{pmatrix}$</p>
+        <p>모든 성분의 합 $=2-36+12+14=-8$</p>
+      </div>
+
+    </div>
+  </div>
+  <footer class="sheet-footer">21</footer>
+</section>
+
+<section class="sheet even solution-section">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <div class="solutions"></div>
+  </div>
+  <footer class="sheet-footer">22</footer>
+</section>
+
+<section class="sheet odd solution-section">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">공통수학 1</header>
+  <div class="sheet-body">
+    <div class="solutions"></div>
+  </div>
+  <footer class="sheet-footer">23</footer>
+</section>
+
+<script>
+const _ready = Promise.all([
+  document.fonts.ready,
+  (window.MathJax && MathJax.startup && MathJax.startup.promise) ? MathJax.startup.promise : Promise.resolve()
+]).then(() => new Promise(resolve => {
+  requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(resolve, 100)));
+}));
+_ready.then(() => {
+  (function autoWrapChoices(){
+    document.querySelectorAll('.choices').forEach(c => {
+      if (c.scrollWidth > c.clientWidth) c.classList.add('two-row');
+    });
+  })();
+  (function compactAndSplitConcepts(){
+    const SLACK_PX = (() => {
+      const probe = document.createElement('div');
+      probe.style.cssText = 'position:absolute;visibility:hidden;width:10mm;';
+      document.body.appendChild(probe);
+      const px = probe.getBoundingClientRect().width;
+      document.body.removeChild(probe);
+      return px;
+    })();
+    function overflows(body){ return body.scrollHeight > body.clientHeight + SLACK_PX; }
+    function conceptSheets(){
+      return Array.from(document.querySelectorAll('.sheet')).filter(s =>
+        s.querySelector('.concept') && !s.classList.contains('solution-section')
+          && !s.classList.contains('quick-answer-section')
+      );
+    }
+    conceptSheets().forEach(sheet => {
+      const body = sheet.querySelector('.sheet-body');
+      if (!overflows(body)) return;
+      body.querySelectorAll('.concept .formula').forEach(f => f.classList.add('compact'));
+    });
+    conceptSheets().forEach(sheet => {
+      const body = sheet.querySelector('.sheet-body');
+      if (!overflows(body)) return;
+      const concept = body.querySelector('.concept');
+      if (concept) concept.classList.add('dense');
+    });
+    const queue = conceptSheets();
+    while (queue.length){
+      const sheet = queue.shift();
+      const body = sheet.querySelector('.sheet-body');
+      if (!body || !overflows(body)) continue;
+      const concept = body.querySelector('.concept');
+      if (!concept) continue;
+      const groups = [];
+      let cur = null;
+      Array.from(concept.children).forEach(ch => {
+        if (ch.classList.contains('sub-title')) { cur = [ch]; groups.push(cur); }
+        else if (cur) { cur.push(ch); }
+        else { cur = [ch]; groups.push(cur); }
+      });
+      if (groups.length < 2) continue;
+      const bodyBottom = body.getBoundingClientRect().bottom;
+      let splitAt = -1;
+      for (let i = 0; i < groups.length; i++){
+        const last = groups[i][groups[i].length - 1];
+        if (last.getBoundingClientRect().bottom > bodyBottom + SLACK_PX) { splitAt = i; break; }
+      }
+      if (splitAt <= 0) continue;
+      const isDense = concept.classList.contains('dense');
+      const ns = document.createElement('section');
+      ns.className = 'sheet';
+      ns.innerHTML =
+        '<div class="corner tr"></div><div class="corner tl"></div>' +
+        '<div class="corner br"></div><div class="corner bl"></div>' +
+        '<header class="sheet-header"></header>' +
+        '<div class="sheet-body"><div class="concept' + (isDense ? ' dense' : '') + '"></div></div>' +
+        '<footer class="sheet-footer"></footer>';
+      const newConcept = ns.querySelector('.concept');
+      for (let i = splitAt; i < groups.length; i++){
+        groups[i].forEach(el => newConcept.appendChild(el));
+      }
+      sheet.parentNode.insertBefore(ns, sheet.nextSibling);
+      queue.push(ns);
+    }
+  })();
+  (function flowSolutions(){
+    const sections = Array.from(document.querySelectorAll('.solution-section'));
+    if (!sections.length) return;
+    const allItems = [];
+    sections.forEach(sec => { sec.querySelectorAll('.solution-item').forEach(it => allItems.push(it)); });
+    sections.forEach(sec => { const c = sec.querySelector('.solutions'); if (c) c.innerHTML = ''; });
+
+    function makeSection() {
+      const prev = sections[sections.length - 1];
+      const ns = document.createElement('section');
+      ns.className = 'sheet solution-section';
+      ns.innerHTML =
+        '<div class="corner tr"></div><div class="corner tl"></div>' +
+        '<div class="corner br"></div><div class="corner bl"></div>' +
+        '<header class="sheet-header"></header>' +
+        '<div class="sheet-body"><div class="solutions"></div></div>' +
+        '<footer class="sheet-footer"></footer>';
+      prev.parentNode.insertBefore(ns, prev.nextSibling);
+      sections.push(ns);
+      return ns;
+    }
+    function lastItemOverflows(sec) {
+      const body = sec.querySelector('.sheet-body');
+      const last = sec.querySelector('.solutions > :last-child');
+      if (!body || !last) return false;
+      void body.offsetHeight;
+      const br = body.getBoundingClientRect();
+      const lr = last.getBoundingClientRect();
+      return lr.bottom > br.bottom + 1 || lr.right > br.right + 1;
+    }
+    function makeContinuation(item, paras) {
+      const cont = document.createElement('div');
+      cont.className = 'solution-item continuation';
+      cont.setAttribute('data-qa-id', item.getAttribute('data-qa-id') || '');
+      paras.forEach(p => cont.appendChild(p));
+      return cont;
+    }
+
+    let queue = allItems.slice();
+    let secIdx = 0;
+    let safety = 0;
+    while (queue.length > 0 && safety++ < 600) {
+      if (secIdx >= sections.length) makeSection();
+      const sec = sections[secIdx];
+      const container = sec.querySelector('.solutions');
+      let advancedToNextSection = false;
+      while (queue.length > 0) {
+        const item = queue.shift();
+        container.appendChild(item);
+        if (!lastItemOverflows(sec)) continue;
+        const paras = Array.from(item.querySelectorAll(':scope > p'));
+        if (paras.length >= 2) {
+          const moved = [];
+          while (paras.length > 1 && lastItemOverflows(sec)) {
+            const p = paras.pop();
+            item.removeChild(p);
+            moved.unshift(p);
+          }
+          if (!lastItemOverflows(sec) && moved.length > 0) {
+            queue.unshift(makeContinuation(item, moved));
+            advancedToNextSection = true;
+            break;
+          }
+          moved.forEach(p => item.appendChild(p));
+        }
+        container.removeChild(item);
+        queue.unshift(item);
+        advancedToNextSection = true;
+        break;
+      }
+      if (advancedToNextSection) secIdx++;
+      else break;
+    }
+    sections.forEach(sec => { if (!sec.querySelector('.solution-item')) sec.remove(); });
+  })();
+  (function rebalanceParity(){
+    const sheets = document.querySelectorAll('.sheet');
+    sheets.forEach((s, i) => {
+      const isOdd = (i % 2 === 0);
+      s.classList.toggle('odd', isOdd);
+      s.classList.toggle('even', !isOdd);
+      const hdr = s.querySelector('.sheet-header');
+      if (hdr) hdr.textContent = isOdd ? '공통수학 1' : '2026 수복이';
+    });
+  })();
+  (function renumberFooters(){
+    document.querySelectorAll('.sheet-footer').forEach((f, i) => { f.textContent = i + 1; });
+  })();
+  document.body.classList.add('ready');
+});
+</script>
+</body>
+</html>
