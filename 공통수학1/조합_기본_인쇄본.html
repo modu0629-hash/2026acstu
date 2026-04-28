@@ -151,6 +151,13 @@ body.ready .solution-section { visibility:visible; }
 
 /* 색상 통일 */
 a, a:link, a:visited, a:hover, a:active { color:#000 !important; }
+
+/* 문제 본문 안 표 — 행렬 등 단원에서 사용. 합본 베이스가 조합이라 여기서 통합 정의 */
+.problem table { border-collapse:collapse; margin:2mm auto; font-size:9.5pt; }
+.problem table th, .problem table td { border:0.5pt solid #000; padding:1mm 2.5mm; text-align:center; vertical-align:middle; }
+.problem table th { font-weight:700; background:#f7f7f7; }
+.problem .table-pair { display:flex; gap:6mm; justify-content:center; flex-wrap:wrap; margin:2mm 0; }
+.problem .table-pair .table-cap { font-size:8.5pt; text-align:center; margin-top:1mm; }
 </style>
 </head>
 <body>
