@@ -1,0 +1,941 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>지수 — 인쇄본</title>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']] },
+  chtml: { matchFontHeight: false },
+  startup: { typeset: true }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+@font-face { font-family:'Gyeonggi Title'; src:url('../%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/woff/Title_Bold.woff') format('woff'); font-weight:700; font-display:swap; }
+@font-face { font-family:'Gyeonggi Title'; src:url('../%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/woff/Title_Medium.woff') format('woff'); font-weight:500; font-display:swap; }
+@font-face { font-family:'Gyeonggi Batang'; src:url('../%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/woff/Batang_Regular.woff') format('woff'); font-weight:400; font-display:swap; }
+@font-face { font-family:'Gyeonggi Batang'; src:url('../%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/woff/Batang_Bold.woff') format('woff'); font-weight:700; font-display:swap; }
+
+@page { size: A4; margin: 0; }
+* { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --line-h: 1.75; --one-line: 7.4mm;
+  --pad-x: 22mm; --pad-top: 20mm; --pad-bottom: 18mm;
+  --corner-x: 22mm; --corner-len: 48mm;
+}
+
+html, body { background:#fff; color:#000; font-family:'신명조','HY신명조','Shinmyeongjo','바탕','Batang',serif; font-size:11pt; line-height:var(--line-h); }
+@media screen { body { background:#dcdcdc; padding:24px 0; } .sheet { box-shadow:0 3px 14px rgba(0,0,0,0.2); margin:0 auto 24px; } }
+
+.sheet { width:210mm; height:297mm; background:#fff; position:relative; overflow:hidden; }
+@media print { .sheet { page-break-after:always; margin:0; box-shadow:none; } .sheet:last-child { page-break-after:auto; } }
+
+.corner { position:absolute; height:0; width:var(--corner-len); border-top:1pt solid #000; }
+.corner::after { content:''; position:absolute; height:3mm; width:0; }
+.corner.tr { top:12mm; right:var(--corner-x); }
+.corner.tr::after { right:0; top:0; border-right:1pt solid #000; }
+.corner.tl { top:12mm; left:var(--corner-x); }
+.corner.tl::after { left:0; top:0; border-left:1pt solid #000; }
+.corner.br { bottom:14mm; right:var(--corner-x); }
+.corner.br::after { right:0; bottom:0; border-right:1pt solid #000; }
+.corner.bl { bottom:14mm; left:var(--corner-x); }
+.corner.bl::after { left:0; bottom:0; border-left:1pt solid #000; }
+.corner.tr, .corner.tl { display:none; }
+.sheet.odd .corner.bl { display:none; }
+.sheet.even .corner.br { display:none; }
+
+.sheet-header { position:absolute; top:21mm; left:var(--pad-x); right:var(--pad-x); font-family:'Gyeonggi Title',sans-serif; font-weight:700; font-size:10.5pt; }
+.sheet.odd .sheet-header { text-align:right; }
+.sheet.even .sheet-header { text-align:left; }
+.sheet-footer { position:absolute; bottom:8mm; left:0; right:0; text-align:center; font-family:'Gyeonggi Batang',serif; font-size:10pt; }
+
+.sheet-body { position:absolute; top:calc(var(--pad-top) + 14mm); bottom:calc(var(--pad-bottom) + 6mm); left:var(--pad-x); right:var(--pad-x); }
+
+.chapter-title { font-family:'Gyeonggi Title',sans-serif; font-weight:700; font-size:18pt; letter-spacing:0.5pt; margin-bottom:calc(var(--one-line) * 2); }
+.section-title { font-family:'Gyeonggi Batang',serif; font-weight:700; font-size:13pt; margin-bottom:calc(var(--one-line) * 1); }
+.sub-label { font-family:'Gyeonggi Title',sans-serif; font-weight:700; font-size:11pt; margin-bottom:3mm; }
+
+.concept { font-family:'Gyeonggi Batang','신명조','HY신명조','바탕','Batang',serif; font-size:11pt; line-height:1.85; }
+.concept p { margin-bottom:2mm; }
+.concept .sub-title { font-family:'Gyeonggi Batang',serif; font-weight:400; font-size:11.5pt; margin:calc(var(--one-line)*2) 0 2mm; }
+.concept .sub-title:first-child { margin-top:0; }
+.concept .formula { border:0.7pt solid #000; padding:3mm 5mm; margin:3mm 0; text-align:center; }
+.concept .formula.left { text-align:left; padding:3mm 3mm; }
+.concept .formula.compact { padding:1.5mm 5mm; margin:1.5mm 0; }
+.concept .note { padding:2mm 0; margin:3mm 0; font-size:8pt; line-height:1.6; }
+.concept .note::before { content:"[참고] "; font-weight:700; }
+.concept .proof { font-size:8pt; line-height:1.6; padding:2mm 0 2mm 10mm; text-indent:-10mm; margin:3mm 0 6mm 0; }
+.concept .ex { padding:2mm 0; margin:3mm 0; font-size:9pt; }
+.concept.dense { line-height:1.7; }
+.concept.dense .sub-title { margin:calc(var(--one-line)*1.1) 0 1.5mm; }
+.concept.dense .sub-title:first-child { margin-top:0; }
+.concept.dense p { margin-bottom:1mm; }
+.concept.dense .note { margin:2mm 0; }
+.concept.dense .formula { padding:2mm 5mm; margin:2mm 0; }
+.concept.dense .ex { margin:1.5mm 0; }
+.concept table { width:100%; border-collapse:collapse; margin:3mm 0; font-size:9.5pt; }
+.concept table th, .concept table td { border:0.5pt solid #000; padding:1.5mm 2mm; text-align:center; vertical-align:middle; }
+.concept table th { font-weight:700; background:#f7f7f7; }
+
+.problem-block { }
+.sheet-body > .problem-block { margin-top:8mm; }
+.problem { font-family:'신명조','HY신명조','바탕','Batang',serif; font-size:10pt; line-height:var(--line-h); letter-spacing:-0.05em; position:relative; }
+.problem > p:first-of-type { padding-left:5.5mm; text-indent:-5.5mm; }
+.problem .pnum { display:inline-block; min-width:4mm; margin-right:1.5mm; font-family:'Gyeonggi Title',sans-serif; font-size:11pt; font-weight:700; text-indent:0; vertical-align:baseline; }
+.problem .pnum a { color:#000; text-decoration:none; font-weight:700; }
+.problem p { margin-bottom:1.5mm; }
+.problem .sub { margin-left:4mm; }
+.problem table { border-collapse:collapse; margin:2mm auto; font-size:9.5pt; }
+.problem table th, .problem table td { border:0.5pt solid #000; padding:1mm 2.5mm; text-align:center; vertical-align:middle; }
+.problem table th { font-weight:700; background:#f7f7f7; }
+.problem .table-pair { display:flex; gap:6mm; justify-content:center; flex-wrap:wrap; margin:2mm 0; }
+.problem .table-pair .table-cap { font-size:8.5pt; text-align:center; margin-top:1mm; }
+.cond-box { display:block; width:fit-content; max-width:92%; border:0.7pt solid #000; padding:2.5mm 6mm; margin:2mm auto; }
+.cond-box p { margin:0.5mm 0; }
+
+.choices { display:grid; grid-template-columns:repeat(5, minmax(0,1fr)); gap:2mm 5mm; margin-top:4mm; font-size:10pt; clear:both; }
+.choices.two-row { grid-template-columns:repeat(3, minmax(0,1fr)); }
+.choices.five-rows { grid-template-columns: 1fr; gap:1mm 0; }
+.choices span { white-space:nowrap; }
+.choices.five-rows span { white-space:normal; }
+
+.problems-area { position:absolute; top:calc(var(--pad-top) + var(--one-line) + 5mm); bottom:calc(var(--pad-bottom) + 6mm); left:var(--pad-x); right:var(--pad-x); display:flex; flex-direction:column; }
+.problems-area > .problem-block:first-child { margin-bottom:0; }
+.problems-area > .problem-block:nth-child(2) { margin:auto 0; }
+.problems-area.single > .problem-block { margin:0; }
+
+mjx-container { font-weight:400 !important; }
+
+.fig-right { float:right; margin:0 0 2mm 5mm; overflow:visible; }
+.fig-center { text-align:center; margin:3mm 0; overflow:visible; }
+.fig-row { display:flex; justify-content:center; gap:14mm; margin:3mm 0; flex-wrap:wrap; }
+svg { overflow:visible; }
+
+/* MathJax CHTML: 지수(위첨자)·아래첨자 안의 \dfrac 분수는 본문 폰트의 50%로 축소 */
+mjx-script mjx-mfrac { font-size: 50% !important; }
+mjx-mover mjx-mfrac { font-size: 50% !important; }
+mjx-munder mjx-mfrac { font-size: 50% !important; }
+
+.quick-answer-section .sheet-body { top:32mm; bottom:20mm; padding:0; overflow:hidden; display:flex; flex-direction:column; }
+.quick-answer-section .section-title { margin-top:0; flex:0 0 auto; }
+.quick-answers { flex:1 1 auto; min-height:0; position:relative; column-count:3; column-fill:auto; column-gap:7mm; column-rule:0.3pt solid #888; font-family:'신명조','HY신명조','Shinmyeongjo','바탕','Batang',serif; font-size:8pt; line-height:1.85; letter-spacing:-0.1em; }
+.quick-answers mjx-container { font-size:8pt !important; }
+.quick-answers::before, .quick-answers::after { content:''; position:absolute; top:0; bottom:0; width:0.3pt; background:#888; pointer-events:none; }
+.quick-answers::before { left:calc((100% - 14mm) / 3 + 3.5mm); }
+.quick-answers::after { left:calc((100% - 14mm) / 3 * 2 + 10.5mm); }
+.qa-item { break-inside:avoid-column; page-break-inside:avoid; -webkit-column-break-inside:avoid; margin-bottom:2mm; display:flex; align-items:baseline; }
+.qa-num { flex:0 0 auto; display:inline-block; min-width:3mm; margin-right:1.5mm; font-family:'Gyeonggi Title',sans-serif; font-size:8pt; }
+.qa-ans { flex:1 1 auto; min-width:0; }
+
+.solution-section .sheet-body { top:32mm; bottom:20mm; padding:0; overflow:hidden; display:flex; flex-direction:column; }
+.solution-section .section-title { margin-top:0; flex:0 0 auto; }
+.solutions { flex:1 1 auto; min-height:0; position:relative; column-count:2; column-fill:auto; column-gap:8mm; column-rule:0.3pt solid #888; font-family:'신명조','HY신명조','Shinmyeongjo','바탕','Batang',serif; font-size:8pt; line-height:1.75; letter-spacing:-0.05em; }
+.solutions::before { content:''; position:absolute; top:0; bottom:0; left:calc((100% - 8mm) / 2 + 4mm); width:0.3pt; background:#888; pointer-events:none; }
+.solutions mjx-container { font-size:8pt !important; max-width:100%; }
+.solution-item { margin-bottom:var(--one-line); padding-left:5mm; padding-right:2mm; position:relative; overflow-wrap:break-word; }
+.solution-item p { text-indent:0; margin:0; }
+.sol-num { position:absolute; left:0; top:0; font-weight:700; font-size:8pt; font-family:'Gyeonggi Title',sans-serif; }
+.sol-num a { color:#000; text-decoration:none; }
+.sol-answer { margin-bottom:1.5mm; }
+@media print { .solution-link { text-decoration:none; } }
+
+.solution-section { visibility:hidden; }
+body.ready .solution-section { visibility:visible; }
+
+.solution-item.continuation { padding-left:5mm; }
+.solution-item.continuation::before { content:'(이어서) '; font-size:0.9em; color:#666; font-style:italic; }
+
+a, a:link, a:visited, a:hover, a:active { color:#000 !important; }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- PAGE 1 (odd) : 대단원 + 거듭제곱·거듭제곱근의 뜻 -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">수학 · 대수</header>
+  <div class="sheet-body">
+    <h1 class="chapter-title">지수</h1>
+
+    <h2 class="section-title">거듭제곱과 거듭제곱근</h2>
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">1) 거듭제곱</div>
+      <p>실수 $a$를 $n$번 곱한 것을 $a$의 <b>$n$제곱</b>이라 하고, 기호 $a^{n}$으로 나타낸다. 이때 $a$를 거듭제곱의 <b>밑</b>, $n$을 거듭제곱의 <b>지수</b>라 하며, $a,\,a^{2},\,a^{3},\,\cdots,\,a^{n},\,\cdots$을 통틀어 $a$의 <b>거듭제곱</b>이라 한다.</p>
+
+      <div class="formula">
+        $\underbrace{a\times a\times \cdots \times a}_{n\text{개}}=a^{n}\;\;(n\text{은 자연수})$
+      </div>
+
+      <div class="note">자연수만 거듭제곱의 지수가 될 수 있는 것이 아니라, 정수·유리수·실수 등 모든 수가 지수가 되도록 의미를 확장해 나간다.</div>
+
+      <div class="sub-title">2) $n$제곱근의 정의</div>
+      <p>실수 $a$에 대하여 $n$이 $2$ 이상의 정수일 때, 방정식 $x^{n}=a$를 만족시키는 수 $x$를 $a$의 <b>$n$제곱근</b>이라 한다. $a$의 제곱근, 세제곱근, 네제곱근, $\cdots$을 통틀어 <b>$a$의 거듭제곱근</b>이라 한다.</p>
+
+      <div class="formula">
+        $x\text{가 }a\text{의 }n\text{제곱근} \;\Longleftrightarrow\; x^{n}=a$
+      </div>
+
+      <div class="note">실수 $a$의 $n$제곱근은 복소수 범위에서 모두 $n$개 존재한다. 그 중 실수인 것의 개수가 거듭제곱근의 핵심 주제이다.</div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q1">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-1" class="solution-link">1</a></span>다음 거듭제곱근에 대한 설명 중 옳은 것은?</p>
+        <div class="choices five-rows">
+          <span>① $-8$의 세제곱근은 $-2$이다.</span>
+          <span>② $16$의 네제곱근은 $\pm 2$이다.</span>
+          <span>③ $-3$의 네제곱근 중 실수인 것은 $1$개이다.</span>
+          <span>④ $\sqrt{16}$의 네제곱근 중 실수인 것은 $2$개이다.</span>
+          <span>⑤ $-32$의 다섯제곱근은 $\sqrt[5]{-32}$이다.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">1</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 2 (even) : $n$제곱근 중 실수인 것 -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">3) 실수 $a$의 $n$제곱근 중 실수인 것</div>
+      <p>$n$이 $2$ 이상의 정수일 때, 실수 $a$의 $n$제곱근 중 실수인 것은 $n$의 짝홀, $a$의 부호에 따라 다음과 같이 결정된다.</p>
+
+      <table>
+        <tr><th>구분</th><th>$a&gt;0$</th><th>$a=0$</th><th>$a&lt;0$</th></tr>
+        <tr><th>$n$이 짝수</th><td>$\sqrt[n]{a},\;-\sqrt[n]{a}$ ($2$개)</td><td>$0$ ($1$개)</td><td>없음 ($0$개)</td></tr>
+        <tr><th>$n$이 홀수</th><td>$\sqrt[n]{a}$ ($1$개)</td><td>$0$ ($1$개)</td><td>$\sqrt[n]{a}$ ($1$개)</td></tr>
+      </table>
+
+      <div class="fig-row" style="margin:2mm 0 1mm;">
+        <figure style="margin:0; text-align:center;">
+          <svg viewBox="0 0 280 200" width="280" height="200" style="width:68mm;" overflow="visible">
+            <defs>
+              <marker id="ar-x2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#000"/></marker>
+            </defs>
+            <!-- 좌표 매핑: 원점 (140, 145), x scale 50svg/unit, y scale 25svg/unit, math x ∈ [-2.2, 2.2], math y ∈ [-1.5, 4.8] -->
+            <line x1="20" y1="145" x2="258" y2="145" stroke="#000" stroke-width="0.8" marker-end="url(#ar-x2)"/>
+            <line x1="140" y1="190" x2="140" y2="14" stroke="#000" stroke-width="0.8" marker-end="url(#ar-x2)"/>
+            <!-- y = x^2 정확한 곡선 : (-2,4)~(2,4), 촘촘한 polyline -->
+            <polyline points="40,45 52.5,66.41 65,88.75 77.5,107.81 90,120 102.5,131.41 115,138.75 127.5,143.59 140,145 152.5,143.59 165,138.75 177.5,131.41 190,120 202.5,107.81 215,88.75 227.5,66.41 240,45" fill="none" stroke="#000" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"/>
+            <!-- y=a (a>0): math y=2 ↔ svg y=95, 교점 x=±√2≈±1.414 → svg x=140±70.7 -->
+            <line x1="20" y1="95" x2="258" y2="95" stroke="#000" stroke-width="0.7" stroke-dasharray="3,2"/>
+            <!-- y=a (a<0): math y=-1 ↔ svg y=170, 곡선과 교점 없음 -->
+            <line x1="20" y1="170" x2="258" y2="170" stroke="#000" stroke-width="0.7" stroke-dasharray="3,2"/>
+            <circle cx="69" cy="95" r="1.8" fill="#000"/>
+            <circle cx="211" cy="95" r="1.8" fill="#000"/>
+            <foreignObject x="42" y="98" width="42" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11pt;font-family:'신명조','HY신명조','바탕','Batang',serif;line-height:1.2;text-align:center;white-space:nowrap;">$-\sqrt{a}$</div></foreignObject>
+            <foreignObject x="214" y="98" width="40" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11pt;font-family:'신명조','HY신명조','바탕','Batang',serif;line-height:1.2;text-align:left;white-space:nowrap;">$\sqrt{a}$</div></foreignObject>
+            <foreignObject x="260" y="83" width="36" height="20" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11pt;font-family:'신명조','HY신명조','바탕','Batang',serif;line-height:1.2;white-space:nowrap;">$y=a$</div></foreignObject>
+            <foreignObject x="260" y="158" width="60" height="20" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11pt;font-family:'신명조','HY신명조','바탕','Batang',serif;line-height:1.2;white-space:nowrap;">$y=a\,(a&lt;0)$</div></foreignObject>
+            <foreignObject x="244" y="133" width="20" height="20" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11pt;font-family:'신명조','HY신명조','바탕','Batang',serif;line-height:1.2;">$x$</div></foreignObject>
+            <foreignObject x="124" y="2" width="20" height="20" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11pt;font-family:'신명조','HY신명조','바탕','Batang',serif;line-height:1.2;">$y$</div></foreignObject>
+            <foreignObject x="216" y="20" width="60" height="20" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11pt;font-family:'신명조','HY신명조','바탕','Batang',serif;line-height:1.2;white-space:nowrap;">$y=x^{2}$</div></foreignObject>
+          </svg>
+          <figcaption style="font-size:8.5pt; margin-top:1mm;">$n$이 짝수($y=x^{2}$): $y$축 대칭, $a&gt;0$이면 교점 $2$개</figcaption>
+        </figure>
+        <figure style="margin:0; text-align:center;">
+          <svg viewBox="0 0 280 200" width="280" height="200" style="width:68mm;" overflow="visible">
+            <line x1="20" y1="100" x2="258" y2="100" stroke="#000" stroke-width="0.8" marker-end="url(#ar-x2)"/>
+            <line x1="140" y1="190" x2="140" y2="14" stroke="#000" stroke-width="0.8" marker-end="url(#ar-x2)"/>
+            <!-- y = x^3 정확한 곡선 : 좌표 매핑 (math x=-1.5~1.5 → svg 80~200, math y=-3.5~3.5 → svg 170~30, 1 unit = 40/20) -->
+            <!-- 점: (-1.5,-3.375)→(80,167.5), (-1.25,-1.953)→(90,139.06), (-1,-1)→(100,120), (-0.75,-0.422)→(110,108.44), (-0.5,-0.125)→(120,102.5), (-0.25,-0.016)→(130,100.31), (0,0)→(140,100), (0.25,0.016)→(150,99.69), (0.5,0.125)→(160,97.5), (0.75,0.422)→(170,91.56), (1,1)→(180,80), (1.25,1.953)→(190,60.94), (1.5,3.375)→(200,32.5) -->
+            <polyline points="80,167.5 90,139.06 100,120 110,108.44 120,102.5 130,100.31 140,100 150,99.69 160,97.5 170,91.56 180,80 190,60.94 200,32.5" fill="none" stroke="#000" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"/>
+            <!-- y=a (a>0): svg y=60 ↔ math y=2, 교점 x=∛2≈1.26, svg x=140+1.26·40≈190.4 -->
+            <line x1="20" y1="60" x2="258" y2="60" stroke="#000" stroke-width="0.7" stroke-dasharray="3,2"/>
+            <!-- y=a (a<0): svg y=140 ↔ math y=-2, 교점 x=∛(-2)≈-1.26, svg x=140-50.4≈89.6 -->
+            <line x1="20" y1="140" x2="258" y2="140" stroke="#000" stroke-width="0.7" stroke-dasharray="3,2"/>
+            <circle cx="190" cy="60" r="1.8" fill="#000"/>
+            <circle cx="90" cy="140" r="1.8" fill="#000"/>
+            <foreignObject x="193" y="38" width="48" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11pt;font-family:'신명조','HY신명조','바탕','Batang',serif;line-height:1.2;text-align:left;white-space:nowrap;">$\sqrt[3]{a}$</div></foreignObject>
+            <foreignObject x="44" y="142" width="48" height="22" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11pt;font-family:'신명조','HY신명조','바탕','Batang',serif;line-height:1.2;text-align:left;white-space:nowrap;">$\sqrt[3]{a}$</div></foreignObject>
+            <foreignObject x="260" y="48" width="36" height="20" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11pt;font-family:'신명조','HY신명조','바탕','Batang',serif;line-height:1.2;white-space:nowrap;">$y=a$</div></foreignObject>
+            <foreignObject x="260" y="128" width="60" height="20" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11pt;font-family:'신명조','HY신명조','바탕','Batang',serif;line-height:1.2;white-space:nowrap;">$y=a\,(a&lt;0)$</div></foreignObject>
+            <foreignObject x="244" y="88" width="20" height="20" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11pt;font-family:'신명조','HY신명조','바탕','Batang',serif;line-height:1.2;">$x$</div></foreignObject>
+            <foreignObject x="124" y="2" width="20" height="20" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11pt;font-family:'신명조','HY신명조','바탕','Batang',serif;line-height:1.2;">$y$</div></foreignObject>
+            <foreignObject x="200" y="20" width="60" height="20" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11pt;font-family:'신명조','HY신명조','바탕','Batang',serif;line-height:1.2;white-space:nowrap;">$y=x^{3}$</div></foreignObject>
+          </svg>
+          <figcaption style="font-size:8.5pt; margin-top:1mm;">$n$이 홀수($y=x^{3}$): 원점 대칭, 교점 항상 $1$개</figcaption>
+        </figure>
+      </div>
+      <div class="ex" style="margin-top:1mm;"><b>해설)</b> 그래프 $y=x^{n}$과 직선 $y=a$의 교점 개수가 곧 실수 $n$제곱근의 개수이다.</div>
+
+      <div class="note">$\sqrt[n]{a}$ 기호는 일반적으로 "$a$의 $n$제곱근 중 양의 실수"(또는 $n$이 홀수이고 $a&lt;0$일 때 음의 실수 하나)를 가리키는 약속이다. 즉 $\sqrt[n]{a}$는 항상 한 값이지만 "$a$의 $n$제곱근"은 여러 개일 수 있다.</div>
+
+      <div class="ex"><b>예)</b> $16$의 네제곱근 — 실수는 $\sqrt[4]{16}=2,\;-\sqrt[4]{16}=-2$의 $2$개. &nbsp; $-8$의 세제곱근 — 실수는 $\sqrt[3]{-8}=-2$ 하나.</div>
+
+      <div class="sub-title">$\sqrt[n]{a^{n}}$의 값</div>
+      <p>$a$의 부호와 $n$의 짝홀에 따라 $\sqrt[n]{a^{n}}$의 값이 달라진다.</p>
+      <div class="formula left">
+        ・$n$이 홀수이면 $\;\sqrt[n]{a^{n}}=a$<br>
+        ・$n$이 짝수이면 $\;\sqrt[n]{a^{n}}=|a|=\begin{cases} a &amp; (a\ge 0) \\ -a &amp; (a&lt;0) \end{cases}$
+      </div>
+      <div class="ex"><b>예)</b> $\sqrt[3]{(-2)^{3}}=-2,\;\;\sqrt[4]{(-2)^{4}}=|-2|=2$</div>
+    </div>
+  </div>
+  <footer class="sheet-footer">2</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 3 (odd) : 거듭제곱근의 성질 (4공식 + 활용) -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">수학 · 대수</header>
+  <div class="sheet-body">
+    <h2 class="section-title">거듭제곱근의 성질</h2>
+    <div class="concept">
+      <p>$a&gt;0,\,b&gt;0$이고 $m,\,n,\,p$가 $2$ 이상의 정수일 때, 다음이 성립한다.</p>
+
+      <div class="formula left">
+        ① $\sqrt[n]{a}\,\sqrt[n]{b}=\sqrt[n]{ab}$ &emsp;&emsp; ② $\dfrac{\sqrt[n]{a}}{\sqrt[n]{b}}=\sqrt[n]{\dfrac{a}{b}}$ &nbsp;($b\neq 0$)<br>
+        ③ $(\sqrt[n]{a})^{m}=\sqrt[n]{a^{m}}$ &emsp;&emsp; ④ $\sqrt[m]{\sqrt[n]{a}}=\sqrt[mn]{a}$<br>
+        ⑤ $\sqrt[np]{a^{mp}}=\sqrt[n]{a^{m}}$ &nbsp;($p$는 양의 정수)
+      </div>
+
+      <div class="note">①, ②는 같은 차수 거듭제곱근의 곱·나눗셈, ③은 거듭제곱과 근호의 교환, ④는 중복 근호의 차수 곱셈, ⑤는 분수 형태 차수의 약분을 보여 준다. 특히 ⑤는 $\dfrac{m}{n}$ 꼴 차수의 약분 그 자체이다.</div>
+
+      <div class="sub-title">$\sqrt[n]{a^{n}}$의 활용</div>
+      <p>음수 거듭제곱근을 다룰 때는 $\sqrt[n]{a^{n}}=|a|$ ($n$이 짝수)인 점을 잘 살펴야 한다.</p>
+      <div class="ex"><b>예)</b> $\sqrt[4]{(-3)^{4}}+\sqrt[3]{(-2)^{3}}=|-3|+(-2)=3-2=1$</div>
+
+      <div class="ex"><b>예)</b> $\sqrt[6]{(-5)^{6}}-\sqrt[5]{(-5)^{5}}=|-5|-(-5)=5+5=10$</div>
+
+      <div class="sub-title">중복 근호의 정리</div>
+      <p>중복된 근호는 ④, ⑤를 차례로 적용해 한 차수의 거듭제곱근으로 묶을 수 있다.</p>
+      <div class="ex"><b>예)</b> $\sqrt[3]{a\sqrt[3]{a}}=\sqrt[3]{a\cdot a^{\dfrac{1}{3}}}=\sqrt[3]{a^{\dfrac{4}{3}}}=a^{\dfrac{4}{9}}=\sqrt[9]{a^{4}}$ ($a&gt;0$)</div>
+    </div>
+  </div>
+  <footer class="sheet-footer">3</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 4 (even) : 정수·유리수·실수 지수법칙 -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">지수의 확장</h2>
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">1) 정수 지수의 정의</div>
+      <p>$a\neq 0$이고 $n$이 양의 정수일 때, 다음과 같이 정의한다.</p>
+      <div class="formula">
+        $a^{0}=1\;,\quad a^{-n}=\dfrac{1}{a^{n}}$
+      </div>
+      <div class="note">$a=0$일 때 $0^{0},\,0^{-n}$은 정의하지 않는다.</div>
+
+      <div class="sub-title">2) 정수 지수의 지수법칙</div>
+      <p>$a\neq 0,\,b\neq 0$이고 $m,\,n$이 정수일 때 다음이 성립한다.</p>
+      <div class="formula left">
+        ① $a^{m}\times a^{n}=a^{m+n}$ &emsp; ② $a^{m}\div a^{n}=a^{m-n}$<br>
+        ③ $(a^{m})^{n}=a^{mn}$ &emsp; ④ $(ab)^{n}=a^{n}b^{n}$ &emsp; ⑤ $\left(\dfrac{a}{b}\right)^{n}=\dfrac{a^{n}}{b^{n}}$
+      </div>
+
+      <div class="sub-title">3) 유리수 지수의 정의</div>
+      <p>$a&gt;0$이고 $m,\,n$($n\ge 2$)이 정수일 때, 다음과 같이 정의한다.</p>
+      <div class="formula">
+        $a^{\dfrac{1}{n}}=\sqrt[n]{a}\;,\quad a^{\dfrac{m}{n}}=\sqrt[n]{a^{m}}$
+      </div>
+      <div class="note">밑 $a$가 음수이면 짝수제곱근의 실수해가 존재하지 않을 수 있으므로 유리수 지수는 <b>밑이 양수인 경우</b>에 한해 정의된다.</div>
+
+      <div class="sub-title">4) 유리수·실수 지수의 지수법칙</div>
+      <p>$a&gt;0,\,b&gt;0$이고 $r,\,s$가 유리수(또는 실수)일 때 다음이 성립한다.</p>
+      <div class="formula left">
+        ① $a^{r}\times a^{s}=a^{r+s}$ &emsp; ② $a^{r}\div a^{s}=a^{r-s}$<br>
+        ③ $(a^{r})^{s}=a^{rs}$ &emsp; ④ $(ab)^{r}=a^{r}b^{r}$
+      </div>
+      <div class="ex"><b>예)</b> $(-3)^{2}=9$이지만 $((-3)^{2})^{\dfrac{1}{2}}\neq -3$이다. ($a&gt;0$ 조건이 빠지면 등호가 깨질 수 있다.)</div>
+    </div>
+  </div>
+  <footer class="sheet-footer">4</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 5 (odd) : 곱셈공식 (사용자 메모 반영) -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">수학 · 대수</header>
+  <div class="sheet-body">
+    <h2 class="section-title">자주 쓰는 곱셈공식</h2>
+    <div class="concept">
+      <p>지수 단원에서 식을 변형할 때 반복적으로 쓰이는 곱셈공식 네 가지를 정리한다. 분수 지수($a^{r},\,b^{r}$)에 대해서도 그대로 적용된다는 점에 유의한다.</p>
+
+      <div class="sub-title" style="margin-top:0;">1) 차의 곱셈공식 (제곱)</div>
+      <div class="formula">
+        $a^{2}-b^{2}=(a+b)(a-b)$
+      </div>
+      <div class="ex"><b>활용)</b> $a-b$만 알 수 없을 때, $a^{2}-b^{2}$과 $a+b$로부터 $a-b=\dfrac{a^{2}-b^{2}}{a+b}$로 구한다.</div>
+
+      <div class="sub-title">2) 합의 곱셈공식 (세제곱)</div>
+      <div class="formula">
+        $a^{3}+b^{3}=(a+b)(a^{2}-ab+b^{2})$
+      </div>
+      <div class="ex"><b>활용)</b> $(a+b)(a^{2}-ab+b^{2})$ 꼴이 나오면 곧장 $a^{3}+b^{3}$으로 묶는다. 분수 지수로 $a=p^{\dfrac{1}{3}},\,b=q^{\dfrac{1}{3}}$이면 $(p^{\dfrac{1}{3}}+q^{\dfrac{1}{3}})(p^{\dfrac{2}{3}}-(pq)^{\dfrac{1}{3}}+q^{\dfrac{2}{3}})=p+q$.</div>
+
+      <div class="sub-title">3) 차의 곱셈공식 (세제곱)</div>
+      <div class="formula">
+        $a^{3}-b^{3}=(a-b)(a^{2}+ab+b^{2})$
+      </div>
+      <div class="ex"><b>활용)</b> $(p^{\dfrac{1}{3}}-q^{\dfrac{1}{3}})(p^{\dfrac{2}{3}}+(pq)^{\dfrac{1}{3}}+q^{\dfrac{2}{3}})=p-q$.</div>
+
+      <div class="sub-title">4) 세 수의 합의 제곱·세제곱</div>
+      <div class="formula left">
+        $(a+b+c)^{2}=a^{2}+b^{2}+c^{2}+2(ab+bc+ca)$<br>
+        $a^{3}+b^{3}+c^{3}-3abc=(a+b+c)(a^{2}+b^{2}+c^{2}-ab-bc-ca)$
+      </div>
+      <div class="note">대칭식 변형 — $a+b+c=0$이면 $a^{3}+b^{3}+c^{3}=3abc$가 성립한다. 분수 지수로 표현된 대칭식의 값을 구할 때 자주 쓴다.</div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q9">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-9" class="solution-link">9</a></span>다음 식의 값을 구하여라.</p>
+        <p style="text-align:center; margin-top:2mm;">$\left(3^{\dfrac{1}{3}}-2^{\dfrac{1}{3}}\right)\!\left(9^{\dfrac{1}{3}}+6^{\dfrac{1}{3}}+4^{\dfrac{1}{3}}\right)$</p>
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">5</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 6 (even) : 밑이 다른 조건의 식 풀이 전략 (사용자 메모 반영) -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">밑이 서로 다른 조건의 식의 값</h2>
+    <div class="concept">
+      <p>$a^{x}=p,\,b^{y}=q$와 같이 밑이 서로 다른 조건이 동시에 주어질 때, 다음 세 가지 표준 전략 중 하나를 골라 사용한다.</p>
+
+      <div class="sub-title" style="margin-top:0;">전략 ① &mdash; 양변을 적당한 거듭제곱으로 바꾸기</div>
+      <p>$a^{x}=p\;(a&gt;0,\,p&gt;0)$이면 양변을 $\dfrac{1}{x}$제곱하여 $a=p^{\dfrac{1}{x}}$로 표현한다. 마찬가지로 $b=q^{\dfrac{1}{y}}$이다. 이렇게 두 밑을 각각 $p,\,q$의 거듭제곱 꼴로 바꾸면 $\dfrac{1}{x},\,\dfrac{1}{y}$가 식 안의 거듭제곱 지수로 직접 등장한다.</p>
+
+      <div class="sub-title">전략 ② &mdash; 두 조건식을 곱하기</div>
+      <p>$ab=k$와 같이 두 밑의 곱(또는 비)이 주어졌다면 $a=p^{\dfrac{1}{x}}$, $b=q^{\dfrac{1}{y}}$를 대입하여 $p^{\dfrac{1}{x}}\cdot q^{\dfrac{1}{y}}=k$를 얻는다. 우변의 $k$를 $p,\,q$의 거듭제곱으로 표현할 수 있으면 양변의 지수를 비교해 $\dfrac{1}{x}$와 $\dfrac{1}{y}$의 관계식을 즉시 얻는다.</p>
+
+      <div class="sub-title">전략 ③ &mdash; 양변을 같은 밑 $a^{c}$ 꼴로 변형</div>
+      <p>$a^{x}=b^{y}=c^{z}=k$처럼 한 값 $k$로 묶이는 경우, 양변을 $k$의 거듭제곱으로 다시 풀어 $a=k^{\dfrac{1}{x}},\,b=k^{\dfrac{1}{y}},\,c=k^{\dfrac{1}{z}}$로 표현한다. 이후 $a,\,b,\,c$ 사이의 관계식(예: $abc=$ 상수)에 대입하면 $\dfrac{1}{x},\,\dfrac{1}{y},\,\dfrac{1}{z}$의 합·차·곱이 한 번에 정리된다.</p>
+
+      <div class="ex"><b>요지)</b> 세 전략 모두 핵심은 밑을 통일하거나 지수를 비교 가능하게 만드는 것이다. 문제에서 묻는 것이 $\dfrac{1}{x}+\dfrac{1}{y}$, $\dfrac{1}{x}-\dfrac{1}{y}$ 같은 분수꼴의 지수라면 거의 항상 이 세 전략 중 하나로 환원된다.</div>
+    </div>
+  </div>
+  <footer class="sheet-footer">6</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 7 (odd) : 문제 2 (single — q1은 개념 ① 페이지로 이동) -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">수학 · 대수</header>
+  <div class="problems-area single">
+
+    <div class="problem-block" data-qa-id="q2">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-2" class="solution-link">2</a></span>실수 $a$와 $2$ 이상의 정수 $n$에 대하여 $a$의 $n$제곱근 중 실수인 것의 개수를 $f(a,\,n)$이라 한다. 다음 식의 값을 구하여라.</p>
+        <p style="text-align:center; margin-top:2mm;">$f(2025,\,2024)+f(2024,\,2025)+f(-2025,\,2024)+f(-2024,\,2025)$</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">7</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 8 (even) : 문제 3 (single — 좌표평면 + F(n)) -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area single">
+
+    <div class="problem-block" data-qa-id="q3">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-3" class="solution-link">3</a></span>좌표평면에서 $2$ 이상의 자연수 $n$에 대하여 직선 $y=n$이 함수 $y=(x+3)^{2}\;(x\ge -3)$의 그래프와 만나는 점의 $x$좌표를 $a_{n}$이라 하자. $a_{n}$의 $n$제곱근 중 실수인 것의 개수를 $F(n)$이라 할 때,</p>
+        <p style="text-align:center; margin-top:2mm;">$F(2)+F(3)+F(4)+\cdots+F(15)$</p>
+        <p>의 값을 구하여라.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">8</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 9 (odd) : 문제 4, 5 -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">수학 · 대수</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q4">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-4" class="solution-link">4</a></span>$a=-2$일 때, $\sqrt[4]{a^{4}}+\sqrt[3]{a^{3}}$의 값을 구하여라.</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q5">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-5" class="solution-link">5</a></span>$a&gt;0$일 때, &nbsp;$\sqrt[3]{a\sqrt{a\sqrt[3]{a}}}$&nbsp;를 $a$의 거듭제곱 꼴 $a^{\dfrac{p}{q}}$ ($p,\,q$는 서로소인 자연수)로 나타낼 때, $p+q$의 값을 구하여라.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">9</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 10 (even) : 문제 6, 7 -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q6">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-6" class="solution-link">6</a></span>다음 식을 간단히 하여라. &nbsp;$\left\{\!\left(\dfrac{25}{16}\right)^{\!\dfrac{-3}{2}}\right\}^{\!\dfrac{1}{3}}$</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q7">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-7" class="solution-link">7</a></span>집합 &nbsp;$A=\left\{x\,\bigg|\,x=\left(\dfrac{1}{729}\right)^{\!\dfrac{1}{n}},\;n\text{은 }0\text{이 아닌 정수}\right\}$&nbsp;의 원소 중 자연수인 것의 개수를 구하여라.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">10</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 11 (odd) : 문제 8 (single — q9는 곱셈공식 페이지로 이동) -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">수학 · 대수</header>
+  <div class="problems-area single">
+
+    <div class="problem-block" data-qa-id="q8">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-8" class="solution-link">8</a></span>세 수 &nbsp;$\sqrt[3]{3},\;\sqrt[4]{5},\;\sqrt[6]{10}$&nbsp;의 크기를 비교하여라.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">11</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 12 (even) : 문제 10 (single — 분수식 변형) -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area single">
+
+    <div class="problem-block" data-qa-id="q10">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-10" class="solution-link">10</a></span>$3^{2x}-3^{x+1}=-1$일 때,</p>
+        <p style="text-align:center; margin-top:2mm;">$\dfrac{3^{4x}+3^{-4x}+1}{3^{2x}+3^{-2x}+1}$</p>
+        <p>의 값을 구하여라.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">12</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 13 (odd) : 문제 11, 12 -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">수학 · 대수</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q11">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-11" class="solution-link">11</a></span>$a^{x}=3,\;b^{y}=27,\;ab=9$일 때, $\dfrac{1}{x}+\dfrac{3}{y}$의 값을 구하여라. (단, $a,\,b&gt;0,\,xy\neq 0$)</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q12">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-12" class="solution-link">12</a></span>$xy\neq 0$인 두 실수 $x,\,y$가 &nbsp;$\dfrac{1}{x}+\dfrac{1}{y}=2,\;\;2^{x}=10^{y}=k$&nbsp;를 만족시킬 때, 양수 $k$의 값을 구하여라.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">13</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- QUICK ANSWER -->
+<!-- ============================================================ -->
+<section class="sheet even quick-answer-section">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">빠른 정답</h2>
+    <div class="quick-answers">
+      <div class="qa-item"><span class="qa-num">1.</span><span class="qa-ans">④</span></div>
+      <div class="qa-item"><span class="qa-num">2.</span><span class="qa-ans">$4$</span></div>
+      <div class="qa-item"><span class="qa-num">3.</span><span class="qa-ans">$13$</span></div>
+      <div class="qa-item"><span class="qa-num">4.</span><span class="qa-ans">$0$</span></div>
+      <div class="qa-item"><span class="qa-num">5.</span><span class="qa-ans">$14$ &nbsp;($a^{\dfrac{5}{9}}$, $p+q=5+9$)</span></div>
+      <div class="qa-item"><span class="qa-num">6.</span><span class="qa-ans">$\dfrac{4}{5}$</span></div>
+      <div class="qa-item"><span class="qa-num">7.</span><span class="qa-ans">$4$</span></div>
+      <div class="qa-item"><span class="qa-num">8.</span><span class="qa-ans">$\sqrt[3]{3}\lt \sqrt[6]{10}\lt \sqrt[4]{5}$</span></div>
+      <div class="qa-item"><span class="qa-num">9.</span><span class="qa-ans">$1$</span></div>
+      <div class="qa-item"><span class="qa-num">10.</span><span class="qa-ans">$6$</span></div>
+      <div class="qa-item"><span class="qa-num">11.</span><span class="qa-ans">$2$</span></div>
+      <div class="qa-item"><span class="qa-num">12.</span><span class="qa-ans">$2\sqrt{5}$</span></div>
+    </div>
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- SOLUTION PAGES -->
+<!-- ============================================================ -->
+<section class="sheet odd solution-section">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">수학 · 대수</header>
+  <div class="sheet-body">
+    <h2 class="section-title">정답 및 해설</h2>
+    <div class="solutions">
+
+      <div class="solution-item" id="sol-1" data-qa-id="q1">
+        <div class="sol-num">1.</div>
+        <div class="sol-answer"><b>[정답]</b> ④</div>
+        <p>① $-8$의 세제곱근은 $x^{3}=-8$의 해 $3$개. 실수는 $-2$ 하나뿐, 다른 두 해는 허수. "세제곱근은 $-2$"라는 표현은 옳지 않음 (거짓)</p>
+        <p>② $16$의 네제곱근은 $x^{4}=16$의 해 $4$개. 실수는 $\pm 2$ ($2$개), 허수 $2$개. "네제곱근은 $\pm 2$"는 거짓 (실수만 $\pm 2$)</p>
+        <p>③ $-3&lt;0$, $n=4$ 짝수 → 실수인 $n$제곱근은 $0$개. (거짓)</p>
+        <p>④ $\sqrt{16}=4&gt;0$, $n=4$ 짝수 → 실수인 네제곱근 $\sqrt[4]{4},\,-\sqrt[4]{4}$의 $2$개. (참)</p>
+        <p>⑤ $\sqrt[5]{-32}=-2$는 $-32$의 다섯제곱근 중 실수 하나일 뿐, "다섯제곱근"은 복소수 범위에서 $5$개임. (거짓)</p>
+        <p>$\therefore$ 옳은 것은 ④</p>
+      </div>
+
+      <div class="solution-item" id="sol-2" data-qa-id="q2">
+        <div class="sol-num">2.</div>
+        <div class="sol-answer"><b>[정답]</b> $4$</div>
+        <p>실수 $a$의 $n$제곱근 중 실수인 것의 개수는</p>
+        <p>・$a&gt;0,\,n$ 짝수 → $2$, &nbsp; ・$a&gt;0,\,n$ 홀수 → $1$</p>
+        <p>・$a&lt;0,\,n$ 짝수 → $0$, &nbsp; ・$a&lt;0,\,n$ 홀수 → $1$</p>
+        <p>$f(2025,\,2024)$: $a&gt;0,\,n=2024$ 짝수 $\to 2$</p>
+        <p>$f(2024,\,2025)$: $a&gt;0,\,n=2025$ 홀수 $\to 1$</p>
+        <p>$f(-2025,\,2024)$: $a&lt;0,\,n=2024$ 짝수 $\to 0$</p>
+        <p>$f(-2024,\,2025)$: $a&lt;0,\,n=2025$ 홀수 $\to 1$</p>
+        <p>합: $2+1+0+1=4$</p>
+      </div>
+
+      <div class="solution-item" id="sol-3" data-qa-id="q3">
+        <div class="sol-num">3.</div>
+        <div class="sol-answer"><b>[정답]</b> $13$</div>
+        <p>$y=(x+3)^{2}\;(x\ge -3)$ 위의 점에서 $y=n$ → $(x+3)^{2}=n,\,x+3\ge 0$이므로 $x+3=\sqrt{n}$, $a_{n}=\sqrt{n}-3$</p>
+        <p>$\sqrt{n}-3$의 부호: $n=9$일 때 $0$, $n&gt;9$일 때 $&gt;0$, $n&lt;9$일 때 $&lt;0$</p>
+        <p>① $2\le n\le 8$ ($a_{n}&lt;0$): 짝수 $n$이면 $F(n)=0$, 홀수 $n$이면 $F(n)=1$</p>
+        <p>$\quad n=2,4,6,8$: $0+0+0+0=0$, &nbsp; $n=3,5,7$: $1+1+1=3$</p>
+        <p>② $n=9$ ($a_{n}=0$): $F(9)=1$ ($0$의 거듭제곱근은 $0$ 하나)</p>
+        <p>③ $10\le n\le 15$ ($a_{n}&gt;0$): 짝수 $n$이면 $F(n)=2$, 홀수 $n$이면 $F(n)=1$</p>
+        <p>$\quad n=10,12,14$: $2+2+2=6$, &nbsp; $n=11,13,15$: $1+1+1=3$</p>
+        <p>합: $0+3+1+6+3=13$</p>
+      </div>
+
+      <div class="solution-item" id="sol-4" data-qa-id="q4">
+        <div class="sol-num">4.</div>
+        <div class="sol-answer"><b>[정답]</b> $0$</div>
+        <p>$\sqrt[4]{a^{4}}=|a|$ ($n$ 짝수), $\sqrt[3]{a^{3}}=a$ ($n$ 홀수)</p>
+        <p>$a=-2$ → $\sqrt[4]{(-2)^{4}}=|-2|=2$, $\sqrt[3]{(-2)^{3}}=-2$</p>
+        <p>합: $2+(-2)=0$</p>
+      </div>
+
+      <div class="solution-item" id="sol-5" data-qa-id="q5">
+        <div class="sol-num">5.</div>
+        <div class="sol-answer"><b>[정답]</b> $14$ &nbsp;($a^{\dfrac{5}{9}}$)</div>
+        <p>안쪽부터 거듭제곱 꼴로 풀어 정리한다.</p>
+        <p>$\sqrt[3]{a}=a^{\dfrac{1}{3}}$, &nbsp; $a\sqrt[3]{a}=a\cdot a^{\dfrac{1}{3}}=a^{\dfrac{4}{3}}$</p>
+        <p>$\sqrt{a^{\dfrac{4}{3}}}=a^{\dfrac{2}{3}}$, &nbsp; $a\sqrt{a\sqrt[3]{a}}=a\cdot a^{\dfrac{2}{3}}=a^{\dfrac{5}{3}}$</p>
+        <p>$\sqrt[3]{a^{\dfrac{5}{3}}}=a^{\dfrac{5}{9}}$</p>
+        <p>$p=5,\,q=9$ (서로소) → $p+q=14$</p>
+      </div>
+
+      <div class="solution-item" id="sol-6" data-qa-id="q6">
+        <div class="sol-num">6.</div>
+        <div class="sol-answer"><b>[정답]</b> $\dfrac{4}{5}$</div>
+        <p>$\left(\dfrac{25}{16}\right)^{\!\dfrac{-3}{2}}=\left(\dfrac{16}{25}\right)^{\!\dfrac{3}{2}}=\left(\dfrac{4}{5}\right)^{\!3}=\dfrac{64}{125}$</p>
+        <p>$\left(\dfrac{64}{125}\right)^{\!\dfrac{1}{3}}=\dfrac{4}{5}$</p>
+      </div>
+
+      <div class="solution-item" id="sol-7" data-qa-id="q7">
+        <div class="sol-num">7.</div>
+        <div class="sol-answer"><b>[정답]</b> $4$</div>
+        <p>$729=3^{6}$ → $\dfrac{1}{729}=3^{-6}$</p>
+        <p>$x=(3^{-6})^{\dfrac{1}{n}}=3^{\dfrac{-6}{n}}$</p>
+        <p>$x$가 자연수이려면 $-\dfrac{6}{n}$이 $0$ 이상의 정수여야 한다.</p>
+        <p>$\Rightarrow n&lt;0$이고 $n\mid 6$ &nbsp; $\Rightarrow n\in\{-1,\,-2,\,-3,\,-6\}$</p>
+        <p>$n=-1$ → $3^{6}=729$, &nbsp; $n=-2$ → $3^{3}=27$</p>
+        <p>$n=-3$ → $3^{2}=9$, &nbsp; $n=-6$ → $3^{1}=3$</p>
+        <p>$\therefore$ 자연수 원소 $\{3,\,9,\,27,\,729\}$ &nbsp; → $4$개</p>
+      </div>
+
+      <div class="solution-item" id="sol-8" data-qa-id="q8">
+        <div class="sol-num">8.</div>
+        <div class="sol-answer"><b>[정답]</b> $\sqrt[3]{3}\lt \sqrt[6]{10}\lt \sqrt[4]{5}$</div>
+        <p>분모 $3,\,4,\,6$의 최소공배수 $=12$. 모두 $12$제곱근으로 통일.</p>
+        <p>$\sqrt[3]{3}=3^{\dfrac{1}{3}}=3^{\dfrac{4}{12}}=(3^{4})^{\dfrac{1}{12}}=81^{\dfrac{1}{12}}$</p>
+        <p>$\sqrt[4]{5}=5^{\dfrac{1}{4}}=5^{\dfrac{3}{12}}=(5^{3})^{\dfrac{1}{12}}=125^{\dfrac{1}{12}}$</p>
+        <p>$\sqrt[6]{10}=10^{\dfrac{1}{6}}=10^{\dfrac{2}{12}}=(10^{2})^{\dfrac{1}{12}}=100^{\dfrac{1}{12}}$</p>
+        <p>$81\lt 100\lt 125$ → $\sqrt[3]{3}\lt \sqrt[6]{10}\lt \sqrt[4]{5}$</p>
+      </div>
+
+      <div class="solution-item" id="sol-9" data-qa-id="q9">
+        <div class="sol-num">9.</div>
+        <div class="sol-answer"><b>[정답]</b> $1$</div>
+        <p>$a^{3}-b^{3}=(a-b)(a^{2}+ab+b^{2})$ 꼴.</p>
+        <p>$a=3^{\dfrac{1}{3}},\;b=2^{\dfrac{1}{3}}$로 놓으면 &nbsp;$a^{2}=9^{\dfrac{1}{3}},\;ab=6^{\dfrac{1}{3}},\;b^{2}=4^{\dfrac{1}{3}}$</p>
+        <p>$\therefore (3^{\dfrac{1}{3}}-2^{\dfrac{1}{3}})(9^{\dfrac{1}{3}}+6^{\dfrac{1}{3}}+4^{\dfrac{1}{3}})=a^{3}-b^{3}=3-2=1$</p>
+      </div>
+
+      <div class="solution-item" id="sol-10" data-qa-id="q10">
+        <div class="sol-num">10.</div>
+        <div class="sol-answer"><b>[정답]</b> $6$</div>
+        <p>$3^{x}=t$ ($t&gt;0$)로 놓으면 $3^{2x}=t^{2},\;3^{x+1}=3t$</p>
+        <p>조건: $t^{2}-3t=-1$ → $t^{2}+1=3t$</p>
+        <p>양변 $\div t$: $t+\dfrac{1}{t}=3$</p>
+        <p>$3^{2x}+3^{-2x}=t^{2}+\dfrac{1}{t^{2}}=\left(t+\dfrac{1}{t}\right)^{\!2}-2=9-2=7$</p>
+        <p>$3^{4x}+3^{-4x}=\left(3^{2x}+3^{-2x}\right)^{\!2}-2=49-2=47$</p>
+        <p>$\dfrac{47+1}{7+1}=\dfrac{48}{8}=6$</p>
+      </div>
+
+      <div class="solution-item" id="sol-11" data-qa-id="q11">
+        <div class="sol-num">11.</div>
+        <div class="sol-answer"><b>[정답]</b> $2$</div>
+        <p>전략 ① — 양변을 $\dfrac{1}{x},\,\dfrac{1}{y}$제곱.</p>
+        <p>$a^{x}=3$ → $a=3^{\dfrac{1}{x}}$</p>
+        <p>$b^{y}=27=3^{3}$ → $b=27^{\dfrac{1}{y}}=3^{\dfrac{3}{y}}$</p>
+        <p>전략 ② — $ab$ 조건에 대입.</p>
+        <p>$ab=3^{\dfrac{1}{x}}\cdot 3^{\dfrac{3}{y}}=3^{\dfrac{1}{x}+\dfrac{3}{y}}=9=3^{2}$</p>
+        <p>밑 $3$이 같으므로 지수 비교: $\dfrac{1}{x}+\dfrac{3}{y}=2$</p>
+      </div>
+
+      <div class="solution-item" id="sol-12" data-qa-id="q12">
+        <div class="sol-num">12.</div>
+        <div class="sol-answer"><b>[정답]</b> $2\sqrt{5}$</div>
+        <p>전략 ③ — 양변을 $k$의 거듭제곱으로.</p>
+        <p>$2^{x}=k$ → $2=k^{\dfrac{1}{x}}$</p>
+        <p>$10^{y}=k$ → $10=k^{\dfrac{1}{y}}$</p>
+        <p>두 식의 곱: $2\cdot 10=k^{\dfrac{1}{x}}\cdot k^{\dfrac{1}{y}}=k^{\dfrac{1}{x}+\dfrac{1}{y}}=k^{2}$</p>
+        <p>$\therefore k^{2}=20$, $k&gt;0$이므로 $k=\sqrt{20}=2\sqrt{5}$</p>
+      </div>
+
+    </div>
+  </div>
+  <footer class="sheet-footer">15</footer>
+</section>
+
+<section class="sheet even solution-section">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <div class="solutions"></div>
+  </div>
+  <footer class="sheet-footer">16</footer>
+</section>
+
+<script>
+const _ready = Promise.all([
+  document.fonts.ready,
+  (window.MathJax && MathJax.startup && MathJax.startup.promise) ? MathJax.startup.promise : Promise.resolve()
+]).then(() => new Promise(resolve => {
+  requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(resolve, 100)));
+}));
+_ready.then(() => {
+  (function autoWrapChoices(){
+    document.querySelectorAll('.choices').forEach(c => {
+      if (c.scrollWidth > c.clientWidth) c.classList.add('two-row');
+    });
+  })();
+  (function compactAndSplitConcepts(){
+    const SLACK_PX = (() => {
+      const probe = document.createElement('div');
+      probe.style.cssText = 'position:absolute;visibility:hidden;width:10mm;';
+      document.body.appendChild(probe);
+      const px = probe.getBoundingClientRect().width;
+      document.body.removeChild(probe);
+      return px;
+    })();
+    function overflows(body){ return body.scrollHeight > body.clientHeight + SLACK_PX; }
+    function conceptSheets(){
+      return Array.from(document.querySelectorAll('.sheet')).filter(s =>
+        s.querySelector('.concept') && !s.classList.contains('solution-section')
+          && !s.classList.contains('quick-answer-section')
+      );
+    }
+    conceptSheets().forEach(sheet => {
+      const body = sheet.querySelector('.sheet-body');
+      if (!overflows(body)) return;
+      body.querySelectorAll('.concept .formula').forEach(f => f.classList.add('compact'));
+    });
+    conceptSheets().forEach(sheet => {
+      const body = sheet.querySelector('.sheet-body');
+      if (!overflows(body)) return;
+      const concept = body.querySelector('.concept');
+      if (concept) concept.classList.add('dense');
+    });
+    const queue = conceptSheets();
+    while (queue.length){
+      const sheet = queue.shift();
+      const body = sheet.querySelector('.sheet-body');
+      if (!body || !overflows(body)) continue;
+      const concept = body.querySelector('.concept');
+      if (!concept) continue;
+      const groups = [];
+      let cur = null;
+      Array.from(concept.children).forEach(ch => {
+        if (ch.classList.contains('sub-title')) { cur = [ch]; groups.push(cur); }
+        else if (cur) { cur.push(ch); }
+        else { cur = [ch]; groups.push(cur); }
+      });
+      if (groups.length < 2) continue;
+      const bodyBottom = body.getBoundingClientRect().bottom;
+      let splitAt = -1;
+      for (let i = 0; i < groups.length; i++){
+        const last = groups[i][groups[i].length - 1];
+        if (last.getBoundingClientRect().bottom > bodyBottom + SLACK_PX) { splitAt = i; break; }
+      }
+      if (splitAt <= 0) continue;
+      const isDense = concept.classList.contains('dense');
+      const ns = document.createElement('section');
+      ns.className = 'sheet';
+      ns.innerHTML =
+        '<div class="corner tr"></div><div class="corner tl"></div>' +
+        '<div class="corner br"></div><div class="corner bl"></div>' +
+        '<header class="sheet-header"></header>' +
+        '<div class="sheet-body"><div class="concept' + (isDense ? ' dense' : '') + '"></div></div>' +
+        '<footer class="sheet-footer"></footer>';
+      const newConcept = ns.querySelector('.concept');
+      for (let i = splitAt; i < groups.length; i++){
+        groups[i].forEach(el => newConcept.appendChild(el));
+      }
+      sheet.parentNode.insertBefore(ns, sheet.nextSibling);
+      queue.push(ns);
+    }
+  })();
+  (function flowSolutions(){
+    const sections = Array.from(document.querySelectorAll('.solution-section'));
+    if (!sections.length) return;
+    const allItems = [];
+    sections.forEach(sec => { sec.querySelectorAll('.solution-item').forEach(it => allItems.push(it)); });
+    sections.forEach(sec => { const c = sec.querySelector('.solutions'); if (c) c.innerHTML = ''; });
+
+    function makeSection() {
+      const prev = sections[sections.length - 1];
+      const ns = document.createElement('section');
+      ns.className = 'sheet solution-section';
+      ns.innerHTML =
+        '<div class="corner tr"></div><div class="corner tl"></div>' +
+        '<div class="corner br"></div><div class="corner bl"></div>' +
+        '<header class="sheet-header"></header>' +
+        '<div class="sheet-body"><div class="solutions"></div></div>' +
+        '<footer class="sheet-footer"></footer>';
+      prev.parentNode.insertBefore(ns, prev.nextSibling);
+      sections.push(ns);
+      return ns;
+    }
+    function lastItemOverflows(sec) {
+      const body = sec.querySelector('.sheet-body');
+      const last = sec.querySelector('.solutions > :last-child');
+      if (!body || !last) return false;
+      void body.offsetHeight;
+      const br = body.getBoundingClientRect();
+      const lr = last.getBoundingClientRect();
+      return lr.bottom > br.bottom + 1 || lr.right > br.right + 1;
+    }
+    function makeContinuation(item, paras) {
+      const cont = document.createElement('div');
+      cont.className = 'solution-item continuation';
+      cont.setAttribute('data-qa-id', item.getAttribute('data-qa-id') || '');
+      paras.forEach(p => cont.appendChild(p));
+      return cont;
+    }
+
+    let queue = allItems.slice();
+    let secIdx = 0;
+    let safety = 0;
+    while (queue.length > 0 && safety++ < 600) {
+      if (secIdx >= sections.length) makeSection();
+      const sec = sections[secIdx];
+      const container = sec.querySelector('.solutions');
+      let advancedToNextSection = false;
+      while (queue.length > 0) {
+        const item = queue.shift();
+        container.appendChild(item);
+        if (!lastItemOverflows(sec)) continue;
+        const paras = Array.from(item.querySelectorAll(':scope > p'));
+        if (paras.length >= 2) {
+          const moved = [];
+          while (paras.length > 1 && lastItemOverflows(sec)) {
+            const p = paras.pop();
+            item.removeChild(p);
+            moved.unshift(p);
+          }
+          if (!lastItemOverflows(sec) && moved.length > 0) {
+            queue.unshift(makeContinuation(item, moved));
+            advancedToNextSection = true;
+            break;
+          }
+          moved.forEach(p => item.appendChild(p));
+        }
+        container.removeChild(item);
+        queue.unshift(item);
+        advancedToNextSection = true;
+        break;
+      }
+      if (advancedToNextSection) secIdx++;
+      else break;
+    }
+    sections.forEach(sec => { if (!sec.querySelector('.solution-item')) sec.remove(); });
+  })();
+  (function rebalanceParity(){
+    const sheets = document.querySelectorAll('.sheet');
+    sheets.forEach((s, i) => {
+      const isOdd = (i % 2 === 0);
+      s.classList.toggle('odd', isOdd);
+      s.classList.toggle('even', !isOdd);
+      const hdr = s.querySelector('.sheet-header');
+      if (hdr) hdr.textContent = isOdd ? '수학 · 대수' : '2026 수복이';
+    });
+  })();
+  (function renumberFooters(){
+    document.querySelectorAll('.sheet-footer').forEach((f, i) => { f.textContent = i + 1; });
+  })();
+  document.body.classList.add('ready');
+});
+</script>
+</body>
+</html>
