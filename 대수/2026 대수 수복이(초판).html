@@ -1,0 +1,3363 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>2026 대수 수복이(초판)</title>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']] },
+  chtml: { matchFontHeight: false },
+  startup: { typeset: true }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+@font-face { font-family:'Gyeonggi Title'; src:url('../%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/woff/Title_Bold.woff') format('woff'); font-weight:700; font-display:swap; }
+@font-face { font-family:'Gyeonggi Title'; src:url('../%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/woff/Title_Medium.woff') format('woff'); font-weight:500; font-display:swap; }
+@font-face { font-family:'Gyeonggi Batang'; src:url('../%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/woff/Batang_Regular.woff') format('woff'); font-weight:400; font-display:swap; }
+@font-face { font-family:'Gyeonggi Batang'; src:url('../%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/woff/Batang_Bold.woff') format('woff'); font-weight:700; font-display:swap; }
+
+@page { size: A4; margin: 0; }
+* { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --line-h: 1.75; --one-line: 7.4mm;
+  --pad-x: 22mm; --pad-top: 20mm; --pad-bottom: 18mm;
+  --corner-x: 22mm; --corner-len: 48mm;
+}
+
+html, body { background:#fff; color:#000; font-family:'신명조','HY신명조','Shinmyeongjo','바탕','Batang',serif; font-size:11pt; line-height:var(--line-h); }
+@media screen { body { background:#dcdcdc; padding:24px 0; } .sheet { box-shadow:0 3px 14px rgba(0,0,0,0.2); margin:0 auto 24px; } }
+
+.sheet { width:210mm; height:297mm; background:#fff; position:relative; overflow:hidden; }
+@media print { .sheet { page-break-after:always; margin:0; box-shadow:none; } .sheet:last-child { page-break-after:auto; } }
+
+.corner { position:absolute; height:0; width:var(--corner-len); border-top:1pt solid #000; }
+.corner::after { content:''; position:absolute; height:3mm; width:0; }
+.corner.tr { top:12mm; right:var(--corner-x); }
+.corner.tr::after { right:0; top:0; border-right:1pt solid #000; }
+.corner.tl { top:12mm; left:var(--corner-x); }
+.corner.tl::after { left:0; top:0; border-left:1pt solid #000; }
+.corner.br { bottom:14mm; right:var(--corner-x); }
+.corner.br::after { right:0; bottom:0; border-right:1pt solid #000; }
+.corner.bl { bottom:14mm; left:var(--corner-x); }
+.corner.bl::after { left:0; bottom:0; border-left:1pt solid #000; }
+.corner.tr, .corner.tl { display:none; }
+.sheet.odd .corner.bl { display:none; }
+.sheet.even .corner.br { display:none; }
+
+.sheet-header { position:absolute; top:21mm; left:var(--pad-x); right:var(--pad-x); font-family:'Gyeonggi Title',sans-serif; font-weight:700; font-size:10.5pt; }
+.sheet.odd .sheet-header { text-align:right; }
+.sheet.even .sheet-header { text-align:left; }
+.sheet-footer { position:absolute; bottom:8mm; left:0; right:0; text-align:center; font-family:'Gyeonggi Batang',serif; font-size:10pt; }
+
+.sheet-body { position:absolute; top:calc(var(--pad-top) + 14mm); bottom:calc(var(--pad-bottom) + 6mm); left:var(--pad-x); right:var(--pad-x); }
+
+.chapter-title { font-family:'Gyeonggi Title',sans-serif; font-weight:700; font-size:18pt; letter-spacing:0.5pt; margin-bottom:calc(var(--one-line) * 2); }
+.section-title { font-family:'Gyeonggi Batang',serif; font-weight:700; font-size:13pt; margin-bottom:calc(var(--one-line) * 1); }
+.sub-label { font-family:'Gyeonggi Title',sans-serif; font-weight:700; font-size:11pt; margin-bottom:3mm; }
+
+.concept { font-family:'Gyeonggi Batang','신명조','HY신명조','바탕','Batang',serif; font-size:11pt; line-height:1.85; }
+.concept p { margin-bottom:2mm; }
+.concept .sub-title { font-family:'Gyeonggi Batang',serif; font-weight:400; font-size:11.5pt; margin:calc(var(--one-line)*2) 0 2mm; }
+.concept .sub-title:first-child { margin-top:0; }
+.concept .formula { border:0.7pt solid #000; padding:3mm 5mm; margin:3mm 0; text-align:center; }
+.concept .formula.left { text-align:left; padding:3mm 3mm; }
+.concept .formula.compact { padding:1.5mm 5mm; margin:1.5mm 0; }
+.concept .note { padding:2mm 0; margin:3mm 0; font-size:8pt; line-height:1.6; }
+.concept .note::before { content:"[참고] "; font-weight:700; }
+.concept .proof { font-size:8pt; line-height:1.6; padding:2mm 0 2mm 10mm; text-indent:-10mm; margin:3mm 0 6mm 0; }
+.concept .ex { padding:2mm 0; margin:3mm 0; font-size:9pt; }
+.concept.dense { line-height:1.7; }
+.concept.dense .sub-title { margin:calc(var(--one-line)*1.1) 0 1.5mm; }
+.concept.dense .sub-title:first-child { margin-top:0; }
+.concept.dense p { margin-bottom:1mm; }
+.concept.dense .note { margin:2mm 0; }
+.concept.dense .formula { padding:2mm 5mm; margin:2mm 0; }
+.concept.dense .ex { margin:1.5mm 0; }
+.concept table { width:100%; border-collapse:collapse; margin:3mm 0; font-size:9.5pt; }
+.concept table th, .concept table td { border:0.5pt solid #000; padding:1.5mm 2mm; text-align:center; vertical-align:middle; }
+.concept table th { font-weight:700; background:#f7f7f7; }
+
+.problem-block { }
+.sheet-body > .problem-block { margin-top:8mm; }
+.problem { font-family:'신명조','HY신명조','바탕','Batang',serif; font-size:10pt; line-height:var(--line-h); letter-spacing:-0.05em; position:relative; }
+.problem > p:first-of-type { padding-left:5.5mm; text-indent:-5.5mm; }
+.problem .pnum { display:inline-block; min-width:4mm; margin-right:1.5mm; font-family:'Gyeonggi Title',sans-serif; font-size:11pt; font-weight:700; text-indent:0; vertical-align:baseline; }
+.problem .pnum a { color:#000; text-decoration:none; font-weight:700; }
+.problem p { margin-bottom:1.5mm; }
+.problem .sub { margin-left:4mm; }
+.cond-box { display:block; width:fit-content; max-width:92%; border:0.7pt solid #000; padding:2.5mm 6mm; margin:2mm auto; }
+.cond-box p { margin:0.5mm 0; }
+
+.choices { display:grid; grid-template-columns:repeat(5, minmax(0,1fr)); gap:2mm 5mm; margin-top:4mm; font-size:10pt; clear:both; }
+.choices.two-row { grid-template-columns:repeat(3, minmax(0,1fr)); }
+.choices span { white-space:nowrap; }
+
+.problems-area { position:absolute; top:calc(var(--pad-top) + var(--one-line) + 5mm); bottom:calc(var(--pad-bottom) + 6mm); left:var(--pad-x); right:var(--pad-x); display:flex; flex-direction:column; }
+.problems-area > .problem-block:first-child { margin-bottom:0; }
+.problems-area > .problem-block:nth-child(2) { margin:auto 0; }
+.problems-area.single > .problem-block { margin:0; }
+
+mjx-container { font-weight:400 !important; }
+
+.fig-right { float:right; margin:0 0 2mm 5mm; overflow:visible; }
+.fig-center { text-align:center; margin:3mm 0; overflow:visible; }
+.fig-row { display:flex; justify-content:center; gap:6mm; margin:3mm 0; flex-wrap:wrap; }
+svg { overflow:visible; }
+
+.quick-answer-section .sheet-body { top:32mm; bottom:20mm; padding:0; overflow:hidden; display:flex; flex-direction:column; }
+.quick-answer-section .section-title { margin-top:0; flex:0 0 auto; }
+.quick-answers { flex:1 1 auto; min-height:0; position:relative; display:flex; gap:7mm; font-family:'신명조','HY신명조','Shinmyeongjo','바탕','Batang',serif; font-size:8pt; line-height:1.85; letter-spacing:-0.1em; }
+.quick-answers mjx-container { font-size:8pt !important; }
+/* qa-wrap-extra */
+    .qa-item {overflow-wrap:anywhere; word-break:break-word; max-width:100%;}
+    .qa-ans  { overflow-wrap:anywhere; word-break:break-word; }
+    .qa-ans mjx-container { max-width:100%; overflow:visible; white-space:normal; }
+    .qa-ans mjx-container[display="false"] { display:inline-block; max-width:100%; }
+    .quick-answers > .col { flex:1 1 0; min-width:0; overflow:hidden; }
+    .quick-answers::before, .quick-answers::after { content:''; position:absolute; top:0; bottom:0; width:0.3pt; background:#888; pointer-events:none; }
+.quick-answers::before { left:calc((100% - 14mm) / 3 + 3.5mm); }
+.quick-answers::after { left:calc((100% - 14mm) / 3 * 2 + 10.5mm); }
+.qa-item { break-inside:avoid-column; page-break-inside:avoid; -webkit-column-break-inside:avoid; margin-bottom:2mm; display:flex; align-items:baseline; }
+.qa-num { flex:0 0 auto; display:inline-block; min-width:3mm; margin-right:1.5mm; font-family:'Gyeonggi Title',sans-serif; font-size:8pt; }
+.qa-ans { flex:1 1 auto; min-width:0; }
+
+.solution-section .sheet-body { top:32mm; bottom:20mm; padding:0; overflow:hidden; display:flex; flex-direction:column; }
+.solution-section .section-title { margin-top:0; flex:0 0 auto; }
+.solutions { flex:1 1 auto; min-height:0; position:relative; column-count:2; column-fill:auto; column-gap:8mm; column-rule:0.3pt solid #888; font-family:'신명조','HY신명조','Shinmyeongjo','바탕','Batang',serif; font-size:8pt; line-height:1.75; letter-spacing:-0.05em; }
+.solutions::before { content:''; position:absolute; top:0; bottom:0; left:calc((100% - 8mm) / 2 + 4mm); width:0.3pt; background:#888; pointer-events:none; }
+.solutions mjx-container { font-size:8pt !important; max-width:100%; }
+.solution-item {margin-bottom:var(--one-line); padding-left:5mm; padding-right:2mm; position:relative; overflow-wrap:break-word;}
+.solution-item p { text-indent:0; margin:0; }
+.sol-num { position:absolute; left:0; top:0; font-weight:700; font-size:8pt; font-family:'Gyeonggi Title',sans-serif; }
+.sol-num a { color:#000; text-decoration:none; }
+.sol-answer { margin-bottom:1.5mm; }
+@media print { .solution-link { text-decoration:none; } }
+
+/* /mathbook:_공통 §9.2 — 깜빡임 방지 */
+.solution-section { visibility:hidden; }
+body.ready .solution-section { visibility:visible; }
+
+/* /mathbook:_공통 §10.3 — 이어서 마커 */
+.solution-item.continuation { padding-left:5mm; }
+.solution-item.continuation::before { content:'(이어서) '; font-size:0.9em; color:#666; font-style:italic; }
+
+/* 색상 통일 */
+a, a:link, a:visited, a:hover, a:active { color:#000 !important; }
+</style>
+</head>
+<body>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="sheet-body">
+    <h1 class="chapter-title">삼각형의 활용</h1>
+
+    <h2 class="section-title">기본 상식</h2>
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">1) 삼각형의 기본 성질</div>
+      <p>① 삼각형에서 두 변의 길이의 합은 다른 한 변의 길이보다 크다.</p>
+      <p>② 세 내각의 크기의 합은 $180^\circ$이다.</p>
+      <p>③ 삼각형의 6요소 — 세 변의 길이 $a,\,b,\,c$와 세 내각 $A,\,B,\,C$.</p>
+
+      <div class="sub-title">2) 사인법칙</div>
+      <p>외접원의 반지름의 길이가 $R$인 삼각형 $\mathrm{ABC}$에서 세 변과 세 각의 사인 사이에는 다음 관계가 성립한다.</p>
+
+      <div class="fig-row" style="gap:8mm; align-items:center; margin:3mm 0;">
+        <div class="fig-wrap" style="width:48mm;">
+          <svg viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+            <circle cx="110" cy="105" r="75" fill="none" stroke="#222" stroke-width="1"/>
+            <polygon points="129,32 38,124 171,148" fill="none" stroke="#222" stroke-width="1.4"/>
+            <!-- 변 길이 표시: 두 꼭짓점을 잇는 둥근 호 (라운드 점선) -->
+            <path d="M 38 124 Q 101 156 171 148" fill="none" stroke="#222" stroke-width="0.9" stroke-dasharray="0.5,4" stroke-linecap="round"/>
+            <path d="M 171 148 Q 169 83 129 32" fill="none" stroke="#222" stroke-width="0.9" stroke-dasharray="0.5,4" stroke-linecap="round"/>
+            <path d="M 129 32 Q 68 66 38 124" fill="none" stroke="#222" stroke-width="0.9" stroke-dasharray="0.5,4" stroke-linecap="round"/>
+            <line x1="110" y1="105" x2="171" y2="148" stroke="#2563eb" stroke-width="0.7" stroke-dasharray="3,2"/>
+            <circle cx="110" cy="105" r="1.6" fill="#222"/>
+            <circle cx="129" cy="32" r="2" fill="#222"/>
+            <circle cx="38" cy="124" r="2" fill="#222"/>
+            <circle cx="171" cy="148" r="2" fill="#222"/>
+            <foreignObject x="119" y="14" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$\mathrm{A}$</div></foreignObject>
+            <foreignObject x="20" y="124" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$\mathrm{B}$</div></foreignObject>
+            <foreignObject x="173" y="150" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$\mathrm{C}$</div></foreignObject>
+            <foreignObject x="115" y="92" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$\mathrm{O}$</div></foreignObject>
+            <foreignObject x="138" y="115" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;color:#2563eb;">$R$</div></foreignObject>
+            <foreignObject x="93" y="137" width="20" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;background:#fff;padding:0 2px;text-align:center;">$a$</div></foreignObject>
+            <foreignObject x="150" y="78" width="20" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;background:#fff;padding:0 2px;text-align:center;">$b$</div></foreignObject>
+            <foreignObject x="66" y="63" width="20" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;background:#fff;padding:0 2px;text-align:center;">$c$</div></foreignObject>
+          </svg>
+        </div>
+        <div class="formula" style="flex:1; margin:0;">
+          $$\dfrac{a}{\sin A} = \dfrac{b}{\sin B} = \dfrac{c}{\sin C} = 2R$$
+        </div>
+      </div>
+
+      <div class="note">변형 : ⓐ $a = 2R\sin A,\; b = 2R\sin B,\; c = 2R\sin C$ &nbsp;&nbsp;&nbsp; ⓑ $\sin A = \dfrac{a}{2R},\;\sin B = \dfrac{b}{2R},\;\sin C = \dfrac{c}{2R}$ &nbsp;&nbsp;&nbsp; ⓒ $a:b:c = \sin A:\sin B:\sin C$ (변의 비 = 사인 비)</div>
+
+      <div class="sub-title">3) 사인법칙을 사용하는 경우</div>
+      <p>① 한 변과 두 각의 크기를 알 때 — 나머지 두 변</p>
+      <p>② 두 변과 끼인각이 아닌 한 각의 크기를 알 때 — 나머지 각·변</p>
+      <p>③ 외접원의 반지름이 주어졌거나 구해야 할 때</p>
+    </div>
+  </div>
+  <footer class="sheet-footer">1</footer>
+</section>
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">코사인 법칙</h2>
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">1) 제이코사인법칙</div>
+      <p>삼각형 $\mathrm{ABC}$의 세 변의 길이 $a,\,b,\,c$와 세 각 $A,\,B,\,C$ 사이에는 다음 관계가 성립한다.</p>
+
+      <div class="formula">
+        $$a^2 = b^2 + c^2 - 2bc\cos A$$
+        $$b^2 = c^2 + a^2 - 2ca\cos B$$
+        $$c^2 = a^2 + b^2 - 2ab\cos C$$
+      </div>
+
+      <div class="fig-center" style="margin:4mm 0;">
+        <svg class="fig-wrap" viewBox="0 0 240 165" xmlns="http://www.w3.org/2000/svg" style="width:64mm;height:auto;">
+          <polygon points="95,30 30,135 210,135" fill="none" stroke="#222" stroke-width="1.4"/>
+          <line x1="95" y1="30" x2="95" y2="135" stroke="#2563eb" stroke-width="0.9" stroke-dasharray="3,2"/>
+          <polyline points="95,128 102,128 102,135" fill="none" stroke="#2563eb" stroke-width="0.7"/>
+          <!-- 변 길이 표시 라운드 점선 호 -->
+          <path d="M 30 135 Q 120 153 210 135" fill="none" stroke="#222" stroke-width="0.9" stroke-dasharray="0.5,4" stroke-linecap="round"/>
+          <path d="M 95 30 Q 165 69 210 135" fill="none" stroke="#222" stroke-width="0.9" stroke-dasharray="0.5,4" stroke-linecap="round"/>
+          <path d="M 95 30 Q 47 73 30 135" fill="none" stroke="#222" stroke-width="0.9" stroke-dasharray="0.5,4" stroke-linecap="round"/>
+          <circle cx="95" cy="30" r="2" fill="#222"/>
+          <circle cx="30" cy="135" r="2" fill="#222"/>
+          <circle cx="210" cy="135" r="2" fill="#222"/>
+          <circle cx="95" cy="135" r="2" fill="#222"/>
+          <foreignObject x="86" y="10" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$\mathrm{A}$</div></foreignObject>
+          <foreignObject x="10" y="140" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$\mathrm{B}$</div></foreignObject>
+          <foreignObject x="214" y="140" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$\mathrm{C}$</div></foreignObject>
+          <foreignObject x="86" y="142" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$\mathrm{H}$</div></foreignObject>
+          <foreignObject x="38" y="69" width="20" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;background:#fff;padding:0 2px;text-align:center;">$c$</div></foreignObject>
+          <foreignObject x="149" y="67" width="20" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;background:#fff;padding:0 2px;text-align:center;">$b$</div></foreignObject>
+          <foreignObject x="110" y="135" width="20" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;background:#fff;padding:0 2px;text-align:center;">$a$</div></foreignObject>
+        </svg>
+      </div>
+
+      <p class="proof"><b>(증명)</b> $\mathrm{A}$에서 $\mathrm{BC}$에 내린 수선의 발을 $\mathrm{H}$라 하면 직각삼각형 $\mathrm{ABH}$에서 $\overline{\mathrm{BH}} = c\cos B,\ \overline{\mathrm{AH}} = c\sin B$이므로 $\overline{\mathrm{CH}} = a - c\cos B$. 직각삼각형 $\mathrm{AHC}$에 피타고라스 정리를 적용하면 $b^2 = (c\sin B)^2 + (a - c\cos B)^2 = c^2\sin^2 B + a^2 - 2ac\cos B + c^2\cos^2 B = a^2 + c^2 - 2ac\cos B,$ &emsp;즉 $b^2 = c^2 + a^2 - 2ca\cos B.$ 같은 방법으로 다른 두 식도 성립.</p>
+
+      <div class="sub-title">2) 각을 변으로 나타내기 (코사인의 변형)</div>
+      <div class="formula">
+        $$\cos A = \dfrac{b^2 + c^2 - a^2}{2bc},\quad \cos B = \dfrac{c^2 + a^2 - b^2}{2ca},\quad \cos C = \dfrac{a^2 + b^2 - c^2}{2ab}$$
+      </div>
+
+      <div class="sub-title">3) 코사인 법칙을 사용하는 경우</div>
+      <p>① 두 변과 끼인각의 크기를 알 때 — 나머지 한 변</p>
+      <p>② 세 변의 길이를 알 때 — 세 각</p>
+    </div>
+  </div>
+  <footer class="sheet-footer">2</footer>
+</section>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="sheet-body">
+    <h2 class="section-title">삼각형의 모양 결정</h2>
+    <div class="concept">
+      <p>각이 포함된 식이 주어지면 사인법칙·코사인법칙을 이용하여 <b>모든 각을 변으로 표현</b>한 다음 변의 관계를 확인한다.</p>
+
+      <div class="formula left">
+        $\bullet$ 각 변환 : $\sin A = \dfrac{a}{2R},\ \sin B = \dfrac{b}{2R},\ \sin C = \dfrac{c}{2R}$<br>
+        $\bullet$ 코사인 변환 : $\cos A = \dfrac{b^2+c^2-a^2}{2bc},\ \cos B = \dfrac{c^2+a^2-b^2}{2ca},\ \cos C = \dfrac{a^2+b^2-c^2}{2ab}$
+      </div>
+
+      <div class="sub-title">대표적인 삼각형 판정</div>
+      <p>① $a = b$ &nbsp;⇒&nbsp; $\overline{\mathrm{CA}} = \overline{\mathrm{CB}}$인 이등변삼각형</p>
+      <p>② $a^2 = b^2 + c^2$ &nbsp;⇒&nbsp; $A = 90^\circ$인 직각삼각형</p>
+      <p>③ $a = b = c$ &nbsp;⇒&nbsp; 정삼각형</p>
+
+      <div class="ex">
+        <b>예)</b> $a\sin A = b\sin B$를 정리하면 사인법칙으로 $a^2 = b^2$이므로 $a = b$인 이등변삼각형.<br>
+        <b>예)</b> $\cos A = 0$이면 $A = 90^\circ$이므로 $A$가 직각인 직각삼각형.
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">3</footer>
+</section>
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">사인법칙 · 코사인법칙의 활용</h2>
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">1) 내각의 이등분선 — 보각 관계</div>
+      <p>$\angle A$의 이등분선이 변 $\mathrm{BC}$와 만나는 점을 $\mathrm{D}$라 하자. 두 작은 삼각형 $\mathrm{ABD},\,\mathrm{ACD}$에서 $\angle\mathrm{ADB} + \angle\mathrm{ADC} = 180^\circ$이므로 두 각은 <b>보각 관계</b>이다.</p>
+
+      <div class="formula left">
+        $\bullet$ 보각 관계 : $\cos(\angle\mathrm{ADC}) = -\cos(\angle\mathrm{ADB})$<br>
+        $\bullet$ 두 작은 삼각형에 코사인법칙을 각각 쓰고 두 식을 더하면 $\cos$ 항이 소거되어 길이 관계식이 나온다.
+      </div>
+
+      <div class="sub-title">2) 원의 활용</div>
+      <p>① <b>원주각</b> : 한 호에 대한 원주각의 크기는 같다 → 같은 호에서 원주각이 같으면 그 호의 길이(현의 길이)도 같다. (역도 성립)</p>
+      <p>② 원에 내접하는 사각형의 <b>대각의 합은 $180^\circ$</b>이다. &nbsp; ($A + C = B + D = 180^\circ$)</p>
+      <p>③ 외접원의 반지름이 주어지면 사인법칙 $\dfrac{a}{\sin A} = 2R$로 변·각 관계를 잡는다.</p>
+      <p>④ 내접원의 반지름이 주어지면 삼각형의 넓이 $S = \dfrac{1}{2}r(a+b+c)$를 이용한다.</p>
+
+      <div class="note">원에 내접하는 사각형 $\mathrm{ABCD}$에서 $\cos B = -\cos D$이므로 두 삼각형 $\mathrm{ABC},\,\mathrm{ACD}$에 코사인법칙을 쓰면 $\cos B$의 부호 차로 변 관계를 빠르게 정리할 수 있다.</div>
+    </div>
+  </div>
+  <footer class="sheet-footer">4</footer>
+</section>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="sheet-body">
+    <h2 class="section-title">톨레미(Ptolemy) 정리</h2>
+    <div class="concept">
+      <p>원에 내접하는 사각형의 두 대각선의 길이의 곱은 두 쌍의 대변의 길이의 곱의 합과 같다.</p>
+
+      <div class="fig-row" style="gap:8mm; align-items:center; margin:3mm 0;">
+        <div class="fig-wrap" style="width:48mm;">
+          <svg viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+            <circle cx="110" cy="110" r="80" fill="none" stroke="#222" stroke-width="1"/>
+            <polygon points="35,83 179,70 161,171 49,161" fill="none" stroke="#222" stroke-width="1.3"/>
+            <line x1="35" y1="83" x2="161" y2="171" stroke="#2563eb" stroke-width="0.9"/>
+            <line x1="179" y1="70" x2="49" y2="161" stroke="#2563eb" stroke-width="0.9"/>
+            <!-- 변 길이 표시 라운드 점선 호 -->
+            <path d="M 35 83 Q 105 59 179 70" fill="none" stroke="#222" stroke-width="0.9" stroke-dasharray="0.5,4" stroke-linecap="round"/>
+            <path d="M 179 70 Q 188 124 161 171" fill="none" stroke="#222" stroke-width="0.9" stroke-dasharray="0.5,4" stroke-linecap="round"/>
+            <path d="M 161 171 Q 103 184 49 161" fill="none" stroke="#222" stroke-width="0.9" stroke-dasharray="0.5,4" stroke-linecap="round"/>
+            <path d="M 49 161 Q 24 125 35 83" fill="none" stroke="#222" stroke-width="0.9" stroke-dasharray="0.5,4" stroke-linecap="round"/>
+            <circle cx="35" cy="83" r="2" fill="#222"/>
+            <circle cx="179" cy="70" r="2" fill="#222"/>
+            <circle cx="161" cy="171" r="2" fill="#222"/>
+            <circle cx="49" cy="161" r="2" fill="#222"/>
+            <foreignObject x="14" y="74" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$\mathrm{A}$</div></foreignObject>
+            <foreignObject x="184" y="56" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$\mathrm{B}$</div></foreignObject>
+            <foreignObject x="166" y="174" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$\mathrm{C}$</div></foreignObject>
+            <foreignObject x="32" y="174" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$\mathrm{D}$</div></foreignObject>
+          </svg>
+        </div>
+        <div class="formula" style="flex:1; margin:0;">
+          $\overline{\mathrm{AC}}\cdot\overline{\mathrm{BD}}$<br>
+          $= \overline{\mathrm{AB}}\cdot\overline{\mathrm{CD}} + \overline{\mathrm{BC}}\cdot\overline{\mathrm{AD}}$
+        </div>
+      </div>
+
+      <p class="proof"><b>(증명)</b> 대각선 $\mathrm{BD}$ 위에 $\angle\mathrm{BAE} = \angle\mathrm{CAD}$가 되도록 점 $\mathrm{E}$를 잡자. 호 $\mathrm{AB}$에 대한 원주각이 같으므로 $\angle\mathrm{ADE} = \angle\mathrm{ACB}$이고, 이때 $\triangle\mathrm{ABE} \sim \triangle\mathrm{ACD}$ (AA 닮음). &emsp;즉 $\overline{\mathrm{AB}}:\overline{\mathrm{AC}} = \overline{\mathrm{BE}}:\overline{\mathrm{CD}}$ 에서 $\overline{\mathrm{AB}}\cdot\overline{\mathrm{CD}} = \overline{\mathrm{AC}}\cdot\overline{\mathrm{BE}}\;\;\cdots\;(\ast)$<br>또 $\angle\mathrm{BAC} = \angle\mathrm{EAD}$ 이고 호 $\mathrm{CD}$에 대한 원주각이 같으므로 $\angle\mathrm{ABC} = \angle\mathrm{ADE}$, 따라서 $\triangle\mathrm{ABC} \sim \triangle\mathrm{AED}$ (AA 닮음). &emsp;즉 $\overline{\mathrm{BC}}:\overline{\mathrm{ED}} = \overline{\mathrm{AC}}:\overline{\mathrm{AD}}$ 에서 $\overline{\mathrm{BC}}\cdot\overline{\mathrm{AD}} = \overline{\mathrm{AC}}\cdot\overline{\mathrm{ED}}\;\;\cdots\;(\ast\ast)$<br>$(\ast),\,(\ast\ast)$를 변끼리 더하면 $\overline{\mathrm{AB}}\cdot\overline{\mathrm{CD}} + \overline{\mathrm{BC}}\cdot\overline{\mathrm{AD}} = \overline{\mathrm{AC}}\cdot(\overline{\mathrm{BE}}+\overline{\mathrm{ED}}) = \overline{\mathrm{AC}}\cdot\overline{\mathrm{BD}}.$<br>$\therefore\ \overline{\mathrm{AC}}\cdot\overline{\mathrm{BD}} = \overline{\mathrm{AB}}\cdot\overline{\mathrm{CD}} + \overline{\mathrm{BC}}\cdot\overline{\mathrm{AD}}.$</p>
+
+      <div class="note">사각형 $\mathrm{ABCD}$가 일반(원에 내접하지 않는) 볼록사각형이면 $\overline{\mathrm{AC}}\cdot\overline{\mathrm{BD}} \le \overline{\mathrm{AB}}\cdot\overline{\mathrm{CD}} + \overline{\mathrm{BC}}\cdot\overline{\mathrm{AD}}$가 성립한다(톨레미 부등식).</div>
+    </div>
+  </div>
+  <footer class="sheet-footer">5</footer>
+</section>
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">우산 공식 (각의 이등분선 + 외접원)</h2>
+    <div class="concept">
+      <p>삼각형 $\mathrm{ABC}$에서 $\angle A$의 이등분선이 변 $\mathrm{BC}$와 만나는 점을 $\mathrm{D}$, 외접원과 만나는 점을 $\mathrm{E}$라 하고 $\overline{\mathrm{AB}} = c,\ \overline{\mathrm{AC}} = b,\ \overline{\mathrm{BC}} = a,\ \overline{\mathrm{BD}} = m,\ \overline{\mathrm{DC}} = n,\ \overline{\mathrm{AD}} = d,\ \angle\mathrm{BAD} = \angle\mathrm{DAC} = \theta$라 하자. 그림이 우산을 펼친 모양과 비슷하여 우산 공식이라 부른다.</p>
+
+      <div class="fig-row" style="justify-content:flex-start; gap:6mm; align-items:center; margin:3mm 0;">
+        <div class="formula left" style="flex:0 1 auto; width:fit-content; margin:0;">
+          ① $\overline{\mathrm{AD}}\cdot\overline{\mathrm{AE}} = \overline{\mathrm{AB}}\cdot\overline{\mathrm{AC}} = bc$ &nbsp;(원주각 닮음)<br>
+          ② $\overline{\mathrm{AD}}^2 = \overline{\mathrm{AB}}\cdot\overline{\mathrm{AC}} - \overline{\mathrm{BD}}\cdot\overline{\mathrm{DC}}$, &nbsp;즉 $d^2 = bc - mn$<br>
+          ③ 이등분선의 길이 : $d = \dfrac{2bc\cos\theta}{b+c}$<br>
+          ④ 변의 비 : $\overline{\mathrm{BD}}:\overline{\mathrm{DC}} = c:b$<br>
+          ⑤ 넓이 비 : $\triangle\mathrm{ABD}:\triangle\mathrm{ACD} = c:b$
+        </div>
+        <div class="fig-wrap" style="flex:0 0 auto; width:46mm;">
+          <svg viewBox="0 0 220 235" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;">
+            <circle cx="110" cy="115" r="80" fill="none" stroke="#222" stroke-width="1"/>
+            <polygon points="59,54 70,184 150,184" fill="none" stroke="#222" stroke-width="1.3"/>
+            <line x1="59" y1="54" x2="106" y2="184" stroke="#2563eb" stroke-width="1.1" stroke-dasharray="4,3"/>
+            <line x1="106" y1="184" x2="110" y2="195" stroke="#2563eb" stroke-width="0.9" stroke-dasharray="3,2"/>
+            <!-- 변 길이 표시 라운드 점선 호 (c=AB, b=AC, m=BD, n=DC) -->
+            <path d="M 59 54 Q 47 121 70 184" fill="none" stroke="#222" stroke-width="0.9" stroke-dasharray="0.5,4" stroke-linecap="round"/>
+            <path d="M 59 54 Q 119 109 150 184" fill="none" stroke="#222" stroke-width="0.9" stroke-dasharray="0.5,4" stroke-linecap="round"/>
+            <path d="M 70 184 Q 88 202 106 184" fill="none" stroke="#222" stroke-width="0.9" stroke-dasharray="0.5,4" stroke-linecap="round"/>
+            <path d="M 106 184 Q 128 202 150 184" fill="none" stroke="#222" stroke-width="0.9" stroke-dasharray="0.5,4" stroke-linecap="round"/>
+            <path d="M 60.4 70 A 16 16 0 0 1 64.4 69" fill="none" stroke="#c0392b" stroke-width="0.9"/>
+            <path d="M 64.4 69 A 16 16 0 0 1 68.2 67.1" fill="none" stroke="#c0392b" stroke-width="0.9"/>
+            <circle cx="59" cy="54" r="2" fill="#222"/>
+            <circle cx="70" cy="184" r="2" fill="#222"/>
+            <circle cx="150" cy="184" r="2" fill="#222"/>
+            <circle cx="106" cy="184" r="2.2" fill="#c0392b"/>
+            <circle cx="110" cy="195" r="2.2" fill="#c0392b"/>
+            <foreignObject x="42" y="36" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$\mathrm{A}$</div></foreignObject>
+            <foreignObject x="52" y="190" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$\mathrm{B}$</div></foreignObject>
+            <foreignObject x="156" y="190" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$\mathrm{C}$</div></foreignObject>
+            <foreignObject x="98" y="190" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$\mathrm{D}$</div></foreignObject>
+            <foreignObject x="115" y="202" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$\mathrm{E}$</div></foreignObject>
+            <foreignObject x="38" y="112" width="20" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;background:#fff;padding:0 2px;text-align:center;">$c$</div></foreignObject>
+            <foreignObject x="124" y="105" width="20" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;background:#fff;padding:0 2px;text-align:center;">$b$</div></foreignObject>
+            <foreignObject x="78" y="184" width="20" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;background:#fff;padding:0 2px;text-align:center;">$m$</div></foreignObject>
+            <foreignObject x="118" y="184" width="20" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;background:#fff;padding:0 2px;text-align:center;">$n$</div></foreignObject>
+            <foreignObject x="86" y="98" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;color:#2563eb;">$d$</div></foreignObject>
+            <foreignObject x="58" y="76" width="14" height="14" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10px;line-height:1;color:#c0392b;">$\theta$</div></foreignObject>
+            <foreignObject x="69" y="73" width="14" height="14" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10px;line-height:1;color:#c0392b;">$\theta$</div></foreignObject>
+          </svg>
+        </div>
+      </div>
+
+      <p class="proof"><b>(증명 ①)</b> 호 $\mathrm{BE}$에 대한 원주각이 같으므로 $\angle\mathrm{BCE} = \angle\mathrm{BAE} = \theta = \angle\mathrm{DAC}$이고 $\angle\mathrm{ABE} = \angle\mathrm{ACE}$ (호 $\mathrm{AE}$ 원주각, 또는 공통각 $\angle\mathrm{ADC} = \angle\mathrm{BDE}$ 활용). $\triangle\mathrm{ABD} \sim \triangle\mathrm{AEC}$ (AA)에서 $\dfrac{\overline{\mathrm{AB}}}{\overline{\mathrm{AE}}} = \dfrac{\overline{\mathrm{AD}}}{\overline{\mathrm{AC}}},$ &emsp;즉 $\overline{\mathrm{AD}}\cdot\overline{\mathrm{AE}} = \overline{\mathrm{AB}}\cdot\overline{\mathrm{AC}}.$</p>
+
+      <p class="proof"><b>(증명 ②)</b> ①에서 $\overline{\mathrm{AD}}\cdot\overline{\mathrm{AE}} = bc.$ 한편 $\overline{\mathrm{AE}} = \overline{\mathrm{AD}} + \overline{\mathrm{DE}}$이고 원의 멱 정리에 의해 $\overline{\mathrm{BD}}\cdot\overline{\mathrm{DC}} = \overline{\mathrm{AD}}\cdot\overline{\mathrm{DE}}.$ 따라서 $bc = \overline{\mathrm{AD}}(\overline{\mathrm{AD}}+\overline{\mathrm{DE}}) = \overline{\mathrm{AD}}^2 + \overline{\mathrm{AD}}\cdot\overline{\mathrm{DE}} = d^2 + mn,$ &emsp;즉 $d^2 = bc - mn.$</p>
+
+      <p class="proof"><b>(증명 ③)</b> 넓이 분할 $\triangle\mathrm{ABC} = \triangle\mathrm{ABD} + \triangle\mathrm{ACD}$에 사인공식을 쓰면 $\dfrac{1}{2}bc\sin 2\theta = \dfrac{1}{2}cd\sin\theta + \dfrac{1}{2}bd\sin\theta.$ 좌변 $\sin 2\theta = 2\sin\theta\cos\theta$를 대입하고 양변을 $\sin\theta$로 나누면 $bc\cos\theta = \dfrac{(b+c)d}{2}\cdot\dfrac{1}{1},$ &emsp;즉 $d = \dfrac{2bc\cos\theta}{b+c}.$</p>
+
+      <p class="proof"><b>(증명 ④, ⑤)</b> $\triangle\mathrm{ABD},\,\triangle\mathrm{ACD}$는 높이가 같으므로 넓이 비는 밑변 비. 또 두 삼각형은 $\angle A$ 이등분각 $\theta$를 공유하므로 사인법칙으로 $\dfrac{m}{\sin\theta} \cdot c$ 와 $\dfrac{n}{\sin\theta} \cdot b$ 비교 ⇒ $m:n = c:b$, &emsp;즉 $\overline{\mathrm{BD}}:\overline{\mathrm{DC}} = c:b$이고 넓이 비도 $c:b.$</p>
+    </div>
+  </div>
+  <footer class="sheet-footer">6</footer>
+</section>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="sheet-body">
+    <h2 class="section-title">입체도형의 최단 거리</h2>
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">1) 전개도를 이용한 최단 경로</div>
+      <p>곡면 위에서 두 점 사이의 최단 거리는 입체도형의 <b>전개도</b>로 펴서 두 점을 잇는 선분의 길이로 구한다. 전개도를 펼친 평면에서는 직선이 가장 짧기 때문이다.</p>
+
+      <div class="sub-title">2) 원뿔의 옆면 전개도</div>
+      <p>밑면의 반지름이 $r$, 모선의 길이가 $\ell$인 원뿔의 옆면을 펼치면 반지름이 $\ell$, 호의 길이가 $2\pi r$인 부채꼴이 된다. 그러므로 부채꼴의 중심각의 크기 $\alpha$는</p>
+
+      <div class="formula">
+        $$\alpha = \dfrac{2\pi r}{\ell} \;(\text{rad}) = \dfrac{r}{\ell}\times 360^\circ$$
+      </div>
+
+      <div class="sub-title">3) 최단 거리 계산 방법</div>
+      <p>[1단계] 입체도형을 전개도로 펼치고 두 점의 위치를 정확히 표시한다.</p>
+      <p>[2단계] 부채꼴의 중심각 $\alpha$를 구한다.</p>
+      <p>[3단계] 두 점을 잇는 선분에 코사인법칙을 적용해 길이를 구한다.</p>
+
+      <div class="ex">
+        <b>예)</b> 밑면 반지름 $r$, 모선 $\ell$인 원뿔의 옆면을 펼치면 반지름 $\ell$인 부채꼴. 꼭짓점 $\mathrm{O}$에서 시작해 모선을 한 바퀴 돌아 다시 같은 모선 위 점 $\mathrm{P}$에 이르는 최단 실의 길이는 펼친 부채꼴에서 $\mathrm{P}$의 두 위치 사이의 직선거리.
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">7</footer>
+</section>
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">삼각형의 넓이</h2>
+    <div class="concept">
+      <p>삼각형 $\mathrm{ABC}$의 넓이를 $S$라 할 때, 주어진 조건에 따라 다음을 사용한다.</p>
+
+      <div class="sub-title" style="margin-top:calc(var(--one-line)*1);">1) 두 변과 끼인각의 크기를 알 때</div>
+      <div class="formula">
+        $$S = \dfrac{1}{2}ab\sin C = \dfrac{1}{2}bc\sin A = \dfrac{1}{2}ca\sin B$$
+      </div>
+
+      <div class="sub-title">2) 외접원의 반지름의 길이 $R$이 주어진 경우</div>
+      <div class="formula">
+        $$S = \dfrac{abc}{4R} = 2R^2\sin A\sin B\sin C$$
+      </div>
+
+      <div class="sub-title">3) 내접원의 반지름의 길이 $r$이 주어진 경우</div>
+      <div class="formula">
+        $$S = \dfrac{1}{2}r(a+b+c)$$
+      </div>
+
+      <div class="sub-title">4) 헤론의 공식 — 세 변의 길이를 알 때</div>
+      <div class="formula">
+        $$S = \sqrt{s(s-a)(s-b)(s-c)} \quad \left(s = \dfrac{a+b+c}{2}\right)$$
+      </div>
+
+      <div class="note">헤론 공식의 한계 : 변의 길이가 무리수이거나 매우 큰 경우 $s(s-a)(s-b)(s-c)$의 계산이 매우 복잡해진다. 수치가 정수·작은 정수일 때만 실용적이며, 보통은 코사인법칙으로 한 각의 $\cos$ 값을 먼저 구해 $\sin$을 얻은 뒤 $\dfrac{1}{2}ab\sin C$를 쓰는 편이 빠르다.</div>
+    </div>
+  </div>
+  <footer class="sheet-footer">8</footer>
+</section>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="sheet-body">
+    <h2 class="section-title">사각형의 넓이</h2>
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">1) 평행사변형의 넓이</div>
+      <p>이웃하는 두 변의 길이가 $a,\,b$이고 그 끼인각의 크기가 $\theta$인 평행사변형의 넓이 $S$는</p>
+      <div class="formula">
+        $$S = ab\sin\theta$$
+      </div>
+
+      <div class="sub-title">2) 사각형의 넓이 (대각선 이용)</div>
+      <p>두 대각선의 길이가 $p,\,q$이고 두 대각선이 이루는 각의 크기가 $\theta$인 사각형 $\mathrm{ABCD}$의 넓이 $S$는</p>
+      <div class="formula">
+        $$S = \dfrac{1}{2}pq\sin\theta$$
+      </div>
+
+      <div class="sub-title">3) 일반 사각형 — 두 삼각형의 합</div>
+      <p>볼록사각형 $\mathrm{ABCD}$에서 한 대각선(예를 들어 $\overline{\mathrm{AC}}$)을 그어 두 삼각형 $\mathrm{ABC},\,\mathrm{ACD}$로 나눈 뒤 각각의 넓이를 더한다. 두 삼각형이 한 변($\overline{\mathrm{AC}}$)을 공유하므로 코사인법칙으로 그 길이를 먼저 구한 뒤 사인공식을 적용한다.</p>
+
+      <div class="formula left">
+        $S = \triangle\mathrm{ABC} + \triangle\mathrm{ACD} = \dfrac{1}{2}\overline{\mathrm{AB}}\cdot\overline{\mathrm{BC}}\sin B + \dfrac{1}{2}\overline{\mathrm{AD}}\cdot\overline{\mathrm{DC}}\sin D$
+      </div>
+
+      <div class="note">대각의 합이 $180^\circ$인 원에 내접하는 사각형이면 $\sin B = \sin D$이므로 두 삼각형 넓이 식에서 $\sin$ 인수를 묶을 수 있다.</div>
+    </div>
+  </div>
+  <footer class="sheet-footer">9</footer>
+</section>
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q1">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-1" class="solution-link">1</a></span>삼각형 $\mathrm{ABC}$에서 $A = 105^\circ,\ C = 45^\circ,\ \overline{\mathrm{AC}} = 10$일 때, 다음을 구하여라.</p>
+        <p class="sub">(1) $\overline{\mathrm{AB}}$의 길이</p>
+        <p class="sub">(2) 삼각형 $\mathrm{ABC}$의 외접원의 반지름의 길이</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q2">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-2" class="solution-link">2</a></span>삼각형 $\mathrm{ABC}$에서 $a = 10,\ b = 10\sqrt{3},\ A = 30^\circ$일 때, 삼각형 $\mathrm{ABC}$를 풀어라. (단, $0^\circ \lt B \lt 90^\circ$)</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">10</footer>
+</section>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q3">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-3" class="solution-link">3</a></span>반지름의 길이가 $\sqrt{10}$인 원에 내접하는 삼각형 $\mathrm{ABC}$에서 $10\sin(A+B)\sin C = 9$가 성립할 때, $c$의 값을 구하여라. (단, $\mathrm{ABC}$의 세 변의 길이는 각각 $a,\,b,\,c$이다.)</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q4">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-4" class="solution-link">4</a></span>삼각형 $\mathrm{ABC}$에서 $\overline{\mathrm{AB}} = 4,\ \overline{\mathrm{AC}} = 8,\ \angle A = \theta$이고 $\overline{\mathrm{BC}} = 2\sqrt{7}$일 때, 다음을 구하여라.</p>
+        <p class="sub">(1) $\cos\theta$의 값</p>
+        <p class="sub">(2) $\sin\theta$의 값</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">11</footer>
+</section>
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q5">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-5" class="solution-link">5</a></span>다음 조건을 만족하는 삼각형 $\mathrm{ABC}$는 어떤 모양의 삼각형인지 말하여라.</p>
+        <p class="sub">(1) $a^2 = b^2 + ab\cos C$</p>
+        <p class="sub">(2) $a\cos B = b\cos A$</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q6">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-6" class="solution-link">6</a></span>그림과 같이 원에 내접하는 사각형 $\mathrm{ABCD}$에서 $\overline{\mathrm{AB}} = 2\sqrt{3},\ \overline{\mathrm{BC}} = 4,\ \overline{\mathrm{CD}} = \sqrt{3},\ \overline{\mathrm{DA}} = 2$일 때, 다음을 구하여라.</p>
+        <p class="sub">(1) $\cos B$의 값</p>
+        <p class="sub">(2) 대각선 $\overline{\mathrm{AC}}$의 길이</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">12</footer>
+</section>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="problems-area single">
+
+    <div class="problem-block" data-qa-id="q7">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <div class="fig-right" style="width:48mm;">
+          <svg viewBox="0 0 120 130" xmlns="http://www.w3.org/2000/svg" style="width:100%;">
+            <!-- 원뿔 -->
+            <path d="M 60 12 L 18 110 L 102 110 Z" fill="none" stroke="#222" stroke-width="1.3"/>
+            <ellipse cx="60" cy="110" rx="42" ry="9" fill="none" stroke="#222" stroke-width="1.1"/>
+            <ellipse cx="60" cy="110" rx="42" ry="9" fill="none" stroke="#222" stroke-width="0.6" stroke-dasharray="2,2" style="clip-path:inset(0 0 50% 0);"/>
+            <!-- 모선 OP, 중점 Q -->
+            <line x1="60" y1="12" x2="18" y2="110" stroke="#222" stroke-width="1"/>
+            <circle cx="39" cy="61" r="1.8" fill="#222"/>
+            <circle cx="18" cy="110" r="1.8" fill="#222"/>
+            <circle cx="60" cy="12" r="1.8" fill="#222"/>
+            <!-- 점 P (밑원 위 다른 점) -->
+            <circle cx="100" cy="106" r="1.8" fill="#222"/>
+            <!-- 실 경로 (붉은 곡선) -->
+            <path d="M 100 106 Q 70 90 39 61" fill="none" stroke="#c0392b" stroke-width="1.2"/>
+            <!-- 라벨 -->
+            <foreignObject x="62" y="2" width="20" height="16" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$\mathrm{O}$</div></foreignObject>
+            <foreignObject x="22" y="48" width="22" height="16" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$\mathrm{Q}$</div></foreignObject>
+            <foreignObject x="6" y="105" width="20" height="16" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$\mathrm{P}$</div></foreignObject>
+            <foreignObject x="44" y="58" width="30" height="14" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;">$12\,\mathrm{cm}$</div></foreignObject>
+            <foreignObject x="60" y="116" width="36" height="14" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;">$4\,\mathrm{cm}$</div></foreignObject>
+          </svg>
+        </div>
+        <p><span class="pnum"><a href="#sol-7" class="solution-link">7</a></span>오른쪽 그림과 같이 밑면의 반지름의 길이가 $4\,\mathrm{cm}$이고 모선의 길이가 $12\,\mathrm{cm}$인 원뿔이 있다. 원뿔의 밑면인 원의 둘레 위의 점 $\mathrm{P}$에서 모선 $\overline{\mathrm{OP}}$의 중점 $\mathrm{Q}$까지 원뿔의 표면을 따라 실을 감을 때, 감은 실의 길이의 최솟값을 구하여라.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">13</footer>
+</section>
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q8">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-8" class="solution-link">8</a></span>다음 물음에 답하여라.</p>
+        <p class="sub">(1) 삼각형 $\mathrm{ABC}$에서 $b = 8,\ c = 10$이고 넓이가 $20\sqrt{3}$일 때, $a$의 값을 구하여라. (단, $0^\circ \lt A \lt 90^\circ$)</p>
+        <p class="sub">(2) 삼각형 $\mathrm{ABC}$에서 $a = 2\sqrt{21},\ b = 10,\ A = 60^\circ$일 때, 삼각형 $\mathrm{ABC}$의 넓이를 구하여라.</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q9">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-9" class="solution-link">9</a></span>삼각형 $\mathrm{ABC}$의 세 변의 길이가 $a = 5,\ b = 7,\ c = 9$일 때, 다음을 구하여라.</p>
+        <p class="sub">(1) 삼각형 $\mathrm{ABC}$의 넓이 $S$</p>
+        <p class="sub">(2) 외접원의 반지름의 길이</p>
+        <p class="sub">(3) 내접원의 반지름의 길이</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">14</footer>
+</section>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q10">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-10" class="solution-link">10</a></span>다음을 각각 구하여라.</p>
+        <p class="sub">(1) $\overline{\mathrm{AB}} = 7,\ \overline{\mathrm{BC}} = 8,\ \overline{\mathrm{AC}} = 13$인 평행사변형 $\mathrm{ABCD}$의 넓이를 구하여라. (단, $90^\circ \lt B \lt 180^\circ$)</p>
+        <p class="sub">(2) 대각선 $\overline{\mathrm{AC}}$의 길이가 $8$이고 두 대각선이 이루는 각의 크기가 $120^\circ$인 사각형 $\mathrm{ABCD}$의 넓이가 $6\sqrt{3}$일 때, 대각선 $\overline{\mathrm{BD}}$의 길이를 구하여라.</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q11">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-11" class="solution-link">11</a></span>$\overline{\mathrm{AB}} = 8,\ \overline{\mathrm{AC}} = 3,\ A = 60^\circ$인 삼각형 $\mathrm{ABC}$의 두 변 $\mathrm{AB},\,\mathrm{AC}$ 위에 각각 두 점 $\mathrm{P},\,\mathrm{Q}$를 잡아 $\overline{\mathrm{AP}} = x,\ \overline{\mathrm{AQ}} = y$라 한다. 삼각형 $\mathrm{APQ}$의 넓이가 삼각형 $\mathrm{ABC}$의 넓이의 $\dfrac{1}{6}$이 되도록 할 때, 다음을 구하여라.</p>
+        <p class="sub">(1) $xy$의 값</p>
+        <p class="sub">(2) 선분 $\overline{\mathrm{PQ}}$의 길이의 최솟값</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">15</footer>
+</section>
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area single">
+
+    <div class="problem-block" data-qa-id="q12">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-12" class="solution-link">12</a></span>사각형 $\mathrm{ABCD}$에서 $\overline{\mathrm{AB}} = 7,\ \overline{\mathrm{BC}} = 4,\ \overline{\mathrm{CD}} = 3,\ B = 60^\circ,\ D = 120^\circ$일 때, 사각형 $\mathrm{ABCD}$의 넓이를 구하여라.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">16</footer>
+</section>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="sheet-body">
+    <h1 class="chapter-title">등차수열</h1>
+
+    <h2 class="section-title">등차수열</h2>
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">1) 등차수열의 정의</div>
+      <p>첫째항부터 차례로 <b>일정한 수</b>를 더하여 만든 수열을 <b>등차수열</b>이라 한다. 이때 더하는 일정한 수를 <b>공차</b>라 한다.</p>
+
+      <div class="ex">
+        <b>예)</b> $2,\;4,\;6,\;8,\;10,\;\cdots$ &rarr; 첫째항 $2$, 공차 $2$인 등차수열<br>
+        $\;\;\;\;\;\;5,\;2,\;-1,\;-4,\;-7,\;\cdots$ &rarr; 첫째항 $5$, 공차 $-3$인 등차수열
+      </div>
+
+      <div class="note">등차수열(等差數列): 같은 차이의 수열을 영어로 arithmetic sequence라고 하며, 공차(公差)는 common difference라고 하여 흔히 보통 $d$로 나타낸다.</div>
+
+      <div class="sub-title">2) 등차수열의 관계식</div>
+      <p>공차가 $d$인 등차수열 $\{a_n\}$에서 제 $n$항에 공차 $d$를 더하면 제 $(n+1)$항이 되므로 다음이 성립한다.</p>
+
+      <div class="formula">
+        $a_{n+1} = a_n + d \;\;\Longleftrightarrow\;\; a_{n+1} - a_n = d \;\;(n=1,\,2,\,3,\,\cdots)$
+      </div>
+
+      <div class="sub-title">3) 등차수열의 일반항</div>
+      <p>첫째항이 $a$, 공차가 $d$인 등차수열의 일반항 $a_n$은</p>
+
+      <div class="formula">
+        $a_n = a + (n-1)d \;\;(n=1,\,2,\,3,\,\cdots)$
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">1</footer>
+</section>
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">등차수열의 일반항과 등차중항</h2>
+    <div class="concept">
+
+      <div class="sub-title" style="margin-top:0;">1) 일반항 $a_n$의 특징 — $n$에 대한 일차식</div>
+      <p>첫째항 $a$, 공차 $d$인 등차수열의 일반항을 정리하면</p>
+      <div class="formula">
+        $a_n = a + (n-1)d = dn + (a-d)$
+      </div>
+      <p>$d=A$, $a-d=B$로 놓으면 $a_n = An + B$ 꼴의 $n$에 대한 <b>일차식</b>이 된다.</p>
+      <div class="formula">
+        $a_n = An + B \;\;(A,\,B$는 상수$)$
+      </div>
+      <p>이때 첫째항은 $a_1 = A+B$, 공차는 $d = a_n - a_{n-1} = (An+B) - \{A(n-1)+B\} = A$이다.</p>
+
+      <div class="note">$d=0$이면 $a_n$은 상수수열이고, $d\neq 0$이면 $a_n$은 $n$에 대한 일차식이다. 직선 $y = dx + (a-d)$ 위의 점 $(1,\,a_1),\,(2,\,a_2),\,(3,\,a_3),\,\cdots$ 이 일정한 기울기 $d$로 늘어선다고 보면 공차의 의미가 명확해진다.</div>
+
+      <div class="sub-title">2) 등차중항</div>
+      <p>세 수 $a,\,x,\,b$가 이 순서대로 등차수열을 이룰 때, $x$를 $a$와 $b$의 <b>등차중항</b>이라 한다. $x$가 $a$와 $b$의 등차중항이면</p>
+      <div class="formula">
+        $b - x = x - a \;\;\Longleftrightarrow\;\; 2x = a + b \;\;\Longleftrightarrow\;\; x = \dfrac{a+b}{2}$
+      </div>
+
+      <div class="note">$x = \dfrac{a+b}{2}$ 일 때, $x$를 $a$와 $b$의 <b>산술평균</b>이라고도 한다.</div>
+
+      <div class="sub-title">3) 이웃하는 세 항의 등차중항</div>
+      <p>수열 $\{a_n\}$의 이웃하는 세 항 $a_{n-1},\,a_n,\,a_{n+1}$이 등차수열을 이룰 때, $a_n$은 $a_{n-1}$과 $a_{n+1}$의 등차중항이다.</p>
+      <div class="formula">
+        $2a_n = a_{n-1} + a_{n+1} \;\;\Longleftrightarrow\;\; a_n = \dfrac{a_{n-1} + a_{n+1}}{2} \;\;(n\ge 2)$
+      </div>
+
+      <div class="ex">
+        <b>예)</b> 세 수 $1,\,x,\,9$가 이 순서대로 등차수열을 이루면 $x$는 $1$과 $9$의 등차중항이므로 $x = \dfrac{1+9}{2} = 5$
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">2</footer>
+</section>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q13">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-13" class="solution-link">13</a></span>다음 물음에 답하시오.</p>
+        <p class="sub">(1) 등차수열 $\{a_n\}$에 대하여 $a_1 + a_3 = 2$, $a_5 + a_7 = 42$일 때, $a_{10}$의 값은?</p>
+        <div class="choices">
+          <span>① 38</span><span>② 39</span><span>③ 40</span><span>④ 41</span><span>⑤ 42</span>
+        </div>
+        <p class="sub" style="margin-top:3mm;">(2) 등차수열 $\{a_n\}$에 대하여 $a_9 = a_3 + 18$, $a_2 + a_3 + a_4 = 21$일 때, $a_{11}$의 값은?</p>
+        <div class="choices">
+          <span>① 30</span><span>② 31</span><span>③ 32</span><span>④ 33</span><span>⑤ 34</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q14">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-14" class="solution-link">14</a></span>두 수 $2$와 $35$ 사이에 $10$개의 수 $x_1,\,x_2,\,x_3,\,\cdots,\,x_{10}$을 넣어 만든 수열</p>
+        <div class="cond-box">
+          <p>$2,\;x_1,\;x_2,\;x_3,\;\cdots,\;x_{10},\;35$</p>
+        </div>
+        <p>가 등차수열을 이룰 때, 이 수열의 공차와 $x_5$의 값을 구하시오.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">3</footer>
+</section>
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q15">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-15" class="solution-link">15</a></span>다음 물음에 답하시오.</p>
+        <p class="sub">(1) 등차수열을 이루는 세 수의 합이 $12$이고 곱이 $48$일 때, 이들 세 수를 구하시오.</p>
+        <p class="sub">(2) 삼차방정식 $x^3 - 6x^2 - 4x - k = 0$의 세 실근이 등차수열을 이룰 때, 상수 $k$의 값을 구하시오.</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q16">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-16" class="solution-link">16</a></span>$x$에 대한 다항식 $f(x) = x^3 + ax + b$를 $x+1,\;x-1,\;x-2$로 나누었을 때의 나머지가 이 순서대로 등차수열을 이루고, $f(x)$는 $x+2$로 나누어떨어진다. 이때 $a+b$의 값을 구하시오. (단, $a,\,b$는 실수이다.)</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">4</footer>
+</section>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q17">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-17" class="solution-link">17</a></span>공차가 $0$이 아닌 등차수열 $\{a_n\}$에 대하여</p>
+        <div class="cond-box">
+          <p>$a_3 + a_5 = 6,\quad |a_4| = |a_6|$</p>
+        </div>
+        <p>일 때, $a_2$의 값을 구하시오.</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q18">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-18" class="solution-link">18</a></span>등차수열 $\{a_n\}$에 대하여 첫째항부터 제 $n$항까지의 합을 $S_n$이라 할 때, $S_{10} = 10$, $S_{20} = 40$이다. 이때 $S_{30}$의 값을 구하시오.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">5</footer>
+</section>
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">등차수열의 합</h2>
+    <div class="concept">
+
+      <div class="sub-title" style="margin-top:0;">1) 수열의 합 $S_n$</div>
+      <p>수열 $\{a_n\}$의 첫째항부터 제 $n$항까지의 합을 기호 $S_n$으로 나타낸다.</p>
+      <div class="formula">
+        $S_n = a_1 + a_2 + a_3 + \cdots + a_n$
+      </div>
+
+      <div class="sub-title">2) 등차수열의 합 — 가우스의 원리</div>
+      <p>첫째항이 $a$, 공차가 $d$, 끝항이 $l$인 등차수열의 합 $S_n$을 구할 때, 같은 합을 거꾸로 더해 항끼리 짝지으면 모든 짝의 합이 $a+l$로 일정해진다.</p>
+      <div class="formula left">
+        $\begin{aligned}
+        S_n &amp;= a + (a+d) + (a+2d) + \cdots + l\\
+        S_n &amp;= l + (l-d) + (l-2d) + \cdots + a\\
+        \hline
+        2S_n &amp;= \underbrace{(a+l)+(a+l)+\cdots+(a+l)}_{n \text{개}} = n(a+l)
+        \end{aligned}$
+      </div>
+
+      <div class="sub-title">3) 등차수열의 합 공식</div>
+      <div class="formula left">
+        ① 첫째항 $a$, 끝항 $l$이 주어진 경우 &emsp; $S_n = \dfrac{n(a+l)}{2}$<br>
+        ② 첫째항 $a$, 공차 $d$가 주어진 경우 &emsp; $S_n = \dfrac{n\{2a + (n-1)d\}}{2}$
+      </div>
+      <p>(②는 ①에 $l = a + (n-1)d$를 대입한 것이다.)</p>
+
+      <div class="sub-title">4) 합 $S_n$은 $n$에 대한 이차식</div>
+      <p>②를 전개하면</p>
+      <div class="formula">
+        $S_n = \dfrac{d}{2}n^2 + \left(a - \dfrac{d}{2}\right)n$
+      </div>
+      <p>꼴이므로 $d \neq 0$이면 $S_n$은 <b>상수항 없는 이차식</b>. $\dfrac{d}{2} &gt; 0$이면 아래로 볼록(최솟값 존재), $\dfrac{d}{2} &lt; 0$이면 위로 볼록(최댓값 존재).</p>
+
+      <div class="note">$d = 0$이면 $S_n = an$ 꼴의 일차식. 상수항 없는 이차식이라는 점이 일반 수열의 합과 등차수열의 합을 가르는 결정적 차이.</div>
+    </div>
+  </div>
+  <footer class="sheet-footer">6</footer>
+</section>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="sheet-body">
+    <h2 class="section-title">수열의 합 $S_n$과 일반항 $a_n$ 사이의 관계</h2>
+    <div class="concept">
+
+      <div class="sub-title" style="margin-top:0;">1) 기본 관계</div>
+      <p>수열 $\{a_n\}$의 첫째항부터 제 $n$항까지의 합을 $S_n$이라 하면</p>
+      <div class="formula left">
+        $a_1 = S_1$<br>
+        $a_n = S_n - S_{n-1} \;\;(n \ge 2)$
+      </div>
+
+      <div class="note">이 관계는 등차수열뿐만 아니라 <b>모든 수열</b>에 적용된다. $S_n - S_{n-1}$은 합의 정의에서 $a_1+\cdots+a_n$과 $a_1+\cdots+a_{n-1}$의 차로 항상 $a_n$이 되기 때문이다.</div>
+
+      <div class="sub-title">2) $S_0 = 0$의 약속</div>
+      <p>$S_0 = 0$으로 약속하면 $a_n = S_n - S_{n-1}$이 $n=1$인 경우에도 성립한다 ($a_1 = S_1 - S_0 = S_1$). 즉 첫째항부터 일반항 공식을 그대로 적용해도 되는지 여부가 자동으로 갈린다.</p>
+
+      <div class="sub-title">3) $S_n$이 $n$에 관한 이차식일 때</div>
+      <p>$S_n = An^2 + Bn + C$ ($A,\,B,\,C$는 상수, $A\neq 0$) 꼴이라 하자. $a_n = S_n - S_{n-1}$로 일반항을 구하면</p>
+      <div class="formula">
+        $a_n = 2An + (B-A) \;\;(n \ge 2)$
+      </div>
+      <p>$n=1$일 때 $a_1 = S_1 = A + B + C$이다. 이때 두 가지 경우로 갈린다.</p>
+      <div class="formula left">
+        ① <b>상수항 $C = 0$일 때</b> &emsp; $a_1$이 일반항 공식에 그대로 들어간다. $\{a_n\}$은 첫째항부터 등차수열이다.<br>
+        ② <b>상수항 $C \neq 0$일 때</b> &emsp; $a_1$만 따로, $n \ge 2$일 때 $a_n = 2An + (B-A)$. $\{a_n\}$은 둘째항부터 등차수열이다.
+      </div>
+
+      <div class="note">"등차수열의 합 $S_n$은 상수항 없는 이차식"이라는 사실(앞 페이지)과 짝지어 외워두면, 합으로 주어진 문제에서 첫째항을 따로 다뤄야 하는지 한눈에 판정할 수 있다.</div>
+    </div>
+  </div>
+  <footer class="sheet-footer">7</footer>
+</section>
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q19">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-19" class="solution-link">19</a></span>다음 물음에 답하시오.</p>
+        <p class="sub">(1) $100$ 이하의 자연수 중에서 $3$의 배수인 수의 합을 구하시오.</p>
+        <p class="sub">(2) $100$ 이하의 자연수 중에서 $7$로 나누어 $3$이 남는 수의 합을 구하시오.</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q20">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <div class="fig-right">
+          <svg viewBox="0 0 230 200" width="240" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="arr8" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+                <path d="M0,0 L10,5 L0,10 z" fill="#000"/>
+              </marker>
+            </defs>
+            <!-- 좌표축 (화살표 포함) -->
+            <line x1="10" y1="175" x2="222" y2="175" stroke="#000" stroke-width="0.6" marker-end="url(#arr8)"/>
+            <line x1="130" y1="195" x2="130" y2="12" stroke="#000" stroke-width="0.6" marker-end="url(#arr8)"/>
+            <!-- y=x^2 곡선 (정점 O, 좌우 대칭) — 교점 (-3,9)에서 위 곡선과 만남 -->
+            <polyline fill="none" stroke="#000" stroke-width="0.9" stroke-linejoin="round" points="85,75 89.5,94 94,111 98.5,126 103,139 107.5,150 112,159 116.5,166 121,171 125.5,174 130,175 134.5,174 139,171 143.5,166 148,159 152.5,150 157,139 161.5,126 166,111 170.5,94 175,75"/>
+            <!-- y=x^2+ax+b 곡선 (정점 (-2,8) 부근, 왼쪽으로 이동) -->
+            <polyline fill="none" stroke="#000" stroke-width="0.9" stroke-linejoin="round" points="76,79 80.5,94 85,107 89.5,118 94,127 98.5,134 103,139 107.5,142 112,143 116.5,142 121,139 125.5,134 130,127 134.5,118 139,107 143.5,94 148,79"/>
+            <!-- 10개 빨간 수직선분 (교점 x=-3에서 오른쪽으로 등간격, 길이가 등차수열 1차~) -->
+            <line x1="107.5" y1="142" x2="107.5" y2="150" stroke="#d22" stroke-width="0.7"/>
+            <line x1="112"   y1="143" x2="112"   y2="159" stroke="#d22" stroke-width="0.7"/>
+            <line x1="116.5" y1="142" x2="116.5" y2="166" stroke="#d22" stroke-width="0.7"/>
+            <line x1="121"   y1="139" x2="121"   y2="171" stroke="#d22" stroke-width="0.7"/>
+            <line x1="125.5" y1="134" x2="125.5" y2="174" stroke="#d22" stroke-width="0.7"/>
+            <line x1="130"   y1="127" x2="130"   y2="175" stroke="#d22" stroke-width="0.7"/>
+            <line x1="134.5" y1="118" x2="134.5" y2="174" stroke="#d22" stroke-width="0.7"/>
+            <line x1="139"   y1="107" x2="139"   y2="171" stroke="#d22" stroke-width="0.7"/>
+            <line x1="143.5" y1="94"  x2="143.5" y2="166" stroke="#d22" stroke-width="0.7"/>
+            <line x1="148"   y1="79"  x2="148"   y2="159" stroke="#d22" stroke-width="0.7"/>
+            <!-- 곡선 라벨 (본문 .problem 10pt와 통일 — 공통 §10.1 SVG 폰트 일치 규칙) -->
+            <foreignObject x="40" y="55" width="90" height="18">
+              <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;white-space:nowrap;">$y=x^2+ax+b$</div>
+            </foreignObject>
+            <foreignObject x="178" y="62" width="50" height="18">
+              <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;white-space:nowrap;">$y=x^2$</div>
+            </foreignObject>
+            <!-- l_10 가리키는 화살표 -->
+            <line x1="155" y1="120" x2="148" y2="121" stroke="#000" stroke-width="0.5" marker-end="url(#arr8)"/>
+            <!-- l_1 라벨 (교점 옆, 아래 곡선 왼쪽 바깥) -->
+            <foreignObject x="86" y="160" width="20" height="18">
+              <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;">$l_1$</div>
+            </foreignObject>
+            <!-- l_10 라벨 (오른쪽 끝 긴 선분 옆) -->
+            <foreignObject x="156" y="111" width="28" height="18">
+              <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;">$l_{10}$</div>
+            </foreignObject>
+            <!-- 가운데 ... 라벨 -->
+            <foreignObject x="120" y="160" width="20" height="18">
+              <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;">$\cdots$</div>
+            </foreignObject>
+            <!-- 좌표축 라벨 -->
+            <foreignObject x="118" y="178" width="14" height="18">
+              <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;">$O$</div>
+            </foreignObject>
+            <foreignObject x="215" y="178" width="14" height="18">
+              <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;">$x$</div>
+            </foreignObject>
+            <foreignObject x="118" y="0" width="14" height="18">
+              <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10pt;">$y$</div>
+            </foreignObject>
+          </svg>
+        </div>
+        <p><span class="pnum"><a href="#sol-20" class="solution-link">20</a></span>오른쪽 그림은 두 곡선 $y = x^2 + ax + b$, $y = x^2$의 교점에서 오른쪽 방향으로 두 곡선 사이에 $y$축과 평행한 선분 $10$개를 일정한 간격으로 그은 것이다. 선분의 길이를 왼쪽부터 차례로 $l_1,\,l_2,\,l_3,\,\cdots,\,l_{10}$이라 하면 $l_1 = 5,\;l_{10} = 17$이다. $l_1 + l_2 + l_3 + \cdots + l_{10}$의 값을 구하시오. (단, $a &gt; 0$이고, $b$는 상수이다.)</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">8</footer>
+</section>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="problems-area single">
+
+    <div class="problem-block" data-qa-id="q21">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-21" class="solution-link">21</a></span>다음 물음에 답하시오.</p>
+        <p class="sub">(1) 수열 $\{a_n\}$의 첫째항부터 제 $n$항까지의 합 $S_n$이 $S_n = n^2 + 6n + 2$일 때, $a_1 + a_5 + a_9$의 값은?</p>
+        <div class="choices">
+          <span>① 27</span><span>② 32</span><span>③ 37</span><span>④ 47</span><span>⑤ 51</span>
+        </div>
+        <p class="sub" style="margin-top:3mm;">(2) 수열 $\{a_n\}$의 첫째항부터 제 $n$항까지의 합 $S_n$이 $S_n = n^2 - 2n + 3$일 때, $a_1 + a_3 + a_5 + a_7 + \cdots + a_{21}$의 값은?</p>
+        <div class="choices">
+          <span>① 208</span><span>② 210</span><span>③ 212</span><span>④ 214</span><span>⑤ 216</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">9</footer>
+</section>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="sheet-body">
+    <h1 class="chapter-title">등비수열</h1>
+
+    <h2 class="section-title">등비수열의 정의와 일반항</h2>
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">1) 등비수열의 정의</div>
+      <p>첫째항부터 차례로 일정한 수를 곱하여 만든 수열을 <b>등비수열</b>이라 하고, 곱하는 일정한 수를 <b>공비</b>라 한다.</p>
+
+      <div class="ex">
+        <b>예)</b> $1,\,-3,\,9,\,-27,\,81,\,\cdots$ : 첫째항 $1$, 공비 $-3$인 등비수열<br>
+        $4,\,2,\,1,\,\dfrac{1}{2},\,\dfrac{1}{4},\,\cdots$ : 첫째항 $4$, 공비 $\dfrac{1}{2}$인 등비수열
+      </div>
+
+      <div class="note">등비수열(等比數列)은 영어로 geometric sequence, 공비(公比)는 common ratio라 한다. 첫째항과 공비가 $0$이 아닌 등비수열만 다룬다.</div>
+
+      <div class="sub-title">2) 등비수열의 일반항</div>
+      <p>첫째항이 $a$, 공비가 $r$인 등비수열 $\{a_n\}$의 일반항은</p>
+
+      <div class="formula">
+        $$a_n = a\,r^{\,n-1} \qquad (n=1,\,2,\,3,\,\cdots)$$
+      </div>
+
+      <div class="sub-title">3) 등비수열의 관계식</div>
+      <p>공비가 $r$인 등비수열 $\{a_n\}$의 이웃하는 두 항 $a_n,\,a_{n+1}$ 사이에는 다음 관계식이 성립한다.</p>
+
+      <div class="formula">
+        $$\dfrac{a_{n+1}}{a_n} = r \quad\Longleftrightarrow\quad a_{n+1} = r\,a_n$$
+      </div>
+
+      <div class="sub-title">4) 등비 중항</div>
+      <p>$0$이 아닌 세 수 $a,\,b,\,c$가 이 순서대로 등비수열을 이룰 때, $b$를 $a$와 $c$의 <b>등비 중항</b>이라 한다.</p>
+
+      <div class="formula">
+        $\dfrac{b}{a} = \dfrac{c}{b} \;\Longleftrightarrow\; b^2 = ac$
+      </div>
+
+      <div class="ex">
+        <b>예)</b> 세 항이 등비수열을 이루는 문제에서 미지수를 줄이려면 ① 등비 중항을 이용하여 $b^2 = ac$를 적용하거나, ② 세 항을 $a,\,ar,\,ar^2$으로 두는 방법을 자주 쓴다.
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q22">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-22" class="solution-link">22</a></span>다음 등비수열 $\{a_n\}$에 대하여 물음에 답하여라.</p>
+        <p class="sub">(1) 제 $2$항이 $12$, 제 $5$항이 $324$인 등비수열의 일반항 $a_n$을 구하여라. (단, 공비는 실수)</p>
+        <p class="sub">(2) 공비가 양수인 등비수열 $\{a_n\}$이 $a_1+a_2 = 30,\;a_3+a_4 = 120$을 만족시킬 때, $a_4$의 값을 구하여라.</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q23">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-23" class="solution-link">23</a></span>모든 항이 양수인 등비수열 $\{a_n\}$에서 $a_2+a_5 = 18,\;a_4+a_7 = 72$일 때, 처음으로 $3000$보다 커지는 항은 제 몇 항인지 구하여라.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q24">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-24" class="solution-link">24</a></span>두 수 $5$와 $320$ 사이에 $n$개의 수를 넣어 만든 수열</p>
+        <p style="text-align:center;">$5,\;x_1,\;x_2,\;x_3,\;\cdots,\;x_n,\;320$</p>
+        <p>이 공비가 $2$인 등비수열을 이룰 때, $n$의 값은?</p>
+        <div class="choices">
+          <span>① $4$</span><span>② $5$</span><span>③ $6$</span><span>④ $7$</span><span>⑤ $8$</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q25">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-25" class="solution-link">25</a></span>두 수 $9$와 $90$ 사이에 $10$개의 수 $a_1,\,a_2,\,a_3,\,\cdots,\,a_{10}$을 넣어 $9,\,a_1,\,a_2,\,a_3,\,\cdots,\,a_{10},\,90$이 이 순서대로 등비수열을 이루도록 할 때, $a_1\,a_{10}$의 값을 구하여라.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area single">
+
+    <div class="problem-block" data-qa-id="q26">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-26" class="solution-link">26</a></span>삼차방정식 $x^3 - 7x^2 + kx - 8 = 0$의 세 실근이 등비수열을 이룰 때, 상수 $k$의 값은?</p>
+        <div class="choices">
+          <span>① $12$</span><span>② $14$</span><span>③ $16$</span><span>④ $18$</span><span>⑤ $20$</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">등비수열의 활용 — 두 직선에 접하는 원의 반지름</h2>
+    <div class="concept">
+      <p>한 점에서 만나는 두 직선에 동시에 접하면서 차례로 외접하는 원들의 반지름은 등비수열을 이룬다. 공비는 두 직선의 사잇각만으로 결정된다.</p>
+
+      <div class="formula left">
+        한 점 $V$에서 만나는 두 직선의 사잇각이 $2\alpha$이고, 두 직선에 동시에 접하면서 차례로 외접하는 원들의 반지름을 $r_1,\,r_2,\,r_3,\,\cdots$이라 하면 $\{r_n\}$은 공비가 $\dfrac{1+\sin\alpha}{1-\sin\alpha}$인 등비수열을 이룬다.
+      </div>
+
+      <p class="proof"><b>(증명)</b> 두 직선의 교점을 $V$, $n$번째 원의 중심을 $C_n$이라 하면 $C_n$은 두 직선의 양분선 위에 있고, $C_n$에서 두 직선까지의 거리가 곧 $r_n$이므로 $\overline{VC_n}\sin\alpha = r_n$, &emsp;즉 $\overline{VC_n} = \dfrac{r_n}{\sin\alpha}$. 인접한 두 원이 외접하므로 $\overline{VC_{n+1}} - \overline{VC_n} = r_{n+1} + r_n$이고, 위 식을 대입하면 $\dfrac{r_{n+1}-r_n}{\sin\alpha} = r_{n+1}+r_n \;\Longleftrightarrow\; r_{n+1}(1-\sin\alpha) = r_n(1+\sin\alpha)$<br>$\therefore\;\dfrac{r_{n+1}}{r_n} = \dfrac{1+\sin\alpha}{1-\sin\alpha}\;(\text{일정})$</p>
+
+      <div class="fig-center" style="margin:8mm 0 0; text-align:center;">
+        <svg viewBox="127 10 229 93" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width:160mm; display:block; margin:0 auto;">
+          <line x1="170" y1="50.3" x2="310" y2="65" stroke="#222" stroke-width="0.5"/>
+          <line x1="170" y1="79.7" x2="310" y2="65" stroke="#222" stroke-width="0.5"/>
+          <line x1="170" y1="65" x2="305" y2="65" stroke="#2563eb" stroke-width="0.3" stroke-dasharray="3,1.8" opacity="0.55"/>
+          <circle cx="195" cy="65" r="12" fill="none" stroke="#222" stroke-width="0.5"/>
+          <circle cx="217" cy="65" r="9.7" fill="none" stroke="#222" stroke-width="0.5"/>
+          <circle cx="234" cy="65" r="7.9" fill="none" stroke="#222" stroke-width="0.5"/>
+          <circle cx="249" cy="65" r="6.4" fill="none" stroke="#222" stroke-width="0.5"/>
+          <circle cx="195" cy="65" r="0.9" fill="#222"/>
+          <circle cx="217" cy="65" r="0.9" fill="#222"/>
+          <line x1="195" y1="65" x2="195" y2="53.3" stroke="#e53e3e" stroke-width="0.45"/>
+          <foreignObject x="186" y="50" width="10" height="8" overflow="visible">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:6px;line-height:1;color:#e53e3e;">$r_1$</div>
+          </foreignObject>
+          <foreignObject x="190" y="66.5" width="14" height="8" overflow="visible">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:6px;line-height:1;font-style:italic;">$C_1$</div>
+          </foreignObject>
+          <foreignObject x="212" y="66.5" width="14" height="8" overflow="visible">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:6px;line-height:1;font-style:italic;">$C_2$</div>
+          </foreignObject>
+          <circle cx="310" cy="65" r="1.1" fill="#222"/>
+          <foreignObject x="303" y="66.5" width="10" height="8" overflow="visible">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:6px;line-height:1;font-style:italic;">$V$</div>
+          </foreignObject>
+          <path d="M 290 60.3 A 22 22 0 0 1 290 69.7" stroke="#222" stroke-width="0.4" fill="none"/>
+          <foreignObject x="280" y="61.5" width="10" height="8" overflow="visible">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:6px;line-height:1;font-style:italic;">$2\alpha$</div>
+          </foreignObject>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="problems-area single">
+
+    <div class="problem-block" data-qa-id="q27">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <div class="fig-right" style="width:55mm;">
+          <svg viewBox="0 0 200 95" xmlns="http://www.w3.org/2000/svg" style="width:100%;">
+            <line x1="20" y1="32.8" x2="190" y2="47.5" stroke="#222" stroke-width="1.2"/>
+            <line x1="20" y1="62.2" x2="190" y2="47.5" stroke="#222" stroke-width="1.2"/>
+            <circle cx="51" cy="47.5" r="12" fill="none" stroke="#222" stroke-width="1.2"/>
+            <circle cx="73" cy="47.5" r="10.1" fill="none" stroke="#222" stroke-width="1.2"/>
+            <circle cx="92" cy="47.5" r="8.5" fill="none" stroke="#222" stroke-width="1.2"/>
+            <circle cx="108" cy="47.5" r="7.1" fill="none" stroke="#222" stroke-width="1.2"/>
+            <circle cx="121" cy="47.5" r="6" fill="none" stroke="#222" stroke-width="1.2"/>
+          </svg>
+        </div>
+        <p><span class="pnum"><a href="#sol-27" class="solution-link">27</a></span>오른쪽 그림과 같이 두 직선을 공통접선으로 하고 서로 외접하는 다섯 개의 원이 있다. 가장 큰 원의 반지름의 길이가 $12$, 가장 작은 원의 반지름의 길이가 $6$일 때, 가운데 원의 반지름의 길이를 구하여라.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area single">
+
+    <div class="problem-block" data-qa-id="q28">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <div class="fig-right" style="width:34mm;">
+          <svg viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg" style="width:100%;">
+            <rect x="30" y="30" width="30" height="30" fill="#fff7d6"/>
+            <rect x="0" y="0" width="90" height="90" fill="none" stroke="#222" stroke-width="1.2"/>
+            <line x1="30" y1="0" x2="30" y2="90" stroke="#222" stroke-width="0.7"/>
+            <line x1="60" y1="0" x2="60" y2="90" stroke="#222" stroke-width="0.7"/>
+            <line x1="0" y1="30" x2="90" y2="30" stroke="#222" stroke-width="0.7"/>
+            <line x1="0" y1="60" x2="90" y2="60" stroke="#222" stroke-width="0.7"/>
+          </svg>
+        </div>
+        <p><span class="pnum"><a href="#sol-28" class="solution-link">28</a></span>한 변의 길이가 $3$인 정사각형에서 오른쪽 그림과 같이 $9$개의 똑같은 정사각형을 만든 후 가운데 정사각형을 제거한다. 남은 $8$개의 정사각형에 대하여 이와 같은 시행을 반복할 때, $12$회 반복한 후 남아 있는 부분의 넓이를 구하여라.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="sheet-body">
+    <h2 class="section-title">등비수열의 합</h2>
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">1) 등비수열의 합 공식</div>
+      <p>첫째항이 $a$, 공비가 $r$인 등비수열의 첫째항부터 제 $n$항까지의 합 $S_n$은 다음과 같다.</p>
+
+      <div class="formula">
+        $$S_n = \begin{cases} \dfrac{a(1-r^{\,n})}{1-r} = \dfrac{a(r^{\,n}-1)}{r-1} & (r\ne 1) \\[3mm] na & (r=1) \end{cases}$$
+      </div>
+
+      <div class="note">$r\gt 1$일 때는 $\dfrac{a(r^{\,n}-1)}{r-1}$, $r\lt 1$일 때는 $\dfrac{a(1-r^{\,n})}{1-r}$를 쓰면 부호 처리가 편하다. $S_n$의 $n$은 더하는 항의 개수임에 유의.</div>
+
+      <div class="sub-title">2) 일반항·합의 형태로 본 등비수열</div>
+      <p>등비수열의 일반항 $a_n = a\,r^{\,n-1}$은 $r^n$의 배수 꼴, 합 $S_n = \dfrac{a(r^{\,n}-1)}{r-1}$은 $r^n$ + 상수 꼴로 정리된다.</p>
+
+      <div class="formula left">
+        ① $a_n = A\,r^{\,n}$ &emsp;꼴<br>
+        ② $S_n = A\,r^{\,n} + B$ &emsp;꼴 (단, $r \ne 1$)
+      </div>
+
+      <p>역으로 합 $S_n$이 $A\,r^{\,n} + B$ 꼴로 주어진 수열에서 일반항 $a_n$을 구하면 다음을 얻는다.</p>
+
+      <div class="formula left">
+        ⅰ) $B = -A$ &emsp;⇒ &emsp; $\{a_n\}$은 <b>첫째항부터</b> 등비수열을 이룬다.<br>
+        ⅱ) $B \ne -A$ &emsp;⇒ &emsp; $\{a_n\}$은 <b>두 번째 항부터</b> 등비수열을 이룬다.
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q29">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-29" class="solution-link">29</a></span>수열 $\{a_n\}$의 첫째항부터 제 $n$항까지의 합을 $S_n$이라 할 때, 다음을 구하여라.</p>
+        <p class="sub">(1) $S_n = 3^{\,n+1} - 3$일 때, 이 수열의 일반항 $a_n$을 구하여라.</p>
+        <p class="sub">(2) $S_n = 5^{\,n+1} - k$일 때, 수열 $\{a_n\}$이 첫째항부터 등비수열을 이루도록 하는 상수 $k$의 값을 구하여라.</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q30">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-30" class="solution-link">30</a></span>모든 항이 양수인 등비수열 $\{a_n\}$에서 $a_1\,a_3 = 16,\;a_2\,a_4 = 64$일 때, 첫째항부터 제 $10$항까지의 합을 구하여라.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q31">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-31" class="solution-link">31</a></span>등비수열 $\{a_n\}$에서 첫째항부터 제 $n$항까지의 합을 $S_n$이라 할 때, $S_{10} = 10,\;S_{20} = 30$이다. 이때 $S_{30}$의 값을 구하여라.</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q32">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-32" class="solution-link">32</a></span>모든 항이 양수인 등비수열 $\{a_n\}$에서 $a_2\,a_6 = 16,\;a_4\,a_5 = 32$일 때, 첫째항부터 제 $n$항까지의 합이 처음으로 $720$보다 커지도록 하는 자연수 $n$의 값을 구하여라.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">등비수열의 합 — 여러 가지 성질</h2>
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">1) 부분합의 등비성</div>
+      <p>등차수열은 일정 구간의 합끼리도 등차수열을 이루고, 등비수열은 일정 구간의 합끼리 등비수열을 이룬다.</p>
+      <p>등비수열 $\{a_n\}$의 첫째항부터 제 $n$항까지의 합을 $S_n$이라 하자. ($r^{\,n} \ne 1$일 때)</p>
+      <div class="formula">
+        $S_n,\;S_{2n}-S_n,\;S_{3n}-S_{2n},\;\cdots$ &emsp;는 공비 $r^{\,n}$인 등비수열
+      </div>
+
+      <div class="sub-title">2) 등비 중항을 이용한 합의 분해</div>
+      <p>등차수열의 합에서 등차 중항을 적용하면</p>
+      <div class="formula compact">
+        $a_1 + a_n = a_2 + a_{n-1} = a_3 + a_{n-2} = \cdots = a_{\frac{n}{2}} + a_{\frac{n}{2}+1}$
+      </div>
+      <p>등비수열의 합에서 등비 중항을 적용하면</p>
+      <div class="formula compact">
+        $a_1\,a_n = a_2\,a_{n-1} = a_3\,a_{n-2} = \cdots = a_{\frac{n}{2}}\,a_{\frac{n}{2}+1}$
+      </div>
+
+      <div class="sub-title">3) 등비수열과 그 역수 수열의 관계</div>
+      <p>ⅰ) 등비수열 $\{a_n\}$의 공비를 $r$이라 하면 역수 수열 $\left\{\dfrac{1}{a_n}\right\}$의 공비는 $\dfrac{1}{r}$이다.</p>
+      <p>ⅱ) $\{a_n\}$의 첫째항부터 제 $n$항까지의 합을 $S_n$, 역수 수열의 합을 $T_n$이라 하면</p>
+      <div class="formula">
+        $T_n = \dfrac{S_n}{a_1\,a_n}$
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="problems-area single">
+
+    <div class="problem-block" data-qa-id="q33">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-33" class="solution-link">33</a></span>등비수열 $\{a_n\}$에 대하여 첫째항부터 제 $n$항까지의 합을 $S_n$, 역수의 합을 $T_n$이라 하면</p>
+        <p style="text-align:center;">$S_{10} = 256,\;T_{10} = 4$</p>
+        <p>가 성립할 때, $a_1\,a_{10}$의 값을 구하여라.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">적립금의 원리합계</h2>
+    <div class="concept">
+      <p>일정한 금액을 일정한 기간마다 적립하는 것을 <b>적금</b> 또는 <b>적립예금</b>이라 한다. 매년 초에 적립하는 경우와 매년 말에 적립하는 경우의 적립금의 원리합계는 다음과 같다.</p>
+
+      <div class="sub-title">1) 매년 초에 적립하는 경우</div>
+      <p>연이율 $r$, $1$년마다의 복리로 매년 초 일정한 금액 $a$원씩 $n$년 동안 적립할 때, $n$년 말의 적립금의 원리합계 $S$는</p>
+
+      <div class="formula">
+        $S = \dfrac{a(1+r)\{(1+r)^{\,n} - 1\}}{r}$
+      </div>
+
+      <div class="note">첫째항 $a(1+r)$, 공비 $1+r$인 등비수열의 첫째항부터 제 $n$항까지의 합</div>
+
+      <div class="sub-title">2) 매년 말에 적립하는 경우</div>
+      <p>연이율 $r$, $1$년마다의 복리로 매년 말 일정한 금액 $a$원씩 $n$년 동안 적립할 때, $n$년 말의 적립금의 원리합계 $S$는</p>
+
+      <div class="formula">
+        $S = \dfrac{a\{(1+r)^{\,n} - 1\}}{r}$
+      </div>
+
+      <div class="note">첫째항 $a$, 공비 $1+r$인 등비수열의 첫째항부터 제 $n$항까지의 합</div>
+    </div>
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q34">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-34" class="solution-link">34</a></span>어떤 신혼부부는 $a$만 원을 연이율 $4\%$, $1$년마다 복리로 올해 초부터 $10$년 동안 매년 초에 적립하여 $325$만 원짜리 가전제품을 사려고 한다. 이때 $a$의 값을 구하여라. (단, $1.04^{\,10} = 1.5$로 계산한다.)</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q35">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-35" class="solution-link">35</a></span>두 함수 $f(x) = k(x-1)$, $g(x) = 2x^2 - 3x + 1$에 대하여 함수</p>
+        <p style="text-align:center;">$h(x) = \begin{cases} f(x) & (f(x) \ge g(x)) \\ g(x) & (f(x) \lt g(x)) \end{cases}$</p>
+        <p>가 다음 조건을 만족시킬 때, 상수 $k$의 값을 구하여라.</p>
+        <p class="sub">(가) 세 수 $h(2),\,h(3),\,h(4)$는 이 순서대로 등차수열을 이룬다.</p>
+        <p class="sub">(나) 세 수 $h(3),\,h(4),\,h(5)$는 이 순서대로 등비수열을 이룬다.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="sheet-body">
+    <h1 class="chapter-title">수열의 합</h1>
+
+    <h2 class="section-title">합의 기호 $\Sigma$의 정의</h2>
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">1) $\Sigma$의 정의</div>
+      <p>수열 $\{a_n\}$에서 첫째항부터 제 $n$항까지의 합 $a_1 + a_2 + a_3 + \cdots + a_n$을 합의 기호 $\Sigma$를 사용하여 다음과 같이 나타낸다.</p>
+
+      <div class="formula">
+        $\displaystyle\sum_{k=1}^{n} a_k = a_1 + a_2 + a_3 + \cdots + a_n$
+      </div>
+
+      <div class="note">$\Sigma$는 합(summation)을 뜻하는 그리스 문자 시그마(sigma)의 첫 글자이다. $k$ 대신 $i,\,j,\,l$ 등 다른 문자를 써도 된다.</div>
+
+      <div class="sub-title">2) $\Sigma$의 뜻</div>
+      <p>$\displaystyle\sum_{k=1}^{n} a_k$는 일반항 $a_k$의 $k$에 $1,\,2,\,3,\,\cdots,\,n$을 차례로 대입하여 더한다는 뜻이다.</p>
+
+      <div class="ex">
+        <b>예)</b> $\displaystyle\sum_{k=1}^{5} k^2 = 1^2+2^2+3^2+4^2+5^2 = 55$<br>
+        $\displaystyle\sum_{k=1}^{4}(2k-1) = 1+3+5+7 = 16$, &emsp; $\displaystyle\sum_{k=3}^{6} k = 3+4+5+6 = 18$
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q36">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-36" class="solution-link">36</a></span>다음과 같이 합의 기호 $\Sigma$로 표현된 수열의 합을 구하여라.</p>
+        <p class="sub">(1) $\displaystyle\sum_{k=1}^{10}(2k+1)$ &emsp; (2) $\displaystyle\sum_{k=1}^{8} 3^{\,k-1}$ &emsp; (3) $\displaystyle\sum_{k=1}^{5}(2^{\,k} + 3k)$</p>
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">$\Sigma$의 기본 성질</h2>
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">1) 합과 차의 성질</div>
+      <div class="formula">
+        $\displaystyle\sum_{k=1}^{n}(a_k + b_k) = \sum_{k=1}^{n} a_k + \sum_{k=1}^{n} b_k,\;\;\; \displaystyle\sum_{k=1}^{n}(a_k - b_k) = \sum_{k=1}^{n} a_k - \sum_{k=1}^{n} b_k$
+      </div>
+
+      <div class="sub-title">2) 상수배의 성질</div>
+      <div class="formula">
+        $\displaystyle\sum_{k=1}^{n} c\,a_k = c\sum_{k=1}^{n} a_k$ &emsp;($c$는 상수)
+      </div>
+
+      <div class="sub-title">3) 상수의 성질</div>
+      <div class="formula">
+        $\displaystyle\sum_{k=1}^{n} c = nc$ &emsp;($c$는 상수)
+      </div>
+
+      <div class="note">$\Sigma$는 항별로 분배되지만 곱과 거듭제곱에는 분배되지 않는다. $\displaystyle\sum a_k\,b_k \ne \sum a_k\cdot\sum b_k$, $\displaystyle\sum a_k^{\,2} \ne \left(\sum a_k\right)^{\!2}.$</div>
+
+      <div class="sub-title">4) 합 $S_n$과 일반항 $a_n$의 관계</div>
+      <p>수열 $\{a_n\}$의 첫째항부터 제 $n$항까지의 합을 $S_n$이라 하면</p>
+      <div class="formula">
+        $a_n = \begin{cases} S_1 & (n=1) \\ S_n - S_{n-1} & (n \ge 2) \end{cases}$
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q37">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-37" class="solution-link">37</a></span>다음 물음에 답하여라.</p>
+        <p class="sub">(1) $\displaystyle\sum_{k=1}^{20}(a_{k+1} - a_k) = 80$일 때, $\displaystyle\sum_{k=1}^{20}(3a_{k+1} - 3a_k)$의 값을 구하여라.</p>
+        <p class="sub">(2) 수열 $\{a_n\}$에 대하여 $a_1 = 10,\;a_{21} = 30$일 때, $\displaystyle\sum_{k=1}^{20}(a_{k+1} - a_k)$의 값을 구하여라.</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q38">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-38" class="solution-link">38</a></span>수열 $\{a_n\}$에 대하여 $\displaystyle\sum_{k=1}^{n} a_k = n^2 + n$일 때, $\displaystyle\sum_{k=1}^{10} a_k^{\,2}$의 값을 구하여라.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">자연수의 거듭제곱의 합</h2>
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">1) 자연수·자연수의 제곱·자연수의 세제곱의 합</title>
+      <div class="formula">
+        (1) $\displaystyle\sum_{k=1}^{n} k = 1+2+3+\cdots+n = \dfrac{n(n+1)}{2}$
+      </div>
+      <div class="formula">
+        (2) $\displaystyle\sum_{k=1}^{n} k^2 = 1^2+2^2+3^2+\cdots+n^2 = \dfrac{n(n+1)(2n+1)}{6}$
+      </div>
+      <div class="formula">
+        (3) $\displaystyle\sum_{k=1}^{n} k^3 = 1^3+2^3+3^3+\cdots+n^3 = \left\{\dfrac{n(n+1)}{2}\right\}^{\!2}$
+      </div>
+
+      <div class="sub-title">2) 연속한 자연수의 곱의 합</div>
+      <div class="formula">
+        (1) $\displaystyle\sum_{k=1}^{n} k(k+1) = \dfrac{n(n+1)(n+2)}{3}$
+      </div>
+      <div class="formula">
+        (2) $\displaystyle\sum_{k=1}^{n} k(k+1)(k+2) = \dfrac{n(n+1)(n+2)(n+3)}{4}$
+      </div>
+
+      <div class="note">일반적으로 $\displaystyle\sum_{k=1}^{n} k(k+1)(k+2)\cdots(k+m) = \dfrac{n(n+1)(n+2)\cdots(n+m+1)}{m+2}$. $\Sigma$를 직접 전개하지 않고 묶음으로 빠르게 계산할 때 자주 쓴다.</div>
+    </div>
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q39">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-39" class="solution-link">39</a></span>다음 수열의 합을 구하여라.</p>
+        <p class="sub">(1) $\displaystyle\sum_{k=1}^{n}(2k+1)^2$</p>
+        <p class="sub">(2) $1\times 5 + 2\times 6 + 3\times 7 + \cdots + 10\times 14$</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q40">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-40" class="solution-link">40</a></span>다음 수열의 합을 구하여라.</p>
+        <p class="sub">(1) $1\times 20 + 2\times 19 + 3\times 18 + \cdots + 20\times 1$</p>
+        <p class="sub">(2) $1\times n + 2\times(n-1) + 3\times(n-2) + \cdots + (n-1)\times 2 + n\times 1$</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area single">
+
+    <div class="problem-block" data-qa-id="q41">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <div class="fig-right" style="width:54mm;">
+          <svg viewBox="102 56 236 179" xmlns="http://www.w3.org/2000/svg" style="width:100%;">
+            <polygon points="178,181 200,192 200,166 178,155" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="222,181 200,192 200,166 222,155" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="200,144 222,155 200,166 178,155" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="156,192 178,203 178,177 156,166" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="200,192 178,203 178,177 200,166" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="178,155 200,166 178,177 156,166" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="200,192 222,203 222,177 200,166" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="244,192 222,203 222,177 244,166" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="222,155 244,166 222,177 200,166" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="134,203 156,214 156,188 134,177" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="178,203 156,214 156,188 178,177" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="156,166 178,177 156,188 134,177" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="178,203 200,214 200,188 178,177" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="222,203 200,214 200,188 222,177" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="200,166 222,177 200,188 178,177" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="222,203 244,214 244,188 222,177" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="266,203 244,214 244,188 266,177" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="244,166 266,177 244,188 222,177" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="112,214 134,225 134,199 112,188" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="156,214 134,225 134,199 156,188" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="134,177 156,188 134,199 112,188" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="156,214 178,225 178,199 156,188" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="200,214 178,225 178,199 200,188" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="178,177 200,188 178,199 156,188" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="200,214 222,225 222,199 200,188" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="244,214 222,225 222,199 244,188" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="222,177 244,188 222,199 200,188" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="244,214 266,225 266,199 244,188" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="288,214 266,225 266,199 288,188" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="266,177 288,188 266,199 244,188" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="178,155 200,166 200,140 178,129" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="222,155 200,166 200,140 222,129" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="200,118 222,129 200,140 178,129" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="156,166 178,177 178,151 156,140" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="200,166 178,177 178,151 200,140" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="178,129 200,140 178,151 156,140" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="200,166 222,177 222,151 200,140" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="244,166 222,177 222,151 244,140" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="222,129 244,140 222,151 200,140" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="134,177 156,188 156,162 134,151" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="178,177 156,188 156,162 178,151" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="156,140 178,151 156,162 134,151" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="178,177 200,188 200,162 178,151" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="222,177 200,188 200,162 222,151" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="200,140 222,151 200,162 178,151" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="222,177 244,188 244,162 222,151" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="266,177 244,188 244,162 266,151" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="244,140 266,151 244,162 222,151" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="178,129 200,140 200,114 178,103" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="222,129 200,140 200,114 222,103" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="200,92 222,103 200,114 178,103" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="156,140 178,151 178,125 156,114" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="200,140 178,151 178,125 200,114" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="178,103 200,114 178,125 156,114" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="200,140 222,151 222,125 200,114" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="244,140 222,151 222,125 244,114" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="222,103 244,114 222,125 200,114" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="178,103 200,114 200,88 178,77" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="222,103 200,114 200,88 222,77" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="200,66 222,77 200,88 178,77" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <foreignObject x="234" y="74" width="14" height="12" overflow="visible">
+              <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:8px;line-height:1;color:#e53e3e;font-style:italic;">$1$</div>
+            </foreignObject>
+            <foreignObject x="256" y="107" width="14" height="12" overflow="visible">
+              <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:8px;line-height:1;color:#e53e3e;font-style:italic;">$3$</div>
+            </foreignObject>
+            <foreignObject x="278" y="141" width="14" height="12" overflow="visible">
+              <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:8px;line-height:1;color:#e53e3e;font-style:italic;">$6$</div>
+            </foreignObject>
+            <foreignObject x="300" y="174" width="16" height="12" overflow="visible">
+              <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:8px;line-height:1;color:#e53e3e;font-style:italic;">$10$</div>
+            </foreignObject>
+          </svg>
+        </div>
+        <p><span class="pnum"><a href="#sol-41" class="solution-link">41</a></span>오른쪽 그림은 맨 위쪽부터 차례로 $1,\,3,\,6,\,10$개의 정육면체 모양의 블록을 쌓아 만든 $4$층 탑이다. 이와 같은 모양으로 $30$층 탑을 쌓기 위해 필요한 블록의 개수를 구하여라.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="problems-area single">
+
+    <div class="problem-block" data-qa-id="q42">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-42" class="solution-link">42</a></span>다음 수열의 첫째항부터 제 $n$항까지의 합 $S_n$을 구하여라.</p>
+        <p class="sub">(1) $1,\;1+2,\;1+2+3,\;1+2+3+4,\;\ldots$</p>
+        <p class="sub">(2) $1,\;1+2,\;1+2+4,\;1+2+4+8,\;\ldots$</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">특수한 수열의 합</h2>
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">1) 지수꼴 — 등비수열의 합</div>
+      <p>일반항이 $a r^{\,k-1}$ 꼴인 등비수열의 합은 등비수열의 합 공식으로 정리한다.</p>
+      <div class="formula">
+        $\displaystyle\sum_{k=1}^{n} a\,r^{\,k-1} = \dfrac{a(r^{\,n}-1)}{r-1}$ &emsp;($r\ne 1$)
+      </div>
+
+      <div class="ex">
+        <b>예)</b> $\displaystyle\sum_{k=m}^{n} r^{\,k} = r^{\,m} + r^{\,m+1} + \cdots + r^{\,n} = \dfrac{r^{\,m}(r^{\,n-m+1}-1)}{r-1}$ &emsp;(공비 $r$, 항의 개수 $n-m+1$)<br>
+        $\displaystyle\sum_{k=1}^{n} r^{\,3k-1} = r^2 + r^5 + \cdots + r^{\,3n-1} = \dfrac{r^2\{(r^3)^{\,n}-1\}}{r^3-1}$ &emsp;(공비 $r^3$)
+      </div>
+
+      <div class="sub-title">2) 같은 숫자가 반복된 수열의 합</div>
+      <p>한 자리 수 $a$가 한 자리, 두 자리, 세 자리, $\ldots$ 로 반복되는 수의 합 ($a$가 $n$개)</p>
+      <div class="formula left">
+        $a + \underbrace{aa}_{2자리} + \underbrace{aaa}_{3자리} + \cdots + \underbrace{aa\cdots a}_{n자리}$ $\;=\; \dfrac{a}{9}\bigl\{(10-1)+(10^2-1)+\cdots+(10^{\,n}-1)\bigr\}$ $\;=\; \dfrac{a(10^{\,n+1} - 9n - 10)}{81}$
+      </div>
+
+      <div class="note">$\displaystyle\underbrace{99\cdots 9}_{n자리} = 10^{\,n} - 1$임을 이용해 $9$로 묶고 $\Sigma$ 공식을 적용한다.</div>
+    </div>
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="problems-area single">
+
+    <div class="problem-block" data-qa-id="q43">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-43" class="solution-link">43</a></span>다음을 계산하여라.</p>
+        <p class="sub">(1) $\displaystyle\sum_{k=1}^{5}\!\left(\sum_{j=1}^{k} j\right)$ &emsp; (2) $\displaystyle\sum_{k=1}^{n}\sum_{j=1}^{k}(j+1)$</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">수학 · 대수</header>
+  <div class="sheet-body">
+    <h1 class="chapter-title">수열의 합(2) — 여러 가지 수열의 합</h1>
+
+    <h2 class="section-title">(1) 망원급수 (부분분수)</h2>
+    <div class="concept">
+      <div class="sub-title">① 망원급수</div>
+      <p>부분적 항들의 합이 소거 후에 결과적으로 고정된 값만이 남는 수열의 합을 말한다. 이 테크닉은 <b>상쇄 합</b>, <b>차의 방법</b>, <b>끼워넣기 합</b> 등으로 불린다.</p>
+
+      <div class="formula">
+        $$\displaystyle \sum_{k=1}^{n}\bigl\{\,f(k)-f(k+1)\,\bigr\}=f(1)-f(n+1)$$
+      </div>
+
+      <div class="sub-title">② 부분분수</div>
+      <p>대수학에서 <b>부분분수분해</b> 또는 <b>부분분수전개</b>는 유리식의 분자나 분모의 차수를 낮추는 데 이용한다. 전체 분수가 몇 개로 이루어진 분수의 합으로 표시된다.</p>
+
+      <div class="formula">
+        $$\dfrac{1}{AB}=\dfrac{1}{B-A}\!\left(\dfrac{1}{A}-\dfrac{1}{B}\right)$$
+      </div>
+
+      <p>망원급수의 합 형식으로 바꾸어 소거를 이끌기 위해서 위와 같이 두 개의 부분분수로 분해하는 것을 <b>이항 분리법</b>이라고도 부른다.</p>
+    </div>
+  </div>
+  <footer class="sheet-footer">1</footer>
+</section>
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">이항 분리법</h2>
+    <div class="concept">
+      <div class="sub-title">[1] 이항분리법 1 — 기본 공식</div>
+
+      <div class="formula left">
+        $$\begin{aligned}
+        &\sum_{k=1}^{n} k = \tfrac{1}{2}\,n(n+1) \\[2mm]
+        &\sum_{k=1}^{n} k(k+1) = \tfrac{1}{3}\,n(n+1)(n+2) \\[2mm]
+        &\sum_{k=1}^{n} k(k+1)(k+2) = \tfrac{1}{4}\,n(n+1)(n+2)(n+3) \\[2mm]
+        &\qquad\cdots
+        \end{aligned}$$
+      </div>
+
+      <p>일반적으로 음이 아닌 정수 $m$에 대하여 아래 성질이 성립</p>
+
+      <div class="formula">
+        $$\sum_{k=1}^{n} k(k+1)\cdots(k+m) = \dfrac{1}{m+2}\,n(n+1)\cdots(n+m+1)$$
+      </div>
+
+      <p>아래와 같이 끼워넣기 합 테크닉을 이용하여 소거 형식을 만들어 낼 수 있다.</p>
+
+      <div class="formula left">
+        $$\begin{aligned}
+        &k(k\!+\!1)\cdots(k\!+\!m) \\[1mm]
+        &= k(k\!+\!1)\cdots(k\!+\!m)\bigl\{(k\!+\!m\!+\!1)-(k\!-\!1)\bigr\}\times\dfrac{1}{m+2}\\[1mm]
+        &= \dfrac{k(k\!+\!1)\cdots(k\!+\!m\!+\!1)\;-\;(k\!-\!1)\,k\cdots(k\!+\!m)}{m+2}
+        \end{aligned}$$
+      </div>
+
+      <p>이를 이용하여 이웃한 항을 소거하며 합을 구하면 다음과 같다.</p>
+    </div>
+  </div>
+  <footer class="sheet-footer">2</footer>
+</section>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">수학 · 대수</header>
+  <div class="sheet-body">
+    <div class="concept">
+      <div class="sub-title">[2] 망원식 전개 — 소거 과정</div>
+
+      <div class="formula left">
+        $$\begin{aligned}
+        &\sum_{k=1}^{n} k(k\!+\!1)\cdots(k\!+\!m)\\[1mm]
+        &= \sum_{k=1}^{n}\dfrac{k(k\!+\!1)\cdots(k\!+\!m\!+\!1)\;-\;(k\!-\!1)\,k\cdots(k\!+\!m)}{m+2}\\[3mm]
+        &= \dfrac{1{\cdot}2\cdots(m\!+\!2)\;-\;0}{m+2}\\[1mm]
+        &\;+\;\dfrac{2{\cdot}3\cdots(m\!+\!3)\;-\;1{\cdot}2\cdots(m\!+\!2)}{m+2}\\[1mm]
+        &\;+\;\dfrac{3{\cdot}4\cdots(m\!+\!4)\;-\;2{\cdot}3\cdots(m\!+\!3)}{m+2}\\[1mm]
+        &\;+\;\cdots\\[1mm]
+        &\;+\;\dfrac{n(n\!+\!1)\cdots(n\!+\!m\!+\!1)\;-\;(n\!-\!1)\,n\cdots(n\!+\!m)}{m+2}\\[3mm]
+        &= \dfrac{n(n+1)\cdots(n+m+1)}{m+2}
+        \end{aligned}$$
+      </div>
+
+      <div class="note">각 행의 앞항과 다음 행의 뒷항이 서로 소거되어 결국 마지막 항의 앞 부분만 남는 구조가 된다. 이것이 <b>망원급수</b>의 핵심이다.</div>
+    </div>
+  </div>
+  <footer class="sheet-footer">3</footer>
+</section>
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <div class="concept">
+      <div class="sub-title">[3] 이항분리법 2 — 다양한 꼴</div>
+
+      <div class="formula left">
+        $$\begin{aligned}
+        \text{①}\;&\;\sum_{k=1}^{n} k\cdot k!
+          = \sum_{k=1}^{n}\{(k+1)-1\}\cdot k!
+          = \sum_{k=1}^{n}\bigl\{(k+1)!-k!\bigr\}\\[3mm]
+        \text{②}\;&\;\sum_{k=1}^{n}\dfrac{k}{(k+1)!}
+          = \sum_{k=1}^{n}\dfrac{(k+1)-1}{(k+1)!}
+          = \sum_{k=1}^{n}\!\left\{\dfrac{1}{k!}-\dfrac{1}{(k+1)!}\right\}\\[3mm]
+        \text{③}\;&\;\sum_{k=1}^{n}\dfrac{1}{(k+1)\sqrt{k}+k\sqrt{k+1}}\\[1mm]
+        &= \sum_{k=1}^{n}\dfrac{1}{\sqrt{k(k+1)}}\cdot\dfrac{1}{\sqrt{k+1}+\sqrt{k}}\\[1mm]
+        &= \sum_{k=1}^{n}\dfrac{\sqrt{k+1}-\sqrt{k}}{\sqrt{k(k+1)}}
+          = \sum_{k=1}^{n}\!\left\{\dfrac{1}{\sqrt{k}}-\dfrac{1}{\sqrt{k+1}}\right\}\\[3mm]
+        \text{④}\;&\;\sum_{k=1}^{n}\dfrac{k^{2}}{3^{k}}
+          = \sum_{k=1}^{n}\dfrac{1}{3^{k}}\cdot\dfrac{1}{2}\bigl\{3k^{2}-(k+1)^{2}+3k-(k+1)+2\bigr\}\\[1mm]
+        &= \dfrac{1}{2}\sum_{k=1}^{n}\!\left\{\dfrac{k^{2}}{3^{k-1}}-\dfrac{(k+1)^{2}}{3^{k}}+\dfrac{k}{3^{k-1}}-\dfrac{k+1}{3^{k}}+\dfrac{2}{3^{k}}\right\}
+        \end{aligned}$$
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">4</footer>
+</section>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">수학 · 대수</header>
+  <div class="sheet-body">
+    <div class="concept">
+      <div class="sub-title">[4] 이항분리법 4 — $\sum k^{2},\ \sum k^{3}$</div>
+
+      <div class="formula">
+        $$\text{①}\;\;\sum_{k=1}^{n} k^{2}=\dfrac{n(n+1)(2n+1)}{6} \qquad\qquad
+        \text{②}\;\;\sum_{k=1}^{n} k^{3}=\!\left\{\dfrac{n(n+1)}{2}\right\}^{\!2}$$
+      </div>
+
+      <div class="sub-title">[증명] $\;\displaystyle\sum_{k=1}^{n} k^{2}=\dfrac{n(n+1)(2n+1)}{6}$</div>
+      <p>아래의 3차식이 항등식임을 이용하여 구한다.</p>
+      <div class="formula">$(k+1)^{3}-k^{3}=3k^{2}+3k+1$</div>
+
+      <p>양변의 $k$에 $1,\;2,\;3,\;\cdots,\;n$을 차례로 대입하여 모두 더하면</p>
+
+      <div class="formula left">
+        $$\begin{aligned}
+        2^{3}-1^{3} &= 3\cdot 1^{2}+3\cdot 1+1\\
+        3^{3}-2^{3} &= 3\cdot 2^{2}+3\cdot 2+1\\
+        4^{3}-3^{3} &= 3\cdot 3^{2}+3\cdot 3+1\\
+        &\;\;\vdots\\[-1mm]
+        +\quad (n+1)^{3}-n^{3} &= 3\cdot n^{2}+3\cdot n+1
+        \end{aligned}$$
+      </div>
+
+      <div class="formula left">
+        $$\begin{aligned}
+        (n\!+\!1)^{3}-1 &= 3\!\sum_{k=1}^{n}k^{2}+3\cdot\dfrac{n(n+1)}{2}+n\\[2mm]
+        \therefore\;3\!\sum_{k=1}^{n}k^{2} &= (n\!+\!1)^{3}-\dfrac{3n(n+1)}{2}-(n\!+\!1)=\dfrac{n(n+1)(2n+1)}{2}\\[2mm]
+        \therefore\;\sum_{k=1}^{n}k^{2}&=\dfrac{n(n+1)(2n+1)}{6}
+        \end{aligned}$$
+      </div>
+
+      <div class="note">$\sum k^{3}$은 $(k+1)^{4}-k^{4}=4k^{3}+6k^{2}+6k+1$을 이용하여 같은 방식으로 구할 수 있다 (증명 생략).</div>
+    </div>
+  </div>
+  <footer class="sheet-footer">5</footer>
+</section>
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title" style="margin-top:0;">헤비사이드 정리 (Heaviside cover-up)</h2>
+    <div class="concept">
+      <p>부분분수 공식만으로는 해결하기 어렵다. 복잡한 분수식 분해에 특화된 계산 방법이 있다. (<b>헤비사이드 가리기법</b>)</p>
+
+      <div class="sub-title">※ 헤비사이드 가리기법</div>
+
+      <div class="formula left">
+        $$(1)\;\;\dfrac{x+4}{x(x-3)(x+6)}=\dfrac{a}{x}+\dfrac{b}{x-3}+\dfrac{c}{x+6}$$
+      </div>
+
+      <p>양변에 $x(x-3)(x+6)$을 곱하면</p>
+      <p>$x+4=a(x-3)(x+6)+bx(x+6)+cx(x-3)$</p>
+      <p>이 성립하고 항등식이므로, $a$를 구하기 위해 $x=0$을 대입하면</p>
+      <p>$0+4=a(0-3)(0+6)$, &nbsp;즉 $a=\dfrac{0+4}{(0-3)(0+6)}=-\dfrac{2}{9}$</p>
+      <p>이것은 맨 처음 주어진 분수식의 좌변에서 $x$를 가리고 $x=0$을 대입한 값과 같다. 같은 방법으로 $b,\,c$도 구할 수 있다.</p>
+
+      <div class="formula left">
+        $$\begin{aligned}
+        a\;(x=0)\!:\;\; & a=\dfrac{0+4}{(0-3)(0+6)}=-\dfrac{2}{9}\\[2mm]
+        b\;(x=3)\!:\;\; & b=\dfrac{3+4}{3\cdot(3+6)}=\dfrac{7}{27}\\[2mm]
+        c\;(x=-6)\!:\;\; & c=\dfrac{-6+4}{(-6)(-6-3)}=-\dfrac{1}{27}
+        \end{aligned}$$
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">6</footer>
+</section>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">수학 · 대수</header>
+  <div class="sheet-body">
+    <div class="concept">
+      <div class="sub-title">※ 중근·기약 2차식이 포함된 경우</div>
+
+      <div class="formula left">
+        $$(2)\;\;\dfrac{2x-1}{(x+1)(x-2)^{2}}=\dfrac{a}{x+1}+\dfrac{b}{x-2}+\dfrac{c}{(x-2)^{2}}$$
+      </div>
+
+      <p>$(x+1)$ 가리고 $x=-1$ 대입 : $\;a=-\dfrac{1}{3}$</p>
+      <p>$(x-2)^{2}$ 가리고 $x=2$ 대입 : $\;c=1$</p>
+      <p>$2x-1=a(x-2)^{2}+b(x+1)(x-2)+c(x+1)$</p>
+      <p>(미분) $\;2=2a(x-2)+b(x-2)+b(x+1)+c$</p>
+      <p>다시 $x=2$ 대입 : $\;2=b(2+1)+c\;\;\therefore\; b=\dfrac{1}{3}$</p>
+
+      <div class="formula left" style="margin-top:calc(var(--one-line)*2);">
+        $$(3)\;\;\dfrac{3x-1}{(x-1)(x^{2}+9)}=\dfrac{a}{x-1}+\dfrac{bx+c}{x^{2}+9}$$
+      </div>
+
+      <p>$(x-1)$ 가리고 $x=1$ 대입 : $\;a=\dfrac{1}{5}$</p>
+      <p>$3x-1=a(x^{2}+9)+(bx+c)(x-1)$에서 계수 비교 :</p>
+      <p>$\therefore\;b=-\dfrac{1}{5},\;\;c=\dfrac{14}{5}$</p>
+    </div>
+  </div>
+  <footer class="sheet-footer">7</footer>
+</section>
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q44">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <span class="pnum"><a href="#sol-1" class="solution-link">1)</a></span>
+        <p>다음 수열의 첫째항부터 제 $n$항까지의 합 $S_{n}$을 구하여라.</p>
+        <p class="sub">(1) $\;\dfrac{1}{2\cdot 5}+\dfrac{1}{5\cdot 8}+\dfrac{1}{8\cdot 11}+\cdots+\dfrac{1}{(3n-1)(3n+2)}$</p>
+        <p class="sub">(2) $\;1+\dfrac{1}{1+2}+\dfrac{1}{1+2+3}+\dfrac{1}{1+2+3+4}+\cdots+\dfrac{1}{1+2+3+\cdots+n}$</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q45">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <span class="pnum"><a href="#sol-2" class="solution-link">2)</a></span>
+        <p>$\;\dfrac{1}{1\cdot 2\cdot 3}+\dfrac{1}{2\cdot 3\cdot 4}+\dfrac{1}{3\cdot 4\cdot 5}+\cdots+\dfrac{1}{10\cdot 11\cdot 12}\;$의 값을 구하여라.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">8</footer>
+</section>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">수학 · 대수</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q46">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <span class="pnum"><a href="#sol-3" class="solution-link">3)</a></span>
+        <p>다음 수열의 합을 구하여라.</p>
+        <p class="sub">(1) $\;\displaystyle\sum_{k=1}^{n}\dfrac{1}{\sqrt{k+1}+\sqrt{k+2}}$</p>
+        <p class="sub">(2) $\;\displaystyle\sum_{k=1}^{n}\dfrac{1}{\sqrt{2k+1}+\sqrt{2k-1}}$</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q47">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <span class="pnum"><a href="#sol-4" class="solution-link">4)</a></span>
+        <p>다음 수열의 합을 구하여라.</p>
+        <p class="sub">(1) $\;\displaystyle\sum_{k=1}^{40}\log_{3}\!\left(1-\dfrac{2}{2k+1}\right)$</p>
+        <p class="sub">(2) $\;\displaystyle\sum_{k=1}^{9}\log\!\left(1-\dfrac{2}{k+2}\right)$</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">9</footer>
+</section>
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q48">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <span class="pnum"><a href="#sol-5" class="solution-link">5)</a></span>
+        <p>수열 $\{a_{n}\}$에 대하여 다음에 답하여라.</p>
+        <p class="sub">(1) $\;\displaystyle\sum_{k=1}^{n} a_{k}=\dfrac{n}{n+1}$ 일 때, $\;\displaystyle\sum_{k=1}^{n}\dfrac{1}{a_{k}}$의 값을 구하여라.</p>
+        <p class="sub">(2) 첫째항부터 제 $n$항까지의 합 $S_{n}$이 $S_{n}=n^{2}$일 때,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$\;\displaystyle\sum_{k=1}^{100}\dfrac{1}{a_{k}\,a_{k+1}}$의 값을 구하여라.</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q49">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <span class="pnum"><a href="#sol-6" class="solution-link">6)</a></span>
+        <p>$n$이 자연수일 때, $x$에 대한 이차방정식</p>
+        <p style="text-align:center;">$x^{2}-6x+(2n+1)(2n+3)=0$</p>
+        <p>의 두 근 $\alpha_{n},\;\beta_{n}$에 대하여 $\;\displaystyle\sum_{n=1}^{10}\!\left(\dfrac{1}{\alpha_{n}}+\dfrac{1}{\beta_{n}}\right)$의 값을 구하여라.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">10</footer>
+</section>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">수학 · 대수</header>
+  <div class="problems-area single">
+
+    <div class="problem-block" data-qa-id="q50">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <span class="pnum"><a href="#sol-7" class="solution-link">7)</a></span>
+        <p>$\;\displaystyle\sum_{n=1}^{50} n\!\left(\sin\dfrac{n}{2}\pi+\cos\dfrac{n}{2}\pi\right)^{\!n}\;$의 값을 구하여라.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">11</footer>
+</section>
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">(2) 멱급수</h2>
+    <div class="concept">
+      <div class="sub-title">① 멱급수의 정의</div>
+      <p>등차수열과 등비수열의 각 항의 곱으로 이루어진 수열의 합을 <b>멱급수</b>라 한다. (수열의 합을 다른 말로 <b>급수</b>라고 한다.)</p>
+
+      <div class="ex">
+        <b>예)</b> $\;1\cdot 2+2\cdot 2^{2}+3\cdot 2^{3}+4\cdot 2^{4}+\cdots+n\cdot 2^{n}$ 에서<br>
+        항의 앞의 계수는 등차수열 $1,\,2,\,3,\,4,\,\cdots,\,n$,<br>
+        항의 뒤의 계수는 등비수열 $2,\,2^{2},\,2^{3},\,2^{4},\,\cdots,\,2^{n}$을<br>
+        서로 대응하는 항끼리 곱하여 더한 것을 멱급수라고 한다.
+      </div>
+
+      <div class="sub-title">② 멱급수의 계산</div>
+      <p>[1단계] 양변에 등비수열의 공비 $r\ne 1$을 곱한 다음, 지수가 같은 것끼리 같은 위치에 나열한다.</p>
+      <p>[2단계] $S-rS$를 계산하여 등비수열의 합을 이용하여 정리한다.</p>
+      <p>[3단계] 양변을 $1-r$로 나누어 $S$를 구한다.</p>
+    </div>
+  </div>
+  <footer class="sheet-footer">12</footer>
+</section>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">수학 · 대수</header>
+  <div class="problems-area single">
+
+    <div class="problem-block" data-qa-id="q51">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <span class="pnum"><a href="#sol-8" class="solution-link">8)</a></span>
+        <p>다음 수열의 첫째항부터 제 $n$항까지의 합을 구하여라.</p>
+        <p style="text-align:center; margin-top:4mm;">$1+3x+5x^{2}+7x^{3}+\cdots+(2n-1)x^{n-1}$</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">13</footer>
+</section>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="sheet-body">
+    <h1 class="chapter-title">수학적 귀납법</h1>
+
+    <h2 class="section-title">수열의 귀납적 정의</h2>
+    <div class="concept">
+      <p>수열의 일반항을 구하는 방법으로 첫째항과 이웃하는 두 항 사이의 관계식을 이용하는 방식이 있다. 수열 $\{a_n\}$에서</p>
+      <div class="formula left">
+        ① 첫째항 $a_1$의 값<br>
+        ② 이웃하는 두 항 $a_n,\ a_{n+1}$ 사이의 관계식 $\;(n=1,2,3,\cdots)$
+      </div>
+      <p>위의 두 조건이 주어지면 관계식의 $n$에 $1,\,2,\,3,\,\cdots$을 차례로 대입하여 수열 $\{a_n\}$의 모든 항을 정할 수 있다. 이와 같이 첫째항과 점화 관계식으로 수열을 정하는 것을 <b>수열의 귀납적 정의</b>라 하고, 이때 사용된 관계식을 그 수열의 <b>점화식</b>이라 한다. 또한 관계식만으로는 수열이 정해지지 않으므로 <b>반드시 첫째항이 주어져야 한다.</b></p>
+
+      <div class="note"><b>예)</b> 무한수열 $1,\,3,\,5,\,7,\,\cdots$ 을<br>
+        ① 일반항으로 표현하면 $\;a_n=2n-1$<br>
+        ② 귀납적으로 표현하면 $\;a_1=1,\;\;a_{n+1}=a_n+2\;\;(n=1,2,3,\cdots)$</div>
+    </div>
+  </div>
+  <footer class="sheet-footer">1</footer>
+</section>
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">등차수열·등비수열의 귀납적 정의</h2>
+    <div class="concept">
+
+      <div class="sub-title">1) 등차수열의 귀납적 정의</div>
+      <p>① 등차수열의 정의를 이용한 관계식</p>
+      <div class="formula">$a_{n+1}-a_n=d\;\;(d\text{는 일정})$</div>
+      <p>② 등차중항을 이용한 관계식</p>
+      <div class="formula">$2a_{n+1}=a_n+a_{n+2}\;\;\;\text{즉}\;\;a_{n+1}-a_n=a_{n+2}-a_{n+1}$</div>
+
+      <div class="sub-title">2) 등비수열의 귀납적 정의</div>
+      <p>① 등비수열의 정의를 이용한 관계식</p>
+      <div class="formula">$a_{n+1}=r\,a_n\;\;\;\text{즉}\;\;\dfrac{a_{n+1}}{a_n}=r\;\;(r\text{은 일정})$</div>
+      <p>② 등비중항을 이용한 관계식</p>
+      <div class="formula">${a_{n+1}}^{2}=a_n\,a_{n+2}\;\;\;\text{즉}\;\;\dfrac{a_{n+1}}{a_n}=\dfrac{a_{n+2}}{a_{n+1}}$</div>
+
+    </div>
+  </div>
+  <footer class="sheet-footer">2</footer>
+</section>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="problems-area single">
+
+    <div class="problem-block" data-qa-id="q52">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-52" class="solution-link">52</a></span>다음 수열 $\{a_n\}$의 일반항을 구하시오. (단, $n=1,2,3,\cdots$)</p>
+        <p class="sub">(1) $a_1=4,\;\;a_{n+1}-a_n=3$</p>
+        <p class="sub">(2) $a_1=5,\;\;\dfrac{a_{n+1}}{a_n}=-3$</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">3</footer>
+</section>
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">여러 가지 수열의 귀납적 정의</h2>
+    <div class="concept">
+
+      <div class="note">여기 단원은 하나씩 대입해서 찾는게 원칙이다.</div>
+
+      <div class="sub-title">1) $a_{n+1}=a_n+f(n)$ 꼴 (합형)</div>
+      <p>$n$에 $1,\,2,\,3,\,\cdots,\,n-1$을 차례로 대입하여 변끼리 더하면</p>
+      <div class="formula left">
+        $$\begin{aligned}
+        a_2 &= a_1 + f(1)\\
+        a_3 &= a_2 + f(2) = a_1 + f(1) + f(2)\\
+        a_4 &= a_3 + f(3) = a_1 + f(1) + f(2) + f(3)\\
+        &\;\;\vdots\\
+        \therefore\;a_n &= a_1 + f(1)+f(2)+\cdots+f(n-1) = a_1+\sum_{k=1}^{n-1} f(k)
+        \end{aligned}$$
+      </div>
+      <div class="note">$f(n)$이 상수이면 수열 $\{a_n\}$은 공차가 $f(n)$인 등차수열이다.</div>
+
+      <div class="sub-title">2) $a_{n+1}=a_n\,f(n)$ 꼴 (곱형)</div>
+      <p>$n$에 $1,\,2,\,3,\,\cdots,\,n-1$을 차례로 대입하여 변끼리 곱하면</p>
+      <div class="formula left">
+        $$\begin{aligned}
+        a_2 &= a_1\,f(1)\\
+        a_3 &= a_2\,f(2) = a_1\,f(1)\,f(2)\\
+        a_4 &= a_3\,f(3) = a_1\,f(1)\,f(2)\,f(3)\\
+        &\;\;\vdots\\
+        \therefore\;a_n &= a_1\,f(1)\,f(2)\cdots f(n-1)
+        \end{aligned}$$
+      </div>
+      <div class="note">$f(n)$이 상수이면 수열 $\{a_n\}$은 공비가 $f(n)$인 등비수열이다.</div>
+
+    </div>
+  </div>
+  <footer class="sheet-footer">4</footer>
+</section>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q53">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-53" class="solution-link">53</a></span>다음과 같이 정의된 수열 $\{a_n\}$에서 $a_5$의 값을 구하시오. (단, $n=1,2,3,\cdots$)</p>
+        <p class="sub">(1) $a_1=2,\;\;a_{n+1}=a_n+\dfrac{1}{n(n+1)}$</p>
+        <p class="sub">(2) $a_1=5,\;\;a_{n+1}=\dfrac{n}{n+1}\,a_n$</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q54">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-54" class="solution-link">54</a></span>수열 $\{a_n\}$의 첫째항부터 제 $n$항까지의 합을 $S_n$이라 할 때,</p>
+        <div class="cond-box"><p>$a_1=3,\;\;\;2S_n=a_{n+1}-3\;\;(n=1,2,3,\cdots)$</p></div>
+        <p>이 성립한다. 이때 $a_5$의 값을 구하시오.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">5</footer>
+</section>
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q55">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-55" class="solution-link">55</a></span>평면 위에서 어느 두 직선도 평행하지 않고, 어느 세 직선도 한 점에서 만나지 않도록 직선을 그어 평면을 분할한다고 한다. $n$개의 직선에 의해 나누어지는 영역의 개수를 $a_n$이라고 할 때, 다음 물음에 답하시오.</p>
+        <p class="sub">(1) $a_1,\,a_2,\,a_3$의 값을 구하고 $a_n$의 점화 관계식을 세우시오.</p>
+        <p class="sub">(2) $a_n$의 값을 구하시오.</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q56">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-56" class="solution-link">56</a></span>수직선 위의 두 점 $A(1),\;P_1(10)$에 대하여 선분 $\overline{AP_n}$을 $2:1$로 내분하는 점을 $P_{n+1}$이라 하자. 점 $P_n$의 좌표를 $a_n$이라 할 때, $a_5$의 값을 구하시오. (단, $n=1,2,3,\cdots$)</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">6</footer>
+</section>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q57">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-57" class="solution-link">57</a></span>$a_1=1$인 수열 $\{a_n\}$이 모든 자연수 $n$에 대하여</p>
+        <div class="cond-box"><p>$a_{n+1}=\begin{cases} 2a_n & (a_n\lt 15) \\ a_n-15 & (a_n\geq 15) \end{cases}$</p></div>
+        <p>를 만족시킬 때, $\;\displaystyle\sum_{n=1}^{30} a_n\;$의 값을 구하시오.</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q58">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-58" class="solution-link">58</a></span>수열 $\{a_n\}$은 $a_1=10$이고, 모든 자연수 $n$에 대하여</p>
+        <div class="cond-box"><p>$a_{n+1}=\begin{cases} 5-\dfrac{10}{a_n} & (a_n\text{이 정수인 경우}) \\ -2a_n+3 & (a_n\text{이 정수가 아닌 경우}) \end{cases}$</p></div>
+        <p>을 만족시킨다. $\;a_3+a_{12}\;$의 값을 구하시오.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">7</footer>
+</section>
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q59">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-59" class="solution-link">59</a></span>첫째항이 $10$인 수열 $\{a_n\}$이 모든 자연수 $n$에 대하여</p>
+        <div class="cond-box"><p>$a_{n+1}=\begin{cases} \dfrac{1}{2}a_n & (a_n\text{이 짝수인 경우}) \\ a_n+1 & (a_n\text{이 홀수인 경우}) \end{cases}$</p></div>
+        <p>를 만족시킬 때, $\;a_k+a_{k+1}=3\;$을 만족시키는 자연수 $k$의 최솟값을 구하시오.</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q60">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-60" class="solution-link">60</a></span>다음 조건을 만족시키는 모든 수열 $\{a_n\}$에 대하여 $a_7$의 최댓값과 최솟값을 각각 $M,\,m$이라 할 때, $M+m$의 값을 구하시오.</p>
+        <div class="cond-box">
+          <p>(가) $a_4=20$이고 모든 항이 $30$ 이하의 자연수이다.</p>
+          <p>(나) 모든 자연수 $n$에 대하여 $a_{n+1}=\begin{cases} a_n+4 & (a_n\text{이 3의 배수가 아닌 경우}) \\ \dfrac{1}{3}a_n & (a_n\text{이 3의 배수인 경우}) \end{cases}$</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">8</footer>
+</section>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="sheet-body">
+    <h2 class="section-title">수학적 귀납법</h2>
+    <div class="concept">
+
+      <div class="sub-title">1) 모든 자연수에 대한 명제 증명</div>
+      <p>자연수 $n$에 대한 명제 $p(n)$이 모든 자연수 $n$에 대하여 성립함을 증명하려면 다음 두 가지를 보이면 된다.</p>
+      <div class="formula left">
+        $\;(\text{i})\;$ $n=1$일 때 $\,p(n)$이 성립한다.<br>
+        $(\text{ii})\;$ $n=k$일 때 $\,p(n)$이 성립한다고 가정하면, $\,n=k+1$일 때에도 $\,p(n)$이 성립한다.
+      </div>
+
+      <div class="sub-title">2) $n\geq m$인 모든 자연수에 대한 명제 증명</div>
+      <p>명제 $p(n)$이 $n\geq m$($m$은 자연수)인 모든 자연수 $n$에 대하여 성립함을 증명하려면 다음 두 가지를 보이면 된다.</p>
+      <div class="formula left">
+        $\;(\text{i})\;$ $n=m$일 때 $\,p(n)$이 성립한다.<br>
+        $(\text{ii})\;$ $n=k\,(k\geq m)$일 때 $\,p(n)$이 성립한다고 가정하면, $\,n=k+1$일 때에도 $\,p(n)$이 성립한다.
+      </div>
+
+      <p style="margin-top:4mm;">이와 같은 방법으로 자연수에 대한 어떤 명제가 참임을 증명하는 방법을 <b>수학적 귀납법</b>이라 한다.</p>
+      <div class="note">수학적 증명법은 크게 직접증명법, 귀류법, 수학적 귀납법의 세 가지가 있다.</div>
+
+    </div>
+  </div>
+  <footer class="sheet-footer">9</footer>
+</section>
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q61">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-61" class="solution-link">61</a></span>모든 자연수 $n$에 대하여 명제 $p(n)$이 참이면 $p(3n)$도 참일 때, [보기]에서 옳은 것을 모두 고르면?</p>
+        <div class="cond-box">
+          <p>ㄱ. $p(1)$이 참이면 $p(9)$가 참이다.</p>
+          <p>ㄴ. $p(2)$가 참이면 $p(54)$가 참이다.</p>
+          <p>ㄷ. $p(3)$이 참이면 모든 자연수 $m$에 대하여 $p(3^{m})$은 참이다.</p>
+        </div>
+        <div class="choices">
+          <span>① ㄱ</span><span>② ㄷ</span><span>③ ㄱ, ㄴ</span><span>④ ㄱ, ㄷ</span><span>⑤ ㄱ, ㄴ, ㄷ</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q62">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-62" class="solution-link">62</a></span>모든 자연수 $n$에 대하여 다음 등식이 성립함을 수학적 귀납법으로 증명하시오.</p>
+        <p style="text-align:center; margin-top:3mm;">$\dfrac{1}{1\times 3}+\dfrac{1}{3\times 5}+\dfrac{1}{5\times 7}+\cdots+\dfrac{1}{(2n-1)(2n+1)}=\dfrac{n}{2n+1}$</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">10</footer>
+</section>
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q63">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-63" class="solution-link">63</a></span>$n\geq 5$인 모든 자연수 $n$에 대하여 $\;2^{n}\gt n^{2}\;$임을 수학적 귀납법으로 증명하시오.</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q64">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-64" class="solution-link">64</a></span>다음은 모든 자연수 $n$에 대하여 $\;n^{3}+5n\;$이 $6$의 배수임을 수학적 귀납법으로 증명하는 과정이다.</p>
+        <div class="cond-box">
+          <p>$\;(\text{i})\;\;n=1$일 때, $\,1+5=6\,$이므로 $\,n^{3}+5n\,$은 $6$의 배수이다.</p>
+          <p>$(\text{ii})\;n=k$일 때, $\,n^{3}+5n\,$이 $6$의 배수라고 가정하면 $\;k^{3}+5k=6m\,$ ($m$은 자연수) 으로 놓을 수 있다. 이때 $\,n=k+1\,$이면</p>
+          <p style="text-align:center;">$(k+1)^{3}+5(k+1)=k^{3}+3k^{2}+\boxed{\;\;(\text{가})\;\;}$<br>$=\boxed{\;\;(\text{나})\;\;}+6+3k(k+1)$</p>
+          <p>이고 $\,3k(k+1)\,$은 $6$의 배수이므로 $\,n=k+1\,$일 때도 $\,n^{3}+5n\,$은 $6$의 배수이다.</p>
+          <p>$\;(\text{i}),\,(\text{ii})\,$에 의하여 $\,n^{3}+5n\,$은 모든 자연수 $\,n\,$에 대하여 $6$의 배수이다.</p>
+        </div>
+        <p style="margin-top:3mm;">위의 증명에서 $(\text{가}),\,(\text{나})$에 알맞은 식을 각각 $f(k),\,g(k)$라 할 때, $\,f(1)+g(2)\,$의 값을 구하시오.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">11</footer>
+</section>
+
+<section class="sheet odd quick-answer-section">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="sheet-body">
+    <h2 class="section-title">빠른 정답</h2>
+    <div class="quick-answers">
+      <div class="qa-item"><span class="qa-num">1.</span><span class="qa-ans">(1) $\overline{\mathrm{AB}} = 10\sqrt{2}$<br>(2) $R = 10$</span></div>
+      <div class="qa-item"><span class="qa-num">2.</span><span class="qa-ans">$B = 60^\circ,$ $C = 90^\circ,$ $c = 20$</span></div>
+      <div class="qa-item"><span class="qa-num">3.</span><span class="qa-ans">$c = 6$</span></div>
+      <div class="qa-item"><span class="qa-num">4.</span><span class="qa-ans">(1) $\cos\theta = \dfrac{13}{16}$<br>(2) $\sin\theta = \dfrac{\sqrt{87}}{16}$</span></div>
+      <div class="qa-item"><span class="qa-num">5.</span><span class="qa-ans">(1) 풀이 참조<br>(2) $a = b$인 이등변삼각형</span></div>
+      <div class="qa-item"><span class="qa-num">6.</span><span class="qa-ans">(1) $\cos B = \dfrac{7\sqrt{3}}{20}$<br>(2) $\overline{\mathrm{AC}}^2 = \dfrac{56}{5}$</span></div>
+      <div class="qa-item"><span class="qa-num">7.</span><span class="qa-ans">$6\sqrt{7}\,\mathrm{cm}$</span></div>
+      <div class="qa-item"><span class="qa-num">8.</span><span class="qa-ans">(1) $a = 2\sqrt{21}$<br>(2) $S = 20\sqrt{3}$</span></div>
+      <div class="qa-item"><span class="qa-num">9.</span><span class="qa-ans">(1) $S = \dfrac{21\sqrt{11}}{4}$<br>(2) $R = \dfrac{15\sqrt{11}}{11}$<br>(3) $r = \dfrac{\sqrt{11}}{2}$</span></div>
+      <div class="qa-item"><span class="qa-num">10.</span><span class="qa-ans">(1) $S = 28\sqrt{3}$<br>(2) $\overline{\mathrm{BD}} = 3$</span></div>
+      <div class="qa-item"><span class="qa-num">11.</span><span class="qa-ans">(1) $xy = 4$<br>(2) $\overline{\mathrm{PQ}}_{\min} = 2$</span></div>
+      <div class="qa-item"><span class="qa-num">12.</span><span class="qa-ans">$S = 10\sqrt{3}$</span></div>
+      <div class="qa-item"><span class="qa-num">13.</span><span class="qa-ans">(1) ④ $41$<br>(2) ② $31$</span></div>
+      <div class="qa-item"><span class="qa-num">14.</span><span class="qa-ans">공차 $3$, $\,x_5 = 17$</span></div>
+      <div class="qa-item"><span class="qa-num">15.</span><span class="qa-ans">(1) $2,\,4,\,6$<br>(2) $k = -24$</span></div>
+      <div class="qa-item"><span class="qa-num">16.</span><span class="qa-ans">$a + b = 23$</span></div>
+      <div class="qa-item"><span class="qa-num">17.</span><span class="qa-ans">$a_2 = 9$</span></div>
+      <div class="qa-item"><span class="qa-num">18.</span><span class="qa-ans">$S_{30} = 90$</span></div>
+      <div class="qa-item"><span class="qa-num">19.</span><span class="qa-ans">(1) $1683$<br>(2) $679$</span></div>
+      <div class="qa-item"><span class="qa-num">20.</span><span class="qa-ans">$110$</span></div>
+      <div class="qa-item"><span class="qa-num">21.</span><span class="qa-ans">(1) ④ $47$<br>(2) ③ $212$</span></div>
+      <div class="qa-item"><span class="qa-num">22.</span><span class="qa-ans">(1) $a_n = 4\cdot 3^{\,n-1}$<br>(2) $80$</span></div>
+      <div class="qa-item"><span class="qa-num">23.</span><span class="qa-ans">제 $13$ 항</span></div>
+      <div class="qa-item"><span class="qa-num">24.</span><span class="qa-ans">② $5$</span></div>
+      <div class="qa-item"><span class="qa-num">25.</span><span class="qa-ans">$810$</span></div>
+      <div class="qa-item"><span class="qa-num">26.</span><span class="qa-ans">② $14$</span></div>
+      <div class="qa-item"><span class="qa-num">27.</span><span class="qa-ans">$6\sqrt{2}$</span></div>
+      <div class="qa-item"><span class="qa-num">28.</span><span class="qa-ans">$\dfrac{8^{\,12}}{9^{\,11}}$</span></div>
+      <div class="qa-item"><span class="qa-num">29.</span><span class="qa-ans">(1) $a_n = 2\cdot 3^{\,n}$<br>(2) $k = 5$</span></div>
+      <div class="qa-item"><span class="qa-num">30.</span><span class="qa-ans">$2046$</span></div>
+      <div class="qa-item"><span class="qa-num">31.</span><span class="qa-ans">$70$</span></div>
+      <div class="qa-item"><span class="qa-num">32.</span><span class="qa-ans">$11$</span></div>
+      <div class="qa-item"><span class="qa-num">33.</span><span class="qa-ans">$64$</span></div>
+      <div class="qa-item"><span class="qa-num">34.</span><span class="qa-ans">$25$ (만 원)</span></div>
+      <div class="qa-item"><span class="qa-num">35.</span><span class="qa-ans">$k = 8$</span></div>
+      <div class="qa-item"><span class="qa-num">36.</span><span class="qa-ans">(1) $120$<br>(2) $3280$<br>(3) $107$</span></div>
+      <div class="qa-item"><span class="qa-num">37.</span><span class="qa-ans">(1) $240$<br>(2) $20$</span></div>
+      <div class="qa-item"><span class="qa-num">38.</span><span class="qa-ans">$1540$</span></div>
+      <div class="qa-item"><span class="qa-num">39.</span><span class="qa-ans">(1) $\dfrac{4n(n+1)(n+2)}{3}+n$<br>(2) $605$</span></div>
+      <div class="qa-item"><span class="qa-num">40.</span><span class="qa-ans">(1) $1540$<br>(2) $\dfrac{n(n+1)(n+2)}{6}$</span></div>
+      <div class="qa-item"><span class="qa-num">41.</span><span class="qa-ans">$4960$</span></div>
+      <div class="qa-item"><span class="qa-num">42.</span><span class="qa-ans">(1) $\dfrac{n(n+1)(n+2)}{6}$<br>(2) $2^{\,n+1}-n-2$</span></div>
+      <div class="qa-item"><span class="qa-num">43.</span><span class="qa-ans">(1) $35$<br>(2) $\dfrac{n(n+1)(n+5)}{6}$</span></div>
+      <div class="qa-item"><span class="qa-num">44.</span><span class="qa-ans">(1) $\dfrac{n}{2(3n+2)}$<br>(2) $\dfrac{2n}{n+1}$</span></div>
+      <div class="qa-item"><span class="qa-num">45.</span><span class="qa-ans">$\dfrac{65}{264}$</span></div>
+      <div class="qa-item"><span class="qa-num">46.</span><span class="qa-ans">(1) $\sqrt{n+2}-\sqrt{2}$<br>(2) $\dfrac{\sqrt{2n+1}-1}{2}$</span></div>
+      <div class="qa-item"><span class="qa-num">47.</span><span class="qa-ans">(1) $-4$<br>(2) $-\log 55$</span></div>
+      <div class="qa-item"><span class="qa-num">48.</span><span class="qa-ans">(1) $\dfrac{n(n+1)(n+2)}{3}$<br>(2) $\dfrac{100}{201}$</span></div>
+      <div class="qa-item"><span class="qa-num">49.</span><span class="qa-ans">$\dfrac{20}{23}$</span></div>
+      <div class="qa-item"><span class="qa-num">50.</span><span class="qa-ans">$675$</span></div>
+      <div class="qa-item"><span class="qa-num">51.</span><span class="qa-ans">$x=1$일 때 $n^{2}$,<br>$x\ne 1$일 때 $\dfrac{1+x-(2n+1)x^{n}+(2n-1)x^{n+1}}{(1-x)^{2}}$</span></div>
+      <div class="qa-item"><span class="qa-num">52.</span><span class="qa-ans">(1) $a_n=3n+1$<br>(2) $a_n=5\cdot(-3)^{n-1}$</span></div>
+      <div class="qa-item"><span class="qa-num">53.</span><span class="qa-ans">(1) $\dfrac{14}{5}$ &nbsp; (2) $1$</span></div>
+      <div class="qa-item"><span class="qa-num">54.</span><span class="qa-ans">$243$</span></div>
+      <div class="qa-item"><span class="qa-num">55.</span><span class="qa-ans">(1) $a_1=2,\;a_2=4,$<br>$\;\;\;\,a_3=7,$<br>$\;\;\;\,a_{n+1}=a_n+(n+1)$<br>(2) $a_n=\dfrac{n^2+n+2}{2}$</span></div>
+      <div class="qa-item"><span class="qa-num">56.</span><span class="qa-ans">$\dfrac{25}{9}$</span></div>
+      <div class="qa-item"><span class="qa-num">57.</span><span class="qa-ans">$186$</span></div>
+      <div class="qa-item"><span class="qa-num">58.</span><span class="qa-ans">$\dfrac{1}{2}$</span></div>
+      <div class="qa-item"><span class="qa-num">59.</span><span class="qa-ans">$k=6$</span></div>
+      <div class="qa-item"><span class="qa-num">60.</span><span class="qa-ans">$24$</span></div>
+      <div class="qa-item"><span class="qa-num">61.</span><span class="qa-ans">⑤ ㄱ, ㄴ, ㄷ</span></div>
+      <div class="qa-item"><span class="qa-num">62.</span><span class="qa-ans">풀이 참조</span></div>
+      <div class="qa-item"><span class="qa-num">63.</span><span class="qa-ans">풀이 참조</span></div>
+      <div class="qa-item"><span class="qa-num">64.</span><span class="qa-ans">$32$</span></div>
+    </div>
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<section class="sheet odd solution-section">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="sheet-body">
+    <h2 class="section-title">정답 및 해설</h2>
+    <div class="solutions">
+
+      <div class="solution-item" id="sol-1" data-qa-id="q1">
+        <div class="sol-num">1.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $\overline{\mathrm{AB}} = 10\sqrt{2}$ &nbsp; (2) $R = 10$</div>
+        <p>$B = 180^\circ - (105^\circ + 45^\circ) = 30^\circ.$</p>
+        <p>(1) $\overline{\mathrm{AC}} = b = 10$ ($\angle B$의 대변), $\overline{\mathrm{AB}} = c$ ($\angle C$의 대변)이므로 사인법칙 $\dfrac{c}{\sin C} = \dfrac{b}{\sin B}$에서</p>
+        <p>$c = \dfrac{b\sin C}{\sin B} = \dfrac{10\sin 45^\circ}{\sin 30^\circ} = \dfrac{10\cdot\frac{\sqrt{2}}{2}}{\frac{1}{2}} = 10\sqrt{2}.$</p>
+        <p>(2) 사인법칙 $\dfrac{b}{\sin B} = 2R$에서 $2R = \dfrac{10}{\sin 30^\circ} = 20,$ &emsp;즉 $R = 10.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-2" data-qa-id="q2">
+        <div class="sol-num">2.</div>
+        <div class="sol-answer"><b>[정답]</b> $B = 60^\circ,\ C = 90^\circ,\ c = 20$</div>
+        <p>사인법칙 $\dfrac{a}{\sin A} = \dfrac{b}{\sin B}$로 $\sin B$를 구한다.</p>
+        <p>$\sin B = \dfrac{b\sin A}{a} = \dfrac{10\sqrt{3}\cdot\frac{1}{2}}{10} = \dfrac{\sqrt{3}}{2}.$</p>
+        <p>$0^\circ \lt B \lt 90^\circ$ 조건에서 $B = 60^\circ.$</p>
+        <p>$C = 180^\circ - (30^\circ + 60^\circ) = 90^\circ,$ &emsp;즉 $\mathrm{ABC}$는 직각삼각형.</p>
+        <p>$c = \dfrac{a\sin C}{\sin A} = \dfrac{10\cdot 1}{1/2} = 20.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-3" data-qa-id="q3">
+        <div class="sol-num">3.</div>
+        <div class="sol-answer"><b>[정답]</b> $c = 6$</div>
+        <p>$A + B + C = 180^\circ$이므로 $A + B = 180^\circ - C,$ &emsp;즉 $\sin(A+B) = \sin C.$</p>
+        <p>주어진 식에 대입 : $10\sin^2 C = 9 \Rightarrow \sin C = \dfrac{3}{\sqrt{10}}\;(\sin C \gt 0).$</p>
+        <p>사인법칙 $c = 2R\sin C = 2\sqrt{10}\cdot\dfrac{3}{\sqrt{10}} = 6.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-4" data-qa-id="q4">
+        <div class="sol-num">4.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $\cos\theta = \dfrac{13}{16}$ &nbsp; (2) $\sin\theta = \dfrac{\sqrt{87}}{16}$</div>
+        <p>(1) 코사인법칙 $\overline{\mathrm{BC}}^2 = \overline{\mathrm{AB}}^2 + \overline{\mathrm{AC}}^2 - 2\cdot\overline{\mathrm{AB}}\cdot\overline{\mathrm{AC}}\cos\theta.$</p>
+        <p>$(2\sqrt{7})^2 = 4^2 + 8^2 - 2\cdot 4\cdot 8\cos\theta$ $\Rightarrow 28 = 80 - 64\cos\theta,$ &emsp;즉 $\cos\theta = \dfrac{52}{64} = \dfrac{13}{16}.$</p>
+        <p>(2) $\sin^2\theta = 1 - \cos^2\theta = 1 - \dfrac{169}{256} = \dfrac{87}{256}.$</p>
+        <p>$0^\circ\lt\theta\lt 180^\circ$이므로 $\sin\theta\gt 0,$ $\sin\theta = \dfrac{\sqrt{87}}{16}.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-5" data-qa-id="q5">
+        <div class="sol-num">5.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) 풀이 참조 &nbsp; (2) $a = b$인 이등변삼각형</div>
+        <p>(1) 사인법칙·코사인법칙으로 모든 각을 변으로 표현. $\sin A = \dfrac{a}{2R},\ \sin B = \dfrac{b}{2R},\ \cos C = \dfrac{a^2+b^2-c^2}{2ab}$ 대입.</p>
+        <p>$a^2 = b^2 + ab\cdot\dfrac{a^2+b^2-c^2}{2ab} \Rightarrow 2a^2 = 2b^2 + a^2 + b^2 - c^2$<br>$\Rightarrow a^2 + c^2 = 3b^2.$</p>
+        <p>특수한 모양으로 결정되지 않는 일반 관계식. (※ 원본 식 표기 확인 필요)</p>
+        <p>(2) $a\cos B = b\cos A$에 코사인 변형 $\cos B = \dfrac{c^2+a^2-b^2}{2ca},\ \cos A = \dfrac{b^2+c^2-a^2}{2bc}$ 대입.</p>
+        <p>$a\cdot\dfrac{c^2+a^2-b^2}{2ca} = b\cdot\dfrac{b^2+c^2-a^2}{2bc}$ $\Rightarrow \dfrac{c^2+a^2-b^2}{2c} = \dfrac{b^2+c^2-a^2}{2c}.$</p>
+        <p>$\therefore a^2 = b^2,$ &emsp;즉 $a = b$인 이등변삼각형.</p>
+      </div>
+
+      <div class="solution-item" id="sol-6" data-qa-id="q6">
+        <div class="sol-num">6.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $\cos B = \dfrac{7\sqrt{3}}{20}$ &nbsp; (2) $\overline{\mathrm{AC}} = \dfrac{2\sqrt{70}}{5}$</div>
+        <p>원에 내접하는 사각형이므로 $B + D = 180^\circ,$ &emsp;즉 $\cos D = -\cos B.$</p>
+        <p>(1) 대각선 $\overline{\mathrm{AC}}$를 그어 두 삼각형 $\mathrm{ABC},\,\mathrm{ACD}$에 코사인법칙을 각각 적용.</p>
+        <p>$\overline{\mathrm{AC}}^2 = (2\sqrt{3})^2 + 4^2 - 2\cdot 2\sqrt{3}\cdot 4\cos B = 28 - 16\sqrt{3}\cos B.$</p>
+        <p>$\overline{\mathrm{AC}}^2 = (\sqrt{3})^2 + 2^2 - 2\cdot\sqrt{3}\cdot 2\cos D = 7 + 4\sqrt{3}\cos B.$</p>
+        <p>두 식의 우변이 같으므로 $28 - 16\sqrt{3}\cos B = 7 + 4\sqrt{3}\cos B$ $\Rightarrow 21 = 20\sqrt{3}\cos B,$ &emsp;즉 $\cos B = \dfrac{21}{20\sqrt{3}} = \dfrac{7\sqrt{3}}{20}.$</p>
+        <p>(2) $\overline{\mathrm{AC}}^2 = 7 + 4\sqrt{3}\cdot\dfrac{7\sqrt{3}}{20} = 7 + \dfrac{84}{20} = \dfrac{56}{5}.$</p>
+        <p>$\therefore \overline{\mathrm{AC}} = \sqrt{\dfrac{56}{5}} = \dfrac{2\sqrt{70}}{5}.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-7" data-qa-id="q7">
+        <div class="sol-num">7.</div>
+        <div class="sol-answer"><b>[정답]</b> $6\sqrt{7}\,\mathrm{cm}$</div>
+        <p>전개도 이용. 밑면 반지름 $r = 4,$ 모선 $\ell = 12$이므로 옆면을 펼치면 반지름 $12,$ 호의 길이 $2\pi\cdot 4 = 8\pi$인 부채꼴.</p>
+        <p>중심각 $\alpha = \dfrac{8\pi}{12} = \dfrac{2\pi}{3}\;(\text{rad}) = 120^\circ.$</p>
+        <p>$\mathrm{P}$를 펴서 부채꼴의 두 끝 위치 $\mathrm{P},\,\mathrm{P}'$에 두고 $\mathrm{Q}$는 모선 $\overline{\mathrm{OP}'}$의 중점이므로 $\overline{\mathrm{OQ}} = 6,\ \overline{\mathrm{OP}} = 12,\ \angle\mathrm{POQ} = 120^\circ.$</p>
+        <p>코사인법칙으로 $\overline{\mathrm{PQ}}^2 = 12^2 + 6^2 - 2\cdot 12\cdot 6\cos 120^\circ = 144 + 36 + 72 = 252.$</p>
+        <p>$\therefore \overline{\mathrm{PQ}} = \sqrt{252} = 6\sqrt{7}\,\mathrm{cm}.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-8" data-qa-id="q8">
+        <div class="sol-num">8.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $a = 2\sqrt{21}$ &nbsp; (2) $S = 20\sqrt{3}$ 또는 $5\sqrt{3}$</div>
+        <p>(1) $S = \dfrac{1}{2}bc\sin A$에서 $20\sqrt{3} = \dfrac{1}{2}\cdot 8\cdot 10\sin A = 40\sin A,$ &emsp;즉 $\sin A = \dfrac{\sqrt{3}}{2}.$</p>
+        <p>$0^\circ\lt A\lt 90^\circ$이므로 $A = 60^\circ,\ \cos A = \dfrac{1}{2}.$</p>
+        <p>코사인법칙 $a^2 = b^2 + c^2 - 2bc\cos A = 64 + 100 - 80 = 84,$ &emsp;즉 $a = 2\sqrt{21}.$</p>
+        <p>(2) 코사인법칙 $a^2 = b^2 + c^2 - 2bc\cos A \Rightarrow 84 = 100 + c^2 - 10c$ $\Rightarrow c^2 - 10c + 16 = 0$ $\Rightarrow c = 2,\ 8.$</p>
+        <p>$S = \dfrac{1}{2}bc\sin A = \dfrac{5\sqrt{3}}{2}c.$ $c = 8$일 때 $S = 20\sqrt{3},$ $c = 2$일 때 $S = 5\sqrt{3}.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-9" data-qa-id="q9">
+        <div class="sol-num">9.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $S = \dfrac{21\sqrt{11}}{4}$ &nbsp; (2) $R = \dfrac{15\sqrt{11}}{11}$ &nbsp; (3) $r = \dfrac{\sqrt{11}}{2}$</div>
+        <p>(1) 헤론의 공식. $s = \dfrac{5+7+9}{2} = \dfrac{21}{2}.$</p>
+        <p>$S = \sqrt{s(s-a)(s-b)(s-c)}$ $= \sqrt{\dfrac{21}{2}\cdot\dfrac{11}{2}\cdot\dfrac{7}{2}\cdot\dfrac{3}{2}}$ $= \sqrt{\dfrac{21\cdot 7\cdot 3\cdot 11}{16}} = \dfrac{21\sqrt{11}}{4}.$</p>
+        <p>(2) $S = \dfrac{abc}{4R}$에서 $R = \dfrac{abc}{4S} = \dfrac{5\cdot 7\cdot 9}{4\cdot\frac{21\sqrt{11}}{4}} = \dfrac{315}{21\sqrt{11}} = \dfrac{15}{\sqrt{11}} = \dfrac{15\sqrt{11}}{11}.$</p>
+        <p>(3) $S = \dfrac{1}{2}r(a+b+c) = \dfrac{r}{2}\cdot 21$에서 $r = \dfrac{2S}{21} = \dfrac{2}{21}\cdot\dfrac{21\sqrt{11}}{4} = \dfrac{\sqrt{11}}{2}.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-10" data-qa-id="q10">
+        <div class="sol-num">10.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $S = 28\sqrt{3}$ &nbsp; (2) $\overline{\mathrm{BD}} = 3$</div>
+        <p>(1) 평행사변형 $\mathrm{ABCD}$에서 삼각형 $\mathrm{ABC}$에 코사인법칙.</p>
+        <p>$13^2 = 7^2 + 8^2 - 2\cdot 7\cdot 8\cos B$ $\Rightarrow 169 = 113 - 112\cos B$ $\Rightarrow \cos B = -\dfrac{1}{2}.$</p>
+        <p>$90^\circ\lt B\lt 180^\circ$이므로 $B = 120^\circ,\ \sin B = \dfrac{\sqrt{3}}{2}.$</p>
+        <p>평행사변형 넓이 $S = \overline{\mathrm{AB}}\cdot\overline{\mathrm{BC}}\sin B = 7\cdot 8\cdot\dfrac{\sqrt{3}}{2} = 28\sqrt{3}.$</p>
+        <p>(2) 두 대각선 공식 $S = \dfrac{1}{2}\overline{\mathrm{AC}}\cdot\overline{\mathrm{BD}}\sin\theta$ 적용.</p>
+        <p>$6\sqrt{3} = \dfrac{1}{2}\cdot 8\cdot\overline{\mathrm{BD}}\cdot\sin 120^\circ = 2\sqrt{3}\,\overline{\mathrm{BD}}.$</p>
+        <p>$\therefore \overline{\mathrm{BD}} = 3.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-11" data-qa-id="q11">
+        <div class="sol-num">11.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $xy = 4$ &nbsp; (2) $\overline{\mathrm{PQ}}_{\min} = 2$</div>
+        <p>(1) 두 삼각형 $\mathrm{APQ},\,\mathrm{ABC}$가 $\angle A$를 공유.</p>
+        <p>$\dfrac{\triangle\mathrm{APQ}}{\triangle\mathrm{ABC}} = \dfrac{\frac{1}{2}xy\sin 60^\circ}{\frac{1}{2}\cdot 8\cdot 3\sin 60^\circ} = \dfrac{xy}{24} = \dfrac{1}{6}.$</p>
+        <p>$\therefore xy = 4.$</p>
+        <p>(2) 코사인법칙 : $\overline{\mathrm{PQ}}^2 = x^2 + y^2 - 2xy\cos 60^\circ = x^2 + y^2 - xy.$</p>
+        <p>$xy = 4$ 대입 : $\overline{\mathrm{PQ}}^2 = x^2 + y^2 - 4.$</p>
+        <p>산술·기하평균 : $x^2 + y^2 \ge 2xy = 8$ (등호 $x = y = 2$일 때).</p>
+        <p>$\therefore \overline{\mathrm{PQ}}^2 \ge 8 - 4 = 4,\ \overline{\mathrm{PQ}}_{\min} = 2.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-12" data-qa-id="q12">
+        <div class="sol-num">12.</div>
+        <div class="sol-answer"><b>[정답]</b> $S = 10\sqrt{3}$</div>
+        <p>$B + D = 60^\circ + 120^\circ = 180^\circ$이므로 사각형 $\mathrm{ABCD}$는 원에 내접.</p>
+        <p>대각선 $\overline{\mathrm{AC}}$에 대해 두 삼각형 $\mathrm{ABC},\,\mathrm{ACD}$로 분할.</p>
+        <p>$\triangle\mathrm{ABC} = \dfrac{1}{2}\cdot 7\cdot 4\sin 60^\circ = 14\cdot\dfrac{\sqrt{3}}{2} = 7\sqrt{3}.$</p>
+        <p>$\overline{\mathrm{AC}}$를 코사인법칙으로 : $\overline{\mathrm{AC}}^2 = 49 + 16 - 56\cos 60^\circ = 65 - 28 = 37.$</p>
+        <p>$\triangle\mathrm{ACD}$에서 $\overline{\mathrm{CD}} = 3,\ D = 120^\circ$이고 $\overline{\mathrm{DA}}$는 미지수. 코사인법칙 : $37 = \overline{\mathrm{DA}}^2 + 9 - 6\overline{\mathrm{DA}}\cos 120^\circ = \overline{\mathrm{DA}}^2 + 9 + 3\overline{\mathrm{DA}}$ $\Rightarrow \overline{\mathrm{DA}}^2 + 3\overline{\mathrm{DA}} - 28 = 0$ $\Rightarrow \overline{\mathrm{DA}} = \dfrac{-3+\sqrt{121}}{2} = 4.$</p>
+        <p>$\triangle\mathrm{ACD} = \dfrac{1}{2}\cdot 4\cdot 3\sin 120^\circ = 6\cdot\dfrac{\sqrt{3}}{2} = 3\sqrt{3}.$</p>
+        <p>$S = 7\sqrt{3} + 3\sqrt{3} = 10\sqrt{3}.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-13" data-qa-id="q13">
+        <div class="sol-num">13.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) ④ $41$ &nbsp; (2) ② $31$</div>
+        <p>등차중항으로 묶기: 등차수열 $\{a_n\}$에서 $a_{k-1} + a_{k+1} = 2a_k$. 또한 $a_2 + a_3 + a_4 = 3a_3$처럼 가운데 항을 중심으로 대칭인 항들의 합은 가운데 항의 정수배가 된다.</p>
+        <p>(1) $a_1 + a_3 = 2a_2 = 2 \Rightarrow a_2 = 1$. $a_5 + a_7 = 2a_6 = 42 \Rightarrow a_6 = 21$. 두 항의 차 $a_6 - a_2 = 4d = 20 \Rightarrow d = 5$.</p>
+        <p>$\therefore a_{10} = a_6 + 4d = 21 + 20 = 41$. ④번.</p>
+        <p>(2) $a_9 = a_3 + 18 \Rightarrow 6d = 18 \Rightarrow d = 3$. $a_2 + a_3 + a_4 = 3a_3 = 21 \Rightarrow a_3 = 7$.</p>
+        <p>$\therefore a_{11} = a_3 + 8d = 7 + 24 = 31$. ②번.</p>
+      </div>
+
+      <div class="solution-item" id="sol-14" data-qa-id="q14">
+        <div class="sol-num">14.</div>
+        <div class="sol-answer"><b>[정답]</b> 공차 $3$, $\,x_5 = 17$</div>
+        <p>$2$를 첫째항, $35$를 끝항으로 두면 사이의 $10$개를 합쳐 항 수가 총 $12$. 등차수열의 일반항에서 $35 = 2 + 11d \Rightarrow d = 3$.</p>
+        <p>기울기 관점: 점 $(1,\,2)$와 점 $(12,\,35)$를 잇는 직선의 기울기가 공차이므로 $d = \dfrac{35 - 2}{12 - 1} = 3$.</p>
+        <p>$x_5$는 수열의 제 $6$항이므로 $x_5 = 2 + 5d = 17$.</p>
+      </div>
+
+      <div class="solution-item" id="sol-15" data-qa-id="q15">
+        <div class="sol-num">15.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $2,\,4,\,6$ &nbsp; (2) $k = -24$</div>
+        <p>(1) 세 수를 $a-d,\,a,\,a+d$로 놓으면 (등차중항 활용 — 합·곱이 $d^2$만 남음) 합 $3a = 12 \Rightarrow a = 4$. 곱 $a(a^2 - d^2) = 4(16 - d^2) = 48 \Rightarrow d^2 = 4 \Rightarrow d = \pm 2$. 세 수는 $2,\,4,\,6$.</p>
+        <p>(2) 세 실근을 $\alpha-\beta,\,\alpha,\,\alpha+\beta$로 놓고 근과 계수의 관계 적용. 합 $3\alpha = 6 \Rightarrow \alpha = 2$. 두 근씩 곱의 합 $3\alpha^2 - \beta^2 = -4 \Rightarrow 12 - \beta^2 = -4 \Rightarrow \beta^2 = 16 \Rightarrow \beta = \pm 4$.</p>
+        <p>세 근은 $-2,\,2,\,6$. 곱 $\alpha(\alpha^2 - \beta^2) = 2(4 - 16) = -24$. 근과 계수의 관계에서 세 근의 곱 $= k$이므로 $k = -24$.</p>
+        <p>검산: $x^3 - 6x^2 - 4x + 24 = (x-2)(x^2 - 4x - 12)$ $= (x-2)(x-6)(x+2)$ → 근 $-2,\,2,\,6$ 확인.</p>
+      </div>
+
+      <div class="solution-item" id="sol-16" data-qa-id="q16">
+        <div class="sol-num">16.</div>
+        <div class="sol-answer"><b>[정답]</b> $a + b = 23$</div>
+        <p>나머지정리: $f(x)$를 $x-c$로 나눈 나머지는 $f(c)$. $f(-1),\,f(1),\,f(2)$가 이 순서로 등차수열이며 $f(-2) = 0$.</p>
+        <p>$f(-1) = -1 - a + b,\;\; f(1) = 1 + a + b,\;\; f(2) = 8 + 2a + b$.</p>
+        <p>등차중항 조건: $2f(1) = f(-1) + f(2)$. &emsp; $2(1+a+b) = (-1-a+b) + (8+2a+b)$ &emsp; $\Rightarrow$ &emsp; $2 + 2a + 2b = 7 + a + 2b$ &emsp; $\Rightarrow$ &emsp; $a = 5$.</p>
+        <p>$f(-2) = -8 - 2a + b = 0 \Rightarrow b = 8 + 2a = 18$.</p>
+        <p>$\therefore a + b = 5 + 18 = 23$.</p>
+      </div>
+
+      <div class="solution-item" id="sol-17" data-qa-id="q17">
+        <div class="sol-num">17.</div>
+        <div class="sol-answer"><b>[정답]</b> $a_2 = 9$</div>
+        <p>$|a_n|$의 의미: 공차 $d \neq 0$인 등차수열에서 $|a_p| = |a_q|$ ($p \neq q$)이면 두 항의 값이 다르므로 $a_p = -a_q$, 즉 부호가 반대이다. 두 항의 등차중항(가운데 항)이 $0$이라는 뜻.</p>
+        <p>$a_3 + a_5 = 6 \Rightarrow 2a_4 = 6 \Rightarrow a_4 = 3$.</p>
+        <p>$|a_4| = |a_6|$이고 $d \neq 0$이므로 $a_4 = -a_6 \Rightarrow a_6 = -3$. (또는 $a_4$와 $a_6$의 등차중항 $a_5 = 0$.)</p>
+        <p>공차 $d = \dfrac{a_6 - a_4}{2} = \dfrac{-3 - 3}{2} = -3$.</p>
+        <p>$\therefore a_2 = a_4 - 2d = 3 - 2(-3) = 9$.</p>
+      </div>
+
+      <div class="solution-item" id="sol-18" data-qa-id="q18">
+        <div class="sol-num">18.</div>
+        <div class="sol-answer"><b>[정답]</b> $S_{30} = 90$</div>
+        <p>일정 구간으로 끊은 등차수열의 합도 등차수열을 이룬다. 즉 $S_{10},\;S_{20} - S_{10},\;S_{30} - S_{20}$이 공차가 같은 등차수열.</p>
+        <p>$S_{10} = 10,\;S_{20} - S_{10} = 30$이므로 이 등차수열의 공차는 $20$. 따라서 $S_{30} - S_{20} = 30 + 20 = 50$.</p>
+        <p>$\therefore S_{30} = S_{20} + 50 = 40 + 50 = 90$.</p>
+      </div>
+
+      <div class="solution-item" id="sol-19" data-qa-id="q19">
+        <div class="sol-num">19.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $1683$ &nbsp; (2) $679$</div>
+        <p>나머지로 자연수를 분할하여 등차수열로 모으고 합 공식을 적용.</p>
+        <p>(1) $100$ 이하 $3$의 배수: $3,\,6,\,9,\,\cdots,\,99$. 첫째항 $3$, 공차 $3$, 끝항 $99$. 항수 $\dfrac{99-3}{3} + 1 = 33$.</p>
+        <p>$S = \dfrac{33(3+99)}{2} = \dfrac{33 \times 102}{2} = 33 \times 51 = 1683$.</p>
+        <p>(2) $100$ 이하 자연수 중 $7$로 나누어 $3$이 남는 수: $3,\,10,\,17,\,\cdots,\,94$. ($94 = 7\times 13 + 3$이고 다음 $101 = 7\times 14 + 3$은 $100$ 초과로 제외.)</p>
+        <p>첫째항 $3$, 공차 $7$, 끝항 $94$. 항수 $\dfrac{94-3}{7} + 1 = 14$.</p>
+        <p>$S = \dfrac{14(3+94)}{2} = 7 \times 97 = 679$.</p>
+      </div>
+
+      <div class="solution-item" id="sol-20" data-qa-id="q20">
+        <div class="sol-num">20.</div>
+        <div class="sol-answer"><b>[정답]</b> $110$</div>
+        <p>두 곡선의 차 $(x^2 + ax + b) - x^2 = ax + b$는 일차식. 따라서 $x$ 좌표가 등간격으로 늘어선 점에서 두 곡선 사이 세로 길이 $l_k$도 등차수열을 이룬다.</p>
+        <p>가우스 원리: 첫째항 $l_1 = 5$, 끝항 $l_{10} = 17$, 항수 $10$이므로</p>
+        <p>$l_1 + l_2 + \cdots + l_{10} = \dfrac{10(5 + 17)}{2} = 110$.</p>
+      </div>
+
+      <div class="solution-item" id="sol-21" data-qa-id="q21">
+        <div class="sol-num">21.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) ④ $47$ &nbsp; (2) ③ $212$</div>
+        <p>$S_n$이 $n$에 관한 이차식이고 상수항이 있을 때: $S_n = An^2 + Bn + C$ ($C \neq 0$)이면 $n \ge 2$에서 $a_n = 2An + (B-A)$로 등차수열이지만, $a_1 = S_1$은 이 공식과 일치하지 않는다 ($S_0 \neq 0$). 즉 $a_1$은 따로, $\{a_n\}$은 둘째항부터 등차.</p>
+        <p>(1) $S_n = n^2 + 6n + 2$. 상수항 $2 \neq 0$. $a_1 = S_1 = 9$ (특수). $n \ge 2$에서 $a_n = S_n - S_{n-1} = (n^2+6n+2) - \{(n-1)^2 + 6(n-1) + 2\}$ $= 2n + 5$.</p>
+        <p>$a_5 = 15,\;a_9 = 23$. $\therefore a_1 + a_5 + a_9 = 9 + 15 + 23 = 47$. ④번.</p>
+        <p>(2) $S_n = n^2 - 2n + 3$. 상수항 $3 \neq 0$. $a_1 = S_1 = 1 - 2 + 3 = 2$ (특수). $n \ge 2$에서 $a_n = 2n - 3$.</p>
+        <p>$a_1 + a_3 + a_5 + \cdots + a_{21}$은 총 $11$개 항. $a_1 = 2$만 특수항이고, $n = 3,\,5,\,\cdots,\,21$인 $10$개 항은 $a_n = 2n - 3$을 따른다.</p>
+        <p>$a_3 = 3,\,a_5 = 7,\,\cdots,\,a_{21} = 39$ — 공차 $4$. 합 $= \dfrac{10(3+39)}{2} = 210$.</p>
+        <p>$\therefore$ 총합 $= 2 + 210 = 212$. ③번.</p>
+      </div>
+
+      <div class="solution-item" id="sol-22" data-qa-id="q22">
+        <div class="sol-num">22.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $a_n = 4\cdot 3^{\,n-1}$ &nbsp; (2) $80$</div>
+        <p>(1) 첫째항을 $a$, 공비를 $r$이라 하면 $ar = 12,\;a r^4 = 324.$</p>
+        <p>두 식을 나누면 $r^3 = 27 \Rightarrow r = 3$ (실수), $a = 4.$ 따라서 $a_n = 4\cdot 3^{\,n-1}.$</p>
+        <p>(2) 공비 $r$이 양수일 때 $a_3 + a_4 = r^2(a_1 + a_2) \Rightarrow r^2 = 4 \Rightarrow r = 2.$</p>
+        <p>$a_1(1 + r) = 30 \Rightarrow 3 a_1 = 30 \Rightarrow a_1 = 10.$ 따라서 $a_4 = 10\cdot 2^3 = 80.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-23" data-qa-id="q23">
+        <div class="sol-num">23.</div>
+        <div class="sol-answer"><b>[정답]</b> 제 $13$ 항</div>
+        <p>$a_4 + a_7 = r^2(a_2 + a_5) \Rightarrow r^2 = 4.$ 모든 항 양수이므로 $r = 2.$</p>
+        <p>$a_2(1 + r^3) = 18 \Rightarrow 9\,a_2 = 18 \Rightarrow a_2 = 2,\;a_1 = 1.$ 일반항 $a_n = 2^{\,n-1}.$</p>
+        <p>$2^{\,n-1} \gt 3000$의 첫 자연수 $n$: $2^{\,11} = 2048,\;2^{\,12} = 4096$이므로 $n - 1 = 12,\;n = 13.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-24" data-qa-id="q24">
+        <div class="sol-num">24.</div>
+        <div class="sol-answer"><b>[정답]</b> ② $5$</div>
+        <p>전체 항의 개수는 $n + 2$. 첫째항 $5$, 공비 $2$이므로 마지막항은 $5\cdot 2^{\,n+1} = 320 \Rightarrow 2^{\,n+1} = 64 \Rightarrow n = 5.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-25" data-qa-id="q25">
+        <div class="sol-num">25.</div>
+        <div class="sol-answer"><b>[정답]</b> $810$</div>
+        <p>전체 $12$항의 등비수열에서 $a_1$은 $2$번째 항, $a_{10}$은 $11$번째 항이다. 두 항의 인덱스 합 $2 + 11 = 13$은 $1 + 12$와 같다.</p>
+        <p>등비 중항의 성질에 의해 $a_1\,a_{10} = (\text{1번째 항})\cdot(\text{12번째 항}) = 9\cdot 90 = 810.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-26" data-qa-id="q26">
+        <div class="sol-num">26.</div>
+        <div class="sol-answer"><b>[정답]</b> ② $14$</div>
+        <p>세 근을 $\dfrac{a}{r},\,a,\,ar$이라 하자. 근과 계수의 관계로</p>
+        <p>합 $a\!\left(\dfrac{1}{r} + 1 + r\right) = 7,$ &emsp;곱 $a^3 = 8 \Rightarrow a = 2$ (실수).</p>
+        <p>두 근씩의 곱의 합 $= a^2\!\left(\dfrac{1}{r} + 1 + r\right) = a\cdot 7 = 14.$ 따라서 $k = 14.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-27" data-qa-id="q27">
+        <div class="sol-num">27.</div>
+        <div class="sol-answer"><b>[정답]</b> $6\sqrt{2}$</div>
+        <p>다섯 원의 반지름은 등비수열을 이루고 양 끝항이 $6,\;12$이다. 다섯 항을 $r_1,\,r_2,\,r_3,\,r_4,\,r_5$라 하면 공비 $q$는 $r_1\,q^4 = r_5 \Rightarrow q^4 = \dfrac{12}{6} = 2.$</p>
+        <p>가운데 항 $r_3 = r_1\cdot q^2 = 6\sqrt{q^4} = 6\sqrt{2}.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-28" data-qa-id="q28">
+        <div class="sol-num">28.</div>
+        <div class="sol-answer"><b>[정답]</b> $\dfrac{8^{\,12}}{9^{\,11}}$</div>
+        <p>한 번 시행할 때마다 남는 정사각형이 $9$개에서 $8$개가 되므로 넓이는 $\dfrac{8}{9}$배가 된다.</p>
+        <p>$n$회 시행 후의 넓이 $= 9\cdot\!\left(\dfrac{8}{9}\right)^{\!n}.$ $\;n = 12$ 대입 $\Rightarrow 9\cdot\dfrac{8^{\,12}}{9^{\,12}} = \dfrac{8^{\,12}}{9^{\,11}}.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-29" data-qa-id="q29">
+        <div class="sol-num">29.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $a_n = 2\cdot 3^{\,n}$ &nbsp; (2) $k = 5$</div>
+        <p>(1) $n \ge 2$일 때 $a_n = S_n - S_{n-1} = 3^{\,n+1} - 3^{\,n} = 2\cdot 3^{\,n}.$</p>
+        <p>$n = 1$일 때 $a_1 = S_1 = 9 - 3 = 6 = 2\cdot 3^1$ — 일반식과 일치. 따라서 $a_n = 2\cdot 3^{\,n}.$</p>
+        <p>(2) $S_n = 5^{\,n+1} - k = 5\cdot 5^{\,n} + (-k).$ &emsp;$Ar^{\,n} + B$ 꼴에서 $A = 5,\;B = -k.$</p>
+        <p>첫째항부터 등비수열 $\Leftrightarrow B = -A \Leftrightarrow -k = -5 \Leftrightarrow k = 5.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-30" data-qa-id="q30">
+        <div class="sol-num">30.</div>
+        <div class="sol-answer"><b>[정답]</b> $2046$</div>
+        <p>$\dfrac{a_2\,a_4}{a_1\,a_3} = r^2 = \dfrac{64}{16} = 4 \Rightarrow r = 2$ (양수).</p>
+        <p>$a_1\,a_3 = a_1\cdot a_1 r^2 = 4\,a_1^{\,2} = 16 \Rightarrow a_1 = 2.$</p>
+        <p>$S_{10} = \dfrac{2(2^{\,10} - 1)}{2 - 1} = 2\cdot 1023 = 2046.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-31" data-qa-id="q31">
+        <div class="sol-num">31.</div>
+        <div class="sol-answer"><b>[정답]</b> $70$</div>
+        <p>부분합의 등비성: $S_{10},\;S_{20} - S_{10},\;S_{30} - S_{20}$은 공비 $r^{\,10}$인 등비수열.</p>
+        <p>$S_{10} = 10,\;S_{20} - S_{10} = 20 \Rightarrow$ 공비 $r^{\,10} = 2.$</p>
+        <p>$S_{30} - S_{20} = 20\cdot 2 = 40,$ &emsp;즉 $S_{30} = 30 + 40 = 70.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-32" data-qa-id="q32">
+        <div class="sol-num">32.</div>
+        <div class="sol-answer"><b>[정답]</b> $11$</div>
+        <p>$\dfrac{a_4\,a_5}{a_2\,a_6} = \dfrac{a_1^{\,2}\,r^7}{a_1^{\,2}\,r^6} = r = \dfrac{32}{16} = 2.$</p>
+        <p>$a_2\,a_6 = a_1^{\,2}\,r^6 = 64\,a_1^{\,2} = 16 \Rightarrow a_1^{\,2} = \dfrac{1}{4} \Rightarrow a_1 = \dfrac{1}{2}$ (양수).</p>
+        <p>$S_n = \dfrac{(1/2)(2^{\,n} - 1)}{1} = \dfrac{2^{\,n} - 1}{2}.$ &emsp;$S_n \gt 720 \Leftrightarrow 2^{\,n} \gt 1441.$</p>
+        <p>$2^{\,10} = 1024,\;2^{\,11} = 2048$이므로 처음으로 만족하는 $n = 11.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-33" data-qa-id="q33">
+        <div class="sol-num">33.</div>
+        <div class="sol-answer"><b>[정답]</b> $64$</div>
+        <p>등비수열의 합과 그 역수의 합 사이 관계 $T_n = \dfrac{S_n}{a_1\,a_n}$을 이용한다.</p>
+        <p>$a_1\,a_{10} = \dfrac{S_{10}}{T_{10}} = \dfrac{256}{4} = 64.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-34" data-qa-id="q34">
+        <div class="sol-num">34.</div>
+        <div class="sol-answer"><b>[정답]</b> $a = 25$</div>
+        <p>매년 초 $a$만 원씩 $10$년 적립한 후 $10$년 말의 원리합계는 첫째항 $a(1.04)$, 공비 $1.04$인 등비수열의 합.</p>
+        <p>$S = \dfrac{a(1.04)\{(1.04)^{\,10} - 1\}}{1.04 - 1} = \dfrac{a\cdot 1.04\cdot (1.5 - 1)}{0.04} = \dfrac{a\cdot 1.04\cdot 0.5}{0.04} = 13\,a$ (만 원).</p>
+        <p>$13a = 325 \Rightarrow a = 25.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-35" data-qa-id="q35">
+        <div class="sol-num">35.</div>
+        <div class="sol-answer"><b>[정답]</b> $k = 8$</div>
+        <p>$f(x) - g(x) = (x-1)(k - 2x + 1).$ &emsp;$x \ge 2$에서 $x - 1 \gt 0$이므로 $f \ge g \Leftrightarrow x \le \dfrac{k+1}{2}.$</p>
+        <p>$g(2) = 3,\;g(3) = 10,\;g(4) = 21,\;g(5) = 36.$ $h(x)$가 $f$가 되는 임계 $k$를 살펴 케이스 분류.</p>
+        <p>$\bullet$ $k \ge 9$: 모두 $h = f$, 즉 $h(2),\,h(3),\,h(4),\,h(5) = k,\,2k,\,3k,\,4k.$ (가)는 자동 성립. (나) $9k^2 = 8k^2 \Rightarrow k = 0$ — 모순.</p>
+        <p>$\bullet$ $7 \le k \lt 9$: $h(2),\,h(3),\,h(4) = k,\,2k,\,3k$ (등차 자동), $h(5) = g(5) = 36.$</p>
+        <p>(나) $h(4)^2 = h(3)\cdot h(5) \Rightarrow 9k^2 = 72k \Rightarrow k = 8$ (또는 $0$). 범위 내 $\Rightarrow k = 8.$</p>
+        <p>$\bullet$ $k \lt 7$: 각 구간에서 (가)를 풀면 $k = 7,\,-1$ 등 모두 해당 범위 밖이라 해 없음.</p>
+        <p>따라서 $k = 8.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-36" data-qa-id="q36">
+        <div class="sol-num">36.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $120$ &nbsp; (2) $3280$ &nbsp; (3) $107$</div>
+        <p>(1) $\Sigma$ 분배 + 자연수의 합 공식. $\displaystyle\sum_{k=1}^{10}(2k+1) = 2\sum k + \sum 1 = 2\cdot\dfrac{10\cdot 11}{2} + 10 = 120.$</p>
+        <p>(2) 등비합. 첫째항 $1$, 공비 $3$, 항 $8$개. $\displaystyle\sum_{k=1}^{8} 3^{\,k-1} = \dfrac{3^8-1}{3-1} = \dfrac{6560}{2} = 3280.$</p>
+        <p>(3) 분배. $\displaystyle\sum 2^{\,k} = \dfrac{2(2^5-1)}{1} = 62,\;3\sum k = 3\cdot 15 = 45.$ 합 $107.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-37" data-qa-id="q37">
+        <div class="sol-num">37.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $240$ &nbsp; (2) $20$</div>
+        <p>(1) 상수배의 성질. $\displaystyle\sum 3(a_{k+1}-a_k) = 3\sum (a_{k+1}-a_k) = 3\cdot 80 = 240.$</p>
+        <p>(2) 망원합(telescoping). $\displaystyle\sum_{k=1}^{20}(a_{k+1}-a_k) = a_{21} - a_1 = 30 - 10 = 20.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-38" data-qa-id="q38">
+        <div class="sol-num">38.</div>
+        <div class="sol-answer"><b>[정답]</b> $1540$</div>
+        <p>$S_n = n^2 + n.$ $n\ge 2$일 때 $a_n = S_n - S_{n-1} = (n^2+n) - ((n-1)^2 + (n-1)) = 2n.$</p>
+        <p>$n=1$일 때 $a_1 = S_1 = 2 = 2\cdot 1$ — 일치. 따라서 $a_n = 2n.$</p>
+        <p>$\displaystyle\sum_{k=1}^{10} a_k^{\,2} = \sum (2k)^2 = 4\sum k^2 = 4\cdot\dfrac{10\cdot 11\cdot 21}{6} = 4\cdot 385 = 1540.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-39" data-qa-id="q39">
+        <div class="sol-num">39.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $\dfrac{4n(n+1)(n+2)}{3}+n$ &nbsp; (2) $605$</div>
+        <p>(1) $(2k+1)^2 = 4k(k+1) + 1$로 변형하면 연속 자연수 곱의 합 공식 적용 편하다.</p>
+        <p>$\displaystyle\sum_{k=1}^{n}(2k+1)^2 = 4\sum k(k+1) + \sum 1 = 4\cdot\dfrac{n(n+1)(n+2)}{3} + n.$</p>
+        <p>(2) 일반항 $k\,(k+4)$ 꼴. $\displaystyle\sum_{k=1}^{10} k(k+4) = \sum k^2 + 4\sum k = 385 + 4\cdot 55 = 385 + 220 = 605.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-40" data-qa-id="q40">
+        <div class="sol-num">40.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $1540$ &nbsp; (2) $\dfrac{n(n+1)(n+2)}{6}$</div>
+        <p>(1) 일반항 $k(21-k).$ $\displaystyle\sum_{k=1}^{20} k(21-k) = 21\sum k - \sum k^2 = 21\cdot 210 - 2870 = 1540.$</p>
+        <p>(2) 일반항 $k(n+1-k).$ $\displaystyle\sum_{k=1}^{n} k(n+1-k) = (n+1)\sum k - \sum k^2$ $= \dfrac{n(n+1)^2}{2} - \dfrac{n(n+1)(2n+1)}{6}$ $= \dfrac{n(n+1)}{6}\bigl[3(n+1)-(2n+1)\bigr]$ $= \dfrac{n(n+1)(n+2)}{6}.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-41" data-qa-id="q41">
+        <div class="sol-num">41.</div>
+        <div class="sol-answer"><b>[정답]</b> $4960$</div>
+        <p>$k$층의 블록 수 $T_k = 1+2+\cdots+k = \dfrac{k(k+1)}{2}$ (삼각수). $1,\,3,\,6,\,10,\,\ldots$ 와 일치.</p>
+        <p>$30$층 총 블록 수 $= \displaystyle\sum_{k=1}^{30}\dfrac{k(k+1)}{2} = \dfrac{1}{2}\sum k(k+1)$ $= \dfrac{1}{2}\cdot\dfrac{30\cdot 31\cdot 32}{3} = \dfrac{30\cdot 31\cdot 32}{6} = 4960.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-42" data-qa-id="q42">
+        <div class="sol-num">42.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $\dfrac{n(n+1)(n+2)}{6}$ &nbsp; (2) $2^{\,n+1}-n-2$</div>
+        <p>(1) 일반항 $a_k = 1+2+\cdots+k = \dfrac{k(k+1)}{2}.$ 합 $S_n = \displaystyle\sum_{k=1}^{n}\dfrac{k(k+1)}{2} = \dfrac{n(n+1)(n+2)}{6}.$</p>
+        <p>(2) 일반항 $a_k = 1+2+4+\cdots+2^{\,k-1} = 2^{\,k}-1$ (등비합).</p>
+        <p>$S_n = \displaystyle\sum_{k=1}^{n}(2^{\,k}-1) = \dfrac{2(2^{\,n}-1)}{1} - n = 2^{\,n+1} - n - 2.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-43" data-qa-id="q43">
+        <div class="sol-num">43.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $35$ &nbsp; (2) $\dfrac{n(n+1)(n+5)}{6}$</div>
+        <p>(1) 안쪽 합 $\displaystyle\sum_{j=1}^{k} j = \dfrac{k(k+1)}{2}.$</p>
+        <p>$\displaystyle\sum_{k=1}^{5}\dfrac{k(k+1)}{2} = \dfrac{1}{2}\cdot\dfrac{5\cdot 6\cdot 7}{3} = \dfrac{210}{6} = 35.$</p>
+        <p>(2) 안쪽 합 $\displaystyle\sum_{j=1}^{k}(j+1) = \dfrac{k(k+1)}{2} + k = \dfrac{k(k+3)}{2}.$</p>
+        <p>$\displaystyle\sum_{k=1}^{n}\dfrac{k(k+3)}{2} = \dfrac{1}{2}\!\left[\dfrac{n(n+1)(2n+1)}{6} + 3\cdot\dfrac{n(n+1)}{2}\right]$ $= \dfrac{n(n+1)}{12}\bigl[(2n+1)+9\bigr] = \dfrac{n(n+1)(n+5)}{6}.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-44" data-qa-id="q44">
+        <div class="sol-num"><a href="#">1.</a></div>
+        <div class="sol-answer"><b>[정답]</b> (1) $\dfrac{n}{2(3n+2)}$ &nbsp; (2) $\dfrac{2n}{n+1}$</div>
+        <p>(1) $\dfrac{1}{(3k-1)(3k+2)}=\dfrac{1}{3}\!\left(\dfrac{1}{3k-1}-\dfrac{1}{3k+2}\right)$</p>
+        <p>$S_{n}=\dfrac{1}{3}\!\left(\dfrac{1}{2}-\dfrac{1}{3n+2}\right)=\dfrac{1}{3}\cdot\dfrac{3n}{2(3n+2)}=\dfrac{n}{2(3n+2)}$</p>
+        <p>(2) 제$k$항 $=\dfrac{1}{1+2+\cdots+k}=\dfrac{2}{k(k+1)}=2\!\left(\dfrac{1}{k}-\dfrac{1}{k+1}\right)$</p>
+        <p>$S_{n}=2\!\left(1-\dfrac{1}{n+1}\right)=\dfrac{2n}{n+1}$</p>
+      </div>
+
+      <div class="solution-item" id="sol-45" data-qa-id="q45">
+        <div class="sol-num"><a href="#">2.</a></div>
+        <div class="sol-answer"><b>[정답]</b> $\dfrac{65}{264}$</div>
+        <p>$\dfrac{1}{k(k+1)(k+2)}=\dfrac{1}{2}\!\left(\dfrac{1}{k(k+1)}-\dfrac{1}{(k+1)(k+2)}\right)$</p>
+        <p>$\displaystyle\sum_{k=1}^{10}=\dfrac{1}{2}\!\left(\dfrac{1}{1\cdot 2}-\dfrac{1}{11\cdot 12}\right)=\dfrac{1}{2}\cdot\dfrac{65}{132}=\dfrac{65}{264}$</p>
+      </div>
+
+      <div class="solution-item" id="sol-46" data-qa-id="q46">
+        <div class="sol-num"><a href="#">3.</a></div>
+        <div class="sol-answer"><b>[정답]</b> (1) $\sqrt{n+2}-\sqrt{2}$ &nbsp; (2) $\dfrac{\sqrt{2n+1}-1}{2}$</div>
+        <p>(1) 유리화: $\dfrac{1}{\sqrt{k+1}+\sqrt{k+2}}=\dfrac{\sqrt{k+2}-\sqrt{k+1}}{(k+2)-(k+1)}=\sqrt{k+2}-\sqrt{k+1}$</p>
+        <p>$S_{n}=(\sqrt{3}-\sqrt{2})+(\sqrt{4}-\sqrt{3})+\cdots+(\sqrt{n+2}-\sqrt{n+1})=\sqrt{n+2}-\sqrt{2}$</p>
+        <p>(2) 유리화: $\dfrac{1}{\sqrt{2k+1}+\sqrt{2k-1}}=\dfrac{\sqrt{2k+1}-\sqrt{2k-1}}{2}$</p>
+        <p>$S_{n}=\dfrac{1}{2}\bigl(\sqrt{2n+1}-1\bigr)$</p>
+      </div>
+
+      <div class="solution-item" id="sol-47" data-qa-id="q47">
+        <div class="sol-num"><a href="#">4.</a></div>
+        <div class="sol-answer"><b>[정답]</b> (1) $-4$ &nbsp; (2) $-\log 55$</div>
+        <p>(1) $\log_{3}\!\left(1-\dfrac{2}{2k+1}\right)=\log_{3}\dfrac{2k-1}{2k+1}$</p>
+        <p>$\displaystyle\sum_{k=1}^{40}=\log_{3}\!\left(\dfrac{1}{3}\cdot\dfrac{3}{5}\cdot\dfrac{5}{7}\cdots\dfrac{79}{81}\right)=\log_{3}\dfrac{1}{81}=-4$</p>
+        <p>(2) $\log\!\left(1-\dfrac{2}{k+2}\right)=\log\dfrac{k}{k+2}$</p>
+        <p>$\displaystyle\sum_{k=1}^{9}=\log\!\left(\dfrac{1}{3}\cdot\dfrac{2}{4}\cdot\dfrac{3}{5}\cdots\dfrac{9}{11}\right)=\log\dfrac{1\cdot 2}{10\cdot 11}=\log\dfrac{1}{55}=-\log 55$</p>
+      </div>
+
+      <div class="solution-item" id="sol-48" data-qa-id="q48">
+        <div class="sol-num"><a href="#">5.</a></div>
+        <div class="sol-answer"><b>[정답]</b> (1) $\dfrac{n(n+1)(n+2)}{3}$ &nbsp; (2) $\dfrac{100}{201}$</div>
+        <p>(1) $a_{n}=S_{n}-S_{n-1}=\dfrac{n}{n+1}-\dfrac{n-1}{n}=\dfrac{1}{n(n+1)}\;(n\ge 2)$. $a_{1}=S_{1}=\tfrac{1}{2}=\tfrac{1}{1\cdot 2}$이므로 모든 $n$에 성립.</p>
+        <p>$\dfrac{1}{a_{k}}=k(k+1)$이므로 $\displaystyle\sum_{k=1}^{n}\dfrac{1}{a_{k}}=\sum_{k=1}^{n}k(k+1)=\dfrac{n(n+1)(n+2)}{3}$</p>
+        <p>(2) $a_{n}=S_{n}-S_{n-1}=n^{2}-(n-1)^{2}=2n-1\;(n\ge 2)$. $a_{1}=1$이므로 성립.</p>
+        <p>$\dfrac{1}{a_{k}\,a_{k+1}}=\dfrac{1}{(2k-1)(2k+1)}=\dfrac{1}{2}\!\left(\dfrac{1}{2k-1}-\dfrac{1}{2k+1}\right)$</p>
+        <p>$\displaystyle\sum_{k=1}^{100}=\dfrac{1}{2}\!\left(1-\dfrac{1}{201}\right)=\dfrac{100}{201}$</p>
+      </div>
+
+      <div class="solution-item" id="sol-49" data-qa-id="q49">
+        <div class="sol-num"><a href="#">6.</a></div>
+        <div class="sol-answer"><b>[정답]</b> $\dfrac{20}{23}$</div>
+        <p>근과 계수의 관계: $\alpha_{n}+\beta_{n}=6,\;\;\alpha_{n}\beta_{n}=(2n+1)(2n+3)$</p>
+        <p>$\dfrac{1}{\alpha_{n}}+\dfrac{1}{\beta_{n}}=\dfrac{6}{(2n+1)(2n+3)}=3\!\left(\dfrac{1}{2n+1}-\dfrac{1}{2n+3}\right)$</p>
+        <p>$\displaystyle\sum_{n=1}^{10}=3\!\left(\dfrac{1}{3}-\dfrac{1}{23}\right)=3\cdot\dfrac{20}{69}=\dfrac{20}{23}$</p>
+      </div>
+
+      <div class="solution-item" id="sol-50" data-qa-id="q50">
+        <div class="sol-num"><a href="#">7.</a></div>
+        <div class="sol-answer"><b>[정답]</b> $675$</div>
+        <p>$n$을 4로 나눈 나머지에 따라 $\sin\dfrac{n}{2}\pi+\cos\dfrac{n}{2}\pi$ 값을 구하면:</p>
+        <p>$n\equiv 1:\ 1,\quad n\equiv 2:\ {-1},\quad n\equiv 3:\ {-1},\quad n\equiv 0:\ 1$</p>
+        <p>각 항 $n\!\left(\sin\dfrac{n}{2}\pi+\cos\dfrac{n}{2}\pi\right)^{\!n}$은 $n\equiv 1:\ n,\; n\equiv 2:\ n,\; n\equiv 3:\ {-n},\; n\equiv 0:\ n$</p>
+        <p>4개씩 묶으면 $(4k\!-\!3)+(4k\!-\!2)-(4k\!-\!1)+4k=8k-4$</p>
+        <p>$50=4\times 12+2$이므로 12묶음 $+$ 나머지 $n=49,\,50$</p>
+        <p>$\displaystyle\sum_{k=1}^{12}(8k-4)=8\cdot 78-48=576$</p>
+        <p>$n=49:\ 49,\quad n=50:\ 50$. 따라서 $576+49+50=675$</p>
+      </div>
+
+      <div class="solution-item" id="sol-51" data-qa-id="q51">
+        <div class="sol-num"><a href="#">8.</a></div>
+        <div class="sol-answer"><b>[정답]</b> $x=1$일 때 $n^{2}$, &nbsp; $x\ne 1$일 때 $\dfrac{1+x-(2n+1)x^{n}+(2n-1)x^{n+1}}{(1-x)^{2}}$</div>
+        <p>$x=1$이면 $S=1+3+5+\cdots+(2n-1)=n^{2}$</p>
+        <p>$x\ne 1$이면 $S=1+3x+5x^{2}+\cdots+(2n-1)x^{n-1}$</p>
+        <p>$xS=\;\;x+3x^{2}+\cdots+(2n-3)x^{n-1}+(2n-1)x^{n}$</p>
+        <p>$(1-x)S=1+2x+2x^{2}+\cdots+2x^{n-1}-(2n-1)x^{n}$</p>
+        <p>$=1+\dfrac{2x(1-x^{n-1})}{1-x}-(2n-1)x^{n}$</p>
+        <p>$=\dfrac{(1-x)+2x(1-x^{n-1})-(2n-1)x^{n}(1-x)}{1-x}$</p>
+        <p>$=\dfrac{1+x-(2n+1)x^{n}+(2n-1)x^{n+1}}{1-x}$</p>
+        <p>$\therefore\;S=\dfrac{1+x-(2n+1)x^{n}+(2n-1)x^{n+1}}{(1-x)^{2}}$</p>
+      </div>
+
+      <div class="solution-item" id="sol-52" data-qa-id="q52">
+        <div class="sol-num">52.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $a_n=3n+1$ &nbsp; (2) $a_n=5\cdot(-3)^{n-1}$</div>
+        <p>(1) 공차 $3$, 첫째항 $4$인 등차수열이므로 $a_n=4+3(n-1)=3n+1$.</p>
+        <p>(2) 공비 $-3$, 첫째항 $5$인 등비수열이므로 $a_n=5\cdot(-3)^{n-1}$.</p>
+      </div>
+
+      <div class="solution-item" id="sol-53" data-qa-id="q53">
+        <div class="sol-num">53.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $\dfrac{14}{5}$ &nbsp; (2) $1$</div>
+        <p>(1) $\dfrac{1}{n(n+1)}=\dfrac{1}{n}-\dfrac{1}{n+1}$ (부분분수). 합형 점화식에 대입하면</p>
+        <p>$a_5=a_1+\displaystyle\sum_{k=1}^{4}\!\left(\dfrac{1}{k}-\dfrac{1}{k+1}\right)$ $=2+\!\left(1-\dfrac{1}{5}\right)=\dfrac{14}{5}$</p>
+        <p>(2) 곱형 점화식이므로 $a_n=a_1\cdot\dfrac{1}{2}\cdot\dfrac{2}{3}\cdot\dfrac{3}{4}\cdots\dfrac{n-1}{n}$ $=5\cdot\dfrac{1}{n}=\dfrac{5}{n}$.</p>
+        <p>따라서 $a_5=\dfrac{5}{5}=1$.</p>
+      </div>
+
+      <div class="solution-item" id="sol-54" data-qa-id="q54">
+        <div class="sol-num">54.</div>
+        <div class="sol-answer"><b>[정답]</b> $243$</div>
+        <p>$2S_n=a_{n+1}-3$, $\;2S_{n-1}=a_n-3$ ($n\geq 2$). 두 식을 빼면</p>
+        <p>$2a_n=a_{n+1}-a_n\;\Rightarrow\;a_{n+1}=3a_n$</p>
+        <p>$n=1$ 대입: $2a_1=a_2-3$, $a_2=9=3a_1$. 모든 $n$에서 $a_{n+1}=3a_n$ 성립.</p>
+        <p>$\{a_n\}$은 첫째항 $3$, 공비 $3$인 등비수열이므로 $a_n=3^{n}$.</p>
+        <p>$\therefore\,a_5=3^{5}=243$</p>
+      </div>
+
+      <div class="solution-item" id="sol-55" data-qa-id="q55">
+        <div class="sol-num">55.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $a_1=2,\;a_2=4,\;a_3=7,\;a_{n+1}=a_n+(n+1)$ &nbsp; (2) $\dfrac{n^2+n+2}{2}$</div>
+        <p>(1) 직선이 $1,\,2,\,3$개일 때 영역은 각각 $2,\,4,\,7$. 직선이 $n$개에서 $n+1$개로 늘면, 새 직선이 기존 $n$개와 모두 만나 $(n+1)$개의 부분으로 잘리고 각 부분이 영역 $1$개씩을 추가한다.</p>
+        <p>$\therefore\,a_{n+1}=a_n+(n+1)$</p>
+        <p>(2) 합형 점화식: $a_n=a_1+\displaystyle\sum_{k=1}^{n-1}(k+1)$ $=2+\dfrac{(n-1)n}{2}+(n-1)$ $=\dfrac{n^{2}+n+2}{2}$</p>
+      </div>
+
+      <div class="solution-item" id="sol-56" data-qa-id="q56">
+        <div class="sol-num">56.</div>
+        <div class="sol-answer"><b>[정답]</b> $\dfrac{25}{9}$</div>
+        <p>내분점 공식: $a_{n+1}=\dfrac{1\cdot 1+2\cdot a_n}{2+1}=\dfrac{2a_n+1}{3}$</p>
+        <p>$a_{n+1}-1=\dfrac{2}{3}(a_n-1)$ 이므로 $\{a_n-1\}$은 첫째항 $a_1-1=9$, 공비 $\dfrac{2}{3}$인 등비수열.</p>
+        <p>$a_n-1=9\!\left(\dfrac{2}{3}\right)^{\!n-1}$, $\;\;a_5-1=9\cdot\dfrac{16}{81}=\dfrac{16}{9}$</p>
+        <p>$\therefore\,a_5=\dfrac{25}{9}$</p>
+      </div>
+
+      <div class="solution-item" id="sol-57" data-qa-id="q57">
+        <div class="sol-num">57.</div>
+        <div class="sol-answer"><b>[정답]</b> $186$</div>
+        <p><b>① 항 계산</b> — 점화식의 분기를 매 항마다 판정한다.</p>
+        <p>$a_1=1$ &nbsp;($\lt 15$)&nbsp; $\Rightarrow a_2=2\cdot 1=2$</p>
+        <p>$a_2=2$ &nbsp;($\lt 15$)&nbsp; $\Rightarrow a_3=2\cdot 2=4$</p>
+        <p>$a_3=4$ &nbsp;($\lt 15$)&nbsp; $\Rightarrow a_4=2\cdot 4=8$</p>
+        <p>$a_4=8$ &nbsp;($\lt 15$)&nbsp; $\Rightarrow a_5=2\cdot 8=16$</p>
+        <p>$a_5=16$ &nbsp;($\geq 15$)&nbsp; $\Rightarrow a_6=16-15=1=a_1$</p>
+        <p><b>② 주기 발견</b> — $a_6=a_1$이므로 수열은 주기 $T=5$인 순환수열:</p>
+        <p>$\{a_n\}=1,\,2,\,4,\,8,\,16,\;\underbrace{1,\,2,\,4,\,8,\,16}_{\text{반복}},\,\cdots$</p>
+        <p>한 주기의 합: $\,T=1+2+4+8+16=31$</p>
+        <p><b>③ 합산</b> — $30=5\times 6$이므로 정확히 $6$주기.</p>
+        <p>$\;\displaystyle\sum_{n=1}^{30} a_n=31\times 6=186$</p>
+      </div>
+
+      <div class="solution-item" id="sol-58" data-qa-id="q58">
+        <div class="sol-num">58.</div>
+        <div class="sol-answer"><b>[정답]</b> $\dfrac{1}{2}$</div>
+        <p><b>① 항 계산</b> — 매 항마다 "정수 / 정수 아님" 판정 후 분기.</p>
+        <p>$a_1=10$ <b>(정수)</b> $\Rightarrow a_2=5-\dfrac{10}{10}=5-1=4$</p>
+        <p>$a_2=4$ <b>(정수)</b> $\Rightarrow a_3=5-\dfrac{10}{4}=5-\dfrac{5}{2}=\dfrac{5}{2}$</p>
+        <p>$a_3=\dfrac{5}{2}$ <b>(정수 아님)</b> $\Rightarrow a_4=-2\cdot\dfrac{5}{2}+3=-5+3=-2$</p>
+        <p>$a_4=-2$ <b>(정수)</b> $\Rightarrow a_5=5-\dfrac{10}{-2}=5-(-5)=10=a_1$</p>
+        <p><b>② 주기 발견</b> — $a_5=a_1$이므로 주기 $T=4$.</p>
+        <p>$\{a_n\}=10,\,4,\,\tfrac{5}{2},\,-2,\;10,\,4,\,\tfrac{5}{2},\,-2,\,\cdots$</p>
+        <p><b>③ $a_{12}$ 위치</b> — $12=4\times 3$이므로 $12$번째 항은 한 주기의 $4$번째 위치, 즉 $a_{12}=a_4=-2$.</p>
+        <p><b>④ 답</b> — $a_3+a_{12}=\dfrac{5}{2}+(-2)=\dfrac{5-4}{2}=\dfrac{1}{2}$</p>
+      </div>
+
+      <div class="solution-item" id="sol-59" data-qa-id="q59">
+        <div class="sol-num">59.</div>
+        <div class="sol-answer"><b>[정답]</b> $k=6$</div>
+        <p><b>① 항 계산</b> — 짝수면 $\dfrac{1}{2}$ 배, 홀수면 $+1$.</p>
+        <p>$a_1=10$ (짝수) $\Rightarrow a_2=5$</p>
+        <p>$a_2=5$ (홀수) $\Rightarrow a_3=6$</p>
+        <p>$a_3=6$ (짝수) $\Rightarrow a_4=3$</p>
+        <p>$a_4=3$ (홀수) $\Rightarrow a_5=4$</p>
+        <p>$a_5=4$ (짝수) $\Rightarrow a_6=2$</p>
+        <p>$a_6=2$ (짝수) $\Rightarrow a_7=1$</p>
+        <p>$a_7=1$ (홀수) $\Rightarrow a_8=2$, 이후 $1,\,2,\,1,\,2,\,\cdots$ 주기 $2$로 안정.</p>
+        <p><b>② 인접합 $a_k+a_{k+1}=3$ 검사</b> — $k=1$부터 차례로:</p>
+        <p>$k=1:\;a_1+a_2=10+5=15$ &nbsp; ($\ne 3$)</p>
+        <p>$k=2:\;a_2+a_3=5+6=11$ &nbsp; ($\ne 3$)</p>
+        <p>$k=3:\;a_3+a_4=6+3=9$ &nbsp; ($\ne 3$)</p>
+        <p>$k=4:\;a_4+a_5=3+4=7$ &nbsp; ($\ne 3$)</p>
+        <p>$k=5:\;a_5+a_6=4+2=6$ &nbsp; ($\ne 3$)</p>
+        <p>$k=6:\;a_6+a_7=2+1=\mathbf{3}$ &nbsp; ✓ <b>(첫 만족)</b></p>
+        <p><b>③ 결론</b> — 조건을 만족시키는 $k$의 최솟값은 $\,k=6$.</p>
+      </div>
+
+      <div class="solution-item" id="sol-60" data-qa-id="q60">
+        <div class="sol-num">60.</div>
+        <div class="sol-answer"><b>[정답]</b> $24$</div>
+        <p><b>① $a_4=20$에서 forward 계산</b> — 점화식이 "$3$의 배수 / 아님" 판정으로 분기.</p>
+        <p>$a_4=20$: &nbsp;$20\div 3=6$ 나머지 $2$ → <b>3의 배수 아님</b>, $30$ 이하 자연수.</p>
+        <p>$\Rightarrow a_5=a_4+4=24$ &nbsp;($30$ 이하 ✓)</p>
+        <p>$a_5=24$: &nbsp;$24=3\times 8$ → <b>3의 배수</b>.</p>
+        <p>$\Rightarrow a_6=\dfrac{1}{3}\cdot 24=8$ &nbsp;(자연수 ✓)</p>
+        <p>$a_6=8$: &nbsp;$8\div 3$ 나머지 $2$ → <b>3의 배수 아님</b>.</p>
+        <p>$\Rightarrow a_7=a_6+4=12$ &nbsp;($30$ 이하 ✓)</p>
+        <p><b>② 결정성 분석</b> — 점화식은 "$a_n$의 값 → 분기 결정 → $a_{n+1}$ 유일"이므로 $a_4$가 정해지면 $a_5,\,a_6,\,a_7,\,\cdots$이 모두 유일하게 결정된다. 따라서 조건 (가)·(나)를 만족하는 수열에서 $a_7$의 값은 $12$ 하나뿐.</p>
+        <p><b>③ 결론</b> — $M=m=12$. $\therefore\,M+m=12+12=24$</p>
+      </div>
+
+      <div class="solution-item" id="sol-61" data-qa-id="q61">
+        <div class="sol-num">61.</div>
+        <div class="sol-answer"><b>[정답]</b> ⑤ ㄱ, ㄴ, ㄷ</div>
+        <p>주어진 조건: $p(n)$ 참 $\Rightarrow$ $p(3n)$ 참.</p>
+        <p>ㄱ. $p(1)\to p(3)\to p(9)$. (참)</p>
+        <p>ㄴ. $p(2)\to p(6)\to p(18)\to p(54)$. (참)</p>
+        <p>ㄷ. $p(3)\to p(9)\to p(27)\to\cdots$ 임의의 자연수 $m$에 대해 $p(3^{m})$ 참. (참)</p>
+        <p>$\therefore$ ㄱ, ㄴ, ㄷ 모두 참.</p>
+      </div>
+
+      <div class="solution-item" id="sol-62" data-qa-id="q62">
+        <div class="sol-num">62.</div>
+        <div class="sol-answer"><b>[정답]</b> 풀이 참조</div>
+        <p>$(\text{i})\;n=1$: 좌변 $=\dfrac{1}{1\cdot 3}=\dfrac{1}{3}$, 우변 $=\dfrac{1}{3}$. 성립.</p>
+        <p>$(\text{ii})\;n=k$에서 성립을 가정하면</p>
+        <p>$\dfrac{1}{1\cdot 3}+\cdots+\dfrac{1}{(2k-1)(2k+1)}=\dfrac{k}{2k+1}$</p>
+        <p>양변에 $\dfrac{1}{(2k+1)(2k+3)}$을 더하면</p>
+        <p>$\dfrac{k}{2k+1}+\dfrac{1}{(2k+1)(2k+3)}$</p>
+        <p>$=\dfrac{k(2k+3)+1}{(2k+1)(2k+3)}=\dfrac{2k^{2}+3k+1}{(2k+1)(2k+3)}$</p>
+        <p>$=\dfrac{(2k+1)(k+1)}{(2k+1)(2k+3)}=\dfrac{k+1}{2(k+1)+1}$</p>
+        <p>즉 $n=k+1$에서도 성립. $(\text{i}),\,(\text{ii})$에 의해 모든 자연수 $n$에서 성립. $\square$</p>
+      </div>
+
+      <div class="solution-item" id="sol-63" data-qa-id="q63">
+        <div class="sol-num">63.</div>
+        <div class="sol-answer"><b>[정답]</b> 풀이 참조</div>
+        <p>$(\text{i})\;n=5$: $2^{5}=32\gt 25=5^{2}$. 성립.</p>
+        <p>$(\text{ii})\;n=k\,(k\geq 5)$에서 $2^{k}\gt k^{2}$ 가정. 양변에 $2$ 곱:</p>
+        <p>$2^{k+1}\gt 2k^{2}$</p>
+        <p>$2k^{2}-(k+1)^{2}=k^{2}-2k-1=(k-1)^{2}-2$</p>
+        <p>$k\geq 5\Rightarrow(k-1)^{2}\geq 16\gt 2\Rightarrow 2k^{2}\gt(k+1)^{2}$</p>
+        <p>$\therefore\,2^{k+1}\gt 2k^{2}\gt(k+1)^{2}$, 즉 $n=k+1$에서도 성립.</p>
+        <p>$(\text{i}),\,(\text{ii})$에 의해 $n\geq 5$인 모든 자연수 $n$에서 $\,2^{n}\gt n^{2}$. $\square$</p>
+      </div>
+
+      <div class="solution-item" id="sol-64" data-qa-id="q64">
+        <div class="sol-num">64.</div>
+        <div class="sol-answer"><b>[정답]</b> $32$</div>
+        <p>$(k+1)^{3}+5(k+1)$ $=k^{3}+3k^{2}+3k+1+5k+5$ $=k^{3}+3k^{2}+(8k+6)$</p>
+        <p>$\therefore\;\boxed{\,(\text{가})\,}=8k+6,\;\;f(k)=8k+6$</p>
+        <p>$k^{3}+3k^{2}+8k+6$ $=(k^{3}+5k)+3k^{2}+3k+6$ $=(k^{3}+5k)+6+3k(k+1)$</p>
+        <p>$\therefore\;\boxed{\,(\text{나})\,}=k^{3}+5k,\;\;g(k)=k^{3}+5k$</p>
+        <p>$f(1)=14,\;g(2)=8+10=18$</p>
+        <p>$\therefore\,f(1)+g(2)=14+18=32$</p>
+      </div>
+
+    </div>
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<script>
+const _ready = Promise.all([
+  document.fonts.ready,
+  (window.MathJax && MathJax.startup && MathJax.startup.promise) ? MathJax.startup.promise : Promise.resolve()
+]).then(() => new Promise(resolve => {
+  // /mathbook:_공통 §9.1 — MathJax/폰트 layout 안정화 대기
+  requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(resolve, 100)));
+}));
+_ready.then(() => {
+  (function autoWrapChoices(){
+    document.querySelectorAll('.choices').forEach(c => {
+      if (c.scrollWidth > c.clientWidth) c.classList.add('two-row');
+    });
+  })();
+  (function compactAndSplitConcepts(){
+    const SLACK_PX = (() => {
+      const probe = document.createElement('div');
+      probe.style.cssText = 'position:absolute;visibility:hidden;width:10mm;';
+      document.body.appendChild(probe);
+      const px = probe.getBoundingClientRect().width;
+      document.body.removeChild(probe);
+      return px;
+    })();
+    function overflows(body){ return body.scrollHeight > body.clientHeight + SLACK_PX; }
+    function conceptSheets(){
+      return Array.from(document.querySelectorAll('.sheet')).filter(s =>
+        s.querySelector('.concept') && !s.classList.contains('solution-section')
+          && !s.classList.contains('quick-answer-section')
+      );
+    }
+    conceptSheets().forEach(sheet => {
+      const body = sheet.querySelector('.sheet-body');
+      if (!overflows(body)) return;
+      body.querySelectorAll('.concept .formula').forEach(f => f.classList.add('compact'));
+    });
+    conceptSheets().forEach(sheet => {
+      const body = sheet.querySelector('.sheet-body');
+      if (!overflows(body)) return;
+      const concept = body.querySelector('.concept');
+      if (concept) concept.classList.add('dense');
+    });
+    const queue = conceptSheets();
+    while (queue.length){
+      const sheet = queue.shift();
+      const body = sheet.querySelector('.sheet-body');
+      if (!body || !overflows(body)) continue;
+      const concept = body.querySelector('.concept');
+      if (!concept) continue;
+      const groups = [];
+      let cur = null;
+      Array.from(concept.children).forEach(ch => {
+        if (ch.classList.contains('sub-title')) { cur = [ch]; groups.push(cur); }
+        else if (cur) { cur.push(ch); }
+        else { cur = [ch]; groups.push(cur); }
+      });
+      if (groups.length < 2) continue;
+      const bodyBottom = body.getBoundingClientRect().bottom;
+      let splitAt = -1;
+      for (let i = 0; i < groups.length; i++){
+        const last = groups[i][groups[i].length - 1];
+        if (last.getBoundingClientRect().bottom > bodyBottom + SLACK_PX) { splitAt = i; break; }
+      }
+      if (splitAt <= 0) continue;
+      const isDense = concept.classList.contains('dense');
+      const ns = document.createElement('section');
+      ns.className = 'sheet';
+      ns.innerHTML =
+        '<div class="corner tr"></div><div class="corner tl"></div>' +
+        '<div class="corner br"></div><div class="corner bl"></div>' +
+        '<header class="sheet-header"></header>' +
+        '<div class="sheet-body"><div class="concept' + (isDense ? ' dense' : '') + '"></div></div>' +
+        '<footer class="sheet-footer"></footer>';
+      const newConcept = ns.querySelector('.concept');
+      for (let i = splitAt; i < groups.length; i++){
+        groups[i].forEach(el => newConcept.appendChild(el));
+      }
+      sheet.parentNode.insertBefore(ns, sheet.nextSibling);
+      queue.push(ns);
+    }
+  })();
+  (function flowSolutions(){
+    // 라이브러리 표준 패턴 — incremental add-and-measure (regionize/Bindery/paged.js)
+    // 1) 한 항목씩 append → 마지막 항목 rect.bottom/right 검사
+    // 2) 오버플로면 split 시도: 마지막 <p>부터 떼며 fit 찾기, 헤더+첫 단락은 유지
+    // 3) 분할 실패면 통째로 다음 페이지
+    const sections = Array.from(document.querySelectorAll('.solution-section'));
+    if (!sections.length) return;
+    const allItems = [];
+    sections.forEach(sec => { sec.querySelectorAll('.solution-item').forEach(it => allItems.push(it)); });
+    sections.forEach(sec => { const c = sec.querySelector('.solutions'); if (c) c.innerHTML = ''; });
+
+    function makeSection() {
+      const prev = sections[sections.length - 1];
+      const ns = document.createElement('section');
+      ns.className = 'sheet solution-section';
+      ns.innerHTML =
+        '<div class="corner tr"></div><div class="corner tl"></div>' +
+        '<div class="corner br"></div><div class="corner bl"></div>' +
+        '<header class="sheet-header"></header>' +
+        '<div class="sheet-body"><div class="solutions"></div></div>' +
+        '<footer class="sheet-footer"></footer>';
+      prev.parentNode.insertBefore(ns, prev.nextSibling);
+      sections.push(ns);
+      return ns;
+    }
+    function lastItemOverflows(sec) {
+      const body = sec.querySelector('.sheet-body');
+      const last = sec.querySelector('.solutions > :last-child');
+      if (!body || !last) return false;
+      void body.offsetHeight;
+      const br = body.getBoundingClientRect();
+      const lr = last.getBoundingClientRect();
+      return lr.bottom > br.bottom + 1 || lr.right > br.right + 1;
+    }
+    function makeContinuation(item, paras) {
+      const cont = document.createElement('div');
+      cont.className = 'solution-item continuation';
+      cont.setAttribute('data-qa-id', item.getAttribute('data-qa-id') || '');
+      paras.forEach(p => cont.appendChild(p));
+      return cont;
+    }
+
+    let queue = allItems.slice();
+    let secIdx = 0;
+    let safety = 0;
+    while (queue.length > 0 && safety++ < 600) {
+      if (secIdx >= sections.length) makeSection();
+      const sec = sections[secIdx];
+      const container = sec.querySelector('.solutions');
+      let advancedToNextSection = false;
+      while (queue.length > 0) {
+        const item = queue.shift();
+        container.appendChild(item);
+        if (!lastItemOverflows(sec)) continue;
+        const paras = Array.from(item.querySelectorAll(':scope > p'));
+        if (paras.length >= 2) {
+          const moved = [];
+          while (paras.length > 1 && lastItemOverflows(sec)) {
+            const p = paras.pop();
+            item.removeChild(p);
+            moved.unshift(p);
+          }
+          if (!lastItemOverflows(sec) && moved.length > 0) {
+            queue.unshift(makeContinuation(item, moved));
+            advancedToNextSection = true;
+            break;
+          }
+          moved.forEach(p => item.appendChild(p));
+        }
+        container.removeChild(item);
+        queue.unshift(item);
+        advancedToNextSection = true;
+        break;
+      }
+      if (advancedToNextSection) secIdx++;
+      else break;
+    }
+    sections.forEach(sec => { if (!sec.querySelector('.solution-item')) sec.remove(); });
+  })();
+  (function rebalanceParity(){
+    const sheets = document.querySelectorAll('.sheet');
+    sheets.forEach((s, i) => {
+      const isOdd = (i % 2 === 0);
+      s.classList.toggle('odd', isOdd);
+      s.classList.toggle('even', !isOdd);
+      const hdr = s.querySelector('.sheet-header');
+      if (hdr) hdr.textContent = isOdd ? '대수' : '2026 수복이';
+    });
+  })();
+  (function renumberFooters(){
+    document.querySelectorAll('.sheet-footer').forEach((f, i) => { f.textContent = i + 1; });
+  })();
+  document.body.classList.add('ready');
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const wait = () => new Promise(r => {
+    if (document.body.classList.contains('ready')) r();
+    else { const id = setInterval(() => {
+      if (document.body.classList.contains('ready')) { clearInterval(id); r(); }
+    }, 50); }
+  });
+  wait().then(() => {
+    function distributeToCols(secs, items, opts) {
+      const colCount = opts.colCount, sheetClass = opts.sheetClass, containerSel = opts.containerSel;
+      const sectionsRef = secs.slice();
+      function ensureCols(sec) {
+        const c = sec.querySelector(containerSel);
+        if (!c) return null;
+        if (c.querySelectorAll(':scope > .col').length !== colCount) {
+          c.innerHTML = '';
+          for (let k = 0; k < colCount; k++) {
+            const d = document.createElement('div');
+            d.className = 'col col-' + (k+1);
+            c.appendChild(d);
+          }
+        }
+        return c;
+      }
+      function makeSection() {
+        const prev = sectionsRef[sectionsRef.length - 1];
+        const ns = document.createElement('section');
+        ns.className = sheetClass;
+        let colsHtml = '';
+        for (let k = 0; k < colCount; k++) colsHtml += '<div class="col col-' + (k+1) + '"></div>';
+        ns.innerHTML =
+          '<div class="corner tr"></div><div class="corner tl"></div>' +
+          '<div class="corner br"></div><div class="corner bl"></div>' +
+          '<header class="sheet-header"></header>' +
+          '<div class="sheet-body"><div class="' + containerSel.slice(1) + '">' + colsHtml + '</div></div>' +
+          '<footer class="sheet-footer"></footer>';
+        prev.parentNode.insertBefore(ns, prev.nextSibling);
+        sectionsRef.push(ns);
+        return ns;
+      }
+      function colOverflows(col) { void col.offsetHeight; return col.scrollHeight > col.clientHeight + 1; }
+      sectionsRef.forEach(sec => ensureCols(sec));
+      sectionsRef.forEach(sec => {
+        sec.querySelectorAll(':scope ' + containerSel + ' > .col').forEach(c => c.innerHTML = '');
+      });
+      let queue = items.slice(), secIdx = 0, safety = 0;
+      while (queue.length > 0 && safety++ < 3000) {
+        if (secIdx >= sectionsRef.length) makeSection();
+        const sec = sectionsRef[secIdx];
+        const cols = Array.from(sec.querySelectorAll(':scope ' + containerSel + ' > .col'));
+        for (const col of cols) {
+          while (queue.length > 0) {
+            const item = queue[0];
+            col.appendChild(item);
+            if (colOverflows(col)) { col.removeChild(item); break; }
+            queue.shift();
+          }
+          if (col.children.length === 0 && queue.length > 0) col.appendChild(queue.shift());
+          if (queue.length === 0) break;
+        }
+        secIdx++;
+      }
+      sectionsRef.forEach(sec => {
+        const cs = sec.querySelectorAll(':scope ' + containerSel + ' > .col');
+        if (![...cs].some(c => c.children.length > 0)) sec.remove();
+      });
+    }
+
+    // 빠른정답: 3-col flex 분배
+    (function flowQuickAnswers(){
+      const secs = Array.from(document.querySelectorAll('.quick-answer-section'));
+      if (!secs.length) return;
+      const items = [];
+      secs.forEach(sec => sec.querySelectorAll('.qa-item').forEach(it => items.push(it)));
+      const titleHtml = secs[0].querySelector('.section-title')?.outerHTML || '';
+      secs[0].querySelector('.sheet-body').innerHTML = titleHtml + '<div class="quick-answers"></div>';
+      for (let i = 1; i < secs.length; i++) {
+        secs[i].querySelector('.sheet-body').innerHTML = '<div class="quick-answers"></div>';
+      }
+      distributeToCols(secs, items, {
+        colCount: 3, sheetClass: 'sheet quick-answer-section', containerSel: '.quick-answers'
+      });
+    })();
+
+    // 해설(.solutions)은 baseline flowSolutions가 처리 (CSS column-fill:auto + 자연 break + 단락 split)
+    // v1.2 (`/mathbook:과목별교재:수복이-합본` v1.2 / `/mathbook:과목별교재:_공통` v1.3) — 행렬 스타일 기본화:
+    //  - (이어서) 마커 활성 유지 (별도 patch 없음)
+    //  - squashShortContinuations / squashTrailingPage 기본 비활성화
+    //    필요 시 메타옵션 enable_squash_short: true 로만 옵트인.
+
+    // 헤더·페이지 번호 재부착
+    const sheets = document.querySelectorAll('.sheet');
+    sheets.forEach((s, i) => {
+      const isOdd = (i % 2 === 0);
+      s.classList.toggle('odd', isOdd);
+      s.classList.toggle('even', !isOdd);
+      const hdr = s.querySelector('.sheet-header');
+      if (hdr) hdr.textContent = isOdd ? '대수' : '2026 수복이';
+    });
+    document.querySelectorAll('.sheet-footer').forEach((f, i) => { f.textContent = i + 1; });
+  });
+});
+</script>
+
+</body>
+</html>

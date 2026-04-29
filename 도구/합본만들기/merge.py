@@ -269,7 +269,11 @@ def replace_fonts(html, fonts_b64):
 
 
 def patch_qa_flex_sol_native(html):
-    """빠른정답 flex 3-col / 해설 자연 column break + (이어서) 마커 제거"""
+    """빠른정답 flex 3-col / 해설 자연 column break.
+
+    v1.2 변경 (`/mathbook:과목별교재:_공통` v1.3 동기): (이어서) 마커는 그대로 유지.
+    행렬 인쇄본 스타일이 자연 흐름에 더 자연스럽다는 사용자 피드백 반영.
+    """
     # 빠른정답: flex 3-col
     new_qa = (
         '.quick-answers { flex:1 1 auto; min-height:0; position:relative; display:flex; gap:7mm; '
@@ -300,13 +304,11 @@ def patch_qa_flex_sol_native(html):
             html, count=1
         )
 
-    # (이어서) 마커 비움
+    # (이어서) 마커는 v1.2부터 활성 유지 — 별도 patch 없음
+    # (만약 단원 파일에서 마커를 비웠다면 여기서 복원)
     html = re.sub(
-        r"(\.solution-item\.continuation::before\s*\{\s*content:)\s*'\(이어서\)\s*'\s*;",
-        r"\1 '';", html)
-    html = re.sub(
-        r"(\.continuation::before[^{]*\{[^}]*content:)\s*'\(이어서\)\s*'\s*;",
-        r"\1 '';", html)
+        r"(\.solution-item\.continuation::before\s*\{\s*content:)\s*''\s*;",
+        r"\1 '(이어서) ';", html)
 
     return html
 
@@ -400,44 +402,10 @@ document.addEventListener('DOMContentLoaded', () => {
     })();
 
     // 해설(.solutions)은 baseline flowSolutions가 처리 (CSS column-fill:auto + 자연 break + 단락 split)
-
-    // 짧은 continuation은 본 항목과 함께 다음 페이지 맨 앞으로 통째 이동
-    (function squashShortContinuations(){
-      const sols = Array.from(document.querySelectorAll('.solution-section'));
-      for (let i = 1; i < sols.length; i++) {
-        const sec = sols[i];
-        const container = sec.querySelector('.solutions');
-        if (!container) continue;
-        const first = container.firstElementChild;
-        if (!first || !first.classList.contains('continuation')) continue;
-        const txt = first.textContent.replace(/\s+/g,'').length;
-        if (txt > 100) continue;
-        const qid = first.getAttribute('data-qa-id');
-        if (!qid) continue;
-        const prevSec = sols[i-1];
-        const prevMain = Array.from(prevSec.querySelectorAll(
-          '.solution-item[data-qa-id="' + qid + '"]')).find(it => !it.classList.contains('continuation'));
-        if (!prevMain) continue;
-        Array.from(first.children).forEach(c => prevMain.appendChild(c));
-        prevMain.parentNode.removeChild(prevMain);
-        container.insertBefore(prevMain, first);
-        first.remove();
-      }
-    })();
-
-    // 마지막 페이지 빈 영역 정리
-    (function squashTrailingPage(){
-      const sols = Array.from(document.querySelectorAll('.solution-section'));
-      if (sols.length < 2) return;
-      const last = sols[sols.length - 1];
-      const items = last.querySelectorAll('.solution-item');
-      if (items.length !== 1) return;
-      const it = items[0];
-      const txt = it.textContent.replace(/\s+/g,'').length;
-      if (!it.classList.contains('continuation') || txt > 250) return;
-      sols[sols.length - 2].querySelector('.solutions').appendChild(it);
-      last.remove();
-    })();
+    // v1.2 (`/mathbook:과목별교재:수복이-합본` v1.2 / `/mathbook:과목별교재:_공통` v1.3) — 행렬 스타일 기본화:
+    //  - (이어서) 마커 활성 유지 (별도 patch 없음)
+    //  - squashShortContinuations / squashTrailingPage 기본 비활성화
+    //    필요 시 메타옵션 enable_squash_short: true 로만 옵트인.
 
     // 헤더·페이지 번호 재부착
     const sheets = document.querySelectorAll('.sheet');
