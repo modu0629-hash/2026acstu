@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>수열의 합 — 인쇄본</title>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']] },
+  chtml: { matchFontHeight: false },
+  startup: { typeset: true }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+@font-face { font-family:'Gyeonggi Title'; src:url('../%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/woff/Title_Bold.woff') format('woff'); font-weight:700; font-display:swap; }
+@font-face { font-family:'Gyeonggi Title'; src:url('../%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/woff/Title_Medium.woff') format('woff'); font-weight:500; font-display:swap; }
+@font-face { font-family:'Gyeonggi Batang'; src:url('../%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/woff/Batang_Regular.woff') format('woff'); font-weight:400; font-display:swap; }
+@font-face { font-family:'Gyeonggi Batang'; src:url('../%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/woff/Batang_Bold.woff') format('woff'); font-weight:700; font-display:swap; }
+
+@page { size: A4; margin: 0; }
+* { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --line-h: 1.75; --one-line: 7.4mm;
+  --pad-x: 22mm; --pad-top: 20mm; --pad-bottom: 18mm;
+  --corner-x: 22mm; --corner-len: 48mm;
+}
+
+html, body { background:#fff; color:#000; font-family:'신명조','HY신명조','Shinmyeongjo','바탕','Batang',serif; font-size:11pt; line-height:var(--line-h); }
+@media screen { body { background:#dcdcdc; padding:24px 0; } .sheet { box-shadow:0 3px 14px rgba(0,0,0,0.2); margin:0 auto 24px; } }
+
+.sheet { width:210mm; height:297mm; background:#fff; position:relative; overflow:hidden; }
+@media print { .sheet { page-break-after:always; margin:0; box-shadow:none; } .sheet:last-child { page-break-after:auto; } }
+
+.corner { position:absolute; height:0; width:var(--corner-len); border-top:1pt solid #000; }
+.corner::after { content:''; position:absolute; height:3mm; width:0; }
+.corner.tr { top:12mm; right:var(--corner-x); }
+.corner.tr::after { right:0; top:0; border-right:1pt solid #000; }
+.corner.tl { top:12mm; left:var(--corner-x); }
+.corner.tl::after { left:0; top:0; border-left:1pt solid #000; }
+.corner.br { bottom:14mm; right:var(--corner-x); }
+.corner.br::after { right:0; bottom:0; border-right:1pt solid #000; }
+.corner.bl { bottom:14mm; left:var(--corner-x); }
+.corner.bl::after { left:0; bottom:0; border-left:1pt solid #000; }
+.corner.tr, .corner.tl { display:none; }
+.sheet.odd .corner.bl { display:none; }
+.sheet.even .corner.br { display:none; }
+
+.sheet-header { position:absolute; top:21mm; left:var(--pad-x); right:var(--pad-x); font-family:'Gyeonggi Title',sans-serif; font-weight:700; font-size:10.5pt; }
+.sheet.odd .sheet-header { text-align:right; }
+.sheet.even .sheet-header { text-align:left; }
+.sheet-footer { position:absolute; bottom:8mm; left:0; right:0; text-align:center; font-family:'Gyeonggi Batang',serif; font-size:10pt; }
+
+.sheet-body { position:absolute; top:calc(var(--pad-top) + 14mm); bottom:calc(var(--pad-bottom) + 6mm); left:var(--pad-x); right:var(--pad-x); }
+
+.chapter-title { font-family:'Gyeonggi Title',sans-serif; font-weight:700; font-size:18pt; letter-spacing:0.5pt; margin-bottom:calc(var(--one-line) * 2); }
+.section-title { font-family:'Gyeonggi Batang',serif; font-weight:700; font-size:13pt; margin-bottom:calc(var(--one-line) * 1); }
+.sub-label { font-family:'Gyeonggi Title',sans-serif; font-weight:700; font-size:11pt; margin-bottom:3mm; }
+
+.concept { font-family:'Gyeonggi Batang','신명조','HY신명조','바탕','Batang',serif; font-size:11pt; line-height:1.85; }
+.concept p { margin-bottom:2mm; }
+.concept .sub-title { font-family:'Gyeonggi Batang',serif; font-weight:400; font-size:11.5pt; margin:calc(var(--one-line)*2) 0 2mm; }
+.concept .sub-title:first-child { margin-top:0; }
+.concept .formula { border:0.7pt solid #000; padding:3mm 5mm; margin:3mm 0; text-align:center; }
+.concept .formula.left { text-align:left; padding:3mm 3mm; }
+.concept .formula.compact { padding:1.5mm 5mm; margin:1.5mm 0; }
+.concept .note { padding:2mm 0; margin:3mm 0; font-size:8pt; line-height:1.6; }
+.concept .note::before { content:"[참고] "; font-weight:700; }
+.concept .proof { font-size:8pt; line-height:1.6; padding:2mm 0 2mm 10mm; text-indent:-10mm; margin:3mm 0 6mm 0; }
+.concept .ex { padding:2mm 0; margin:3mm 0; font-size:9pt; }
+.concept.dense { line-height:1.7; }
+.concept.dense .sub-title { margin:calc(var(--one-line)*1.1) 0 1.5mm; }
+.concept.dense .sub-title:first-child { margin-top:0; }
+.concept.dense p { margin-bottom:1mm; }
+.concept.dense .note { margin:2mm 0; }
+.concept.dense .formula { padding:2mm 5mm; margin:2mm 0; }
+.concept.dense .ex { margin:1.5mm 0; }
+.concept table { width:100%; border-collapse:collapse; margin:3mm 0; font-size:9.5pt; }
+.concept table th, .concept table td { border:0.5pt solid #000; padding:1.5mm 2mm; text-align:center; vertical-align:middle; }
+.concept table th { font-weight:700; background:#f7f7f7; }
+
+.problem-block { }
+.sheet-body > .problem-block { margin-top:8mm; }
+.problem { font-family:'신명조','HY신명조','바탕','Batang',serif; font-size:10pt; line-height:var(--line-h); letter-spacing:-0.05em; position:relative; }
+.problem > p:first-of-type { padding-left:5.5mm; text-indent:-5.5mm; }
+.problem .pnum { display:inline-block; min-width:4mm; margin-right:1.5mm; font-family:'Gyeonggi Title',sans-serif; font-size:11pt; font-weight:700; text-indent:0; vertical-align:baseline; }
+.problem .pnum a { color:#000; text-decoration:none; font-weight:700; }
+.problem p { margin-bottom:1.5mm; }
+.problem .sub { margin-left:4mm; }
+.cond-box { display:block; width:fit-content; max-width:92%; border:0.7pt solid #000; padding:2.5mm 6mm; margin:2mm auto; }
+.cond-box p { margin:0.5mm 0; }
+
+.choices { display:grid; grid-template-columns:repeat(5, minmax(0,1fr)); gap:2mm 5mm; margin-top:4mm; font-size:10pt; clear:both; }
+.choices.two-row { grid-template-columns:repeat(3, minmax(0,1fr)); }
+.choices span { white-space:nowrap; }
+
+.problems-area { position:absolute; top:calc(var(--pad-top) + var(--one-line) + 5mm); bottom:calc(var(--pad-bottom) + 6mm); left:var(--pad-x); right:var(--pad-x); display:flex; flex-direction:column; }
+.problems-area > .problem-block:first-child { margin-bottom:0; }
+.problems-area > .problem-block:nth-child(2) { margin:auto 0; }
+.problems-area.single > .problem-block { margin:0; }
+
+mjx-container { font-weight:400 !important; }
+
+.fig-right { float:right; margin:0 0 2mm 5mm; overflow:visible; }
+.fig-center { text-align:center; margin:3mm 0; overflow:visible; }
+.fig-row { display:flex; justify-content:center; gap:6mm; margin:3mm 0; flex-wrap:wrap; }
+svg { overflow:visible; }
+
+.quick-answer-section .sheet-body { top:32mm; bottom:20mm; padding:0; overflow:hidden; display:flex; flex-direction:column; }
+.quick-answer-section .section-title { margin-top:0; flex:0 0 auto; }
+.quick-answers { flex:1 1 auto; min-height:0; position:relative; column-count:3; column-fill:auto; column-gap:7mm; column-rule:0.3pt solid #888; font-family:'신명조','HY신명조','Shinmyeongjo','바탕','Batang',serif; font-size:8pt; line-height:1.85; letter-spacing:-0.1em; }
+.quick-answers mjx-container { font-size:8pt !important; }
+.quick-answers::before, .quick-answers::after { content:''; position:absolute; top:0; bottom:0; width:0.3pt; background:#888; pointer-events:none; }
+.quick-answers::before { left:calc((100% - 14mm) / 3 + 3.5mm); }
+.quick-answers::after { left:calc((100% - 14mm) / 3 * 2 + 10.5mm); }
+.qa-item { break-inside:avoid-column; page-break-inside:avoid; -webkit-column-break-inside:avoid; margin-bottom:2mm; display:flex; align-items:baseline; }
+.qa-num { flex:0 0 auto; display:inline-block; min-width:3mm; margin-right:1.5mm; font-family:'Gyeonggi Title',sans-serif; font-size:8pt; }
+.qa-ans { flex:1 1 auto; min-width:0; }
+
+.solution-section .sheet-body { top:32mm; bottom:20mm; padding:0; overflow:hidden; display:flex; flex-direction:column; }
+.solution-section .section-title { margin-top:0; flex:0 0 auto; }
+.solutions { flex:1 1 auto; min-height:0; position:relative; column-count:2; column-fill:auto; column-gap:8mm; column-rule:0.3pt solid #888; font-family:'신명조','HY신명조','Shinmyeongjo','바탕','Batang',serif; font-size:8pt; line-height:1.75; letter-spacing:-0.05em; }
+.solutions::before { content:''; position:absolute; top:0; bottom:0; left:calc((100% - 8mm) / 2 + 4mm); width:0.3pt; background:#888; pointer-events:none; }
+.solutions mjx-container { font-size:8pt !important; max-width:100%; }
+.solution-item { margin-bottom:var(--one-line); padding-left:5mm; padding-right:2mm; position:relative; overflow-wrap:break-word; }
+.solution-item p { text-indent:0; margin:0; }
+.sol-num { position:absolute; left:0; top:0; font-weight:700; font-size:8pt; font-family:'Gyeonggi Title',sans-serif; }
+.sol-num a { color:#000; text-decoration:none; }
+.sol-answer { margin-bottom:1.5mm; }
+@media print { .solution-link { text-decoration:none; } }
+
+/* /mathbook:_공통 §9.2 — 깜빡임 방지 */
+.solution-section { visibility:hidden; }
+body.ready .solution-section { visibility:visible; }
+
+/* /mathbook:_공통 §10.3 — 이어서 마커 */
+.solution-item.continuation { padding-left:5mm; }
+.solution-item.continuation::before { content:'(이어서) '; font-size:0.9em; color:#666; font-style:italic; }
+
+/* 색상 통일 */
+a, a:link, a:visited, a:hover, a:active { color:#000 !important; }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- PAGE 1 : 개념 1 — Σ의 정의 + 문제 1 -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="sheet-body">
+    <h1 class="chapter-title">수열의 합</h1>
+
+    <h2 class="section-title">합의 기호 $\Sigma$의 정의</h2>
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">1) $\Sigma$의 정의</div>
+      <p>수열 $\{a_n\}$에서 첫째항부터 제 $n$항까지의 합 $a_1 + a_2 + a_3 + \cdots + a_n$을 합의 기호 $\Sigma$를 사용하여 다음과 같이 나타낸다.</p>
+
+      <div class="formula">
+        $\displaystyle\sum_{k=1}^{n} a_k = a_1 + a_2 + a_3 + \cdots + a_n$
+      </div>
+
+      <div class="note">$\Sigma$는 합(summation)을 뜻하는 그리스 문자 시그마(sigma)의 첫 글자이다. $k$ 대신 $i,\,j,\,l$ 등 다른 문자를 써도 된다.</div>
+
+      <div class="sub-title">2) $\Sigma$의 뜻</div>
+      <p>$\displaystyle\sum_{k=1}^{n} a_k$는 일반항 $a_k$의 $k$에 $1,\,2,\,3,\,\cdots,\,n$을 차례로 대입하여 더한다는 뜻이다.</p>
+
+      <div class="ex">
+        <b>예)</b> $\displaystyle\sum_{k=1}^{5} k^2 = 1^2+2^2+3^2+4^2+5^2 = 55$<br>
+        $\displaystyle\sum_{k=1}^{4}(2k-1) = 1+3+5+7 = 16$, &emsp; $\displaystyle\sum_{k=3}^{6} k = 3+4+5+6 = 18$
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q1">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-1" class="solution-link">1</a></span>다음과 같이 합의 기호 $\Sigma$로 표현된 수열의 합을 구하여라.</p>
+        <p class="sub">(1) $\displaystyle\sum_{k=1}^{10}(2k+1)$ &emsp; (2) $\displaystyle\sum_{k=1}^{8} 3^{\,k-1}$ &emsp; (3) $\displaystyle\sum_{k=1}^{5}(2^{\,k} + 3k)$</p>
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 2 : 개념 2 — Σ의 기본 성질 + 합과 일반항 관계 -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">$\Sigma$의 기본 성질</h2>
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">1) 합과 차의 성질</div>
+      <div class="formula">
+        $\displaystyle\sum_{k=1}^{n}(a_k + b_k) = \sum_{k=1}^{n} a_k + \sum_{k=1}^{n} b_k,\;\;\; \displaystyle\sum_{k=1}^{n}(a_k - b_k) = \sum_{k=1}^{n} a_k - \sum_{k=1}^{n} b_k$
+      </div>
+
+      <div class="sub-title">2) 상수배의 성질</div>
+      <div class="formula">
+        $\displaystyle\sum_{k=1}^{n} c\,a_k = c\sum_{k=1}^{n} a_k$ &emsp;($c$는 상수)
+      </div>
+
+      <div class="sub-title">3) 상수의 성질</div>
+      <div class="formula">
+        $\displaystyle\sum_{k=1}^{n} c = nc$ &emsp;($c$는 상수)
+      </div>
+
+      <div class="note">$\Sigma$는 항별로 분배되지만 곱과 거듭제곱에는 분배되지 않는다. $\displaystyle\sum a_k\,b_k \ne \sum a_k\cdot\sum b_k$, $\displaystyle\sum a_k^{\,2} \ne \left(\sum a_k\right)^{\!2}.$</div>
+
+      <div class="sub-title">4) 합 $S_n$과 일반항 $a_n$의 관계</div>
+      <p>수열 $\{a_n\}$의 첫째항부터 제 $n$항까지의 합을 $S_n$이라 하면</p>
+      <div class="formula">
+        $a_n = \begin{cases} S_1 & (n=1) \\ S_n - S_{n-1} & (n \ge 2) \end{cases}$
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 3 : 문제 2, 3 — Σ 성질·합과 일반항 적용 -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q2">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-2" class="solution-link">2</a></span>다음 물음에 답하여라.</p>
+        <p class="sub">(1) $\displaystyle\sum_{k=1}^{20}(a_{k+1} - a_k) = 80$일 때, $\displaystyle\sum_{k=1}^{20}(3a_{k+1} - 3a_k)$의 값을 구하여라.</p>
+        <p class="sub">(2) 수열 $\{a_n\}$에 대하여 $a_1 = 10,\;a_{21} = 30$일 때, $\displaystyle\sum_{k=1}^{20}(a_{k+1} - a_k)$의 값을 구하여라.</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q3">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-3" class="solution-link">3</a></span>수열 $\{a_n\}$에 대하여 $\displaystyle\sum_{k=1}^{n} a_k = n^2 + n$일 때, $\displaystyle\sum_{k=1}^{10} a_k^{\,2}$의 값을 구하여라.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 4 : 개념 3 — 자연수의 거듭제곱의 합 -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">자연수의 거듭제곱의 합</h2>
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">1) 자연수·자연수의 제곱·자연수의 세제곱의 합</title>
+      <div class="formula">
+        (1) $\displaystyle\sum_{k=1}^{n} k = 1+2+3+\cdots+n = \dfrac{n(n+1)}{2}$
+      </div>
+      <div class="formula">
+        (2) $\displaystyle\sum_{k=1}^{n} k^2 = 1^2+2^2+3^2+\cdots+n^2 = \dfrac{n(n+1)(2n+1)}{6}$
+      </div>
+      <div class="formula">
+        (3) $\displaystyle\sum_{k=1}^{n} k^3 = 1^3+2^3+3^3+\cdots+n^3 = \left\{\dfrac{n(n+1)}{2}\right\}^{\!2}$
+      </div>
+
+      <div class="sub-title">2) 연속한 자연수의 곱의 합</div>
+      <div class="formula">
+        (1) $\displaystyle\sum_{k=1}^{n} k(k+1) = \dfrac{n(n+1)(n+2)}{3}$
+      </div>
+      <div class="formula">
+        (2) $\displaystyle\sum_{k=1}^{n} k(k+1)(k+2) = \dfrac{n(n+1)(n+2)(n+3)}{4}$
+      </div>
+
+      <div class="note">일반적으로 $\displaystyle\sum_{k=1}^{n} k(k+1)(k+2)\cdots(k+m) = \dfrac{n(n+1)(n+2)\cdots(n+m+1)}{m+2}$. $\Sigma$를 직접 전개하지 않고 묶음으로 빠르게 계산할 때 자주 쓴다.</div>
+    </div>
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 5 : 문제 4, 5 — 거듭제곱 합 응용 -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q4">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-4" class="solution-link">4</a></span>다음 수열의 합을 구하여라.</p>
+        <p class="sub">(1) $\displaystyle\sum_{k=1}^{n}(2k+1)^2$</p>
+        <p class="sub">(2) $1\times 5 + 2\times 6 + 3\times 7 + \cdots + 10\times 14$</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q5">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-5" class="solution-link">5</a></span>다음 수열의 합을 구하여라.</p>
+        <p class="sub">(1) $1\times 20 + 2\times 19 + 3\times 18 + \cdots + 20\times 1$</p>
+        <p class="sub">(2) $1\times n + 2\times(n-1) + 3\times(n-2) + \cdots + (n-1)\times 2 + n\times 1$</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 6 : 문제 6 — 블록 쌓기 (single, 3D SVG) -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area single">
+
+    <div class="problem-block" data-qa-id="q6">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <div class="fig-right" style="width:54mm;">
+          <svg viewBox="102 56 236 179" xmlns="http://www.w3.org/2000/svg" style="width:100%;">
+            <polygon points="178,181 200,192 200,166 178,155" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="222,181 200,192 200,166 222,155" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="200,144 222,155 200,166 178,155" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="156,192 178,203 178,177 156,166" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="200,192 178,203 178,177 200,166" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="178,155 200,166 178,177 156,166" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="200,192 222,203 222,177 200,166" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="244,192 222,203 222,177 244,166" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="222,155 244,166 222,177 200,166" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="134,203 156,214 156,188 134,177" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="178,203 156,214 156,188 178,177" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="156,166 178,177 156,188 134,177" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="178,203 200,214 200,188 178,177" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="222,203 200,214 200,188 222,177" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="200,166 222,177 200,188 178,177" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="222,203 244,214 244,188 222,177" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="266,203 244,214 244,188 266,177" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="244,166 266,177 244,188 222,177" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="112,214 134,225 134,199 112,188" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="156,214 134,225 134,199 156,188" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="134,177 156,188 134,199 112,188" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="156,214 178,225 178,199 156,188" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="200,214 178,225 178,199 200,188" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="178,177 200,188 178,199 156,188" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="200,214 222,225 222,199 200,188" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="244,214 222,225 222,199 244,188" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="222,177 244,188 222,199 200,188" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="244,214 266,225 266,199 244,188" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="288,214 266,225 266,199 288,188" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="266,177 288,188 266,199 244,188" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="178,155 200,166 200,140 178,129" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="222,155 200,166 200,140 222,129" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="200,118 222,129 200,140 178,129" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="156,166 178,177 178,151 156,140" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="200,166 178,177 178,151 200,140" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="178,129 200,140 178,151 156,140" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="200,166 222,177 222,151 200,140" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="244,166 222,177 222,151 244,140" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="222,129 244,140 222,151 200,140" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="134,177 156,188 156,162 134,151" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="178,177 156,188 156,162 178,151" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="156,140 178,151 156,162 134,151" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="178,177 200,188 200,162 178,151" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="222,177 200,188 200,162 222,151" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="200,140 222,151 200,162 178,151" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="222,177 244,188 244,162 222,151" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="266,177 244,188 244,162 266,151" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="244,140 266,151 244,162 222,151" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="178,129 200,140 200,114 178,103" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="222,129 200,140 200,114 222,103" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="200,92 222,103 200,114 178,103" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="156,140 178,151 178,125 156,114" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="200,140 178,151 178,125 200,114" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="178,103 200,114 178,125 156,114" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="200,140 222,151 222,125 200,114" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="244,140 222,151 222,125 244,114" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="222,103 244,114 222,125 200,114" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="178,103 200,114 200,88 178,77" fill="#cdd5e0" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="222,103 200,114 200,88 222,77" fill="#dee4ec" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <polygon points="200,66 222,77 200,88 178,77" fill="#f0f3f8" stroke="#7a8c9e" stroke-width="0.7" stroke-linejoin="round"/>
+            <foreignObject x="234" y="74" width="14" height="12" overflow="visible">
+              <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:8px;line-height:1;color:#e53e3e;font-style:italic;">$1$</div>
+            </foreignObject>
+            <foreignObject x="256" y="107" width="14" height="12" overflow="visible">
+              <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:8px;line-height:1;color:#e53e3e;font-style:italic;">$3$</div>
+            </foreignObject>
+            <foreignObject x="278" y="141" width="14" height="12" overflow="visible">
+              <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:8px;line-height:1;color:#e53e3e;font-style:italic;">$6$</div>
+            </foreignObject>
+            <foreignObject x="300" y="174" width="16" height="12" overflow="visible">
+              <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:8px;line-height:1;color:#e53e3e;font-style:italic;">$10$</div>
+            </foreignObject>
+          </svg>
+        </div>
+        <p><span class="pnum"><a href="#sol-6" class="solution-link">6</a></span>오른쪽 그림은 맨 위쪽부터 차례로 $1,\,3,\,6,\,10$개의 정육면체 모양의 블록을 쌓아 만든 $4$층 탑이다. 이와 같은 모양으로 $30$층 탑을 쌓기 위해 필요한 블록의 개수를 구하여라.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 7 : 문제 7 — 일반항이 합의 꼴인 수열 (single) -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="problems-area single">
+
+    <div class="problem-block" data-qa-id="q7">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-7" class="solution-link">7</a></span>다음 수열의 첫째항부터 제 $n$항까지의 합 $S_n$을 구하여라.</p>
+        <p class="sub">(1) $1,\;1+2,\;1+2+3,\;1+2+3+4,\;\ldots$</p>
+        <p class="sub">(2) $1,\;1+2,\;1+2+4,\;1+2+4+8,\;\ldots$</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 8 : 개념 4 — 특수한 수열의 합 -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">특수한 수열의 합</h2>
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">1) 지수꼴 — 등비수열의 합</div>
+      <p>일반항이 $a r^{\,k-1}$ 꼴인 등비수열의 합은 등비수열의 합 공식으로 정리한다.</p>
+      <div class="formula">
+        $\displaystyle\sum_{k=1}^{n} a\,r^{\,k-1} = \dfrac{a(r^{\,n}-1)}{r-1}$ &emsp;($r\ne 1$)
+      </div>
+
+      <div class="ex">
+        <b>예)</b> $\displaystyle\sum_{k=m}^{n} r^{\,k} = r^{\,m} + r^{\,m+1} + \cdots + r^{\,n} = \dfrac{r^{\,m}(r^{\,n-m+1}-1)}{r-1}$ &emsp;(공비 $r$, 항의 개수 $n-m+1$)<br>
+        $\displaystyle\sum_{k=1}^{n} r^{\,3k-1} = r^2 + r^5 + \cdots + r^{\,3n-1} = \dfrac{r^2\{(r^3)^{\,n}-1\}}{r^3-1}$ &emsp;(공비 $r^3$)
+      </div>
+
+      <div class="sub-title">2) 같은 숫자가 반복된 수열의 합</div>
+      <p>한 자리 수 $a$가 한 자리, 두 자리, 세 자리, $\ldots$ 로 반복되는 수의 합 ($a$가 $n$개)</p>
+      <div class="formula left">
+        $a + \underbrace{aa}_{2자리} + \underbrace{aaa}_{3자리} + \cdots + \underbrace{aa\cdots a}_{n자리}$ $\;=\; \dfrac{a}{9}\bigl\{(10-1)+(10^2-1)+\cdots+(10^{\,n}-1)\bigr\}$ $\;=\; \dfrac{a(10^{\,n+1} - 9n - 10)}{81}$
+      </div>
+
+      <div class="note">$\displaystyle\underbrace{99\cdots 9}_{n자리} = 10^{\,n} - 1$임을 이용해 $9$로 묶고 $\Sigma$ 공식을 적용한다.</div>
+    </div>
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 9 : 문제 8 — 이중 Σ (single) -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="problems-area single">
+
+    <div class="problem-block" data-qa-id="q8">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-8" class="solution-link">8</a></span>다음을 계산하여라.</p>
+        <p class="sub">(1) $\displaystyle\sum_{k=1}^{5}\!\left(\sum_{j=1}^{k} j\right)$ &emsp; (2) $\displaystyle\sum_{k=1}^{n}\sum_{j=1}^{k}(j+1)$</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- QUICK ANSWER PAGE -->
+<!-- ============================================================ -->
+<section class="sheet even quick-answer-section">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">빠른 정답</h2>
+    <div class="quick-answers">
+      <div class="qa-item"><span class="qa-num">1.</span><span class="qa-ans">(1) $120$<br>(2) $3280$<br>(3) $107$</span></div>
+      <div class="qa-item"><span class="qa-num">2.</span><span class="qa-ans">(1) $240$<br>(2) $20$</span></div>
+      <div class="qa-item"><span class="qa-num">3.</span><span class="qa-ans">$1540$</span></div>
+      <div class="qa-item"><span class="qa-num">4.</span><span class="qa-ans">(1) $\dfrac{4n(n+1)(n+2)}{3}+n$<br>(2) $605$</span></div>
+      <div class="qa-item"><span class="qa-num">5.</span><span class="qa-ans">(1) $1540$<br>(2) $\dfrac{n(n+1)(n+2)}{6}$</span></div>
+      <div class="qa-item"><span class="qa-num">6.</span><span class="qa-ans">$4960$</span></div>
+      <div class="qa-item"><span class="qa-num">7.</span><span class="qa-ans">(1) $\dfrac{n(n+1)(n+2)}{6}$<br>(2) $2^{\,n+1}-n-2$</span></div>
+      <div class="qa-item"><span class="qa-num">8.</span><span class="qa-ans">(1) $35$<br>(2) $\dfrac{n(n+1)(n+5)}{6}$</span></div>
+    </div>
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- SOLUTION PAGES -->
+<!-- ============================================================ -->
+<section class="sheet odd solution-section">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="sheet-body">
+    <h2 class="section-title">정답 및 해설</h2>
+    <div class="solutions">
+
+      <div class="solution-item" id="sol-1" data-qa-id="q1">
+        <div class="sol-num">1.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $120$ &nbsp; (2) $3280$ &nbsp; (3) $107$</div>
+        <p>(1) $\Sigma$ 분배 + 자연수의 합 공식. $\displaystyle\sum_{k=1}^{10}(2k+1) = 2\sum k + \sum 1 = 2\cdot\dfrac{10\cdot 11}{2} + 10 = 120.$</p>
+        <p>(2) 등비합. 첫째항 $1$, 공비 $3$, 항 $8$개. $\displaystyle\sum_{k=1}^{8} 3^{\,k-1} = \dfrac{3^8-1}{3-1} = \dfrac{6560}{2} = 3280.$</p>
+        <p>(3) 분배. $\displaystyle\sum 2^{\,k} = \dfrac{2(2^5-1)}{1} = 62,\;3\sum k = 3\cdot 15 = 45.$ 합 $107.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-2" data-qa-id="q2">
+        <div class="sol-num">2.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $240$ &nbsp; (2) $20$</div>
+        <p>(1) 상수배의 성질. $\displaystyle\sum 3(a_{k+1}-a_k) = 3\sum (a_{k+1}-a_k) = 3\cdot 80 = 240.$</p>
+        <p>(2) 망원합(telescoping). $\displaystyle\sum_{k=1}^{20}(a_{k+1}-a_k) = a_{21} - a_1 = 30 - 10 = 20.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-3" data-qa-id="q3">
+        <div class="sol-num">3.</div>
+        <div class="sol-answer"><b>[정답]</b> $1540$</div>
+        <p>$S_n = n^2 + n.$ $n\ge 2$일 때 $a_n = S_n - S_{n-1} = (n^2+n) - ((n-1)^2 + (n-1)) = 2n.$</p>
+        <p>$n=1$일 때 $a_1 = S_1 = 2 = 2\cdot 1$ — 일치. 따라서 $a_n = 2n.$</p>
+        <p>$\displaystyle\sum_{k=1}^{10} a_k^{\,2} = \sum (2k)^2 = 4\sum k^2 = 4\cdot\dfrac{10\cdot 11\cdot 21}{6} = 4\cdot 385 = 1540.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-4" data-qa-id="q4">
+        <div class="sol-num">4.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $\dfrac{4n(n+1)(n+2)}{3}+n$ &nbsp; (2) $605$</div>
+        <p>(1) $(2k+1)^2 = 4k(k+1) + 1$로 변형하면 연속 자연수 곱의 합 공식 적용 편하다.</p>
+        <p>$\displaystyle\sum_{k=1}^{n}(2k+1)^2 = 4\sum k(k+1) + \sum 1 = 4\cdot\dfrac{n(n+1)(n+2)}{3} + n.$</p>
+        <p>(2) 일반항 $k\,(k+4)$ 꼴. $\displaystyle\sum_{k=1}^{10} k(k+4) = \sum k^2 + 4\sum k = 385 + 4\cdot 55 = 385 + 220 = 605.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-5" data-qa-id="q5">
+        <div class="sol-num">5.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $1540$ &nbsp; (2) $\dfrac{n(n+1)(n+2)}{6}$</div>
+        <p>(1) 일반항 $k(21-k).$ $\displaystyle\sum_{k=1}^{20} k(21-k) = 21\sum k - \sum k^2 = 21\cdot 210 - 2870 = 1540.$</p>
+        <p>(2) 일반항 $k(n+1-k).$ $\displaystyle\sum_{k=1}^{n} k(n+1-k) = (n+1)\sum k - \sum k^2$ $= \dfrac{n(n+1)^2}{2} - \dfrac{n(n+1)(2n+1)}{6}$ $= \dfrac{n(n+1)}{6}\bigl[3(n+1)-(2n+1)\bigr]$ $= \dfrac{n(n+1)(n+2)}{6}.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-6" data-qa-id="q6">
+        <div class="sol-num">6.</div>
+        <div class="sol-answer"><b>[정답]</b> $4960$</div>
+        <p>$k$층의 블록 수 $T_k = 1+2+\cdots+k = \dfrac{k(k+1)}{2}$ (삼각수). $1,\,3,\,6,\,10,\,\ldots$ 와 일치.</p>
+        <p>$30$층 총 블록 수 $= \displaystyle\sum_{k=1}^{30}\dfrac{k(k+1)}{2} = \dfrac{1}{2}\sum k(k+1)$ $= \dfrac{1}{2}\cdot\dfrac{30\cdot 31\cdot 32}{3} = \dfrac{30\cdot 31\cdot 32}{6} = 4960.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-7" data-qa-id="q7">
+        <div class="sol-num">7.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $\dfrac{n(n+1)(n+2)}{6}$ &nbsp; (2) $2^{\,n+1}-n-2$</div>
+        <p>(1) 일반항 $a_k = 1+2+\cdots+k = \dfrac{k(k+1)}{2}.$ 합 $S_n = \displaystyle\sum_{k=1}^{n}\dfrac{k(k+1)}{2} = \dfrac{n(n+1)(n+2)}{6}.$</p>
+        <p>(2) 일반항 $a_k = 1+2+4+\cdots+2^{\,k-1} = 2^{\,k}-1$ (등비합).</p>
+        <p>$S_n = \displaystyle\sum_{k=1}^{n}(2^{\,k}-1) = \dfrac{2(2^{\,n}-1)}{1} - n = 2^{\,n+1} - n - 2.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-8" data-qa-id="q8">
+        <div class="sol-num">8.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $35$ &nbsp; (2) $\dfrac{n(n+1)(n+5)}{6}$</div>
+        <p>(1) 안쪽 합 $\displaystyle\sum_{j=1}^{k} j = \dfrac{k(k+1)}{2}.$</p>
+        <p>$\displaystyle\sum_{k=1}^{5}\dfrac{k(k+1)}{2} = \dfrac{1}{2}\cdot\dfrac{5\cdot 6\cdot 7}{3} = \dfrac{210}{6} = 35.$</p>
+        <p>(2) 안쪽 합 $\displaystyle\sum_{j=1}^{k}(j+1) = \dfrac{k(k+1)}{2} + k = \dfrac{k(k+3)}{2}.$</p>
+        <p>$\displaystyle\sum_{k=1}^{n}\dfrac{k(k+3)}{2} = \dfrac{1}{2}\!\left[\dfrac{n(n+1)(2n+1)}{6} + 3\cdot\dfrac{n(n+1)}{2}\right]$ $= \dfrac{n(n+1)}{12}\bigl[(2n+1)+9\bigr] = \dfrac{n(n+1)(n+5)}{6}.$</p>
+      </div>
+
+    </div>
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<section class="sheet even solution-section">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <div class="solutions"></div>
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<script>
+const _ready = Promise.all([
+  document.fonts.ready,
+  (window.MathJax && MathJax.startup && MathJax.startup.promise) ? MathJax.startup.promise : Promise.resolve()
+]).then(() => new Promise(resolve => {
+  // /mathbook:_공통 §9.1 — MathJax/폰트 layout 안정화 대기
+  requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(resolve, 100)));
+}));
+_ready.then(() => {
+  (function autoWrapChoices(){
+    document.querySelectorAll('.choices').forEach(c => {
+      if (c.scrollWidth > c.clientWidth) c.classList.add('two-row');
+    });
+  })();
+  (function compactAndSplitConcepts(){
+    const SLACK_PX = (() => {
+      const probe = document.createElement('div');
+      probe.style.cssText = 'position:absolute;visibility:hidden;width:10mm;';
+      document.body.appendChild(probe);
+      const px = probe.getBoundingClientRect().width;
+      document.body.removeChild(probe);
+      return px;
+    })();
+    function overflows(body){ return body.scrollHeight > body.clientHeight + SLACK_PX; }
+    function conceptSheets(){
+      return Array.from(document.querySelectorAll('.sheet')).filter(s =>
+        s.querySelector('.concept') && !s.classList.contains('solution-section')
+          && !s.classList.contains('quick-answer-section')
+      );
+    }
+    conceptSheets().forEach(sheet => {
+      const body = sheet.querySelector('.sheet-body');
+      if (!overflows(body)) return;
+      body.querySelectorAll('.concept .formula').forEach(f => f.classList.add('compact'));
+    });
+    conceptSheets().forEach(sheet => {
+      const body = sheet.querySelector('.sheet-body');
+      if (!overflows(body)) return;
+      const concept = body.querySelector('.concept');
+      if (concept) concept.classList.add('dense');
+    });
+    const queue = conceptSheets();
+    while (queue.length){
+      const sheet = queue.shift();
+      const body = sheet.querySelector('.sheet-body');
+      if (!body || !overflows(body)) continue;
+      const concept = body.querySelector('.concept');
+      if (!concept) continue;
+      const groups = [];
+      let cur = null;
+      Array.from(concept.children).forEach(ch => {
+        if (ch.classList.contains('sub-title')) { cur = [ch]; groups.push(cur); }
+        else if (cur) { cur.push(ch); }
+        else { cur = [ch]; groups.push(cur); }
+      });
+      if (groups.length < 2) continue;
+      const bodyBottom = body.getBoundingClientRect().bottom;
+      let splitAt = -1;
+      for (let i = 0; i < groups.length; i++){
+        const last = groups[i][groups[i].length - 1];
+        if (last.getBoundingClientRect().bottom > bodyBottom + SLACK_PX) { splitAt = i; break; }
+      }
+      if (splitAt <= 0) continue;
+      const isDense = concept.classList.contains('dense');
+      const ns = document.createElement('section');
+      ns.className = 'sheet';
+      ns.innerHTML =
+        '<div class="corner tr"></div><div class="corner tl"></div>' +
+        '<div class="corner br"></div><div class="corner bl"></div>' +
+        '<header class="sheet-header"></header>' +
+        '<div class="sheet-body"><div class="concept' + (isDense ? ' dense' : '') + '"></div></div>' +
+        '<footer class="sheet-footer"></footer>';
+      const newConcept = ns.querySelector('.concept');
+      for (let i = splitAt; i < groups.length; i++){
+        groups[i].forEach(el => newConcept.appendChild(el));
+      }
+      sheet.parentNode.insertBefore(ns, sheet.nextSibling);
+      queue.push(ns);
+    }
+  })();
+  (function flowSolutions(){
+    // 라이브러리 표준 패턴 — incremental add-and-measure (regionize/Bindery/paged.js)
+    // 1) 한 항목씩 append → 마지막 항목 rect.bottom/right 검사
+    // 2) 오버플로면 split 시도: 마지막 <p>부터 떼며 fit 찾기, 헤더+첫 단락은 유지
+    // 3) 분할 실패면 통째로 다음 페이지
+    const sections = Array.from(document.querySelectorAll('.solution-section'));
+    if (!sections.length) return;
+    const allItems = [];
+    sections.forEach(sec => { sec.querySelectorAll('.solution-item').forEach(it => allItems.push(it)); });
+    sections.forEach(sec => { const c = sec.querySelector('.solutions'); if (c) c.innerHTML = ''; });
+
+    function makeSection() {
+      const prev = sections[sections.length - 1];
+      const ns = document.createElement('section');
+      ns.className = 'sheet solution-section';
+      ns.innerHTML =
+        '<div class="corner tr"></div><div class="corner tl"></div>' +
+        '<div class="corner br"></div><div class="corner bl"></div>' +
+        '<header class="sheet-header"></header>' +
+        '<div class="sheet-body"><div class="solutions"></div></div>' +
+        '<footer class="sheet-footer"></footer>';
+      prev.parentNode.insertBefore(ns, prev.nextSibling);
+      sections.push(ns);
+      return ns;
+    }
+    function lastItemOverflows(sec) {
+      const body = sec.querySelector('.sheet-body');
+      const last = sec.querySelector('.solutions > :last-child');
+      if (!body || !last) return false;
+      void body.offsetHeight;
+      const br = body.getBoundingClientRect();
+      const lr = last.getBoundingClientRect();
+      return lr.bottom > br.bottom + 1 || lr.right > br.right + 1;
+    }
+    function makeContinuation(item, paras) {
+      const cont = document.createElement('div');
+      cont.className = 'solution-item continuation';
+      cont.setAttribute('data-qa-id', item.getAttribute('data-qa-id') || '');
+      paras.forEach(p => cont.appendChild(p));
+      return cont;
+    }
+
+    let queue = allItems.slice();
+    let secIdx = 0;
+    let safety = 0;
+    while (queue.length > 0 && safety++ < 600) {
+      if (secIdx >= sections.length) makeSection();
+      const sec = sections[secIdx];
+      const container = sec.querySelector('.solutions');
+      let advancedToNextSection = false;
+      while (queue.length > 0) {
+        const item = queue.shift();
+        container.appendChild(item);
+        if (!lastItemOverflows(sec)) continue;
+        const paras = Array.from(item.querySelectorAll(':scope > p'));
+        if (paras.length >= 2) {
+          const moved = [];
+          while (paras.length > 1 && lastItemOverflows(sec)) {
+            const p = paras.pop();
+            item.removeChild(p);
+            moved.unshift(p);
+          }
+          if (!lastItemOverflows(sec) && moved.length > 0) {
+            queue.unshift(makeContinuation(item, moved));
+            advancedToNextSection = true;
+            break;
+          }
+          moved.forEach(p => item.appendChild(p));
+        }
+        container.removeChild(item);
+        queue.unshift(item);
+        advancedToNextSection = true;
+        break;
+      }
+      if (advancedToNextSection) secIdx++;
+      else break;
+    }
+    sections.forEach(sec => { if (!sec.querySelector('.solution-item')) sec.remove(); });
+  })();
+  (function rebalanceParity(){
+    const sheets = document.querySelectorAll('.sheet');
+    sheets.forEach((s, i) => {
+      const isOdd = (i % 2 === 0);
+      s.classList.toggle('odd', isOdd);
+      s.classList.toggle('even', !isOdd);
+      const hdr = s.querySelector('.sheet-header');
+      if (hdr) hdr.textContent = isOdd ? '대수' : '2026 수복이';
+    });
+  })();
+  (function renumberFooters(){
+    document.querySelectorAll('.sheet-footer').forEach((f, i) => { f.textContent = i + 1; });
+  })();
+  document.body.classList.add('ready');
+});
+</script>
+</body>
+</html>

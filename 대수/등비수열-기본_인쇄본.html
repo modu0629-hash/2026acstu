@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>등비수열 — 인쇄본</title>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']] },
+  chtml: { matchFontHeight: false },
+  startup: { typeset: true }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+@font-face { font-family:'Gyeonggi Title'; src:url('../%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/woff/Title_Bold.woff') format('woff'); font-weight:700; font-display:swap; }
+@font-face { font-family:'Gyeonggi Title'; src:url('../%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/woff/Title_Medium.woff') format('woff'); font-weight:500; font-display:swap; }
+@font-face { font-family:'Gyeonggi Batang'; src:url('../%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/woff/Batang_Regular.woff') format('woff'); font-weight:400; font-display:swap; }
+@font-face { font-family:'Gyeonggi Batang'; src:url('../%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/woff/Batang_Bold.woff') format('woff'); font-weight:700; font-display:swap; }
+
+@page { size: A4; margin: 0; }
+* { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --line-h: 1.75; --one-line: 7.4mm;
+  --pad-x: 22mm; --pad-top: 20mm; --pad-bottom: 18mm;
+  --corner-x: 22mm; --corner-len: 48mm;
+}
+
+html, body { background:#fff; color:#000; font-family:'신명조','HY신명조','Shinmyeongjo','바탕','Batang',serif; font-size:11pt; line-height:var(--line-h); }
+@media screen { body { background:#dcdcdc; padding:24px 0; } .sheet { box-shadow:0 3px 14px rgba(0,0,0,0.2); margin:0 auto 24px; } }
+
+.sheet { width:210mm; height:297mm; background:#fff; position:relative; overflow:hidden; }
+@media print { .sheet { page-break-after:always; margin:0; box-shadow:none; } .sheet:last-child { page-break-after:auto; } }
+
+.corner { position:absolute; height:0; width:var(--corner-len); border-top:1pt solid #000; }
+.corner::after { content:''; position:absolute; height:3mm; width:0; }
+.corner.tr { top:12mm; right:var(--corner-x); }
+.corner.tr::after { right:0; top:0; border-right:1pt solid #000; }
+.corner.tl { top:12mm; left:var(--corner-x); }
+.corner.tl::after { left:0; top:0; border-left:1pt solid #000; }
+.corner.br { bottom:14mm; right:var(--corner-x); }
+.corner.br::after { right:0; bottom:0; border-right:1pt solid #000; }
+.corner.bl { bottom:14mm; left:var(--corner-x); }
+.corner.bl::after { left:0; bottom:0; border-left:1pt solid #000; }
+.corner.tr, .corner.tl { display:none; }
+.sheet.odd .corner.bl { display:none; }
+.sheet.even .corner.br { display:none; }
+
+.sheet-header { position:absolute; top:21mm; left:var(--pad-x); right:var(--pad-x); font-family:'Gyeonggi Title',sans-serif; font-weight:700; font-size:10.5pt; }
+.sheet.odd .sheet-header { text-align:right; }
+.sheet.even .sheet-header { text-align:left; }
+.sheet-footer { position:absolute; bottom:8mm; left:0; right:0; text-align:center; font-family:'Gyeonggi Batang',serif; font-size:10pt; }
+
+.sheet-body { position:absolute; top:calc(var(--pad-top) + 14mm); bottom:calc(var(--pad-bottom) + 6mm); left:var(--pad-x); right:var(--pad-x); }
+
+.chapter-title { font-family:'Gyeonggi Title',sans-serif; font-weight:700; font-size:18pt; letter-spacing:0.5pt; margin-bottom:calc(var(--one-line) * 2); }
+.section-title { font-family:'Gyeonggi Batang',serif; font-weight:700; font-size:13pt; margin-bottom:calc(var(--one-line) * 1); }
+.sub-label { font-family:'Gyeonggi Title',sans-serif; font-weight:700; font-size:11pt; margin-bottom:3mm; }
+
+.concept { font-family:'Gyeonggi Batang','신명조','HY신명조','바탕','Batang',serif; font-size:11pt; line-height:1.85; }
+.concept p { margin-bottom:2mm; }
+.concept .sub-title { font-family:'Gyeonggi Batang',serif; font-weight:400; font-size:11.5pt; margin:calc(var(--one-line)*2) 0 2mm; }
+.concept .sub-title:first-child { margin-top:0; }
+.concept .formula { border:0.7pt solid #000; padding:3mm 5mm; margin:3mm 0; text-align:center; }
+.concept .formula.left { text-align:left; padding:3mm 3mm; }
+.concept .formula.compact { padding:1.5mm 5mm; margin:1.5mm 0; }
+.concept .note { padding:2mm 0; margin:3mm 0; font-size:8pt; line-height:1.6; }
+.concept .note::before { content:"[참고] "; font-weight:700; }
+.concept .proof { font-size:8pt; line-height:1.6; padding:2mm 0 2mm 10mm; text-indent:-10mm; margin:3mm 0 6mm 0; }
+.concept .ex { padding:2mm 0; margin:3mm 0; font-size:9pt; }
+.concept.dense { line-height:1.7; }
+.concept.dense .sub-title { margin:calc(var(--one-line)*1.1) 0 1.5mm; }
+.concept.dense .sub-title:first-child { margin-top:0; }
+.concept.dense p { margin-bottom:1mm; }
+.concept.dense .note { margin:2mm 0; }
+.concept.dense .formula { padding:2mm 5mm; margin:2mm 0; }
+.concept.dense .ex { margin:1.5mm 0; }
+.concept table { width:100%; border-collapse:collapse; margin:3mm 0; font-size:9.5pt; }
+.concept table th, .concept table td { border:0.5pt solid #000; padding:1.5mm 2mm; text-align:center; vertical-align:middle; }
+.concept table th { font-weight:700; background:#f7f7f7; }
+
+.problem-block { }
+.sheet-body > .problem-block { margin-top:8mm; }
+.problem { font-family:'신명조','HY신명조','바탕','Batang',serif; font-size:10pt; line-height:var(--line-h); letter-spacing:-0.05em; position:relative; }
+.problem > p:first-of-type { padding-left:5.5mm; text-indent:-5.5mm; }
+.problem .pnum { display:inline-block; min-width:4mm; margin-right:1.5mm; font-family:'Gyeonggi Title',sans-serif; font-size:11pt; font-weight:700; text-indent:0; vertical-align:baseline; }
+.problem .pnum a { color:#000; text-decoration:none; font-weight:700; }
+.problem p { margin-bottom:1.5mm; }
+.problem .sub { margin-left:4mm; }
+.cond-box { display:block; width:fit-content; max-width:92%; border:0.7pt solid #000; padding:2.5mm 6mm; margin:2mm auto; }
+.cond-box p { margin:0.5mm 0; }
+
+.choices { display:grid; grid-template-columns:repeat(5, minmax(0,1fr)); gap:2mm 5mm; margin-top:4mm; font-size:10pt; clear:both; }
+.choices.two-row { grid-template-columns:repeat(3, minmax(0,1fr)); }
+.choices span { white-space:nowrap; }
+
+.problems-area { position:absolute; top:calc(var(--pad-top) + var(--one-line) + 5mm); bottom:calc(var(--pad-bottom) + 6mm); left:var(--pad-x); right:var(--pad-x); display:flex; flex-direction:column; }
+.problems-area > .problem-block:first-child { margin-bottom:0; }
+.problems-area > .problem-block:nth-child(2) { margin:auto 0; }
+.problems-area.single > .problem-block { margin:0; }
+
+mjx-container { font-weight:400 !important; }
+
+.fig-right { float:right; margin:0 0 2mm 5mm; overflow:visible; }
+.fig-center { text-align:center; margin:3mm 0; overflow:visible; }
+.fig-row { display:flex; justify-content:center; gap:6mm; margin:3mm 0; flex-wrap:wrap; }
+svg { overflow:visible; }
+
+.quick-answer-section .sheet-body { top:32mm; bottom:20mm; padding:0; overflow:hidden; display:flex; flex-direction:column; }
+.quick-answer-section .section-title { margin-top:0; flex:0 0 auto; }
+.quick-answers { flex:1 1 auto; min-height:0; position:relative; column-count:3; column-fill:auto; column-gap:7mm; column-rule:0.3pt solid #888; font-family:'신명조','HY신명조','Shinmyeongjo','바탕','Batang',serif; font-size:8pt; line-height:1.85; letter-spacing:-0.1em; }
+.quick-answers mjx-container { font-size:8pt !important; }
+.quick-answers::before, .quick-answers::after { content:''; position:absolute; top:0; bottom:0; width:0.3pt; background:#888; pointer-events:none; }
+.quick-answers::before { left:calc((100% - 14mm) / 3 + 3.5mm); }
+.quick-answers::after { left:calc((100% - 14mm) / 3 * 2 + 10.5mm); }
+.qa-item { break-inside:avoid-column; page-break-inside:avoid; -webkit-column-break-inside:avoid; margin-bottom:2mm; display:flex; align-items:baseline; }
+.qa-num { flex:0 0 auto; display:inline-block; min-width:3mm; margin-right:1.5mm; font-family:'Gyeonggi Title',sans-serif; font-size:8pt; }
+.qa-ans { flex:1 1 auto; min-width:0; }
+
+.solution-section .sheet-body { top:32mm; bottom:20mm; padding:0; overflow:hidden; display:flex; flex-direction:column; }
+.solution-section .section-title { margin-top:0; flex:0 0 auto; }
+.solutions { flex:1 1 auto; min-height:0; position:relative; column-count:2; column-fill:auto; column-gap:8mm; column-rule:0.3pt solid #888; font-family:'신명조','HY신명조','Shinmyeongjo','바탕','Batang',serif; font-size:8pt; line-height:1.75; letter-spacing:-0.05em; }
+.solutions::before { content:''; position:absolute; top:0; bottom:0; left:calc((100% - 8mm) / 2 + 4mm); width:0.3pt; background:#888; pointer-events:none; }
+.solutions mjx-container { font-size:8pt !important; max-width:100%; }
+.solution-item { margin-bottom:var(--one-line); padding-left:5mm; padding-right:2mm; position:relative; overflow-wrap:break-word; }
+.solution-item p { text-indent:0; margin:0; }
+.sol-num { position:absolute; left:0; top:0; font-weight:700; font-size:8pt; font-family:'Gyeonggi Title',sans-serif; }
+.sol-num a { color:#000; text-decoration:none; }
+.sol-answer { margin-bottom:1.5mm; }
+@media print { .solution-link { text-decoration:none; } }
+
+/* /mathbook:_공통 §9.2 — 깜빡임 방지 */
+.solution-section { visibility:hidden; }
+body.ready .solution-section { visibility:visible; }
+
+/* /mathbook:_공통 §10.3 — 이어서 마커 */
+.solution-item.continuation { padding-left:5mm; }
+.solution-item.continuation::before { content:'(이어서) '; font-size:0.9em; color:#666; font-style:italic; }
+
+/* 색상 통일 */
+a, a:link, a:visited, a:hover, a:active { color:#000 !important; }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- PAGE 1 : 개념 1 — 등비수열 정의·일반항·관계식·중항 -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="sheet-body">
+    <h1 class="chapter-title">등비수열</h1>
+
+    <h2 class="section-title">등비수열의 정의와 일반항</h2>
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">1) 등비수열의 정의</div>
+      <p>첫째항부터 차례로 일정한 수를 곱하여 만든 수열을 <b>등비수열</b>이라 하고, 곱하는 일정한 수를 <b>공비</b>라 한다.</p>
+
+      <div class="ex">
+        <b>예)</b> $1,\,-3,\,9,\,-27,\,81,\,\cdots$ : 첫째항 $1$, 공비 $-3$인 등비수열<br>
+        $4,\,2,\,1,\,\dfrac{1}{2},\,\dfrac{1}{4},\,\cdots$ : 첫째항 $4$, 공비 $\dfrac{1}{2}$인 등비수열
+      </div>
+
+      <div class="note">등비수열(等比數列)은 영어로 geometric sequence, 공비(公比)는 common ratio라 한다. 첫째항과 공비가 $0$이 아닌 등비수열만 다룬다.</div>
+
+      <div class="sub-title">2) 등비수열의 일반항</div>
+      <p>첫째항이 $a$, 공비가 $r$인 등비수열 $\{a_n\}$의 일반항은</p>
+
+      <div class="formula">
+        $$a_n = a\,r^{\,n-1} \qquad (n=1,\,2,\,3,\,\cdots)$$
+      </div>
+
+      <div class="sub-title">3) 등비수열의 관계식</div>
+      <p>공비가 $r$인 등비수열 $\{a_n\}$의 이웃하는 두 항 $a_n,\,a_{n+1}$ 사이에는 다음 관계식이 성립한다.</p>
+
+      <div class="formula">
+        $$\dfrac{a_{n+1}}{a_n} = r \quad\Longleftrightarrow\quad a_{n+1} = r\,a_n$$
+      </div>
+
+      <div class="sub-title">4) 등비 중항</div>
+      <p>$0$이 아닌 세 수 $a,\,b,\,c$가 이 순서대로 등비수열을 이룰 때, $b$를 $a$와 $c$의 <b>등비 중항</b>이라 한다.</p>
+
+      <div class="formula">
+        $\dfrac{b}{a} = \dfrac{c}{b} \;\Longleftrightarrow\; b^2 = ac$
+      </div>
+
+      <div class="ex">
+        <b>예)</b> 세 항이 등비수열을 이루는 문제에서 미지수를 줄이려면 ① 등비 중항을 이용하여 $b^2 = ac$를 적용하거나, ② 세 항을 $a,\,ar,\,ar^2$으로 두는 방법을 자주 쓴다.
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 2 : 문제 1, 2 — 일반항·조건 항 (개념 1 적용) -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q1">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-1" class="solution-link">1</a></span>다음 등비수열 $\{a_n\}$에 대하여 물음에 답하여라.</p>
+        <p class="sub">(1) 제 $2$항이 $12$, 제 $5$항이 $324$인 등비수열의 일반항 $a_n$을 구하여라. (단, 공비는 실수)</p>
+        <p class="sub">(2) 공비가 양수인 등비수열 $\{a_n\}$이 $a_1+a_2 = 30,\;a_3+a_4 = 120$을 만족시킬 때, $a_4$의 값을 구하여라.</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q2">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-2" class="solution-link">2</a></span>모든 항이 양수인 등비수열 $\{a_n\}$에서 $a_2+a_5 = 18,\;a_4+a_7 = 72$일 때, 처음으로 $3000$보다 커지는 항은 제 몇 항인지 구하여라.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 3 : 문제 3, 4 — 등비수열 항 사이 관계 -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q3">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-3" class="solution-link">3</a></span>두 수 $5$와 $320$ 사이에 $n$개의 수를 넣어 만든 수열</p>
+        <p style="text-align:center;">$5,\;x_1,\;x_2,\;x_3,\;\cdots,\;x_n,\;320$</p>
+        <p>이 공비가 $2$인 등비수열을 이룰 때, $n$의 값은?</p>
+        <div class="choices">
+          <span>① $4$</span><span>② $5$</span><span>③ $6$</span><span>④ $7$</span><span>⑤ $8$</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q4">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-4" class="solution-link">4</a></span>두 수 $9$와 $90$ 사이에 $10$개의 수 $a_1,\,a_2,\,a_3,\,\cdots,\,a_{10}$을 넣어 $9,\,a_1,\,a_2,\,a_3,\,\cdots,\,a_{10},\,90$이 이 순서대로 등비수열을 이루도록 할 때, $a_1\,a_{10}$의 값을 구하여라.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 4 : 문제 5 — 삼차방정식 세 실근 등비 (등비 중항 적용) -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area single">
+
+    <div class="problem-block" data-qa-id="q5">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-5" class="solution-link">5</a></span>삼차방정식 $x^3 - 7x^2 + kx - 8 = 0$의 세 실근이 등비수열을 이룰 때, 상수 $k$의 값은?</p>
+        <div class="choices">
+          <span>① $12$</span><span>② $14$</span><span>③ $16$</span><span>④ $18$</span><span>⑤ $20$</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 5 : 개념 2 — 등비수열의 활용 (외접원, 큰 SVG 가운데) -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">등비수열의 활용 — 두 직선에 접하는 원의 반지름</h2>
+    <div class="concept">
+      <p>한 점에서 만나는 두 직선에 동시에 접하면서 차례로 외접하는 원들의 반지름은 등비수열을 이룬다. 공비는 두 직선의 사잇각만으로 결정된다.</p>
+
+      <div class="formula left">
+        한 점 $V$에서 만나는 두 직선의 사잇각이 $2\alpha$이고, 두 직선에 동시에 접하면서 차례로 외접하는 원들의 반지름을 $r_1,\,r_2,\,r_3,\,\cdots$이라 하면 $\{r_n\}$은 공비가 $\dfrac{1+\sin\alpha}{1-\sin\alpha}$인 등비수열을 이룬다.
+      </div>
+
+      <p class="proof"><b>(증명)</b> 두 직선의 교점을 $V$, $n$번째 원의 중심을 $C_n$이라 하면 $C_n$은 두 직선의 양분선 위에 있고, $C_n$에서 두 직선까지의 거리가 곧 $r_n$이므로 $\overline{VC_n}\sin\alpha = r_n$, &emsp;즉 $\overline{VC_n} = \dfrac{r_n}{\sin\alpha}$. 인접한 두 원이 외접하므로 $\overline{VC_{n+1}} - \overline{VC_n} = r_{n+1} + r_n$이고, 위 식을 대입하면 $\dfrac{r_{n+1}-r_n}{\sin\alpha} = r_{n+1}+r_n \;\Longleftrightarrow\; r_{n+1}(1-\sin\alpha) = r_n(1+\sin\alpha)$<br>$\therefore\;\dfrac{r_{n+1}}{r_n} = \dfrac{1+\sin\alpha}{1-\sin\alpha}\;(\text{일정})$</p>
+
+      <div class="fig-center" style="margin:8mm 0 0; text-align:center;">
+        <svg viewBox="127 10 229 93" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width:160mm; display:block; margin:0 auto;">
+          <line x1="170" y1="50.3" x2="310" y2="65" stroke="#222" stroke-width="0.5"/>
+          <line x1="170" y1="79.7" x2="310" y2="65" stroke="#222" stroke-width="0.5"/>
+          <line x1="170" y1="65" x2="305" y2="65" stroke="#2563eb" stroke-width="0.3" stroke-dasharray="3,1.8" opacity="0.55"/>
+          <circle cx="195" cy="65" r="12" fill="none" stroke="#222" stroke-width="0.5"/>
+          <circle cx="217" cy="65" r="9.7" fill="none" stroke="#222" stroke-width="0.5"/>
+          <circle cx="234" cy="65" r="7.9" fill="none" stroke="#222" stroke-width="0.5"/>
+          <circle cx="249" cy="65" r="6.4" fill="none" stroke="#222" stroke-width="0.5"/>
+          <circle cx="195" cy="65" r="0.9" fill="#222"/>
+          <circle cx="217" cy="65" r="0.9" fill="#222"/>
+          <line x1="195" y1="65" x2="195" y2="53.3" stroke="#e53e3e" stroke-width="0.45"/>
+          <foreignObject x="186" y="50" width="10" height="8" overflow="visible">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:6px;line-height:1;color:#e53e3e;">$r_1$</div>
+          </foreignObject>
+          <foreignObject x="190" y="66.5" width="14" height="8" overflow="visible">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:6px;line-height:1;font-style:italic;">$C_1$</div>
+          </foreignObject>
+          <foreignObject x="212" y="66.5" width="14" height="8" overflow="visible">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:6px;line-height:1;font-style:italic;">$C_2$</div>
+          </foreignObject>
+          <circle cx="310" cy="65" r="1.1" fill="#222"/>
+          <foreignObject x="303" y="66.5" width="10" height="8" overflow="visible">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:6px;line-height:1;font-style:italic;">$V$</div>
+          </foreignObject>
+          <path d="M 290 60.3 A 22 22 0 0 1 290 69.7" stroke="#222" stroke-width="0.4" fill="none"/>
+          <foreignObject x="280" y="61.5" width="10" height="8" overflow="visible">
+            <div xmlns="http://www.w3.org/1999/xhtml" style="font-size:6px;line-height:1;font-style:italic;">$2\alpha$</div>
+          </foreignObject>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 5 : 문제 6 — 외접원 5개 (개념 2 적용) -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="problems-area single">
+
+    <div class="problem-block" data-qa-id="q6">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <div class="fig-right" style="width:55mm;">
+          <svg viewBox="0 0 200 95" xmlns="http://www.w3.org/2000/svg" style="width:100%;">
+            <line x1="20" y1="32.8" x2="190" y2="47.5" stroke="#222" stroke-width="1.2"/>
+            <line x1="20" y1="62.2" x2="190" y2="47.5" stroke="#222" stroke-width="1.2"/>
+            <circle cx="51" cy="47.5" r="12" fill="none" stroke="#222" stroke-width="1.2"/>
+            <circle cx="73" cy="47.5" r="10.1" fill="none" stroke="#222" stroke-width="1.2"/>
+            <circle cx="92" cy="47.5" r="8.5" fill="none" stroke="#222" stroke-width="1.2"/>
+            <circle cx="108" cy="47.5" r="7.1" fill="none" stroke="#222" stroke-width="1.2"/>
+            <circle cx="121" cy="47.5" r="6" fill="none" stroke="#222" stroke-width="1.2"/>
+          </svg>
+        </div>
+        <p><span class="pnum"><a href="#sol-6" class="solution-link">6</a></span>오른쪽 그림과 같이 두 직선을 공통접선으로 하고 서로 외접하는 다섯 개의 원이 있다. 가장 큰 원의 반지름의 길이가 $12$, 가장 작은 원의 반지름의 길이가 $6$일 때, 가운데 원의 반지름의 길이를 구하여라.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 6 : 문제 7 — 정사각형 9분할 12회 (등비수열의 일반항 적용) -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area single">
+
+    <div class="problem-block" data-qa-id="q7">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <div class="fig-right" style="width:34mm;">
+          <svg viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg" style="width:100%;">
+            <rect x="30" y="30" width="30" height="30" fill="#fff7d6"/>
+            <rect x="0" y="0" width="90" height="90" fill="none" stroke="#222" stroke-width="1.2"/>
+            <line x1="30" y1="0" x2="30" y2="90" stroke="#222" stroke-width="0.7"/>
+            <line x1="60" y1="0" x2="60" y2="90" stroke="#222" stroke-width="0.7"/>
+            <line x1="0" y1="30" x2="90" y2="30" stroke="#222" stroke-width="0.7"/>
+            <line x1="0" y1="60" x2="90" y2="60" stroke="#222" stroke-width="0.7"/>
+          </svg>
+        </div>
+        <p><span class="pnum"><a href="#sol-7" class="solution-link">7</a></span>한 변의 길이가 $3$인 정사각형에서 오른쪽 그림과 같이 $9$개의 똑같은 정사각형을 만든 후 가운데 정사각형을 제거한다. 남은 $8$개의 정사각형에 대하여 이와 같은 시행을 반복할 때, $12$회 반복한 후 남아 있는 부분의 넓이를 구하여라.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 7 : 개념 3 — 등비수열의 합 + 일반항·합 꼴 해석 -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="sheet-body">
+    <h2 class="section-title">등비수열의 합</h2>
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">1) 등비수열의 합 공식</div>
+      <p>첫째항이 $a$, 공비가 $r$인 등비수열의 첫째항부터 제 $n$항까지의 합 $S_n$은 다음과 같다.</p>
+
+      <div class="formula">
+        $$S_n = \begin{cases} \dfrac{a(1-r^{\,n})}{1-r} = \dfrac{a(r^{\,n}-1)}{r-1} & (r\ne 1) \\[3mm] na & (r=1) \end{cases}$$
+      </div>
+
+      <div class="note">$r\gt 1$일 때는 $\dfrac{a(r^{\,n}-1)}{r-1}$, $r\lt 1$일 때는 $\dfrac{a(1-r^{\,n})}{1-r}$를 쓰면 부호 처리가 편하다. $S_n$의 $n$은 더하는 항의 개수임에 유의.</div>
+
+      <div class="sub-title">2) 일반항·합의 형태로 본 등비수열</div>
+      <p>등비수열의 일반항 $a_n = a\,r^{\,n-1}$은 $r^n$의 배수 꼴, 합 $S_n = \dfrac{a(r^{\,n}-1)}{r-1}$은 $r^n$ + 상수 꼴로 정리된다.</p>
+
+      <div class="formula left">
+        ① $a_n = A\,r^{\,n}$ &emsp;꼴<br>
+        ② $S_n = A\,r^{\,n} + B$ &emsp;꼴 (단, $r \ne 1$)
+      </div>
+
+      <p>역으로 합 $S_n$이 $A\,r^{\,n} + B$ 꼴로 주어진 수열에서 일반항 $a_n$을 구하면 다음을 얻는다.</p>
+
+      <div class="formula left">
+        ⅰ) $B = -A$ &emsp;⇒ &emsp; $\{a_n\}$은 <b>첫째항부터</b> 등비수열을 이룬다.<br>
+        ⅱ) $B \ne -A$ &emsp;⇒ &emsp; $\{a_n\}$은 <b>두 번째 항부터</b> 등비수열을 이룬다.
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 8 : 문제 8, 9 — 합과 일반항·등비 중항 (개념 3 적용) -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q8">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-8" class="solution-link">8</a></span>수열 $\{a_n\}$의 첫째항부터 제 $n$항까지의 합을 $S_n$이라 할 때, 다음을 구하여라.</p>
+        <p class="sub">(1) $S_n = 3^{\,n+1} - 3$일 때, 이 수열의 일반항 $a_n$을 구하여라.</p>
+        <p class="sub">(2) $S_n = 5^{\,n+1} - k$일 때, 수열 $\{a_n\}$이 첫째항부터 등비수열을 이루도록 하는 상수 $k$의 값을 구하여라.</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q9">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-9" class="solution-link">9</a></span>모든 항이 양수인 등비수열 $\{a_n\}$에서 $a_1\,a_3 = 16,\;a_2\,a_4 = 64$일 때, 첫째항부터 제 $10$항까지의 합을 구하여라.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 9 : 문제 10, 11 — 부분합의 등비성 (개념 3 + 다음 개념 4 도입부) -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q10">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-10" class="solution-link">10</a></span>등비수열 $\{a_n\}$에서 첫째항부터 제 $n$항까지의 합을 $S_n$이라 할 때, $S_{10} = 10,\;S_{20} = 30$이다. 이때 $S_{30}$의 값을 구하여라.</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q11">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-11" class="solution-link">11</a></span>모든 항이 양수인 등비수열 $\{a_n\}$에서 $a_2\,a_6 = 16,\;a_4\,a_5 = 32$일 때, 첫째항부터 제 $n$항까지의 합이 처음으로 $720$보다 커지도록 하는 자연수 $n$의 값을 구하여라.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 10 : 개념 4 — 부분합의 등비성·등비 중항 적용·역수 수열 -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">등비수열의 합 — 여러 가지 성질</h2>
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">1) 부분합의 등비성</div>
+      <p>등차수열은 일정 구간의 합끼리도 등차수열을 이루고, 등비수열은 일정 구간의 합끼리 등비수열을 이룬다.</p>
+      <p>등비수열 $\{a_n\}$의 첫째항부터 제 $n$항까지의 합을 $S_n$이라 하자. ($r^{\,n} \ne 1$일 때)</p>
+      <div class="formula">
+        $S_n,\;S_{2n}-S_n,\;S_{3n}-S_{2n},\;\cdots$ &emsp;는 공비 $r^{\,n}$인 등비수열
+      </div>
+
+      <div class="sub-title">2) 등비 중항을 이용한 합의 분해</div>
+      <p>등차수열의 합에서 등차 중항을 적용하면</p>
+      <div class="formula compact">
+        $a_1 + a_n = a_2 + a_{n-1} = a_3 + a_{n-2} = \cdots = a_{\frac{n}{2}} + a_{\frac{n}{2}+1}$
+      </div>
+      <p>등비수열의 합에서 등비 중항을 적용하면</p>
+      <div class="formula compact">
+        $a_1\,a_n = a_2\,a_{n-1} = a_3\,a_{n-2} = \cdots = a_{\frac{n}{2}}\,a_{\frac{n}{2}+1}$
+      </div>
+
+      <div class="sub-title">3) 등비수열과 그 역수 수열의 관계</div>
+      <p>ⅰ) 등비수열 $\{a_n\}$의 공비를 $r$이라 하면 역수 수열 $\left\{\dfrac{1}{a_n}\right\}$의 공비는 $\dfrac{1}{r}$이다.</p>
+      <p>ⅱ) $\{a_n\}$의 첫째항부터 제 $n$항까지의 합을 $S_n$, 역수 수열의 합을 $T_n$이라 하면</p>
+      <div class="formula">
+        $T_n = \dfrac{S_n}{a_1\,a_n}$
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 11 : 문제 12 — 합과 역수의 합 관계 (개념 4 적용) -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="problems-area single">
+
+    <div class="problem-block" data-qa-id="q12">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-12" class="solution-link">12</a></span>등비수열 $\{a_n\}$에 대하여 첫째항부터 제 $n$항까지의 합을 $S_n$, 역수의 합을 $T_n$이라 하면</p>
+        <p style="text-align:center;">$S_{10} = 256,\;T_{10} = 4$</p>
+        <p>가 성립할 때, $a_1\,a_{10}$의 값을 구하여라.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 12 : 개념 5 — 적립금의 원리합계 -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">적립금의 원리합계</h2>
+    <div class="concept">
+      <p>일정한 금액을 일정한 기간마다 적립하는 것을 <b>적금</b> 또는 <b>적립예금</b>이라 한다. 매년 초에 적립하는 경우와 매년 말에 적립하는 경우의 적립금의 원리합계는 다음과 같다.</p>
+
+      <div class="sub-title">1) 매년 초에 적립하는 경우</div>
+      <p>연이율 $r$, $1$년마다의 복리로 매년 초 일정한 금액 $a$원씩 $n$년 동안 적립할 때, $n$년 말의 적립금의 원리합계 $S$는</p>
+
+      <div class="formula">
+        $S = \dfrac{a(1+r)\{(1+r)^{\,n} - 1\}}{r}$
+      </div>
+
+      <div class="note">첫째항 $a(1+r)$, 공비 $1+r$인 등비수열의 첫째항부터 제 $n$항까지의 합</div>
+
+      <div class="sub-title">2) 매년 말에 적립하는 경우</div>
+      <p>연이율 $r$, $1$년마다의 복리로 매년 말 일정한 금액 $a$원씩 $n$년 동안 적립할 때, $n$년 말의 적립금의 원리합계 $S$는</p>
+
+      <div class="formula">
+        $S = \dfrac{a\{(1+r)^{\,n} - 1\}}{r}$
+      </div>
+
+      <div class="note">첫째항 $a$, 공비 $1+r$인 등비수열의 첫째항부터 제 $n$항까지의 합</div>
+    </div>
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 13 : 문제 13, 14 — 적립금 + 함수 h (종합) -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q13">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-13" class="solution-link">13</a></span>어떤 신혼부부는 $a$만 원을 연이율 $4\%$, $1$년마다 복리로 올해 초부터 $10$년 동안 매년 초에 적립하여 $325$만 원짜리 가전제품을 사려고 한다. 이때 $a$의 값을 구하여라. (단, $1.04^{\,10} = 1.5$로 계산한다.)</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q14">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-14" class="solution-link">14</a></span>두 함수 $f(x) = k(x-1)$, $g(x) = 2x^2 - 3x + 1$에 대하여 함수</p>
+        <p style="text-align:center;">$h(x) = \begin{cases} f(x) & (f(x) \ge g(x)) \\ g(x) & (f(x) \lt g(x)) \end{cases}$</p>
+        <p>가 다음 조건을 만족시킬 때, 상수 $k$의 값을 구하여라.</p>
+        <p class="sub">(가) 세 수 $h(2),\,h(3),\,h(4)$는 이 순서대로 등차수열을 이룬다.</p>
+        <p class="sub">(나) 세 수 $h(3),\,h(4),\,h(5)$는 이 순서대로 등비수열을 이룬다.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- QUICK ANSWER PAGE -->
+<!-- ============================================================ -->
+<section class="sheet even quick-answer-section">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">빠른 정답</h2>
+    <div class="quick-answers">
+      <div class="qa-item"><span class="qa-num">1.</span><span class="qa-ans">(1) $a_n = 4\cdot 3^{\,n-1}$<br>(2) $80$</span></div>
+      <div class="qa-item"><span class="qa-num">2.</span><span class="qa-ans">제 $13$ 항</span></div>
+      <div class="qa-item"><span class="qa-num">3.</span><span class="qa-ans">② $5$</span></div>
+      <div class="qa-item"><span class="qa-num">4.</span><span class="qa-ans">$810$</span></div>
+      <div class="qa-item"><span class="qa-num">5.</span><span class="qa-ans">② $14$</span></div>
+      <div class="qa-item"><span class="qa-num">6.</span><span class="qa-ans">$6\sqrt{2}$</span></div>
+      <div class="qa-item"><span class="qa-num">7.</span><span class="qa-ans">$\dfrac{8^{\,12}}{9^{\,11}}$</span></div>
+      <div class="qa-item"><span class="qa-num">8.</span><span class="qa-ans">(1) $a_n = 2\cdot 3^{\,n}$<br>(2) $k = 5$</span></div>
+      <div class="qa-item"><span class="qa-num">9.</span><span class="qa-ans">$2046$</span></div>
+      <div class="qa-item"><span class="qa-num">10.</span><span class="qa-ans">$70$</span></div>
+      <div class="qa-item"><span class="qa-num">11.</span><span class="qa-ans">$11$</span></div>
+      <div class="qa-item"><span class="qa-num">12.</span><span class="qa-ans">$64$</span></div>
+      <div class="qa-item"><span class="qa-num">13.</span><span class="qa-ans">$25$ (만 원)</span></div>
+      <div class="qa-item"><span class="qa-num">14.</span><span class="qa-ans">$k = 8$</span></div>
+    </div>
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- SOLUTION PAGES -->
+<!-- ============================================================ -->
+<section class="sheet odd solution-section">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="sheet-body">
+    <h2 class="section-title">정답 및 해설</h2>
+    <div class="solutions">
+
+      <div class="solution-item" id="sol-1" data-qa-id="q1">
+        <div class="sol-num">1.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $a_n = 4\cdot 3^{\,n-1}$ &nbsp; (2) $80$</div>
+        <p>(1) 첫째항을 $a$, 공비를 $r$이라 하면 $ar = 12,\;a r^4 = 324.$</p>
+        <p>두 식을 나누면 $r^3 = 27 \Rightarrow r = 3$ (실수), $a = 4.$ 따라서 $a_n = 4\cdot 3^{\,n-1}.$</p>
+        <p>(2) 공비 $r$이 양수일 때 $a_3 + a_4 = r^2(a_1 + a_2) \Rightarrow r^2 = 4 \Rightarrow r = 2.$</p>
+        <p>$a_1(1 + r) = 30 \Rightarrow 3 a_1 = 30 \Rightarrow a_1 = 10.$ 따라서 $a_4 = 10\cdot 2^3 = 80.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-2" data-qa-id="q2">
+        <div class="sol-num">2.</div>
+        <div class="sol-answer"><b>[정답]</b> 제 $13$ 항</div>
+        <p>$a_4 + a_7 = r^2(a_2 + a_5) \Rightarrow r^2 = 4.$ 모든 항 양수이므로 $r = 2.$</p>
+        <p>$a_2(1 + r^3) = 18 \Rightarrow 9\,a_2 = 18 \Rightarrow a_2 = 2,\;a_1 = 1.$ 일반항 $a_n = 2^{\,n-1}.$</p>
+        <p>$2^{\,n-1} \gt 3000$의 첫 자연수 $n$: $2^{\,11} = 2048,\;2^{\,12} = 4096$이므로 $n - 1 = 12,\;n = 13.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-3" data-qa-id="q3">
+        <div class="sol-num">3.</div>
+        <div class="sol-answer"><b>[정답]</b> ② $5$</div>
+        <p>전체 항의 개수는 $n + 2$. 첫째항 $5$, 공비 $2$이므로 마지막항은 $5\cdot 2^{\,n+1} = 320 \Rightarrow 2^{\,n+1} = 64 \Rightarrow n = 5.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-4" data-qa-id="q4">
+        <div class="sol-num">4.</div>
+        <div class="sol-answer"><b>[정답]</b> $810$</div>
+        <p>전체 $12$항의 등비수열에서 $a_1$은 $2$번째 항, $a_{10}$은 $11$번째 항이다. 두 항의 인덱스 합 $2 + 11 = 13$은 $1 + 12$와 같다.</p>
+        <p>등비 중항의 성질에 의해 $a_1\,a_{10} = (\text{1번째 항})\cdot(\text{12번째 항}) = 9\cdot 90 = 810.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-5" data-qa-id="q5">
+        <div class="sol-num">5.</div>
+        <div class="sol-answer"><b>[정답]</b> ② $14$</div>
+        <p>세 근을 $\dfrac{a}{r},\,a,\,ar$이라 하자. 근과 계수의 관계로</p>
+        <p>합 $a\!\left(\dfrac{1}{r} + 1 + r\right) = 7,$ &emsp;곱 $a^3 = 8 \Rightarrow a = 2$ (실수).</p>
+        <p>두 근씩의 곱의 합 $= a^2\!\left(\dfrac{1}{r} + 1 + r\right) = a\cdot 7 = 14.$ 따라서 $k = 14.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-6" data-qa-id="q6">
+        <div class="sol-num">6.</div>
+        <div class="sol-answer"><b>[정답]</b> $6\sqrt{2}$</div>
+        <p>다섯 원의 반지름은 등비수열을 이루고 양 끝항이 $6,\;12$이다. 다섯 항을 $r_1,\,r_2,\,r_3,\,r_4,\,r_5$라 하면 공비 $q$는 $r_1\,q^4 = r_5 \Rightarrow q^4 = \dfrac{12}{6} = 2.$</p>
+        <p>가운데 항 $r_3 = r_1\cdot q^2 = 6\sqrt{q^4} = 6\sqrt{2}.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-7" data-qa-id="q7">
+        <div class="sol-num">7.</div>
+        <div class="sol-answer"><b>[정답]</b> $\dfrac{8^{\,12}}{9^{\,11}}$</div>
+        <p>한 번 시행할 때마다 남는 정사각형이 $9$개에서 $8$개가 되므로 넓이는 $\dfrac{8}{9}$배가 된다.</p>
+        <p>$n$회 시행 후의 넓이 $= 9\cdot\!\left(\dfrac{8}{9}\right)^{\!n}.$ $\;n = 12$ 대입 $\Rightarrow 9\cdot\dfrac{8^{\,12}}{9^{\,12}} = \dfrac{8^{\,12}}{9^{\,11}}.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-8" data-qa-id="q8">
+        <div class="sol-num">8.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $a_n = 2\cdot 3^{\,n}$ &nbsp; (2) $k = 5$</div>
+        <p>(1) $n \ge 2$일 때 $a_n = S_n - S_{n-1} = 3^{\,n+1} - 3^{\,n} = 2\cdot 3^{\,n}.$</p>
+        <p>$n = 1$일 때 $a_1 = S_1 = 9 - 3 = 6 = 2\cdot 3^1$ — 일반식과 일치. 따라서 $a_n = 2\cdot 3^{\,n}.$</p>
+        <p>(2) $S_n = 5^{\,n+1} - k = 5\cdot 5^{\,n} + (-k).$ &emsp;$Ar^{\,n} + B$ 꼴에서 $A = 5,\;B = -k.$</p>
+        <p>첫째항부터 등비수열 $\Leftrightarrow B = -A \Leftrightarrow -k = -5 \Leftrightarrow k = 5.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-9" data-qa-id="q9">
+        <div class="sol-num">9.</div>
+        <div class="sol-answer"><b>[정답]</b> $2046$</div>
+        <p>$\dfrac{a_2\,a_4}{a_1\,a_3} = r^2 = \dfrac{64}{16} = 4 \Rightarrow r = 2$ (양수).</p>
+        <p>$a_1\,a_3 = a_1\cdot a_1 r^2 = 4\,a_1^{\,2} = 16 \Rightarrow a_1 = 2.$</p>
+        <p>$S_{10} = \dfrac{2(2^{\,10} - 1)}{2 - 1} = 2\cdot 1023 = 2046.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-10" data-qa-id="q10">
+        <div class="sol-num">10.</div>
+        <div class="sol-answer"><b>[정답]</b> $70$</div>
+        <p>부분합의 등비성: $S_{10},\;S_{20} - S_{10},\;S_{30} - S_{20}$은 공비 $r^{\,10}$인 등비수열.</p>
+        <p>$S_{10} = 10,\;S_{20} - S_{10} = 20 \Rightarrow$ 공비 $r^{\,10} = 2.$</p>
+        <p>$S_{30} - S_{20} = 20\cdot 2 = 40,$ &emsp;즉 $S_{30} = 30 + 40 = 70.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-11" data-qa-id="q11">
+        <div class="sol-num">11.</div>
+        <div class="sol-answer"><b>[정답]</b> $11$</div>
+        <p>$\dfrac{a_4\,a_5}{a_2\,a_6} = \dfrac{a_1^{\,2}\,r^7}{a_1^{\,2}\,r^6} = r = \dfrac{32}{16} = 2.$</p>
+        <p>$a_2\,a_6 = a_1^{\,2}\,r^6 = 64\,a_1^{\,2} = 16 \Rightarrow a_1^{\,2} = \dfrac{1}{4} \Rightarrow a_1 = \dfrac{1}{2}$ (양수).</p>
+        <p>$S_n = \dfrac{(1/2)(2^{\,n} - 1)}{1} = \dfrac{2^{\,n} - 1}{2}.$ &emsp;$S_n \gt 720 \Leftrightarrow 2^{\,n} \gt 1441.$</p>
+        <p>$2^{\,10} = 1024,\;2^{\,11} = 2048$이므로 처음으로 만족하는 $n = 11.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-12" data-qa-id="q12">
+        <div class="sol-num">12.</div>
+        <div class="sol-answer"><b>[정답]</b> $64$</div>
+        <p>등비수열의 합과 그 역수의 합 사이 관계 $T_n = \dfrac{S_n}{a_1\,a_n}$을 이용한다.</p>
+        <p>$a_1\,a_{10} = \dfrac{S_{10}}{T_{10}} = \dfrac{256}{4} = 64.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-13" data-qa-id="q13">
+        <div class="sol-num">13.</div>
+        <div class="sol-answer"><b>[정답]</b> $a = 25$</div>
+        <p>매년 초 $a$만 원씩 $10$년 적립한 후 $10$년 말의 원리합계는 첫째항 $a(1.04)$, 공비 $1.04$인 등비수열의 합.</p>
+        <p>$S = \dfrac{a(1.04)\{(1.04)^{\,10} - 1\}}{1.04 - 1} = \dfrac{a\cdot 1.04\cdot (1.5 - 1)}{0.04} = \dfrac{a\cdot 1.04\cdot 0.5}{0.04} = 13\,a$ (만 원).</p>
+        <p>$13a = 325 \Rightarrow a = 25.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-14" data-qa-id="q14">
+        <div class="sol-num">14.</div>
+        <div class="sol-answer"><b>[정답]</b> $k = 8$</div>
+        <p>$f(x) - g(x) = (x-1)(k - 2x + 1).$ &emsp;$x \ge 2$에서 $x - 1 \gt 0$이므로 $f \ge g \Leftrightarrow x \le \dfrac{k+1}{2}.$</p>
+        <p>$g(2) = 3,\;g(3) = 10,\;g(4) = 21,\;g(5) = 36.$ $h(x)$가 $f$가 되는 임계 $k$를 살펴 케이스 분류.</p>
+        <p>$\bullet$ $k \ge 9$: 모두 $h = f$, 즉 $h(2),\,h(3),\,h(4),\,h(5) = k,\,2k,\,3k,\,4k.$ (가)는 자동 성립. (나) $9k^2 = 8k^2 \Rightarrow k = 0$ — 모순.</p>
+        <p>$\bullet$ $7 \le k \lt 9$: $h(2),\,h(3),\,h(4) = k,\,2k,\,3k$ (등차 자동), $h(5) = g(5) = 36.$</p>
+        <p>(나) $h(4)^2 = h(3)\cdot h(5) \Rightarrow 9k^2 = 72k \Rightarrow k = 8$ (또는 $0$). 범위 내 $\Rightarrow k = 8.$</p>
+        <p>$\bullet$ $k \lt 7$: 각 구간에서 (가)를 풀면 $k = 7,\,-1$ 등 모두 해당 범위 밖이라 해 없음.</p>
+        <p>따라서 $k = 8.$</p>
+      </div>
+
+    </div>
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<section class="sheet even solution-section">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <div class="solutions"></div>
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<script>
+const _ready = Promise.all([
+  document.fonts.ready,
+  (window.MathJax && MathJax.startup && MathJax.startup.promise) ? MathJax.startup.promise : Promise.resolve()
+]).then(() => new Promise(resolve => {
+  // /mathbook:_공통 §9.1 — MathJax/폰트 layout 안정화 대기
+  requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(resolve, 100)));
+}));
+_ready.then(() => {
+  (function autoWrapChoices(){
+    document.querySelectorAll('.choices').forEach(c => {
+      if (c.scrollWidth > c.clientWidth) c.classList.add('two-row');
+    });
+  })();
+  (function compactAndSplitConcepts(){
+    const SLACK_PX = (() => {
+      const probe = document.createElement('div');
+      probe.style.cssText = 'position:absolute;visibility:hidden;width:10mm;';
+      document.body.appendChild(probe);
+      const px = probe.getBoundingClientRect().width;
+      document.body.removeChild(probe);
+      return px;
+    })();
+    function overflows(body){ return body.scrollHeight > body.clientHeight + SLACK_PX; }
+    function conceptSheets(){
+      return Array.from(document.querySelectorAll('.sheet')).filter(s =>
+        s.querySelector('.concept') && !s.classList.contains('solution-section')
+          && !s.classList.contains('quick-answer-section')
+      );
+    }
+    conceptSheets().forEach(sheet => {
+      const body = sheet.querySelector('.sheet-body');
+      if (!overflows(body)) return;
+      body.querySelectorAll('.concept .formula').forEach(f => f.classList.add('compact'));
+    });
+    conceptSheets().forEach(sheet => {
+      const body = sheet.querySelector('.sheet-body');
+      if (!overflows(body)) return;
+      const concept = body.querySelector('.concept');
+      if (concept) concept.classList.add('dense');
+    });
+    const queue = conceptSheets();
+    while (queue.length){
+      const sheet = queue.shift();
+      const body = sheet.querySelector('.sheet-body');
+      if (!body || !overflows(body)) continue;
+      const concept = body.querySelector('.concept');
+      if (!concept) continue;
+      const groups = [];
+      let cur = null;
+      Array.from(concept.children).forEach(ch => {
+        if (ch.classList.contains('sub-title')) { cur = [ch]; groups.push(cur); }
+        else if (cur) { cur.push(ch); }
+        else { cur = [ch]; groups.push(cur); }
+      });
+      if (groups.length < 2) continue;
+      const bodyBottom = body.getBoundingClientRect().bottom;
+      let splitAt = -1;
+      for (let i = 0; i < groups.length; i++){
+        const last = groups[i][groups[i].length - 1];
+        if (last.getBoundingClientRect().bottom > bodyBottom + SLACK_PX) { splitAt = i; break; }
+      }
+      if (splitAt <= 0) continue;
+      const isDense = concept.classList.contains('dense');
+      const ns = document.createElement('section');
+      ns.className = 'sheet';
+      ns.innerHTML =
+        '<div class="corner tr"></div><div class="corner tl"></div>' +
+        '<div class="corner br"></div><div class="corner bl"></div>' +
+        '<header class="sheet-header"></header>' +
+        '<div class="sheet-body"><div class="concept' + (isDense ? ' dense' : '') + '"></div></div>' +
+        '<footer class="sheet-footer"></footer>';
+      const newConcept = ns.querySelector('.concept');
+      for (let i = splitAt; i < groups.length; i++){
+        groups[i].forEach(el => newConcept.appendChild(el));
+      }
+      sheet.parentNode.insertBefore(ns, sheet.nextSibling);
+      queue.push(ns);
+    }
+  })();
+  (function flowSolutions(){
+    // 라이브러리 표준 패턴 — incremental add-and-measure (regionize/Bindery/paged.js)
+    // 1) 한 항목씩 append → 마지막 항목 rect.bottom/right 검사
+    // 2) 오버플로면 split 시도: 마지막 <p>부터 떼며 fit 찾기, 헤더+첫 단락은 유지
+    // 3) 분할 실패면 통째로 다음 페이지
+    const sections = Array.from(document.querySelectorAll('.solution-section'));
+    if (!sections.length) return;
+    const allItems = [];
+    sections.forEach(sec => { sec.querySelectorAll('.solution-item').forEach(it => allItems.push(it)); });
+    sections.forEach(sec => { const c = sec.querySelector('.solutions'); if (c) c.innerHTML = ''; });
+
+    function makeSection() {
+      const prev = sections[sections.length - 1];
+      const ns = document.createElement('section');
+      ns.className = 'sheet solution-section';
+      ns.innerHTML =
+        '<div class="corner tr"></div><div class="corner tl"></div>' +
+        '<div class="corner br"></div><div class="corner bl"></div>' +
+        '<header class="sheet-header"></header>' +
+        '<div class="sheet-body"><div class="solutions"></div></div>' +
+        '<footer class="sheet-footer"></footer>';
+      prev.parentNode.insertBefore(ns, prev.nextSibling);
+      sections.push(ns);
+      return ns;
+    }
+    function lastItemOverflows(sec) {
+      const body = sec.querySelector('.sheet-body');
+      const last = sec.querySelector('.solutions > :last-child');
+      if (!body || !last) return false;
+      void body.offsetHeight;
+      const br = body.getBoundingClientRect();
+      const lr = last.getBoundingClientRect();
+      return lr.bottom > br.bottom + 1 || lr.right > br.right + 1;
+    }
+    function makeContinuation(item, paras) {
+      const cont = document.createElement('div');
+      cont.className = 'solution-item continuation';
+      cont.setAttribute('data-qa-id', item.getAttribute('data-qa-id') || '');
+      paras.forEach(p => cont.appendChild(p));
+      return cont;
+    }
+
+    let queue = allItems.slice();
+    let secIdx = 0;
+    let safety = 0;
+    while (queue.length > 0 && safety++ < 600) {
+      if (secIdx >= sections.length) makeSection();
+      const sec = sections[secIdx];
+      const container = sec.querySelector('.solutions');
+      let advancedToNextSection = false;
+      while (queue.length > 0) {
+        const item = queue.shift();
+        container.appendChild(item);
+        if (!lastItemOverflows(sec)) continue;
+        const paras = Array.from(item.querySelectorAll(':scope > p'));
+        if (paras.length >= 2) {
+          const moved = [];
+          while (paras.length > 1 && lastItemOverflows(sec)) {
+            const p = paras.pop();
+            item.removeChild(p);
+            moved.unshift(p);
+          }
+          if (!lastItemOverflows(sec) && moved.length > 0) {
+            queue.unshift(makeContinuation(item, moved));
+            advancedToNextSection = true;
+            break;
+          }
+          moved.forEach(p => item.appendChild(p));
+        }
+        container.removeChild(item);
+        queue.unshift(item);
+        advancedToNextSection = true;
+        break;
+      }
+      if (advancedToNextSection) secIdx++;
+      else break;
+    }
+    sections.forEach(sec => { if (!sec.querySelector('.solution-item')) sec.remove(); });
+  })();
+  (function rebalanceParity(){
+    const sheets = document.querySelectorAll('.sheet');
+    sheets.forEach((s, i) => {
+      const isOdd = (i % 2 === 0);
+      s.classList.toggle('odd', isOdd);
+      s.classList.toggle('even', !isOdd);
+      const hdr = s.querySelector('.sheet-header');
+      if (hdr) hdr.textContent = isOdd ? '대수' : '2026 수복이';
+    });
+  })();
+  (function renumberFooters(){
+    document.querySelectorAll('.sheet-footer').forEach((f, i) => { f.textContent = i + 1; });
+  })();
+  document.body.classList.add('ready');
+});
+</script>
+</body>
+</html>

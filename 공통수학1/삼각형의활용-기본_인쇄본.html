@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>삼각형의 활용 — 인쇄본</title>
+<script>
+MathJax = {
+  tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']] },
+  chtml: { matchFontHeight: false },
+  startup: { typeset: true }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+@font-face { font-family:'Gyeonggi Title'; src:url('file:///Z:/HDD1/005.%ED%95%A8%EB%B3%91%EC%97%B0%20%EA%B0%9C%EC%9D%B8%ED%8F%B4%EB%8D%94/%EC%BD%94%EB%94%A9/2026%EB%85%84%20%ED%95%99%EC%9B%90%20%EC%8A%A4%ED%84%B0%EB%94%94/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/woff/Title_Bold.woff') format('woff'); font-weight:700; font-display:swap; }
+@font-face { font-family:'Gyeonggi Title'; src:url('file:///Z:/HDD1/005.%ED%95%A8%EB%B3%91%EC%97%B0%20%EA%B0%9C%EC%9D%B8%ED%8F%B4%EB%8D%94/%EC%BD%94%EB%94%A9/2026%EB%85%84%20%ED%95%99%EC%9B%90%20%EC%8A%A4%ED%84%B0%EB%94%94/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/woff/Title_Medium.woff') format('woff'); font-weight:500; font-display:swap; }
+@font-face { font-family:'Gyeonggi Batang'; src:url('file:///Z:/HDD1/005.%ED%95%A8%EB%B3%91%EC%97%B0%20%EA%B0%9C%EC%9D%B8%ED%8F%B4%EB%8D%94/%EC%BD%94%EB%94%A9/2026%EB%85%84%20%ED%95%99%EC%9B%90%20%EC%8A%A4%ED%84%B0%EB%94%94/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/woff/Batang_Regular.woff') format('woff'); font-weight:400; font-display:swap; }
+@font-face { font-family:'Gyeonggi Batang'; src:url('file:///Z:/HDD1/005.%ED%95%A8%EB%B3%91%EC%97%B0%20%EA%B0%9C%EC%9D%B8%ED%8F%B4%EB%8D%94/%EC%BD%94%EB%94%A9/2026%EB%85%84%20%ED%95%99%EC%9B%90%20%EC%8A%A4%ED%84%B0%EB%94%94/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/%EA%B2%BD%EA%B8%B0%EC%84%9C%EC%B2%B4%EC%9B%B9%ED%8F%B0%ED%8A%B8/woff/Batang_Bold.woff') format('woff'); font-weight:700; font-display:swap; }
+
+@page { size: A4; margin: 0; }
+* { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --line-h: 1.75; --one-line: 7.4mm;
+  --pad-x: 22mm; --pad-top: 20mm; --pad-bottom: 18mm;
+  --corner-x: 22mm; --corner-len: 48mm;
+}
+
+html, body { background:#fff; color:#000; font-family:'신명조','HY신명조','Shinmyeongjo','바탕','Batang',serif; font-size:11pt; line-height:var(--line-h); }
+@media screen { body { background:#dcdcdc; padding:24px 0; } .sheet { box-shadow:0 3px 14px rgba(0,0,0,0.2); margin:0 auto 24px; } }
+
+.sheet { width:210mm; height:297mm; background:#fff; position:relative; overflow:hidden; }
+@media print { .sheet { page-break-after:always; margin:0; box-shadow:none; } .sheet:last-child { page-break-after:auto; } }
+
+.corner { position:absolute; height:0; width:var(--corner-len); border-top:1pt solid #000; }
+.corner::after { content:''; position:absolute; height:3mm; width:0; }
+.corner.tr { top:12mm; right:var(--corner-x); }
+.corner.tr::after { right:0; top:0; border-right:1pt solid #000; }
+.corner.tl { top:12mm; left:var(--corner-x); }
+.corner.tl::after { left:0; top:0; border-left:1pt solid #000; }
+.corner.br { bottom:14mm; right:var(--corner-x); }
+.corner.br::after { right:0; bottom:0; border-right:1pt solid #000; }
+.corner.bl { bottom:14mm; left:var(--corner-x); }
+.corner.bl::after { left:0; bottom:0; border-left:1pt solid #000; }
+.corner.tr, .corner.tl { display:none; }
+.sheet.odd .corner.bl { display:none; }
+.sheet.even .corner.br { display:none; }
+
+.sheet-header { position:absolute; top:21mm; left:var(--pad-x); right:var(--pad-x); font-family:'Gyeonggi Title',sans-serif; font-weight:700; font-size:10.5pt; }
+.sheet.odd .sheet-header { text-align:right; }
+.sheet.even .sheet-header { text-align:left; }
+.sheet-footer { position:absolute; bottom:8mm; left:0; right:0; text-align:center; font-family:'Gyeonggi Batang',serif; font-size:10pt; }
+
+.sheet-body { position:absolute; top:calc(var(--pad-top) + 14mm); bottom:calc(var(--pad-bottom) + 6mm); left:var(--pad-x); right:var(--pad-x); }
+
+.chapter-title { font-family:'Gyeonggi Title',sans-serif; font-weight:700; font-size:18pt; letter-spacing:0.5pt; margin-bottom:calc(var(--one-line) * 2); }
+.section-title { font-family:'Gyeonggi Batang',serif; font-weight:700; font-size:13pt; margin-bottom:calc(var(--one-line) * 1); }
+.sub-label { font-family:'Gyeonggi Title',sans-serif; font-weight:700; font-size:11pt; margin-bottom:3mm; }
+
+.concept { font-family:'Gyeonggi Batang','신명조','HY신명조','바탕','Batang',serif; font-size:11pt; line-height:1.85; }
+.concept p { margin-bottom:2mm; }
+.concept .sub-title { font-family:'Gyeonggi Batang',serif; font-weight:400; font-size:11.5pt; margin:calc(var(--one-line)*2) 0 2mm; }
+.concept .sub-title:first-child { margin-top:0; }
+.concept .formula { border:0.7pt solid #000; padding:3mm 5mm; margin:3mm 0; text-align:center; }
+.concept .formula.left { text-align:left; padding:3mm 3mm; }
+.concept .formula.compact { padding:1.5mm 5mm; margin:1.5mm 0; }
+.concept .note { padding:2mm 0; margin:3mm 0; font-size:8pt; line-height:1.6; }
+.concept .note::before { content:"[참고] "; font-weight:700; }
+.concept .proof { font-size:8pt; line-height:1.6; padding:2mm 0 2mm 10mm; text-indent:-10mm; margin:3mm 0 6mm 0; }
+.concept .ex { padding:2mm 0; margin:3mm 0; font-size:9pt; }
+.concept.dense { line-height:1.7; }
+.concept.dense .sub-title { margin:calc(var(--one-line)*1.1) 0 1.5mm; }
+.concept.dense .sub-title:first-child { margin-top:0; }
+.concept.dense p { margin-bottom:1mm; }
+.concept.dense .note { margin:2mm 0; }
+.concept.dense .formula { padding:2mm 5mm; margin:2mm 0; }
+.concept.dense .ex { margin:1.5mm 0; }
+.concept table { width:100%; border-collapse:collapse; margin:3mm 0; font-size:9.5pt; }
+.concept table th, .concept table td { border:0.5pt solid #000; padding:1.5mm 2mm; text-align:center; vertical-align:middle; }
+.concept table th { font-weight:700; background:#f7f7f7; }
+
+.problem-block { }
+.sheet-body > .problem-block { margin-top:8mm; }
+.problem { font-family:'신명조','HY신명조','바탕','Batang',serif; font-size:10pt; line-height:var(--line-h); letter-spacing:-0.05em; position:relative; }
+.problem > p:first-of-type { padding-left:5.5mm; text-indent:-5.5mm; }
+.problem .pnum { display:inline-block; min-width:4mm; margin-right:1.5mm; font-family:'Gyeonggi Title',sans-serif; font-size:11pt; font-weight:700; text-indent:0; vertical-align:baseline; }
+.problem .pnum a { color:#000; text-decoration:none; font-weight:700; }
+.problem p { margin-bottom:1.5mm; }
+.problem .sub { margin-left:4mm; }
+.cond-box { display:block; width:fit-content; max-width:92%; border:0.7pt solid #000; padding:2.5mm 6mm; margin:2mm auto; }
+.cond-box p { margin:0.5mm 0; }
+
+.choices { display:grid; grid-template-columns:repeat(5, minmax(0,1fr)); gap:2mm 5mm; margin-top:4mm; font-size:10pt; clear:both; }
+.choices.two-row { grid-template-columns:repeat(3, minmax(0,1fr)); }
+.choices span { white-space:nowrap; }
+
+.problems-area { position:absolute; top:calc(var(--pad-top) + var(--one-line) + 5mm); bottom:calc(var(--pad-bottom) + 6mm); left:var(--pad-x); right:var(--pad-x); display:flex; flex-direction:column; }
+.problems-area > .problem-block:first-child { margin-bottom:0; }
+.problems-area > .problem-block:nth-child(2) { margin:auto 0; }
+.problems-area.single > .problem-block { margin:0; }
+
+mjx-container { font-weight:400 !important; }
+
+.fig-right { float:right; margin:0 0 2mm 5mm; overflow:visible; }
+.fig-center { text-align:center; margin:3mm 0; overflow:visible; }
+.fig-row { display:flex; justify-content:center; gap:6mm; margin:3mm 0; flex-wrap:wrap; align-items:center; }
+svg { overflow:visible; }
+
+.quick-answer-section .sheet-body { top:32mm; bottom:20mm; padding:0; overflow:hidden; display:flex; flex-direction:column; }
+.quick-answer-section .section-title { margin-top:0; flex:0 0 auto; }
+.quick-answers { flex:1 1 auto; min-height:0; position:relative; column-count:3; column-fill:auto; column-gap:7mm; column-rule:0.3pt solid #888; font-family:'신명조','HY신명조','Shinmyeongjo','바탕','Batang',serif; font-size:8pt; line-height:1.85; letter-spacing:-0.1em; }
+.quick-answers mjx-container { font-size:8pt !important; }
+.quick-answers::before, .quick-answers::after { content:''; position:absolute; top:0; bottom:0; width:0.3pt; background:#888; pointer-events:none; }
+.quick-answers::before { left:calc((100% - 14mm) / 3 + 3.5mm); }
+.quick-answers::after { left:calc((100% - 14mm) / 3 * 2 + 10.5mm); }
+.qa-item { break-inside:avoid-column; page-break-inside:avoid; -webkit-column-break-inside:avoid; margin-bottom:2mm; display:flex; align-items:baseline; }
+.qa-num { flex:0 0 auto; display:inline-block; min-width:3mm; margin-right:1.5mm; font-family:'Gyeonggi Title',sans-serif; font-size:8pt; }
+.qa-ans { flex:1 1 auto; min-width:0; }
+
+.solution-section .sheet-body { top:32mm; bottom:20mm; padding:0; overflow:hidden; display:flex; flex-direction:column; }
+.solution-section .section-title { margin-top:0; flex:0 0 auto; }
+.solutions { flex:1 1 auto; min-height:0; position:relative; column-count:2; column-fill:auto; column-gap:8mm; column-rule:0.3pt solid #888; font-family:'신명조','HY신명조','Shinmyeongjo','바탕','Batang',serif; font-size:8pt; line-height:1.75; letter-spacing:-0.05em; }
+.solutions::before { content:''; position:absolute; top:0; bottom:0; left:calc((100% - 8mm) / 2 + 4mm); width:0.3pt; background:#888; pointer-events:none; }
+.solutions mjx-container { font-size:8pt !important; max-width:100%; }
+.solution-item { margin-bottom:var(--one-line); padding-left:5mm; padding-right:2mm; position:relative; overflow-wrap:break-word; }
+.solution-item p { text-indent:0; margin:0; }
+.sol-num { position:absolute; left:0; top:0; font-weight:700; font-size:8pt; font-family:'Gyeonggi Title',sans-serif; }
+.sol-num a { color:#000; text-decoration:none; }
+.sol-answer { margin-bottom:1.5mm; }
+@media print { .solution-link { text-decoration:none; } }
+
+.solution-section { visibility:hidden; }
+body.ready .solution-section { visibility:visible; }
+
+.solution-item.continuation { padding-left:5mm; }
+.solution-item.continuation::before { content:'(이어서) '; font-size:0.9em; color:#666; font-style:italic; }
+
+a, a:link, a:visited, a:hover, a:active { color:#000 !important; }
+
+/* SVG 도형 공통 */
+.fig-wrap svg text { font-family:MJXZERO,MJXTEX-I,"STIX Two Math","Cambria Math","Times New Roman",serif; font-size:14px; }
+.fig-wrap svg text.ko { font-family:'신명조','HY신명조','바탕','Batang',serif; font-size:13px; }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- PAGE 1 (odd) : 단원 표지 + 사인법칙 -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="sheet-body">
+    <h1 class="chapter-title">삼각형의 활용</h1>
+
+    <h2 class="section-title">기본 상식</h2>
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">1) 삼각형의 기본 성질</div>
+      <p>① 삼각형에서 두 변의 길이의 합은 다른 한 변의 길이보다 크다.</p>
+      <p>② 세 내각의 크기의 합은 $180^\circ$이다.</p>
+      <p>③ 삼각형의 6요소 — 세 변의 길이 $a,\,b,\,c$와 세 내각 $A,\,B,\,C$.</p>
+
+      <div class="sub-title">2) 사인법칙</div>
+      <p>외접원의 반지름의 길이가 $R$인 삼각형 $\mathrm{ABC}$에서 세 변과 세 각의 사인 사이에는 다음 관계가 성립한다.</p>
+
+      <div class="fig-row" style="gap:8mm; align-items:center; margin:3mm 0;">
+        <div class="fig-wrap" style="width:48mm;">
+          <svg viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+            <circle cx="110" cy="105" r="75" fill="none" stroke="#222" stroke-width="1"/>
+            <polygon points="129,32 38,124 171,148" fill="none" stroke="#222" stroke-width="1.4"/>
+            <!-- 변 길이 표시: 두 꼭짓점을 잇는 둥근 호 (라운드 점선) -->
+            <path d="M 38 124 Q 101 156 171 148" fill="none" stroke="#222" stroke-width="0.9" stroke-dasharray="0.5,4" stroke-linecap="round"/>
+            <path d="M 171 148 Q 169 83 129 32" fill="none" stroke="#222" stroke-width="0.9" stroke-dasharray="0.5,4" stroke-linecap="round"/>
+            <path d="M 129 32 Q 68 66 38 124" fill="none" stroke="#222" stroke-width="0.9" stroke-dasharray="0.5,4" stroke-linecap="round"/>
+            <line x1="110" y1="105" x2="171" y2="148" stroke="#2563eb" stroke-width="0.7" stroke-dasharray="3,2"/>
+            <circle cx="110" cy="105" r="1.6" fill="#222"/>
+            <circle cx="129" cy="32" r="2" fill="#222"/>
+            <circle cx="38" cy="124" r="2" fill="#222"/>
+            <circle cx="171" cy="148" r="2" fill="#222"/>
+            <foreignObject x="119" y="14" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$\mathrm{A}$</div></foreignObject>
+            <foreignObject x="20" y="124" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$\mathrm{B}$</div></foreignObject>
+            <foreignObject x="173" y="150" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$\mathrm{C}$</div></foreignObject>
+            <foreignObject x="115" y="92" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$\mathrm{O}$</div></foreignObject>
+            <foreignObject x="138" y="115" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;color:#2563eb;">$R$</div></foreignObject>
+            <foreignObject x="93" y="137" width="20" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;background:#fff;padding:0 2px;text-align:center;">$a$</div></foreignObject>
+            <foreignObject x="150" y="78" width="20" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;background:#fff;padding:0 2px;text-align:center;">$b$</div></foreignObject>
+            <foreignObject x="66" y="63" width="20" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;background:#fff;padding:0 2px;text-align:center;">$c$</div></foreignObject>
+          </svg>
+        </div>
+        <div class="formula" style="flex:1; margin:0;">
+          $$\dfrac{a}{\sin A} = \dfrac{b}{\sin B} = \dfrac{c}{\sin C} = 2R$$
+        </div>
+      </div>
+
+      <div class="note">변형 : ⓐ $a = 2R\sin A,\; b = 2R\sin B,\; c = 2R\sin C$ &nbsp;&nbsp;&nbsp; ⓑ $\sin A = \dfrac{a}{2R},\;\sin B = \dfrac{b}{2R},\;\sin C = \dfrac{c}{2R}$ &nbsp;&nbsp;&nbsp; ⓒ $a:b:c = \sin A:\sin B:\sin C$ (변의 비 = 사인 비)</div>
+
+      <div class="sub-title">3) 사인법칙을 사용하는 경우</div>
+      <p>① 한 변과 두 각의 크기를 알 때 — 나머지 두 변</p>
+      <p>② 두 변과 끼인각이 아닌 한 각의 크기를 알 때 — 나머지 각·변</p>
+      <p>③ 외접원의 반지름이 주어졌거나 구해야 할 때</p>
+    </div>
+  </div>
+  <footer class="sheet-footer">1</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 2 (even) : 코사인 법칙 + 증명 -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">코사인 법칙</h2>
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">1) 제이코사인법칙</div>
+      <p>삼각형 $\mathrm{ABC}$의 세 변의 길이 $a,\,b,\,c$와 세 각 $A,\,B,\,C$ 사이에는 다음 관계가 성립한다.</p>
+
+      <div class="formula">
+        $$a^2 = b^2 + c^2 - 2bc\cos A$$
+        $$b^2 = c^2 + a^2 - 2ca\cos B$$
+        $$c^2 = a^2 + b^2 - 2ab\cos C$$
+      </div>
+
+      <div class="fig-center" style="margin:4mm 0;">
+        <svg class="fig-wrap" viewBox="0 0 240 165" xmlns="http://www.w3.org/2000/svg" style="width:64mm;height:auto;">
+          <polygon points="95,30 30,135 210,135" fill="none" stroke="#222" stroke-width="1.4"/>
+          <line x1="95" y1="30" x2="95" y2="135" stroke="#2563eb" stroke-width="0.9" stroke-dasharray="3,2"/>
+          <polyline points="95,128 102,128 102,135" fill="none" stroke="#2563eb" stroke-width="0.7"/>
+          <!-- 변 길이 표시 라운드 점선 호 -->
+          <path d="M 30 135 Q 120 153 210 135" fill="none" stroke="#222" stroke-width="0.9" stroke-dasharray="0.5,4" stroke-linecap="round"/>
+          <path d="M 95 30 Q 165 69 210 135" fill="none" stroke="#222" stroke-width="0.9" stroke-dasharray="0.5,4" stroke-linecap="round"/>
+          <path d="M 95 30 Q 47 73 30 135" fill="none" stroke="#222" stroke-width="0.9" stroke-dasharray="0.5,4" stroke-linecap="round"/>
+          <circle cx="95" cy="30" r="2" fill="#222"/>
+          <circle cx="30" cy="135" r="2" fill="#222"/>
+          <circle cx="210" cy="135" r="2" fill="#222"/>
+          <circle cx="95" cy="135" r="2" fill="#222"/>
+          <foreignObject x="86" y="10" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$\mathrm{A}$</div></foreignObject>
+          <foreignObject x="10" y="140" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$\mathrm{B}$</div></foreignObject>
+          <foreignObject x="214" y="140" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$\mathrm{C}$</div></foreignObject>
+          <foreignObject x="86" y="142" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$\mathrm{H}$</div></foreignObject>
+          <foreignObject x="38" y="69" width="20" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;background:#fff;padding:0 2px;text-align:center;">$c$</div></foreignObject>
+          <foreignObject x="149" y="67" width="20" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;background:#fff;padding:0 2px;text-align:center;">$b$</div></foreignObject>
+          <foreignObject x="110" y="135" width="20" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;background:#fff;padding:0 2px;text-align:center;">$a$</div></foreignObject>
+        </svg>
+      </div>
+
+      <p class="proof"><b>(증명)</b> $\mathrm{A}$에서 $\mathrm{BC}$에 내린 수선의 발을 $\mathrm{H}$라 하면 직각삼각형 $\mathrm{ABH}$에서 $\overline{\mathrm{BH}} = c\cos B,\ \overline{\mathrm{AH}} = c\sin B$이므로 $\overline{\mathrm{CH}} = a - c\cos B$. 직각삼각형 $\mathrm{AHC}$에 피타고라스 정리를 적용하면 $b^2 = (c\sin B)^2 + (a - c\cos B)^2 = c^2\sin^2 B + a^2 - 2ac\cos B + c^2\cos^2 B = a^2 + c^2 - 2ac\cos B,$ &emsp;즉 $b^2 = c^2 + a^2 - 2ca\cos B.$ 같은 방법으로 다른 두 식도 성립.</p>
+
+      <div class="sub-title">2) 각을 변으로 나타내기 (코사인의 변형)</div>
+      <div class="formula">
+        $$\cos A = \dfrac{b^2 + c^2 - a^2}{2bc},\quad \cos B = \dfrac{c^2 + a^2 - b^2}{2ca},\quad \cos C = \dfrac{a^2 + b^2 - c^2}{2ab}$$
+      </div>
+
+      <div class="sub-title">3) 코사인 법칙을 사용하는 경우</div>
+      <p>① 두 변과 끼인각의 크기를 알 때 — 나머지 한 변</p>
+      <p>② 세 변의 길이를 알 때 — 세 각</p>
+    </div>
+  </div>
+  <footer class="sheet-footer">2</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 3 (odd) : 삼각형의 모양 결정 + 사인법칙·코사인법칙의 활용 -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="sheet-body">
+    <h2 class="section-title">삼각형의 모양 결정</h2>
+    <div class="concept">
+      <p>각이 포함된 식이 주어지면 사인법칙·코사인법칙을 이용하여 <b>모든 각을 변으로 표현</b>한 다음 변의 관계를 확인한다.</p>
+
+      <div class="formula left">
+        $\bullet$ 각 변환 : $\sin A = \dfrac{a}{2R},\ \sin B = \dfrac{b}{2R},\ \sin C = \dfrac{c}{2R}$<br>
+        $\bullet$ 코사인 변환 : $\cos A = \dfrac{b^2+c^2-a^2}{2bc},\ \cos B = \dfrac{c^2+a^2-b^2}{2ca},\ \cos C = \dfrac{a^2+b^2-c^2}{2ab}$
+      </div>
+
+      <div class="sub-title">대표적인 삼각형 판정</div>
+      <p>① $a = b$ &nbsp;⇒&nbsp; $\overline{\mathrm{CA}} = \overline{\mathrm{CB}}$인 이등변삼각형</p>
+      <p>② $a^2 = b^2 + c^2$ &nbsp;⇒&nbsp; $A = 90^\circ$인 직각삼각형</p>
+      <p>③ $a = b = c$ &nbsp;⇒&nbsp; 정삼각형</p>
+
+      <div class="ex">
+        <b>예)</b> $a\sin A = b\sin B$를 정리하면 사인법칙으로 $a^2 = b^2$이므로 $a = b$인 이등변삼각형.<br>
+        <b>예)</b> $\cos A = 0$이면 $A = 90^\circ$이므로 $A$가 직각인 직각삼각형.
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">3</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 4 (even) : 사인·코사인 법칙의 활용 — 이등분선·원의 활용 -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">사인법칙 · 코사인법칙의 활용</h2>
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">1) 내각의 이등분선 — 보각 관계</div>
+      <p>$\angle A$의 이등분선이 변 $\mathrm{BC}$와 만나는 점을 $\mathrm{D}$라 하자. 두 작은 삼각형 $\mathrm{ABD},\,\mathrm{ACD}$에서 $\angle\mathrm{ADB} + \angle\mathrm{ADC} = 180^\circ$이므로 두 각은 <b>보각 관계</b>이다.</p>
+
+      <div class="formula left">
+        $\bullet$ 보각 관계 : $\cos(\angle\mathrm{ADC}) = -\cos(\angle\mathrm{ADB})$<br>
+        $\bullet$ 두 작은 삼각형에 코사인법칙을 각각 쓰고 두 식을 더하면 $\cos$ 항이 소거되어 길이 관계식이 나온다.
+      </div>
+
+      <div class="sub-title">2) 원의 활용</div>
+      <p>① <b>원주각</b> : 한 호에 대한 원주각의 크기는 같다 → 같은 호에서 원주각이 같으면 그 호의 길이(현의 길이)도 같다. (역도 성립)</p>
+      <p>② 원에 내접하는 사각형의 <b>대각의 합은 $180^\circ$</b>이다. &nbsp; ($A + C = B + D = 180^\circ$)</p>
+      <p>③ 외접원의 반지름이 주어지면 사인법칙 $\dfrac{a}{\sin A} = 2R$로 변·각 관계를 잡는다.</p>
+      <p>④ 내접원의 반지름이 주어지면 삼각형의 넓이 $S = \dfrac{1}{2}r(a+b+c)$를 이용한다.</p>
+
+      <div class="note">원에 내접하는 사각형 $\mathrm{ABCD}$에서 $\cos B = -\cos D$이므로 두 삼각형 $\mathrm{ABC},\,\mathrm{ACD}$에 코사인법칙을 쓰면 $\cos B$의 부호 차로 변 관계를 빠르게 정리할 수 있다.</div>
+    </div>
+  </div>
+  <footer class="sheet-footer">4</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 5 (odd) : 톨레미 정리 + 증명 -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="sheet-body">
+    <h2 class="section-title">톨레미(Ptolemy) 정리</h2>
+    <div class="concept">
+      <p>원에 내접하는 사각형의 두 대각선의 길이의 곱은 두 쌍의 대변의 길이의 곱의 합과 같다.</p>
+
+      <div class="fig-row" style="gap:8mm; align-items:center; margin:3mm 0;">
+        <div class="fig-wrap" style="width:48mm;">
+          <svg viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+            <circle cx="110" cy="110" r="80" fill="none" stroke="#222" stroke-width="1"/>
+            <polygon points="35,83 179,70 161,171 49,161" fill="none" stroke="#222" stroke-width="1.3"/>
+            <line x1="35" y1="83" x2="161" y2="171" stroke="#2563eb" stroke-width="0.9"/>
+            <line x1="179" y1="70" x2="49" y2="161" stroke="#2563eb" stroke-width="0.9"/>
+            <!-- 변 길이 표시 라운드 점선 호 -->
+            <path d="M 35 83 Q 105 59 179 70" fill="none" stroke="#222" stroke-width="0.9" stroke-dasharray="0.5,4" stroke-linecap="round"/>
+            <path d="M 179 70 Q 188 124 161 171" fill="none" stroke="#222" stroke-width="0.9" stroke-dasharray="0.5,4" stroke-linecap="round"/>
+            <path d="M 161 171 Q 103 184 49 161" fill="none" stroke="#222" stroke-width="0.9" stroke-dasharray="0.5,4" stroke-linecap="round"/>
+            <path d="M 49 161 Q 24 125 35 83" fill="none" stroke="#222" stroke-width="0.9" stroke-dasharray="0.5,4" stroke-linecap="round"/>
+            <circle cx="35" cy="83" r="2" fill="#222"/>
+            <circle cx="179" cy="70" r="2" fill="#222"/>
+            <circle cx="161" cy="171" r="2" fill="#222"/>
+            <circle cx="49" cy="161" r="2" fill="#222"/>
+            <foreignObject x="14" y="74" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$\mathrm{A}$</div></foreignObject>
+            <foreignObject x="184" y="56" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$\mathrm{B}$</div></foreignObject>
+            <foreignObject x="166" y="174" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$\mathrm{C}$</div></foreignObject>
+            <foreignObject x="32" y="174" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$\mathrm{D}$</div></foreignObject>
+          </svg>
+        </div>
+        <div class="formula" style="flex:1; margin:0;">
+          $\overline{\mathrm{AC}}\cdot\overline{\mathrm{BD}}$<br>
+          $= \overline{\mathrm{AB}}\cdot\overline{\mathrm{CD}} + \overline{\mathrm{BC}}\cdot\overline{\mathrm{AD}}$
+        </div>
+      </div>
+
+      <p class="proof"><b>(증명)</b> 대각선 $\mathrm{BD}$ 위에 $\angle\mathrm{BAE} = \angle\mathrm{CAD}$가 되도록 점 $\mathrm{E}$를 잡자. 호 $\mathrm{AB}$에 대한 원주각이 같으므로 $\angle\mathrm{ADE} = \angle\mathrm{ACB}$이고, 이때 $\triangle\mathrm{ABE} \sim \triangle\mathrm{ACD}$ (AA 닮음). &emsp;즉 $\overline{\mathrm{AB}}:\overline{\mathrm{AC}} = \overline{\mathrm{BE}}:\overline{\mathrm{CD}}$ 에서 $\overline{\mathrm{AB}}\cdot\overline{\mathrm{CD}} = \overline{\mathrm{AC}}\cdot\overline{\mathrm{BE}}\;\;\cdots\;(\ast)$<br>또 $\angle\mathrm{BAC} = \angle\mathrm{EAD}$ 이고 호 $\mathrm{CD}$에 대한 원주각이 같으므로 $\angle\mathrm{ABC} = \angle\mathrm{ADE}$, 따라서 $\triangle\mathrm{ABC} \sim \triangle\mathrm{AED}$ (AA 닮음). &emsp;즉 $\overline{\mathrm{BC}}:\overline{\mathrm{ED}} = \overline{\mathrm{AC}}:\overline{\mathrm{AD}}$ 에서 $\overline{\mathrm{BC}}\cdot\overline{\mathrm{AD}} = \overline{\mathrm{AC}}\cdot\overline{\mathrm{ED}}\;\;\cdots\;(\ast\ast)$<br>$(\ast),\,(\ast\ast)$를 변끼리 더하면 $\overline{\mathrm{AB}}\cdot\overline{\mathrm{CD}} + \overline{\mathrm{BC}}\cdot\overline{\mathrm{AD}} = \overline{\mathrm{AC}}\cdot(\overline{\mathrm{BE}}+\overline{\mathrm{ED}}) = \overline{\mathrm{AC}}\cdot\overline{\mathrm{BD}}.$<br>$\therefore\ \overline{\mathrm{AC}}\cdot\overline{\mathrm{BD}} = \overline{\mathrm{AB}}\cdot\overline{\mathrm{CD}} + \overline{\mathrm{BC}}\cdot\overline{\mathrm{AD}}.$</p>
+
+      <div class="note">사각형 $\mathrm{ABCD}$가 일반(원에 내접하지 않는) 볼록사각형이면 $\overline{\mathrm{AC}}\cdot\overline{\mathrm{BD}} \le \overline{\mathrm{AB}}\cdot\overline{\mathrm{CD}} + \overline{\mathrm{BC}}\cdot\overline{\mathrm{AD}}$가 성립한다(톨레미 부등식).</div>
+    </div>
+  </div>
+  <footer class="sheet-footer">5</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 6 (even) : 우산 공식 + 5가지 결과 -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">우산 공식 (각의 이등분선 + 외접원)</h2>
+    <div class="concept">
+      <p>삼각형 $\mathrm{ABC}$에서 $\angle A$의 이등분선이 변 $\mathrm{BC}$와 만나는 점을 $\mathrm{D}$, 외접원과 만나는 점을 $\mathrm{E}$라 하고 $\overline{\mathrm{AB}} = c,\ \overline{\mathrm{AC}} = b,\ \overline{\mathrm{BC}} = a,\ \overline{\mathrm{BD}} = m,\ \overline{\mathrm{DC}} = n,\ \overline{\mathrm{AD}} = d,\ \angle\mathrm{BAD} = \angle\mathrm{DAC} = \theta$라 하자. 그림이 우산을 펼친 모양과 비슷하여 우산 공식이라 부른다.</p>
+
+      <div class="fig-row" style="justify-content:flex-start; gap:6mm; align-items:center; margin:3mm 0;">
+        <div class="formula left" style="flex:0 1 auto; width:fit-content; margin:0;">
+          ① $\overline{\mathrm{AD}}\cdot\overline{\mathrm{AE}} = \overline{\mathrm{AB}}\cdot\overline{\mathrm{AC}} = bc$ &nbsp;(원주각 닮음)<br>
+          ② $\overline{\mathrm{AD}}^2 = \overline{\mathrm{AB}}\cdot\overline{\mathrm{AC}} - \overline{\mathrm{BD}}\cdot\overline{\mathrm{DC}}$, &nbsp;즉 $d^2 = bc - mn$<br>
+          ③ 이등분선의 길이 : $d = \dfrac{2bc\cos\theta}{b+c}$<br>
+          ④ 변의 비 : $\overline{\mathrm{BD}}:\overline{\mathrm{DC}} = c:b$<br>
+          ⑤ 넓이 비 : $\triangle\mathrm{ABD}:\triangle\mathrm{ACD} = c:b$
+        </div>
+        <div class="fig-wrap" style="flex:0 0 auto; width:46mm;">
+          <svg viewBox="0 0 220 235" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;">
+            <circle cx="110" cy="115" r="80" fill="none" stroke="#222" stroke-width="1"/>
+            <polygon points="59,54 70,184 150,184" fill="none" stroke="#222" stroke-width="1.3"/>
+            <line x1="59" y1="54" x2="106" y2="184" stroke="#2563eb" stroke-width="1.1" stroke-dasharray="4,3"/>
+            <line x1="106" y1="184" x2="110" y2="195" stroke="#2563eb" stroke-width="0.9" stroke-dasharray="3,2"/>
+            <!-- 변 길이 표시 라운드 점선 호 (c=AB, b=AC, m=BD, n=DC) -->
+            <path d="M 59 54 Q 47 121 70 184" fill="none" stroke="#222" stroke-width="0.9" stroke-dasharray="0.5,4" stroke-linecap="round"/>
+            <path d="M 59 54 Q 119 109 150 184" fill="none" stroke="#222" stroke-width="0.9" stroke-dasharray="0.5,4" stroke-linecap="round"/>
+            <path d="M 70 184 Q 88 202 106 184" fill="none" stroke="#222" stroke-width="0.9" stroke-dasharray="0.5,4" stroke-linecap="round"/>
+            <path d="M 106 184 Q 128 202 150 184" fill="none" stroke="#222" stroke-width="0.9" stroke-dasharray="0.5,4" stroke-linecap="round"/>
+            <path d="M 60.4 70 A 16 16 0 0 1 64.4 69" fill="none" stroke="#c0392b" stroke-width="0.9"/>
+            <path d="M 64.4 69 A 16 16 0 0 1 68.2 67.1" fill="none" stroke="#c0392b" stroke-width="0.9"/>
+            <circle cx="59" cy="54" r="2" fill="#222"/>
+            <circle cx="70" cy="184" r="2" fill="#222"/>
+            <circle cx="150" cy="184" r="2" fill="#222"/>
+            <circle cx="106" cy="184" r="2.2" fill="#c0392b"/>
+            <circle cx="110" cy="195" r="2.2" fill="#c0392b"/>
+            <foreignObject x="42" y="36" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$\mathrm{A}$</div></foreignObject>
+            <foreignObject x="52" y="190" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$\mathrm{B}$</div></foreignObject>
+            <foreignObject x="156" y="190" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$\mathrm{C}$</div></foreignObject>
+            <foreignObject x="98" y="190" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$\mathrm{D}$</div></foreignObject>
+            <foreignObject x="115" y="202" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$\mathrm{E}$</div></foreignObject>
+            <foreignObject x="38" y="112" width="20" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;background:#fff;padding:0 2px;text-align:center;">$c$</div></foreignObject>
+            <foreignObject x="124" y="105" width="20" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;background:#fff;padding:0 2px;text-align:center;">$b$</div></foreignObject>
+            <foreignObject x="78" y="184" width="20" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;background:#fff;padding:0 2px;text-align:center;">$m$</div></foreignObject>
+            <foreignObject x="118" y="184" width="20" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;background:#fff;padding:0 2px;text-align:center;">$n$</div></foreignObject>
+            <foreignObject x="86" y="98" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;color:#2563eb;">$d$</div></foreignObject>
+            <foreignObject x="58" y="76" width="14" height="14" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10px;line-height:1;color:#c0392b;">$\theta$</div></foreignObject>
+            <foreignObject x="69" y="73" width="14" height="14" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10px;line-height:1;color:#c0392b;">$\theta$</div></foreignObject>
+          </svg>
+        </div>
+      </div>
+
+      <p class="proof"><b>(증명 ①)</b> 호 $\mathrm{BE}$에 대한 원주각이 같으므로 $\angle\mathrm{BCE} = \angle\mathrm{BAE} = \theta = \angle\mathrm{DAC}$이고 $\angle\mathrm{ABE} = \angle\mathrm{ACE}$ (호 $\mathrm{AE}$ 원주각, 또는 공통각 $\angle\mathrm{ADC} = \angle\mathrm{BDE}$ 활용). $\triangle\mathrm{ABD} \sim \triangle\mathrm{AEC}$ (AA)에서 $\dfrac{\overline{\mathrm{AB}}}{\overline{\mathrm{AE}}} = \dfrac{\overline{\mathrm{AD}}}{\overline{\mathrm{AC}}},$ &emsp;즉 $\overline{\mathrm{AD}}\cdot\overline{\mathrm{AE}} = \overline{\mathrm{AB}}\cdot\overline{\mathrm{AC}}.$</p>
+
+      <p class="proof"><b>(증명 ②)</b> ①에서 $\overline{\mathrm{AD}}\cdot\overline{\mathrm{AE}} = bc.$ 한편 $\overline{\mathrm{AE}} = \overline{\mathrm{AD}} + \overline{\mathrm{DE}}$이고 원의 멱 정리에 의해 $\overline{\mathrm{BD}}\cdot\overline{\mathrm{DC}} = \overline{\mathrm{AD}}\cdot\overline{\mathrm{DE}}.$ 따라서 $bc = \overline{\mathrm{AD}}(\overline{\mathrm{AD}}+\overline{\mathrm{DE}}) = \overline{\mathrm{AD}}^2 + \overline{\mathrm{AD}}\cdot\overline{\mathrm{DE}} = d^2 + mn,$ &emsp;즉 $d^2 = bc - mn.$</p>
+
+      <p class="proof"><b>(증명 ③)</b> 넓이 분할 $\triangle\mathrm{ABC} = \triangle\mathrm{ABD} + \triangle\mathrm{ACD}$에 사인공식을 쓰면 $\dfrac{1}{2}bc\sin 2\theta = \dfrac{1}{2}cd\sin\theta + \dfrac{1}{2}bd\sin\theta.$ 좌변 $\sin 2\theta = 2\sin\theta\cos\theta$를 대입하고 양변을 $\sin\theta$로 나누면 $bc\cos\theta = \dfrac{(b+c)d}{2}\cdot\dfrac{1}{1},$ &emsp;즉 $d = \dfrac{2bc\cos\theta}{b+c}.$</p>
+
+      <p class="proof"><b>(증명 ④, ⑤)</b> $\triangle\mathrm{ABD},\,\triangle\mathrm{ACD}$는 높이가 같으므로 넓이 비는 밑변 비. 또 두 삼각형은 $\angle A$ 이등분각 $\theta$를 공유하므로 사인법칙으로 $\dfrac{m}{\sin\theta} \cdot c$ 와 $\dfrac{n}{\sin\theta} \cdot b$ 비교 ⇒ $m:n = c:b$, &emsp;즉 $\overline{\mathrm{BD}}:\overline{\mathrm{DC}} = c:b$이고 넓이 비도 $c:b.$</p>
+    </div>
+  </div>
+  <footer class="sheet-footer">6</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 7 (odd) : 최단 거리 — 전개도 -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="sheet-body">
+    <h2 class="section-title">입체도형의 최단 거리</h2>
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">1) 전개도를 이용한 최단 경로</div>
+      <p>곡면 위에서 두 점 사이의 최단 거리는 입체도형의 <b>전개도</b>로 펴서 두 점을 잇는 선분의 길이로 구한다. 전개도를 펼친 평면에서는 직선이 가장 짧기 때문이다.</p>
+
+      <div class="sub-title">2) 원뿔의 옆면 전개도</div>
+      <p>밑면의 반지름이 $r$, 모선의 길이가 $\ell$인 원뿔의 옆면을 펼치면 반지름이 $\ell$, 호의 길이가 $2\pi r$인 부채꼴이 된다. 그러므로 부채꼴의 중심각의 크기 $\alpha$는</p>
+
+      <div class="formula">
+        $$\alpha = \dfrac{2\pi r}{\ell} \;(\text{rad}) = \dfrac{r}{\ell}\times 360^\circ$$
+      </div>
+
+      <div class="sub-title">3) 최단 거리 계산 방법</div>
+      <p>[1단계] 입체도형을 전개도로 펼치고 두 점의 위치를 정확히 표시한다.</p>
+      <p>[2단계] 부채꼴의 중심각 $\alpha$를 구한다.</p>
+      <p>[3단계] 두 점을 잇는 선분에 코사인법칙을 적용해 길이를 구한다.</p>
+
+      <div class="ex">
+        <b>예)</b> 밑면 반지름 $r$, 모선 $\ell$인 원뿔의 옆면을 펼치면 반지름 $\ell$인 부채꼴. 꼭짓점 $\mathrm{O}$에서 시작해 모선을 한 바퀴 돌아 다시 같은 모선 위 점 $\mathrm{P}$에 이르는 최단 실의 길이는 펼친 부채꼴에서 $\mathrm{P}$의 두 위치 사이의 직선거리.
+      </div>
+    </div>
+  </div>
+  <footer class="sheet-footer">7</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 8 (even) : 삼각형의 넓이 + 헤론의 공식 -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">삼각형의 넓이</h2>
+    <div class="concept">
+      <p>삼각형 $\mathrm{ABC}$의 넓이를 $S$라 할 때, 주어진 조건에 따라 다음을 사용한다.</p>
+
+      <div class="sub-title" style="margin-top:calc(var(--one-line)*1);">1) 두 변과 끼인각의 크기를 알 때</div>
+      <div class="formula">
+        $$S = \dfrac{1}{2}ab\sin C = \dfrac{1}{2}bc\sin A = \dfrac{1}{2}ca\sin B$$
+      </div>
+
+      <div class="sub-title">2) 외접원의 반지름의 길이 $R$이 주어진 경우</div>
+      <div class="formula">
+        $$S = \dfrac{abc}{4R} = 2R^2\sin A\sin B\sin C$$
+      </div>
+
+      <div class="sub-title">3) 내접원의 반지름의 길이 $r$이 주어진 경우</div>
+      <div class="formula">
+        $$S = \dfrac{1}{2}r(a+b+c)$$
+      </div>
+
+      <div class="sub-title">4) 헤론의 공식 — 세 변의 길이를 알 때</div>
+      <div class="formula">
+        $$S = \sqrt{s(s-a)(s-b)(s-c)} \quad \left(s = \dfrac{a+b+c}{2}\right)$$
+      </div>
+
+      <div class="note">헤론 공식의 한계 : 변의 길이가 무리수이거나 매우 큰 경우 $s(s-a)(s-b)(s-c)$의 계산이 매우 복잡해진다. 수치가 정수·작은 정수일 때만 실용적이며, 보통은 코사인법칙으로 한 각의 $\cos$ 값을 먼저 구해 $\sin$을 얻은 뒤 $\dfrac{1}{2}ab\sin C$를 쓰는 편이 빠르다.</div>
+    </div>
+  </div>
+  <footer class="sheet-footer">8</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 9 (odd) : 사각형의 넓이 -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="sheet-body">
+    <h2 class="section-title">사각형의 넓이</h2>
+    <div class="concept">
+      <div class="sub-title" style="margin-top:0;">1) 평행사변형의 넓이</div>
+      <p>이웃하는 두 변의 길이가 $a,\,b$이고 그 끼인각의 크기가 $\theta$인 평행사변형의 넓이 $S$는</p>
+      <div class="formula">
+        $$S = ab\sin\theta$$
+      </div>
+
+      <div class="sub-title">2) 사각형의 넓이 (대각선 이용)</div>
+      <p>두 대각선의 길이가 $p,\,q$이고 두 대각선이 이루는 각의 크기가 $\theta$인 사각형 $\mathrm{ABCD}$의 넓이 $S$는</p>
+      <div class="formula">
+        $$S = \dfrac{1}{2}pq\sin\theta$$
+      </div>
+
+      <div class="sub-title">3) 일반 사각형 — 두 삼각형의 합</div>
+      <p>볼록사각형 $\mathrm{ABCD}$에서 한 대각선(예를 들어 $\overline{\mathrm{AC}}$)을 그어 두 삼각형 $\mathrm{ABC},\,\mathrm{ACD}$로 나눈 뒤 각각의 넓이를 더한다. 두 삼각형이 한 변($\overline{\mathrm{AC}}$)을 공유하므로 코사인법칙으로 그 길이를 먼저 구한 뒤 사인공식을 적용한다.</p>
+
+      <div class="formula left">
+        $S = \triangle\mathrm{ABC} + \triangle\mathrm{ACD} = \dfrac{1}{2}\overline{\mathrm{AB}}\cdot\overline{\mathrm{BC}}\sin B + \dfrac{1}{2}\overline{\mathrm{AD}}\cdot\overline{\mathrm{DC}}\sin D$
+      </div>
+
+      <div class="note">대각의 합이 $180^\circ$인 원에 내접하는 사각형이면 $\sin B = \sin D$이므로 두 삼각형 넓이 식에서 $\sin$ 인수를 묶을 수 있다.</div>
+    </div>
+  </div>
+  <footer class="sheet-footer">9</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 10 (even) : 문제 1, 2 — 사인법칙 -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q1">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-1" class="solution-link">1</a></span>삼각형 $\mathrm{ABC}$에서 $A = 105^\circ,\ C = 45^\circ,\ \overline{\mathrm{AC}} = 10$일 때, 다음을 구하여라.</p>
+        <p class="sub">(1) $\overline{\mathrm{AB}}$의 길이</p>
+        <p class="sub">(2) 삼각형 $\mathrm{ABC}$의 외접원의 반지름의 길이</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q2">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-2" class="solution-link">2</a></span>삼각형 $\mathrm{ABC}$에서 $a = 10,\ b = 10\sqrt{3},\ A = 30^\circ$일 때, 삼각형 $\mathrm{ABC}$를 풀어라. (단, $0^\circ \lt B \lt 90^\circ$)</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">10</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 11 (odd) : 문제 3, 4 — 코사인법칙 -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q3">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-3" class="solution-link">3</a></span>반지름의 길이가 $\sqrt{10}$인 원에 내접하는 삼각형 $\mathrm{ABC}$에서 $10\sin(A+B)\sin C = 9$가 성립할 때, $c$의 값을 구하여라. (단, $\mathrm{ABC}$의 세 변의 길이는 각각 $a,\,b,\,c$이다.)</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q4">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-4" class="solution-link">4</a></span>삼각형 $\mathrm{ABC}$에서 $\overline{\mathrm{AB}} = 4,\ \overline{\mathrm{AC}} = 8,\ \angle A = \theta$이고 $\overline{\mathrm{BC}} = 2\sqrt{7}$일 때, 다음을 구하여라.</p>
+        <p class="sub">(1) $\cos\theta$의 값</p>
+        <p class="sub">(2) $\sin\theta$의 값</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">11</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 12 (even) : 문제 5 — 삼각형 모양 결정 -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q5">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-5" class="solution-link">5</a></span>다음 조건을 만족하는 삼각형 $\mathrm{ABC}$는 어떤 모양의 삼각형인지 말하여라.</p>
+        <p class="sub">(1) $a^2 = b^2 + ab\cos C$</p>
+        <p class="sub">(2) $a\cos B = b\cos A$</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q6">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-6" class="solution-link">6</a></span>그림과 같이 원에 내접하는 사각형 $\mathrm{ABCD}$에서 $\overline{\mathrm{AB}} = 2\sqrt{3},\ \overline{\mathrm{BC}} = 4,\ \overline{\mathrm{CD}} = \sqrt{3},\ \overline{\mathrm{DA}} = 2$일 때, 다음을 구하여라.</p>
+        <p class="sub">(1) $\cos B$의 값</p>
+        <p class="sub">(2) 대각선 $\overline{\mathrm{AC}}$의 길이</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">12</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 13 (odd) : 문제 7 — 전개도 최단거리 -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="problems-area single">
+
+    <div class="problem-block" data-qa-id="q7">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <div class="fig-right" style="width:48mm;">
+          <svg viewBox="0 0 120 130" xmlns="http://www.w3.org/2000/svg" style="width:100%;">
+            <!-- 원뿔 -->
+            <path d="M 60 12 L 18 110 L 102 110 Z" fill="none" stroke="#222" stroke-width="1.3"/>
+            <ellipse cx="60" cy="110" rx="42" ry="9" fill="none" stroke="#222" stroke-width="1.1"/>
+            <ellipse cx="60" cy="110" rx="42" ry="9" fill="none" stroke="#222" stroke-width="0.6" stroke-dasharray="2,2" style="clip-path:inset(0 0 50% 0);"/>
+            <!-- 모선 OP, 중점 Q -->
+            <line x1="60" y1="12" x2="18" y2="110" stroke="#222" stroke-width="1"/>
+            <circle cx="39" cy="61" r="1.8" fill="#222"/>
+            <circle cx="18" cy="110" r="1.8" fill="#222"/>
+            <circle cx="60" cy="12" r="1.8" fill="#222"/>
+            <!-- 점 P (밑원 위 다른 점) -->
+            <circle cx="100" cy="106" r="1.8" fill="#222"/>
+            <!-- 실 경로 (붉은 곡선) -->
+            <path d="M 100 106 Q 70 90 39 61" fill="none" stroke="#c0392b" stroke-width="1.2"/>
+            <!-- 라벨 -->
+            <foreignObject x="62" y="2" width="20" height="16" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$\mathrm{O}$</div></foreignObject>
+            <foreignObject x="22" y="48" width="22" height="16" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$\mathrm{Q}$</div></foreignObject>
+            <foreignObject x="6" y="105" width="20" height="16" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$\mathrm{P}$</div></foreignObject>
+            <foreignObject x="44" y="58" width="30" height="14" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;">$12\,\mathrm{cm}$</div></foreignObject>
+            <foreignObject x="60" y="116" width="36" height="14" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;">$4\,\mathrm{cm}$</div></foreignObject>
+          </svg>
+        </div>
+        <p><span class="pnum"><a href="#sol-7" class="solution-link">7</a></span>오른쪽 그림과 같이 밑면의 반지름의 길이가 $4\,\mathrm{cm}$이고 모선의 길이가 $12\,\mathrm{cm}$인 원뿔이 있다. 원뿔의 밑면인 원의 둘레 위의 점 $\mathrm{P}$에서 모선 $\overline{\mathrm{OP}}$의 중점 $\mathrm{Q}$까지 원뿔의 표면을 따라 실을 감을 때, 감은 실의 길이의 최솟값을 구하여라.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">13</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 14 (even) : 문제 8, 9 — 삼각형 넓이 -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q8">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-8" class="solution-link">8</a></span>다음 물음에 답하여라.</p>
+        <p class="sub">(1) 삼각형 $\mathrm{ABC}$에서 $b = 8,\ c = 10$이고 넓이가 $20\sqrt{3}$일 때, $a$의 값을 구하여라. (단, $0^\circ \lt A \lt 90^\circ$)</p>
+        <p class="sub">(2) 삼각형 $\mathrm{ABC}$에서 $a = 2\sqrt{21},\ b = 10,\ A = 60^\circ$일 때, 삼각형 $\mathrm{ABC}$의 넓이를 구하여라.</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q9">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-9" class="solution-link">9</a></span>삼각형 $\mathrm{ABC}$의 세 변의 길이가 $a = 5,\ b = 7,\ c = 9$일 때, 다음을 구하여라.</p>
+        <p class="sub">(1) 삼각형 $\mathrm{ABC}$의 넓이 $S$</p>
+        <p class="sub">(2) 외접원의 반지름의 길이</p>
+        <p class="sub">(3) 내접원의 반지름의 길이</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">14</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 15 (odd) : 문제 10 — 사각형 넓이 -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="problems-area">
+
+    <div class="problem-block" data-qa-id="q10">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-10" class="solution-link">10</a></span>다음을 각각 구하여라.</p>
+        <p class="sub">(1) $\overline{\mathrm{AB}} = 7,\ \overline{\mathrm{BC}} = 8,\ \overline{\mathrm{AC}} = 13$인 평행사변형 $\mathrm{ABCD}$의 넓이를 구하여라. (단, $90^\circ \lt B \lt 180^\circ$)</p>
+        <p class="sub">(2) 대각선 $\overline{\mathrm{AC}}$의 길이가 $8$이고 두 대각선이 이루는 각의 크기가 $120^\circ$인 사각형 $\mathrm{ABCD}$의 넓이가 $6\sqrt{3}$일 때, 대각선 $\overline{\mathrm{BD}}$의 길이를 구하여라.</p>
+      </div>
+    </div>
+
+    <div class="problem-block" data-qa-id="q11">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-11" class="solution-link">11</a></span>$\overline{\mathrm{AB}} = 8,\ \overline{\mathrm{AC}} = 3,\ A = 60^\circ$인 삼각형 $\mathrm{ABC}$의 두 변 $\mathrm{AB},\,\mathrm{AC}$ 위에 각각 두 점 $\mathrm{P},\,\mathrm{Q}$를 잡아 $\overline{\mathrm{AP}} = x,\ \overline{\mathrm{AQ}} = y$라 한다. 삼각형 $\mathrm{APQ}$의 넓이가 삼각형 $\mathrm{ABC}$의 넓이의 $\dfrac{1}{6}$이 되도록 할 때, 다음을 구하여라.</p>
+        <p class="sub">(1) $xy$의 값</p>
+        <p class="sub">(2) 선분 $\overline{\mathrm{PQ}}$의 길이의 최솟값</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">15</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 16 (even) : 문제 12 — 사각형 ABCD 넓이 (B=60°, D=120°) -->
+<!-- ============================================================ -->
+<section class="sheet even">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="problems-area single">
+
+    <div class="problem-block" data-qa-id="q12">
+      <div class="sub-label">- 확인문제</div>
+      <div class="problem">
+        <p><span class="pnum"><a href="#sol-12" class="solution-link">12</a></span>사각형 $\mathrm{ABCD}$에서 $\overline{\mathrm{AB}} = 7,\ \overline{\mathrm{BC}} = 4,\ \overline{\mathrm{CD}} = 3,\ B = 60^\circ,\ D = 120^\circ$일 때, 사각형 $\mathrm{ABCD}$의 넓이를 구하여라.</p>
+      </div>
+    </div>
+
+  </div>
+  <footer class="sheet-footer">16</footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- QUICK ANSWER PAGE -->
+<!-- ============================================================ -->
+<section class="sheet odd quick-answer-section">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="sheet-body">
+    <h2 class="section-title">빠른 정답</h2>
+    <div class="quick-answers">
+      <div class="qa-item"><span class="qa-num">1.</span><span class="qa-ans">(1) $\overline{\mathrm{AB}} = 10\sqrt{2}$<br>(2) $R = 10$</span></div>
+      <div class="qa-item"><span class="qa-num">2.</span><span class="qa-ans">$B = 60^\circ,$ $C = 90^\circ,$ $c = 20$</span></div>
+      <div class="qa-item"><span class="qa-num">3.</span><span class="qa-ans">$c = 6$</span></div>
+      <div class="qa-item"><span class="qa-num">4.</span><span class="qa-ans">(1) $\cos\theta = \dfrac{13}{16}$<br>(2) $\sin\theta = \dfrac{\sqrt{87}}{16}$</span></div>
+      <div class="qa-item"><span class="qa-num">5.</span><span class="qa-ans">(1) 풀이 참조<br>(2) $a = b$인 이등변삼각형</span></div>
+      <div class="qa-item"><span class="qa-num">6.</span><span class="qa-ans">(1) $\cos B = \dfrac{7\sqrt{3}}{20}$<br>(2) $\overline{\mathrm{AC}}^2 = \dfrac{56}{5}$</span></div>
+      <div class="qa-item"><span class="qa-num">7.</span><span class="qa-ans">$6\sqrt{7}\,\mathrm{cm}$</span></div>
+      <div class="qa-item"><span class="qa-num">8.</span><span class="qa-ans">(1) $a = 2\sqrt{21}$<br>(2) $S = 20\sqrt{3}$</span></div>
+      <div class="qa-item"><span class="qa-num">9.</span><span class="qa-ans">(1) $S = \dfrac{21\sqrt{11}}{4}$<br>(2) $R = \dfrac{15\sqrt{11}}{11}$<br>(3) $r = \dfrac{\sqrt{11}}{2}$</span></div>
+      <div class="qa-item"><span class="qa-num">10.</span><span class="qa-ans">(1) $S = 28\sqrt{3}$<br>(2) $\overline{\mathrm{BD}} = 3$</span></div>
+      <div class="qa-item"><span class="qa-num">11.</span><span class="qa-ans">(1) $xy = 4$<br>(2) $\overline{\mathrm{PQ}}_{\min} = 2$</span></div>
+      <div class="qa-item"><span class="qa-num">12.</span><span class="qa-ans">$S = 10\sqrt{3}$</span></div>
+    </div>
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- SOLUTION PAGES -->
+<!-- ============================================================ -->
+<section class="sheet even solution-section">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">2026 수복이</header>
+  <div class="sheet-body">
+    <h2 class="section-title">정답 및 해설</h2>
+    <div class="solutions">
+
+      <div class="solution-item" id="sol-1" data-qa-id="q1">
+        <div class="sol-num">1.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $\overline{\mathrm{AB}} = 10\sqrt{2}$ &nbsp; (2) $R = 10$</div>
+        <p>$B = 180^\circ - (105^\circ + 45^\circ) = 30^\circ.$</p>
+        <p>(1) $\overline{\mathrm{AC}} = b = 10$ ($\angle B$의 대변), $\overline{\mathrm{AB}} = c$ ($\angle C$의 대변)이므로 사인법칙 $\dfrac{c}{\sin C} = \dfrac{b}{\sin B}$에서</p>
+        <p>$c = \dfrac{b\sin C}{\sin B} = \dfrac{10\sin 45^\circ}{\sin 30^\circ} = \dfrac{10\cdot\frac{\sqrt{2}}{2}}{\frac{1}{2}} = 10\sqrt{2}.$</p>
+        <p>(2) 사인법칙 $\dfrac{b}{\sin B} = 2R$에서 $2R = \dfrac{10}{\sin 30^\circ} = 20,$ &emsp;즉 $R = 10.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-2" data-qa-id="q2">
+        <div class="sol-num">2.</div>
+        <div class="sol-answer"><b>[정답]</b> $B = 60^\circ,\ C = 90^\circ,\ c = 20$</div>
+        <p>사인법칙 $\dfrac{a}{\sin A} = \dfrac{b}{\sin B}$로 $\sin B$를 구한다.</p>
+        <p>$\sin B = \dfrac{b\sin A}{a} = \dfrac{10\sqrt{3}\cdot\frac{1}{2}}{10} = \dfrac{\sqrt{3}}{2}.$</p>
+        <p>$0^\circ \lt B \lt 90^\circ$ 조건에서 $B = 60^\circ.$</p>
+        <p>$C = 180^\circ - (30^\circ + 60^\circ) = 90^\circ,$ &emsp;즉 $\mathrm{ABC}$는 직각삼각형.</p>
+        <p>$c = \dfrac{a\sin C}{\sin A} = \dfrac{10\cdot 1}{1/2} = 20.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-3" data-qa-id="q3">
+        <div class="sol-num">3.</div>
+        <div class="sol-answer"><b>[정답]</b> $c = 6$</div>
+        <p>$A + B + C = 180^\circ$이므로 $A + B = 180^\circ - C,$ &emsp;즉 $\sin(A+B) = \sin C.$</p>
+        <p>주어진 식에 대입 : $10\sin^2 C = 9 \Rightarrow \sin C = \dfrac{3}{\sqrt{10}}\;(\sin C \gt 0).$</p>
+        <p>사인법칙 $c = 2R\sin C = 2\sqrt{10}\cdot\dfrac{3}{\sqrt{10}} = 6.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-4" data-qa-id="q4">
+        <div class="sol-num">4.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $\cos\theta = \dfrac{13}{16}$ &nbsp; (2) $\sin\theta = \dfrac{\sqrt{87}}{16}$</div>
+        <p>(1) 코사인법칙 $\overline{\mathrm{BC}}^2 = \overline{\mathrm{AB}}^2 + \overline{\mathrm{AC}}^2 - 2\cdot\overline{\mathrm{AB}}\cdot\overline{\mathrm{AC}}\cos\theta.$</p>
+        <p>$(2\sqrt{7})^2 = 4^2 + 8^2 - 2\cdot 4\cdot 8\cos\theta$ $\Rightarrow 28 = 80 - 64\cos\theta,$ &emsp;즉 $\cos\theta = \dfrac{52}{64} = \dfrac{13}{16}.$</p>
+        <p>(2) $\sin^2\theta = 1 - \cos^2\theta = 1 - \dfrac{169}{256} = \dfrac{87}{256}.$</p>
+        <p>$0^\circ\lt\theta\lt 180^\circ$이므로 $\sin\theta\gt 0,$ $\sin\theta = \dfrac{\sqrt{87}}{16}.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-5" data-qa-id="q5">
+        <div class="sol-num">5.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) 풀이 참조 &nbsp; (2) $a = b$인 이등변삼각형</div>
+        <p>(1) 사인법칙·코사인법칙으로 모든 각을 변으로 표현. $\sin A = \dfrac{a}{2R},\ \sin B = \dfrac{b}{2R},\ \cos C = \dfrac{a^2+b^2-c^2}{2ab}$ 대입.</p>
+        <p>$a^2 = b^2 + ab\cdot\dfrac{a^2+b^2-c^2}{2ab} \Rightarrow 2a^2 = 2b^2 + a^2 + b^2 - c^2$<br>$\Rightarrow a^2 + c^2 = 3b^2.$</p>
+        <p>특수한 모양으로 결정되지 않는 일반 관계식. (※ 원본 식 표기 확인 필요)</p>
+        <p>(2) $a\cos B = b\cos A$에 코사인 변형 $\cos B = \dfrac{c^2+a^2-b^2}{2ca},\ \cos A = \dfrac{b^2+c^2-a^2}{2bc}$ 대입.</p>
+        <p>$a\cdot\dfrac{c^2+a^2-b^2}{2ca} = b\cdot\dfrac{b^2+c^2-a^2}{2bc}$ $\Rightarrow \dfrac{c^2+a^2-b^2}{2c} = \dfrac{b^2+c^2-a^2}{2c}.$</p>
+        <p>$\therefore a^2 = b^2,$ &emsp;즉 $a = b$인 이등변삼각형.</p>
+      </div>
+
+      <div class="solution-item" id="sol-6" data-qa-id="q6">
+        <div class="sol-num">6.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $\cos B = \dfrac{7\sqrt{3}}{20}$ &nbsp; (2) $\overline{\mathrm{AC}} = \dfrac{2\sqrt{70}}{5}$</div>
+        <p>원에 내접하는 사각형이므로 $B + D = 180^\circ,$ &emsp;즉 $\cos D = -\cos B.$</p>
+        <p>(1) 대각선 $\overline{\mathrm{AC}}$를 그어 두 삼각형 $\mathrm{ABC},\,\mathrm{ACD}$에 코사인법칙을 각각 적용.</p>
+        <p>$\overline{\mathrm{AC}}^2 = (2\sqrt{3})^2 + 4^2 - 2\cdot 2\sqrt{3}\cdot 4\cos B = 28 - 16\sqrt{3}\cos B.$</p>
+        <p>$\overline{\mathrm{AC}}^2 = (\sqrt{3})^2 + 2^2 - 2\cdot\sqrt{3}\cdot 2\cos D = 7 + 4\sqrt{3}\cos B.$</p>
+        <p>두 식의 우변이 같으므로 $28 - 16\sqrt{3}\cos B = 7 + 4\sqrt{3}\cos B$ $\Rightarrow 21 = 20\sqrt{3}\cos B,$ &emsp;즉 $\cos B = \dfrac{21}{20\sqrt{3}} = \dfrac{7\sqrt{3}}{20}.$</p>
+        <p>(2) $\overline{\mathrm{AC}}^2 = 7 + 4\sqrt{3}\cdot\dfrac{7\sqrt{3}}{20} = 7 + \dfrac{84}{20} = \dfrac{56}{5}.$</p>
+        <p>$\therefore \overline{\mathrm{AC}} = \sqrt{\dfrac{56}{5}} = \dfrac{2\sqrt{70}}{5}.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-7" data-qa-id="q7">
+        <div class="sol-num">7.</div>
+        <div class="sol-answer"><b>[정답]</b> $6\sqrt{7}\,\mathrm{cm}$</div>
+        <p>전개도 이용. 밑면 반지름 $r = 4,$ 모선 $\ell = 12$이므로 옆면을 펼치면 반지름 $12,$ 호의 길이 $2\pi\cdot 4 = 8\pi$인 부채꼴.</p>
+        <p>중심각 $\alpha = \dfrac{8\pi}{12} = \dfrac{2\pi}{3}\;(\text{rad}) = 120^\circ.$</p>
+        <p>$\mathrm{P}$를 펴서 부채꼴의 두 끝 위치 $\mathrm{P},\,\mathrm{P}'$에 두고 $\mathrm{Q}$는 모선 $\overline{\mathrm{OP}'}$의 중점이므로 $\overline{\mathrm{OQ}} = 6,\ \overline{\mathrm{OP}} = 12,\ \angle\mathrm{POQ} = 120^\circ.$</p>
+        <p>코사인법칙으로 $\overline{\mathrm{PQ}}^2 = 12^2 + 6^2 - 2\cdot 12\cdot 6\cos 120^\circ = 144 + 36 + 72 = 252.$</p>
+        <p>$\therefore \overline{\mathrm{PQ}} = \sqrt{252} = 6\sqrt{7}\,\mathrm{cm}.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-8" data-qa-id="q8">
+        <div class="sol-num">8.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $a = 2\sqrt{21}$ &nbsp; (2) $S = 20\sqrt{3}$ 또는 $5\sqrt{3}$</div>
+        <p>(1) $S = \dfrac{1}{2}bc\sin A$에서 $20\sqrt{3} = \dfrac{1}{2}\cdot 8\cdot 10\sin A = 40\sin A,$ &emsp;즉 $\sin A = \dfrac{\sqrt{3}}{2}.$</p>
+        <p>$0^\circ\lt A\lt 90^\circ$이므로 $A = 60^\circ,\ \cos A = \dfrac{1}{2}.$</p>
+        <p>코사인법칙 $a^2 = b^2 + c^2 - 2bc\cos A = 64 + 100 - 80 = 84,$ &emsp;즉 $a = 2\sqrt{21}.$</p>
+        <p>(2) 코사인법칙 $a^2 = b^2 + c^2 - 2bc\cos A \Rightarrow 84 = 100 + c^2 - 10c$ $\Rightarrow c^2 - 10c + 16 = 0$ $\Rightarrow c = 2,\ 8.$</p>
+        <p>$S = \dfrac{1}{2}bc\sin A = \dfrac{5\sqrt{3}}{2}c.$ $c = 8$일 때 $S = 20\sqrt{3},$ $c = 2$일 때 $S = 5\sqrt{3}.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-9" data-qa-id="q9">
+        <div class="sol-num">9.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $S = \dfrac{21\sqrt{11}}{4}$ &nbsp; (2) $R = \dfrac{15\sqrt{11}}{11}$ &nbsp; (3) $r = \dfrac{\sqrt{11}}{2}$</div>
+        <p>(1) 헤론의 공식. $s = \dfrac{5+7+9}{2} = \dfrac{21}{2}.$</p>
+        <p>$S = \sqrt{s(s-a)(s-b)(s-c)}$ $= \sqrt{\dfrac{21}{2}\cdot\dfrac{11}{2}\cdot\dfrac{7}{2}\cdot\dfrac{3}{2}}$ $= \sqrt{\dfrac{21\cdot 7\cdot 3\cdot 11}{16}} = \dfrac{21\sqrt{11}}{4}.$</p>
+        <p>(2) $S = \dfrac{abc}{4R}$에서 $R = \dfrac{abc}{4S} = \dfrac{5\cdot 7\cdot 9}{4\cdot\frac{21\sqrt{11}}{4}} = \dfrac{315}{21\sqrt{11}} = \dfrac{15}{\sqrt{11}} = \dfrac{15\sqrt{11}}{11}.$</p>
+        <p>(3) $S = \dfrac{1}{2}r(a+b+c) = \dfrac{r}{2}\cdot 21$에서 $r = \dfrac{2S}{21} = \dfrac{2}{21}\cdot\dfrac{21\sqrt{11}}{4} = \dfrac{\sqrt{11}}{2}.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-10" data-qa-id="q10">
+        <div class="sol-num">10.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $S = 28\sqrt{3}$ &nbsp; (2) $\overline{\mathrm{BD}} = 3$</div>
+        <p>(1) 평행사변형 $\mathrm{ABCD}$에서 삼각형 $\mathrm{ABC}$에 코사인법칙.</p>
+        <p>$13^2 = 7^2 + 8^2 - 2\cdot 7\cdot 8\cos B$ $\Rightarrow 169 = 113 - 112\cos B$ $\Rightarrow \cos B = -\dfrac{1}{2}.$</p>
+        <p>$90^\circ\lt B\lt 180^\circ$이므로 $B = 120^\circ,\ \sin B = \dfrac{\sqrt{3}}{2}.$</p>
+        <p>평행사변형 넓이 $S = \overline{\mathrm{AB}}\cdot\overline{\mathrm{BC}}\sin B = 7\cdot 8\cdot\dfrac{\sqrt{3}}{2} = 28\sqrt{3}.$</p>
+        <p>(2) 두 대각선 공식 $S = \dfrac{1}{2}\overline{\mathrm{AC}}\cdot\overline{\mathrm{BD}}\sin\theta$ 적용.</p>
+        <p>$6\sqrt{3} = \dfrac{1}{2}\cdot 8\cdot\overline{\mathrm{BD}}\cdot\sin 120^\circ = 2\sqrt{3}\,\overline{\mathrm{BD}}.$</p>
+        <p>$\therefore \overline{\mathrm{BD}} = 3.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-11" data-qa-id="q11">
+        <div class="sol-num">11.</div>
+        <div class="sol-answer"><b>[정답]</b> (1) $xy = 4$ &nbsp; (2) $\overline{\mathrm{PQ}}_{\min} = 2$</div>
+        <p>(1) 두 삼각형 $\mathrm{APQ},\,\mathrm{ABC}$가 $\angle A$를 공유.</p>
+        <p>$\dfrac{\triangle\mathrm{APQ}}{\triangle\mathrm{ABC}} = \dfrac{\frac{1}{2}xy\sin 60^\circ}{\frac{1}{2}\cdot 8\cdot 3\sin 60^\circ} = \dfrac{xy}{24} = \dfrac{1}{6}.$</p>
+        <p>$\therefore xy = 4.$</p>
+        <p>(2) 코사인법칙 : $\overline{\mathrm{PQ}}^2 = x^2 + y^2 - 2xy\cos 60^\circ = x^2 + y^2 - xy.$</p>
+        <p>$xy = 4$ 대입 : $\overline{\mathrm{PQ}}^2 = x^2 + y^2 - 4.$</p>
+        <p>산술·기하평균 : $x^2 + y^2 \ge 2xy = 8$ (등호 $x = y = 2$일 때).</p>
+        <p>$\therefore \overline{\mathrm{PQ}}^2 \ge 8 - 4 = 4,\ \overline{\mathrm{PQ}}_{\min} = 2.$</p>
+      </div>
+
+      <div class="solution-item" id="sol-12" data-qa-id="q12">
+        <div class="sol-num">12.</div>
+        <div class="sol-answer"><b>[정답]</b> $S = 10\sqrt{3}$</div>
+        <p>$B + D = 60^\circ + 120^\circ = 180^\circ$이므로 사각형 $\mathrm{ABCD}$는 원에 내접.</p>
+        <p>대각선 $\overline{\mathrm{AC}}$에 대해 두 삼각형 $\mathrm{ABC},\,\mathrm{ACD}$로 분할.</p>
+        <p>$\triangle\mathrm{ABC} = \dfrac{1}{2}\cdot 7\cdot 4\sin 60^\circ = 14\cdot\dfrac{\sqrt{3}}{2} = 7\sqrt{3}.$</p>
+        <p>$\overline{\mathrm{AC}}$를 코사인법칙으로 : $\overline{\mathrm{AC}}^2 = 49 + 16 - 56\cos 60^\circ = 65 - 28 = 37.$</p>
+        <p>$\triangle\mathrm{ACD}$에서 $\overline{\mathrm{CD}} = 3,\ D = 120^\circ$이고 $\overline{\mathrm{DA}}$는 미지수. 코사인법칙 : $37 = \overline{\mathrm{DA}}^2 + 9 - 6\overline{\mathrm{DA}}\cos 120^\circ = \overline{\mathrm{DA}}^2 + 9 + 3\overline{\mathrm{DA}}$ $\Rightarrow \overline{\mathrm{DA}}^2 + 3\overline{\mathrm{DA}} - 28 = 0$ $\Rightarrow \overline{\mathrm{DA}} = \dfrac{-3+\sqrt{121}}{2} = 4.$</p>
+        <p>$\triangle\mathrm{ACD} = \dfrac{1}{2}\cdot 4\cdot 3\sin 120^\circ = 6\cdot\dfrac{\sqrt{3}}{2} = 3\sqrt{3}.$</p>
+        <p>$S = 7\sqrt{3} + 3\sqrt{3} = 10\sqrt{3}.$</p>
+      </div>
+
+    </div>
+  </div>
+  <footer class="sheet-footer">17</footer>
+</section>
+
+<section class="sheet odd solution-section">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="sheet-body">
+    <div class="solutions"></div>
+  </div>
+  <footer class="sheet-footer">18</footer>
+</section>
+
+<script>
+const _ready = Promise.all([
+  document.fonts.ready,
+  (window.MathJax && MathJax.startup && MathJax.startup.promise) ? MathJax.startup.promise : Promise.resolve()
+]).then(() => new Promise(resolve => {
+  requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(resolve, 100)));
+}));
+_ready.then(() => {
+  (function autoWrapChoices(){
+    document.querySelectorAll('.choices').forEach(c => {
+      if (c.scrollWidth > c.clientWidth) c.classList.add('two-row');
+    });
+  })();
+  (function compactAndSplitConcepts(){
+    const SLACK_PX = (() => {
+      const probe = document.createElement('div');
+      probe.style.cssText = 'position:absolute;visibility:hidden;width:10mm;';
+      document.body.appendChild(probe);
+      const px = probe.getBoundingClientRect().width;
+      document.body.removeChild(probe);
+      return px;
+    })();
+    function overflows(body){ return body.scrollHeight > body.clientHeight + SLACK_PX; }
+    function conceptSheets(){
+      return Array.from(document.querySelectorAll('.sheet')).filter(s =>
+        s.querySelector('.concept') && !s.classList.contains('solution-section')
+          && !s.classList.contains('quick-answer-section')
+      );
+    }
+    conceptSheets().forEach(sheet => {
+      const body = sheet.querySelector('.sheet-body');
+      if (!overflows(body)) return;
+      body.querySelectorAll('.concept .formula').forEach(f => f.classList.add('compact'));
+    });
+    conceptSheets().forEach(sheet => {
+      const body = sheet.querySelector('.sheet-body');
+      if (!overflows(body)) return;
+      const concept = body.querySelector('.concept');
+      if (concept) concept.classList.add('dense');
+    });
+    const queue = conceptSheets();
+    while (queue.length){
+      const sheet = queue.shift();
+      const body = sheet.querySelector('.sheet-body');
+      if (!body || !overflows(body)) continue;
+      const concept = body.querySelector('.concept');
+      if (!concept) continue;
+      const groups = [];
+      let cur = null;
+      Array.from(concept.children).forEach(ch => {
+        if (ch.classList.contains('sub-title')) { cur = [ch]; groups.push(cur); }
+        else if (cur) { cur.push(ch); }
+        else { cur = [ch]; groups.push(cur); }
+      });
+      if (groups.length < 2) continue;
+      const bodyBottom = body.getBoundingClientRect().bottom;
+      let splitAt = -1;
+      for (let i = 0; i < groups.length; i++){
+        const last = groups[i][groups[i].length - 1];
+        if (last.getBoundingClientRect().bottom > bodyBottom + SLACK_PX) { splitAt = i; break; }
+      }
+      if (splitAt <= 0) continue;
+      const isDense = concept.classList.contains('dense');
+      const ns = document.createElement('section');
+      ns.className = 'sheet';
+      ns.innerHTML =
+        '<div class="corner tr"></div><div class="corner tl"></div>' +
+        '<div class="corner br"></div><div class="corner bl"></div>' +
+        '<header class="sheet-header"></header>' +
+        '<div class="sheet-body"><div class="concept' + (isDense ? ' dense' : '') + '"></div></div>' +
+        '<footer class="sheet-footer"></footer>';
+      const newConcept = ns.querySelector('.concept');
+      for (let i = splitAt; i < groups.length; i++){
+        groups[i].forEach(el => newConcept.appendChild(el));
+      }
+      sheet.parentNode.insertBefore(ns, sheet.nextSibling);
+      queue.push(ns);
+    }
+  })();
+  (function flowSolutions(){
+    const sections = Array.from(document.querySelectorAll('.solution-section'));
+    if (!sections.length) return;
+    const allItems = [];
+    sections.forEach(sec => { sec.querySelectorAll('.solution-item').forEach(it => allItems.push(it)); });
+    sections.forEach(sec => { const c = sec.querySelector('.solutions'); if (c) c.innerHTML = ''; });
+
+    function makeSection() {
+      const prev = sections[sections.length - 1];
+      const ns = document.createElement('section');
+      ns.className = 'sheet solution-section';
+      ns.innerHTML =
+        '<div class="corner tr"></div><div class="corner tl"></div>' +
+        '<div class="corner br"></div><div class="corner bl"></div>' +
+        '<header class="sheet-header"></header>' +
+        '<div class="sheet-body"><div class="solutions"></div></div>' +
+        '<footer class="sheet-footer"></footer>';
+      prev.parentNode.insertBefore(ns, prev.nextSibling);
+      sections.push(ns);
+      return ns;
+    }
+    function lastItemOverflows(sec) {
+      const body = sec.querySelector('.sheet-body');
+      const last = sec.querySelector('.solutions > :last-child');
+      if (!body || !last) return false;
+      void body.offsetHeight;
+      const br = body.getBoundingClientRect();
+      const lr = last.getBoundingClientRect();
+      return lr.bottom > br.bottom + 1 || lr.right > br.right + 1;
+    }
+    function makeContinuation(item, paras) {
+      const cont = document.createElement('div');
+      cont.className = 'solution-item continuation';
+      cont.setAttribute('data-qa-id', item.getAttribute('data-qa-id') || '');
+      paras.forEach(p => cont.appendChild(p));
+      return cont;
+    }
+
+    let queue = allItems.slice();
+    let secIdx = 0;
+    let safety = 0;
+    while (queue.length > 0 && safety++ < 600) {
+      if (secIdx >= sections.length) makeSection();
+      const sec = sections[secIdx];
+      const container = sec.querySelector('.solutions');
+      let advancedToNextSection = false;
+      while (queue.length > 0) {
+        const item = queue.shift();
+        container.appendChild(item);
+        if (!lastItemOverflows(sec)) continue;
+        const paras = Array.from(item.querySelectorAll(':scope > p'));
+        if (paras.length >= 2) {
+          const moved = [];
+          while (paras.length > 1 && lastItemOverflows(sec)) {
+            const p = paras.pop();
+            item.removeChild(p);
+            moved.unshift(p);
+          }
+          if (!lastItemOverflows(sec) && moved.length > 0) {
+            queue.unshift(makeContinuation(item, moved));
+            advancedToNextSection = true;
+            break;
+          }
+          moved.forEach(p => item.appendChild(p));
+        }
+        container.removeChild(item);
+        queue.unshift(item);
+        advancedToNextSection = true;
+        break;
+      }
+      if (advancedToNextSection) secIdx++;
+      else break;
+    }
+    sections.forEach(sec => { if (!sec.querySelector('.solution-item')) sec.remove(); });
+  })();
+  (function rebalanceParity(){
+    const sheets = document.querySelectorAll('.sheet');
+    sheets.forEach((s, i) => {
+      const isOdd = (i % 2 === 0);
+      s.classList.toggle('odd', isOdd);
+      s.classList.toggle('even', !isOdd);
+      const hdr = s.querySelector('.sheet-header');
+      if (hdr) hdr.textContent = isOdd ? '대수' : '2026 수복이';
+    });
+  })();
+  (function renumberFooters(){
+    document.querySelectorAll('.sheet-footer').forEach((f, i) => { f.textContent = i + 1; });
+  })();
+  document.body.classList.add('ready');
+});
+</script>
+</body>
+</html>
