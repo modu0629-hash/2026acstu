@@ -328,17 +328,17 @@ a, a:link, a:visited, a:hover, a:active { color:#000 !important; }
     <div class="problem-block" data-qa-id="q6" style="margin-top:5mm;">
       <div class="sub-label">- 확인문제</div>
       <div class="problem">
-        <div class="fig-right" style="width:48mm;">
+        <div class="fig-right" style="width:50mm;">
           <svg viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg" style="width:100%;">
-            <!-- 두 직선 ~40° 사잇각 (각 20°), 우측 vertex에서 만남 -->
-            <line x1="10" y1="0" x2="190" y2="65" stroke="#222" stroke-width="1.2"/>
-            <line x1="10" y1="130" x2="190" y2="65" stroke="#222" stroke-width="1.2"/>
-            <!-- 5개 원 (체인 형태로 외접, 시각적 비율 유지) -->
-            <circle cx="30" cy="65" r="12" fill="none" stroke="#222" stroke-width="1.2"/>
-            <circle cx="52" cy="65" r="10" fill="none" stroke="#222" stroke-width="1.2"/>
-            <circle cx="70.5" cy="65" r="8.5" fill="none" stroke="#222" stroke-width="1.2"/>
-            <circle cx="86" cy="65" r="7" fill="none" stroke="#222" stroke-width="1.2"/>
-            <circle cx="99" cy="65" r="6" fill="none" stroke="#222" stroke-width="1.2"/>
+            <!-- 두 직선 사잇각 35° (각 17.5°), 우측 (180, 65)에서 교차 -->
+            <line x1="10" y1="11.4" x2="180" y2="65" stroke="#222" stroke-width="1.2"/>
+            <line x1="10" y1="118.6" x2="180" y2="65" stroke="#222" stroke-width="1.2"/>
+            <!-- 5개 원 (체인 외접 + 두 직선에 동시 접). r_i+1/r_i = (1+sin17.5°)/(1-sin17.5°) ≈ 1.86 -->
+            <circle cx="140.09" cy="65" r="12" fill="none" stroke="#222" stroke-width="1.2"/>
+            <circle cx="158.55" cy="65" r="6.45" fill="none" stroke="#222" stroke-width="1.2"/>
+            <circle cx="168.46" cy="65" r="3.47" fill="none" stroke="#222" stroke-width="1.2"/>
+            <circle cx="173.81" cy="65" r="1.86" fill="none" stroke="#222" stroke-width="1.2"/>
+            <circle cx="176.67" cy="65" r="1.0" fill="none" stroke="#222" stroke-width="1.2"/>
           </svg>
         </div>
         <p><span class="pnum"><a href="#sol-6" class="solution-link">6</a></span>오른쪽 그림과 같이 두 직선을 공통접선으로 하고 서로 외접하는 다섯 개의 원이 있다. 가장 큰 원의 반지름의 길이가 $12$, 가장 작은 원의 반지름의 길이가 $6$일 때, 가운데 원의 반지름의 길이를 구하여라.</p>

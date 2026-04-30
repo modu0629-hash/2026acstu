@@ -503,13 +503,11 @@ a, a:link, a:visited, a:hover, a:active { color:#000 !important; }
             <ellipse cx="60" cy="110" rx="42" ry="9" fill="none" stroke="#222" stroke-width="0.6" stroke-dasharray="2,2" style="clip-path:inset(0 0 50% 0);"/>
             <!-- 모선 OP (좌측 슬랜트) — Q는 OP의 중점 -->
             <line x1="60" y1="12" x2="18" y2="110" stroke="#222" stroke-width="1"/>
-            <!-- 실 경로: P (좌측 base, 모선 OP의 끝) → 한 바퀴 감김 → Q (OP의 중점) -->
-            <!-- 1) 앞면 visible: P → 베이스 따라 우측 → 우측 슬랜트 위로 cross-over -->
-            <path d="M 18 110 C 30 116 80 116 92 70" fill="none" stroke="#c0392b" stroke-width="1.4"/>
-            <!-- 2) 뒷면 (점선): 우측 위 → 좌측 위 (꼭짓점 부근으로 spiral 상승) -->
-            <path d="M 92 70 C 80 28 40 28 36 56" fill="none" stroke="#c0392b" stroke-width="1" stroke-dasharray="2.5,2"/>
-            <!-- 3) 앞면 visible: 좌측 cross-over → Q -->
-            <path d="M 36 56 Q 36 60 39 61" fill="none" stroke="#c0392b" stroke-width="1.4"/>
+            <!-- 실 경로: P (좌측 base) → 표면을 따라 한 바퀴 감김 → Q (OP의 중점). 측면 투영의 정확한 spiral 경로를 cubic Bezier 2개로 근사 — 항상 cone 외곽선 내부를 통과 -->
+            <!-- 1) 앞면 visible (좌측 base → 우측 슬랜트 위) -->
+            <path d="M 18 110 C 23 101 41 71 48 64 C 55 57 76 50 74 45" fill="none" stroke="#c0392b" stroke-width="1.4"/>
+            <!-- 2) 뒷면 (점선) — 우측 슬랜트 위 → 좌측 슬랜트 중점 Q -->
+            <path d="M 74 45 C 65 42 48 49 39 61" fill="none" stroke="#c0392b" stroke-width="1" stroke-dasharray="2.5,2"/>
             <circle cx="39" cy="61" r="1.8" fill="#222"/>
             <circle cx="18" cy="110" r="1.8" fill="#222"/>
             <circle cx="60" cy="12" r="1.8" fill="#222"/>
@@ -631,8 +629,8 @@ a, a:link, a:visited, a:hover, a:active { color:#000 !important; }
             <!-- AB(=8), AC(=3), AP(=x), AQ(=y) 라벨 — 변 외측에 배치 -->
             <foreignObject x="100" y="66" width="22" height="16" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;background:#fff;padding:0 1px;">$8$</div></foreignObject>
             <foreignObject x="22" y="20" width="20" height="16" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;background:#fff;padding:0 1px;">$3$</div></foreignObject>
-            <foreignObject x="76" y="44" width="20" height="16" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;color:#2563eb;background:#fff;padding:0 1px;">$x$</div></foreignObject>
-            <foreignObject x="40" y="26" width="20" height="16" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;color:#2563eb;background:#fff;padding:0 1px;">$y$</div></foreignObject>
+            <foreignObject x="64" y="50" width="14" height="16" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;color:#2563eb;background:#fff;padding:0 1px;">$x$</div></foreignObject>
+            <foreignObject x="42" y="30" width="14" height="16" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;color:#2563eb;background:#fff;padding:0 1px;">$y$</div></foreignObject>
           </svg>
         </div>
         <p><span class="pnum"><a href="#sol-10" class="solution-link">10</a></span>$\overline{\mathrm{AB}} = 8,\ \overline{\mathrm{AC}} = 3,\ A = 60^\circ$인 삼각형 $\mathrm{ABC}$의 두 변 $\mathrm{AB},\,\mathrm{AC}$ 위에 각각 두 점 $\mathrm{P},\,\mathrm{Q}$를 잡아 $\overline{\mathrm{AP}} = x,\ \overline{\mathrm{AQ}} = y$라 한다. 삼각형 $\mathrm{APQ}$의 넓이가 삼각형 $\mathrm{ABC}$의 넓이의 $\dfrac{1}{6}$이 되도록 할 때, 다음을 구하여라.</p>
@@ -662,17 +660,20 @@ a, a:link, a:visited, a:hover, a:active { color:#000 !important; }
         </div>
         <div style="flex:0 0 42mm;">
           <svg viewBox="0 0 110 70" xmlns="http://www.w3.org/2000/svg" style="width:100%;">
-            <!-- 평행사변형: A(10,58), B(70,58), C(90,18), D(30,18) — AB=60, BC=44.7, ∠B=60° -->
+            <!-- 평행사변형: A(10,58), B(70,58), C(90,18), D(30,18). 한 변 a (AB), 다른 변 b (BC) -->
             <polygon points="10,58 70,58 90,18 30,18" fill="none" stroke="#222" stroke-width="1.3"/>
-            <!-- 높이 (점선): C에서 AB로 내린 수선 -->
-            <line x1="90" y1="18" x2="90" y2="58" stroke="#2563eb" stroke-width="0.7" stroke-dasharray="2,2"/>
-            <line x1="86" y1="54" x2="86" y2="58" stroke="#2563eb" stroke-width="0.6"/>
-            <line x1="86" y1="54" x2="90" y2="54" stroke="#2563eb" stroke-width="0.6"/>
-            <!-- ∠B 호 (B = (70,58), 60°) -->
+            <!-- 높이 점선: D에서 AB로 내린 수선 (h = b sin θ) -->
+            <line x1="30" y1="18" x2="30" y2="58" stroke="#2563eb" stroke-width="0.7" stroke-dasharray="2,2"/>
+            <line x1="30" y1="54" x2="34" y2="54" stroke="#2563eb" stroke-width="0.6"/>
+            <line x1="34" y1="54" x2="34" y2="58" stroke="#2563eb" stroke-width="0.6"/>
+            <!-- ∠B 호 (∠ABC = θ, 둔각 표현) -->
             <path d="M 84 58 A 14 14 0 0 0 77 46" fill="none" stroke="#c0392b" stroke-width="0.8"/>
-            <foreignObject x="36" y="60" width="14" height="14" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;">$a$</div></foreignObject>
-            <foreignObject x="84" y="32" width="14" height="14" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;">$b$</div></foreignObject>
-            <foreignObject x="74" y="48" width="14" height="14" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10px;line-height:1;color:#c0392b;">$\theta$</div></foreignObject>
+            <!-- a 라벨: 변 AB 중점 아래 -->
+            <foreignObject x="34" y="60" width="12" height="14" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;background:#fff;padding:0 1px;text-align:center;">$a$</div></foreignObject>
+            <!-- b 라벨: 변 BC 중점 우측 -->
+            <foreignObject x="86" y="34" width="12" height="14" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;background:#fff;padding:0 1px;text-align:center;">$b$</div></foreignObject>
+            <!-- θ 라벨: ∠B 호 안쪽 -->
+            <foreignObject x="73" y="49" width="12" height="14" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10px;line-height:1;color:#c0392b;">$\theta$</div></foreignObject>
           </svg>
         </div>
       </div>
@@ -685,16 +686,19 @@ a, a:link, a:visited, a:hover, a:active { color:#000 !important; }
         </div>
         <div style="flex:0 0 42mm;">
           <svg viewBox="0 0 110 76" xmlns="http://www.w3.org/2000/svg" style="width:100%;">
-            <!-- 일반 사각형 (4 꼭짓점), 두 대각선 교차 -->
+            <!-- 일반 사각형 ABCD, 두 대각선 교차 (사잇각 θ) -->
             <polygon points="14,40 56,8 96,30 62,68" fill="none" stroke="#222" stroke-width="1.3"/>
-            <!-- 대각선 AC, BD -->
+            <!-- 대각선 AC (수평방향, p), BD (수직방향, q) -->
             <line x1="14" y1="40" x2="96" y2="30" stroke="#2563eb" stroke-width="1" stroke-dasharray="3,2"/>
             <line x1="56" y1="8" x2="62" y2="68" stroke="#2563eb" stroke-width="1" stroke-dasharray="3,2"/>
-            <!-- 교점 부근 ∠θ 호 (대각선 사잇각, 약 70도 표현) -->
-            <path d="M 65 33 A 8 8 0 0 1 60 39" fill="none" stroke="#c0392b" stroke-width="0.8"/>
-            <foreignObject x="32" y="20" width="14" height="14" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10px;line-height:1;color:#2563eb;">$p$</div></foreignObject>
-            <foreignObject x="68" y="48" width="14" height="14" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10px;line-height:1;color:#2563eb;">$q$</div></foreignObject>
-            <foreignObject x="64" y="38" width="14" height="14" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10px;line-height:1;color:#c0392b;">$\theta$</div></foreignObject>
+            <!-- 교점 (~58.7, 34.6) 근처 ∠θ 호 -->
+            <path d="M 67 34 A 8 8 0 0 1 60 41" fill="none" stroke="#c0392b" stroke-width="0.8"/>
+            <!-- p 라벨: AC 대각선 우측 부분 위쪽 (intersection 우측 영역) -->
+            <foreignObject x="74" y="22" width="12" height="14" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;color:#2563eb;background:#fff;padding:0 1px;">$p$</div></foreignObject>
+            <!-- q 라벨: BD 대각선 하단 부분 우측 (intersection 아래 영역) -->
+            <foreignObject x="64" y="52" width="12" height="14" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;color:#2563eb;background:#fff;padding:0 1px;">$q$</div></foreignObject>
+            <!-- θ 라벨: 호 내부 -->
+            <foreignObject x="62" y="40" width="12" height="14" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10px;line-height:1;color:#c0392b;">$\theta$</div></foreignObject>
           </svg>
         </div>
       </div>
