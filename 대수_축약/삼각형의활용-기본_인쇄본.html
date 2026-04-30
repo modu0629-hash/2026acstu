@@ -417,6 +417,30 @@ a, a:link, a:visited, a:hover, a:active { color:#000 !important; }
     <div class="problem-block" data-qa-id="q6">
       <div class="sub-label">- 확인문제</div>
       <div class="problem">
+        <div class="fig-right" style="width:46mm;">
+          <svg viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;">
+            <circle cx="110" cy="110" r="78" fill="none" stroke="#222" stroke-width="1"/>
+            <polygon points="110,32 175,138 41,128 51,68" fill="none" stroke="#222" stroke-width="1.4"/>
+            <line x1="110" y1="32" x2="41" y2="128" stroke="#2563eb" stroke-width="0.8" stroke-dasharray="3,2"/>
+            <!-- 변 길이 표시 라운드 점선 호 (skill v1.2 표준) -->
+            <path d="M 110 32 Q 168 65 175 138" fill="none" stroke="#222" stroke-width="0.9" stroke-dasharray="0.5,4" stroke-linecap="round"/>
+            <path d="M 175 138 Q 108 152 41 128" fill="none" stroke="#222" stroke-width="0.9" stroke-dasharray="0.5,4" stroke-linecap="round"/>
+            <path d="M 41 128 Q 22 100 51 68" fill="none" stroke="#222" stroke-width="0.9" stroke-dasharray="0.5,4" stroke-linecap="round"/>
+            <path d="M 51 68 Q 70 38 110 32" fill="none" stroke="#222" stroke-width="0.9" stroke-dasharray="0.5,4" stroke-linecap="round"/>
+            <circle cx="110" cy="32" r="2.2" fill="#222"/>
+            <circle cx="175" cy="138" r="2.2" fill="#222"/>
+            <circle cx="41" cy="128" r="2.2" fill="#222"/>
+            <circle cx="51" cy="68" r="2.2" fill="#222"/>
+            <foreignObject x="105" y="12" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$\mathrm{A}$</div></foreignObject>
+            <foreignObject x="180" y="138" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$\mathrm{B}$</div></foreignObject>
+            <foreignObject x="22" y="130" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$\mathrm{C}$</div></foreignObject>
+            <foreignObject x="32" y="56" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$\mathrm{D}$</div></foreignObject>
+            <foreignObject x="156" y="64" width="32" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:12px;line-height:1;background:#fff;padding:0 2px;text-align:center;">$2\sqrt{3}$</div></foreignObject>
+            <foreignObject x="100" y="148" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:12px;line-height:1;background:#fff;padding:0 2px;text-align:center;">$4$</div></foreignObject>
+            <foreignObject x="22" y="92" width="28" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:12px;line-height:1;background:#fff;padding:0 2px;text-align:center;">$\sqrt{3}$</div></foreignObject>
+            <foreignObject x="64" y="40" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:12px;line-height:1;background:#fff;padding:0 2px;text-align:center;">$2$</div></foreignObject>
+          </svg>
+        </div>
         <p><span class="pnum"><a href="#sol-6" class="solution-link">6</a></span>그림과 같이 원에 내접하는 사각형 $\mathrm{ABCD}$에서 $\overline{\mathrm{AB}} = 2\sqrt{3},\ \overline{\mathrm{BC}} = 4,\ \overline{\mathrm{CD}} = \sqrt{3},\ \overline{\mathrm{DA}} = 2$일 때, 다음을 구하여라.</p>
         <p class="sub">(1) $\cos B$의 값</p>
         <p class="sub">(2) 대각선 $\overline{\mathrm{AC}}$의 길이</p>
@@ -476,14 +500,20 @@ a, a:link, a:visited, a:hover, a:active { color:#000 !important; }
             <ellipse cx="60" cy="110" rx="42" ry="9" fill="none" stroke="#222" stroke-width="1.1"/>
             <ellipse cx="60" cy="110" rx="42" ry="9" fill="none" stroke="#222" stroke-width="0.6" stroke-dasharray="2,2" style="clip-path:inset(0 0 50% 0);"/>
             <line x1="60" y1="12" x2="18" y2="110" stroke="#222" stroke-width="1"/>
+            <!-- 실 경로: P (밑면 우측) → 한 바퀴 감김 → Q (모선 OP의 중점, 좌측) -->
+            <!-- 1) 앞면 보이는 부분: P → 위로 이동하며 우측 슬랜트 cross-over -->
+            <path d="M 102 110 Q 99 80 84 42" fill="none" stroke="#c0392b" stroke-width="1.2"/>
+            <!-- 2) 뒷면 (점선): 우측 위 → 좌측 위 -->
+            <path d="M 84 42 Q 60 26 36 42" fill="none" stroke="#c0392b" stroke-width="0.9" stroke-dasharray="2.5,2"/>
+            <!-- 3) 앞면 다시 보이는 부분: 좌측 슬랜트 cross-over → Q -->
+            <path d="M 36 42 Q 36 52 39 61" fill="none" stroke="#c0392b" stroke-width="1.2"/>
             <circle cx="39" cy="61" r="1.8" fill="#222"/>
             <circle cx="18" cy="110" r="1.8" fill="#222"/>
             <circle cx="60" cy="12" r="1.8" fill="#222"/>
-            <circle cx="100" cy="106" r="1.8" fill="#222"/>
-            <path d="M 100 106 Q 70 90 39 61" fill="none" stroke="#c0392b" stroke-width="1.2"/>
+            <circle cx="102" cy="110" r="1.8" fill="#222"/>
             <foreignObject x="62" y="2" width="20" height="16" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$\mathrm{O}$</div></foreignObject>
             <foreignObject x="22" y="48" width="22" height="16" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$\mathrm{Q}$</div></foreignObject>
-            <foreignObject x="6" y="105" width="20" height="16" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$\mathrm{P}$</div></foreignObject>
+            <foreignObject x="104" y="106" width="20" height="16" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$\mathrm{P}$</div></foreignObject>
             <foreignObject x="44" y="58" width="30" height="14" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;">$12\,\mathrm{cm}$</div></foreignObject>
             <foreignObject x="60" y="116" width="36" height="14" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;">$4\,\mathrm{cm}$</div></foreignObject>
           </svg>
@@ -575,6 +605,34 @@ a, a:link, a:visited, a:hover, a:active { color:#000 !important; }
     <div class="problem-block" data-qa-id="q10">
       <div class="sub-label">- 확인문제</div>
       <div class="problem">
+        <div class="fig-right" style="width:42mm;">
+          <svg viewBox="0 0 150 130" xmlns="http://www.w3.org/2000/svg" style="width:100%;">
+            <!-- 삼각형 ABC: A 위, B 우하, C 좌하. ∠A=60°, AB=8(=80px), AC=3(=30px) -->
+            <polygon points="65,20 105,113 38,46" fill="none" stroke="#222" stroke-width="1.4"/>
+            <!-- P (AB 위 약 60%), Q (AC 위 약 60%) -->
+            <circle cx="89" cy="76" r="2.2" fill="#222"/>
+            <circle cx="49" cy="36" r="2.2" fill="#222"/>
+            <!-- PQ 연결선 -->
+            <line x1="89" y1="76" x2="49" y2="36" stroke="#2563eb" stroke-width="1" stroke-dasharray="3,2"/>
+            <!-- ∠A 60° 호 -->
+            <path d="M 76 27 A 14 14 0 0 1 56 32" fill="none" stroke="#c0392b" stroke-width="0.9"/>
+            <!-- 꼭짓점·라벨 -->
+            <circle cx="65" cy="20" r="2" fill="#222"/>
+            <circle cx="105" cy="113" r="2" fill="#222"/>
+            <circle cx="38" cy="46" r="2" fill="#222"/>
+            <foreignObject x="60" y="2" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$\mathrm{A}$</div></foreignObject>
+            <foreignObject x="108" y="113" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$\mathrm{B}$</div></foreignObject>
+            <foreignObject x="20" y="40" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:14px;line-height:1;">$\mathrm{C}$</div></foreignObject>
+            <foreignObject x="92" y="76" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$\mathrm{P}$</div></foreignObject>
+            <foreignObject x="51" y="20" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$\mathrm{Q}$</div></foreignObject>
+            <foreignObject x="58" y="34" width="20" height="14" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:9px;line-height:1;color:#c0392b;">$60^\circ$</div></foreignObject>
+            <!-- AB, AC, x, y 라벨 -->
+            <foreignObject x="92" y="44" width="20" height="14" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;background:#fff;padding:0 1px;">$8$</div></foreignObject>
+            <foreignObject x="32" y="22" width="20" height="14" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;background:#fff;padding:0 1px;">$3$</div></foreignObject>
+            <foreignObject x="74" y="44" width="20" height="14" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10px;line-height:1;color:#2563eb;background:#fff;padding:0 1px;">$x$</div></foreignObject>
+            <foreignObject x="44" y="26" width="20" height="14" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:10px;line-height:1;color:#2563eb;background:#fff;padding:0 1px;">$y$</div></foreignObject>
+          </svg>
+        </div>
         <p><span class="pnum"><a href="#sol-10" class="solution-link">10</a></span>$\overline{\mathrm{AB}} = 8,\ \overline{\mathrm{AC}} = 3,\ A = 60^\circ$인 삼각형 $\mathrm{ABC}$의 두 변 $\mathrm{AB},\,\mathrm{AC}$ 위에 각각 두 점 $\mathrm{P},\,\mathrm{Q}$를 잡아 $\overline{\mathrm{AP}} = x,\ \overline{\mathrm{AQ}} = y$라 한다. 삼각형 $\mathrm{APQ}$의 넓이가 삼각형 $\mathrm{ABC}$의 넓이의 $\dfrac{1}{6}$이 되도록 할 때, 다음을 구하여라.</p>
         <p class="sub">(1) $xy$의 값</p>
         <p class="sub">(2) 선분 $\overline{\mathrm{PQ}}$의 길이의 최솟값</p>
@@ -595,22 +653,57 @@ a, a:link, a:visited, a:hover, a:active { color:#000 !important; }
     <h2 class="section-title">사각형의 넓이</h2>
     <div class="concept">
       <div class="sub-title" style="margin-top:0;">1) 평행사변형의 넓이</div>
-      <p>이웃하는 두 변의 길이가 $a,\,b$이고 그 끼인각의 크기가 $\theta$인 평행사변형의 넓이 $S$는</p>
-      <div class="formula">
-        $$S = ab\sin\theta$$
+      <div class="fig-row" style="align-items:center; gap:6mm; margin:2mm 0;">
+        <div style="flex:1; min-width:0;">
+          <p style="margin-bottom:1mm;">이웃하는 두 변의 길이가 $a,\,b$이고 그 끼인각의 크기가 $\theta$인 평행사변형의 넓이 $S$는</p>
+          <div class="formula compact">$$S = ab\sin\theta$$</div>
+        </div>
+        <div style="flex:0 0 32mm;">
+          <svg viewBox="0 0 90 56" xmlns="http://www.w3.org/2000/svg" style="width:100%;">
+            <polygon points="12,46 60,46 78,12 30,12" fill="none" stroke="#222" stroke-width="1.2"/>
+            <path d="M 22 46 A 10 10 0 0 0 24 38" fill="none" stroke="#c0392b" stroke-width="0.7"/>
+            <foreignObject x="34" y="48" width="14" height="10" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:9px;line-height:1;">$a$</div></foreignObject>
+            <foreignObject x="61" y="26" width="14" height="10" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:9px;line-height:1;">$b$</div></foreignObject>
+            <foreignObject x="22" y="34" width="14" height="10" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:8px;line-height:1;color:#c0392b;">$\theta$</div></foreignObject>
+          </svg>
+        </div>
       </div>
 
       <div class="sub-title">2) 사각형의 넓이 (대각선 이용)</div>
-      <p>두 대각선의 길이가 $p,\,q$이고 두 대각선이 이루는 각의 크기가 $\theta$인 사각형 $\mathrm{ABCD}$의 넓이 $S$는</p>
-      <div class="formula">
-        $$S = \dfrac{1}{2}pq\sin\theta$$
+      <div class="fig-row" style="align-items:center; gap:6mm; margin:2mm 0;">
+        <div style="flex:1; min-width:0;">
+          <p style="margin-bottom:1mm;">두 대각선의 길이가 $p,\,q$이고 두 대각선이 이루는 각의 크기가 $\theta$인 사각형 $\mathrm{ABCD}$의 넓이 $S$는</p>
+          <div class="formula compact">$$S = \dfrac{1}{2}pq\sin\theta$$</div>
+        </div>
+        <div style="flex:0 0 32mm;">
+          <svg viewBox="0 0 90 64" xmlns="http://www.w3.org/2000/svg" style="width:100%;">
+            <polygon points="14,28 52,8 76,38 38,58" fill="none" stroke="#222" stroke-width="1.2"/>
+            <line x1="14" y1="28" x2="76" y2="38" stroke="#2563eb" stroke-width="0.9" stroke-dasharray="3,2"/>
+            <line x1="52" y1="8" x2="38" y2="58" stroke="#2563eb" stroke-width="0.9" stroke-dasharray="3,2"/>
+            <path d="M 50 31 A 6 6 0 0 1 47 36" fill="none" stroke="#c0392b" stroke-width="0.7"/>
+            <foreignObject x="33" y="14" width="14" height="10" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:8px;line-height:1;color:#2563eb;">$p$</div></foreignObject>
+            <foreignObject x="58" y="20" width="14" height="10" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:8px;line-height:1;color:#2563eb;">$q$</div></foreignObject>
+            <foreignObject x="50" y="34" width="14" height="10" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:8px;line-height:1;color:#c0392b;">$\theta$</div></foreignObject>
+          </svg>
+        </div>
       </div>
 
       <div class="sub-title">3) 일반 사각형 — 두 삼각형의 합</div>
-      <p>볼록사각형 $\mathrm{ABCD}$에서 한 대각선(예를 들어 $\overline{\mathrm{AC}}$)을 그어 두 삼각형 $\mathrm{ABC},\,\mathrm{ACD}$로 나눈 뒤 각각의 넓이를 더한다. 두 삼각형이 한 변($\overline{\mathrm{AC}}$)을 공유하므로 코사인법칙으로 그 길이를 먼저 구한 뒤 사인공식을 적용한다.</p>
-
-      <div class="formula left">
-        $S = \triangle\mathrm{ABC} + \triangle\mathrm{ACD} = \dfrac{1}{2}\overline{\mathrm{AB}}\cdot\overline{\mathrm{BC}}\sin B + \dfrac{1}{2}\overline{\mathrm{AD}}\cdot\overline{\mathrm{DC}}\sin D$
+      <div class="fig-row" style="align-items:flex-start; gap:6mm; margin:2mm 0;">
+        <div style="flex:1; min-width:0;">
+          <p style="margin-bottom:1mm;">볼록사각형 $\mathrm{ABCD}$에서 한 대각선($\overline{\mathrm{AC}}$)을 그어 두 삼각형 $\mathrm{ABC},\,\mathrm{ACD}$로 나눈 뒤 각각의 넓이를 더한다. 두 삼각형이 한 변($\overline{\mathrm{AC}}$)을 공유하므로 코사인법칙으로 그 길이를 먼저 구한 뒤 사인공식을 적용한다.</p>
+          <div class="formula left compact">$S = \triangle\mathrm{ABC} + \triangle\mathrm{ACD} = \dfrac{1}{2}\overline{\mathrm{AB}}\cdot\overline{\mathrm{BC}}\sin B + \dfrac{1}{2}\overline{\mathrm{AD}}\cdot\overline{\mathrm{DC}}\sin D$</div>
+        </div>
+        <div style="flex:0 0 32mm;">
+          <svg viewBox="0 0 90 70" xmlns="http://www.w3.org/2000/svg" style="width:100%;">
+            <polygon points="78,52 18,60 12,28 50,8" fill="none" stroke="#222" stroke-width="1.2"/>
+            <line x1="78" y1="52" x2="12" y2="28" stroke="#2563eb" stroke-width="0.9" stroke-dasharray="3,2"/>
+            <foreignObject x="80" y="48" width="14" height="10" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:9px;line-height:1;">$\mathrm{A}$</div></foreignObject>
+            <foreignObject x="6" y="60" width="14" height="10" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:9px;line-height:1;">$\mathrm{B}$</div></foreignObject>
+            <foreignObject x="0" y="20" width="14" height="10" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:9px;line-height:1;">$\mathrm{C}$</div></foreignObject>
+            <foreignObject x="50" y="0" width="14" height="10" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:9px;line-height:1;">$\mathrm{D}$</div></foreignObject>
+          </svg>
+        </div>
       </div>
 
       <div class="note">대각의 합이 $180^\circ$인 원에 내접하는 사각형이면 $\sin B = \sin D$이므로 두 삼각형 넓이 식에서 $\sin$ 인수를 묶을 수 있다.</div>
@@ -630,6 +723,28 @@ a, a:link, a:visited, a:hover, a:active { color:#000 !important; }
     <div class="problem-block" data-qa-id="q11">
       <div class="sub-label">- 확인문제</div>
       <div class="problem">
+        <div class="fig-right" style="width:42mm;">
+          <svg viewBox="0 0 150 110" xmlns="http://www.w3.org/2000/svg" style="width:100%;">
+            <!-- 평행사변형 ABCD: A 좌상, B 우상, C 우하, D 좌하. ∠B = 120°, AB=7, BC=8 -->
+            <polygon points="20,30 90,30 130,99 60,99" fill="none" stroke="#222" stroke-width="1.4"/>
+            <!-- 대각선 AC = 13 (대각선 표시) -->
+            <line x1="20" y1="30" x2="130" y2="99" stroke="#2563eb" stroke-width="1" stroke-dasharray="3,2"/>
+            <!-- ∠B 호 -->
+            <path d="M 78 30 A 12 12 0 0 1 95 41" fill="none" stroke="#c0392b" stroke-width="0.8"/>
+            <!-- 꼭짓점·라벨 -->
+            <circle cx="20" cy="30" r="2" fill="#222"/>
+            <circle cx="90" cy="30" r="2" fill="#222"/>
+            <circle cx="130" cy="99" r="2" fill="#222"/>
+            <circle cx="60" cy="99" r="2" fill="#222"/>
+            <foreignObject x="6" y="14" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$\mathrm{A}$</div></foreignObject>
+            <foreignObject x="92" y="14" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$\mathrm{B}$</div></foreignObject>
+            <foreignObject x="132" y="100" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$\mathrm{C}$</div></foreignObject>
+            <foreignObject x="42" y="100" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$\mathrm{D}$</div></foreignObject>
+            <foreignObject x="50" y="16" width="14" height="14" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;background:#fff;padding:0 1px;">$7$</div></foreignObject>
+            <foreignObject x="112" y="58" width="14" height="14" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;background:#fff;padding:0 1px;">$8$</div></foreignObject>
+            <foreignObject x="68" y="60" width="20" height="14" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;color:#2563eb;background:#fff;padding:0 1px;">$13$</div></foreignObject>
+          </svg>
+        </div>
         <p><span class="pnum"><a href="#sol-11" class="solution-link">11</a></span>다음을 각각 구하여라.</p>
         <p class="sub">(1) $\overline{\mathrm{AB}} = 7,\ \overline{\mathrm{BC}} = 8,\ \overline{\mathrm{AC}} = 13$인 평행사변형 $\mathrm{ABCD}$의 넓이를 구하여라. (단, $90^\circ \lt B \lt 180^\circ$)</p>
         <p class="sub">(2) 대각선 $\overline{\mathrm{AC}}$의 길이가 $8$이고 두 대각선이 이루는 각의 크기가 $120^\circ$인 사각형 $\mathrm{ABCD}$의 넓이가 $6\sqrt{3}$일 때, 대각선 $\overline{\mathrm{BD}}$의 길이를 구하여라.</p>
@@ -639,6 +754,30 @@ a, a:link, a:visited, a:hover, a:active { color:#000 !important; }
     <div class="problem-block" data-qa-id="q12">
       <div class="sub-label">- 확인문제</div>
       <div class="problem">
+        <div class="fig-right" style="width:42mm;">
+          <svg viewBox="0 0 140 110" xmlns="http://www.w3.org/2000/svg" style="width:100%;">
+            <!-- 사각형 ABCD: A 우하, B 좌하, C 좌상-중, D 우상-중 (B+D=180° 원에 내접) -->
+            <polygon points="115,80 10,80 40,28 85,28" fill="none" stroke="#222" stroke-width="1.4"/>
+            <!-- ∠B = 60° 호 (B에서 BA 우방향, BC 우상방향) -->
+            <path d="M 24 80 A 14 14 0 0 0 17 67" fill="none" stroke="#c0392b" stroke-width="0.8"/>
+            <!-- ∠D = 120° 호 (D에서 DA 우하방향, DC 좌방향) -->
+            <path d="M 95 41 A 11 11 0 0 1 74 28" fill="none" stroke="#c0392b" stroke-width="0.8"/>
+            <!-- 꼭짓점·라벨 -->
+            <circle cx="115" cy="80" r="2" fill="#222"/>
+            <circle cx="10" cy="80" r="2" fill="#222"/>
+            <circle cx="40" cy="28" r="2" fill="#222"/>
+            <circle cx="85" cy="28" r="2" fill="#222"/>
+            <foreignObject x="118" y="80" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$\mathrm{A}$</div></foreignObject>
+            <foreignObject x="-6" y="80" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$\mathrm{B}$</div></foreignObject>
+            <foreignObject x="22" y="14" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$\mathrm{C}$</div></foreignObject>
+            <foreignObject x="86" y="14" width="22" height="18" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:13px;line-height:1;">$\mathrm{D}$</div></foreignObject>
+            <foreignObject x="50" y="84" width="14" height="14" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;background:#fff;padding:0 1px;">$7$</div></foreignObject>
+            <foreignObject x="14" y="46" width="14" height="14" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;background:#fff;padding:0 1px;">$4$</div></foreignObject>
+            <foreignObject x="56" y="14" width="14" height="14" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:11px;line-height:1;background:#fff;padding:0 1px;">$3$</div></foreignObject>
+            <foreignObject x="22" y="64" width="22" height="14" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:9px;line-height:1;color:#c0392b;">$60^\circ$</div></foreignObject>
+            <foreignObject x="78" y="34" width="22" height="14" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="font-size:9px;line-height:1;color:#c0392b;">$120^\circ$</div></foreignObject>
+          </svg>
+        </div>
         <p><span class="pnum"><a href="#sol-12" class="solution-link">12</a></span>사각형 $\mathrm{ABCD}$에서 $\overline{\mathrm{AB}} = 7,\ \overline{\mathrm{BC}} = 4,\ \overline{\mathrm{CD}} = 3,\ B = 60^\circ,\ D = 120^\circ$일 때, 사각형 $\mathrm{ABCD}$의 넓이를 구하여라.</p>
       </div>
     </div>

@@ -292,8 +292,8 @@ a, a:link, a:visited, a:hover, a:active { color:#000 !important; }
 
       <p class="proof"><b>(증명)</b> 두 직선의 교점을 $V$, $n$번째 원의 중심을 $C_n$이라 하면 $C_n$은 두 직선의 양분선 위에 있고, $C_n$에서 두 직선까지의 거리가 곧 $r_n$이므로 $\overline{VC_n}\sin\alpha = r_n$, &emsp;즉 $\overline{VC_n} = \dfrac{r_n}{\sin\alpha}$. 인접한 두 원이 외접하므로 $\overline{VC_{n+1}} - \overline{VC_n} = r_{n+1} + r_n$이고, 위 식을 대입하면 $\dfrac{r_{n+1}-r_n}{\sin\alpha} = r_{n+1}+r_n \;\Longleftrightarrow\; r_{n+1}(1-\sin\alpha) = r_n(1+\sin\alpha)$<br>$\therefore\;\dfrac{r_{n+1}}{r_n} = \dfrac{1+\sin\alpha}{1-\sin\alpha}\;(\text{일정})$</p>
 
-      <div class="fig-center" style="margin:8mm 0 0; text-align:center;">
-        <svg viewBox="127 10 229 93" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width:160mm; display:block; margin:0 auto;">
+      <div class="fig-center" style="margin:-15mm 0 0; text-align:center;">
+        <svg viewBox="127 10 229 93" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width:140mm; display:block; margin:0 auto;">
           <line x1="170" y1="50.3" x2="310" y2="65" stroke="#222" stroke-width="0.5"/>
           <line x1="170" y1="79.7" x2="310" y2="65" stroke="#222" stroke-width="0.5"/>
           <line x1="170" y1="65" x2="305" y2="65" stroke="#2563eb" stroke-width="0.3" stroke-dasharray="3,1.8" opacity="0.55"/>
@@ -324,35 +324,38 @@ a, a:link, a:visited, a:hover, a:active { color:#000 !important; }
         </svg>
       </div>
     </div>
-  </div>
-  <footer class="sheet-footer"></footer>
-</section>
 
-<!-- ============================================================ -->
-<!-- PAGE 5 : 문제 6 + 문제 7 — 등비수열 활용 -->
-<!-- ============================================================ -->
-<section class="sheet odd">
-  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
-  <header class="sheet-header">대수</header>
-  <div class="problems-area">
-
-    <div class="problem-block" data-qa-id="q6">
+    <div class="problem-block" data-qa-id="q6" style="margin-top:5mm;">
       <div class="sub-label">- 확인문제</div>
       <div class="problem">
-        <div class="fig-right" style="width:55mm;">
-          <svg viewBox="0 0 200 95" xmlns="http://www.w3.org/2000/svg" style="width:100%;">
-            <line x1="20" y1="32.8" x2="190" y2="47.5" stroke="#222" stroke-width="1.2"/>
-            <line x1="20" y1="62.2" x2="190" y2="47.5" stroke="#222" stroke-width="1.2"/>
-            <circle cx="51" cy="47.5" r="12" fill="none" stroke="#222" stroke-width="1.2"/>
-            <circle cx="73" cy="47.5" r="10.1" fill="none" stroke="#222" stroke-width="1.2"/>
-            <circle cx="92" cy="47.5" r="8.5" fill="none" stroke="#222" stroke-width="1.2"/>
-            <circle cx="108" cy="47.5" r="7.1" fill="none" stroke="#222" stroke-width="1.2"/>
-            <circle cx="121" cy="47.5" r="6" fill="none" stroke="#222" stroke-width="1.2"/>
+        <div class="fig-right" style="width:48mm;">
+          <svg viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg" style="width:100%;">
+            <!-- 두 직선 ~40° 사잇각 (각 20°), 우측 vertex에서 만남 -->
+            <line x1="10" y1="0" x2="190" y2="65" stroke="#222" stroke-width="1.2"/>
+            <line x1="10" y1="130" x2="190" y2="65" stroke="#222" stroke-width="1.2"/>
+            <!-- 5개 원 (체인 형태로 외접, 시각적 비율 유지) -->
+            <circle cx="30" cy="65" r="12" fill="none" stroke="#222" stroke-width="1.2"/>
+            <circle cx="52" cy="65" r="10" fill="none" stroke="#222" stroke-width="1.2"/>
+            <circle cx="70.5" cy="65" r="8.5" fill="none" stroke="#222" stroke-width="1.2"/>
+            <circle cx="86" cy="65" r="7" fill="none" stroke="#222" stroke-width="1.2"/>
+            <circle cx="99" cy="65" r="6" fill="none" stroke="#222" stroke-width="1.2"/>
           </svg>
         </div>
         <p><span class="pnum"><a href="#sol-6" class="solution-link">6</a></span>오른쪽 그림과 같이 두 직선을 공통접선으로 하고 서로 외접하는 다섯 개의 원이 있다. 가장 큰 원의 반지름의 길이가 $12$, 가장 작은 원의 반지름의 길이가 $6$일 때, 가운데 원의 반지름의 길이를 구하여라.</p>
       </div>
     </div>
+
+  </div>
+  <footer class="sheet-footer"></footer>
+</section>
+
+<!-- ============================================================ -->
+<!-- PAGE 5 : 문제 7 — 정사각형 9분할 (single) -->
+<!-- ============================================================ -->
+<section class="sheet odd">
+  <div class="corner tr"></div><div class="corner tl"></div><div class="corner br"></div><div class="corner bl"></div>
+  <header class="sheet-header">대수</header>
+  <div class="problems-area single">
 
     <div class="problem-block" data-qa-id="q7">
       <div class="sub-label">- 확인문제</div>
