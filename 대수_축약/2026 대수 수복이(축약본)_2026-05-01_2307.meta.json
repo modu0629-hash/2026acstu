@@ -1,0 +1,40 @@
+{
+  "version": "1.0",
+  "title": "2026 대수 수복이(축약본)_2026-05-01_2307",
+  "header_odd": "대수",
+  "header_even": "2026 수복이",
+  "base_dir": "C:\\Users\\USER\\Documents\\2026acstu\\대수_축약",
+  "base_template_file": "수열의합1-기본_인쇄본.html",
+  "units": [
+    {
+      "name": "삼각형의 활용",
+      "file": "삼각형의활용-기본_인쇄본.html"
+    },
+    {
+      "name": "삼각함수의 활용",
+      "file": "삼각함수의 활용-문제 1.html"
+    },
+    {
+      "name": "등차수열",
+      "file": "등차수열-기본_인쇄본.html"
+    },
+    {
+      "name": "등비수열",
+      "file": "등비수열-기본_인쇄본.html"
+    },
+    {
+      "name": "수열의 합 1",
+      "file": "수열의합1-기본_인쇄본.html"
+    },
+    {
+      "name": "수열의 합 2",
+      "file": "수열의합2-기본_인쇄본.html"
+    },
+    {
+      "name": "수학적 귀납법",
+      "file": "수학적_귀납법-기본_인쇄본.html"
+    }
+  ],
+  "total_problems": 70,
+  "last_built": "2026-05-01T23:07:20"
+}
